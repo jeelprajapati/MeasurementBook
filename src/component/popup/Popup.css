@@ -1,0 +1,57 @@
+.pop-container{
+    background-color: rgb(220, 217, 217); 
+    width: 40vw;
+    border-radius: 7px;
+    position: relative;
+}
+.pro-select{
+    border: none;
+    width: 97%;
+    height: 30px;
+    border-radius: 7px;
+}
+.add-title{
+    padding: 15px 10px 0 10px;
+    font-size: 19px;
+}
+.name-container,.no-container,.loi-container,.validity-container{
+    margin: 10px 15px;
+}
+.Add-input{
+    width: 97%;
+    height: 27px;
+    border-radius: 5px;
+    border: none;
+}
+.Add-Project{
+    background-color: green;
+    color: white;
+    border: none;
+    font-size: 16px;
+    padding: 7px 10px;
+    margin: 18px 25px 25px 25px;
+}
+.Add-Project:hover{
+    cursor: pointer;
+    background-color: rgb(1, 106, 1);
+}
+.close{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 7px;
+    right: 7px;
+}
+.close:hover{
+    cursor: pointer;
+}
+.date-and-time{
+    margin: 10px 15px;
+    display: flex;
+    gap: 5px;
+}
+.dt-input{
+    width: 180px;
+    border: none;
+    height: 27px;
+}

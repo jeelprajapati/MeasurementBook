@@ -1,0 +1,29 @@
+.client-main-container{
+    width: 90vw;
+    margin: auto;
+    display: flex;
+    margin-top: 10px;
+    gap: 10px;
+}
+.client-left{
+    flex: 1;
+    background-color: rgb(172, 97, 247);
+    height: 83vh;
+}
+.client-right{
+    flex: 5;
+    position: relative;
+}
+.client-path{
+    color:rgb(172, 97, 247);
+    margin: 0 10px;
+}
+.client-title{
+    color: gray;
+    margin: 15px 10px;
+}
+.clientpopup{
+    position: absolute;
+    top: 8%;
+    left: 15%;
+}

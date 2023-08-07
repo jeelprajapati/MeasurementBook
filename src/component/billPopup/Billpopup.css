@@ -1,0 +1,17 @@
+.bill-pop-container{
+    position: absolute;
+    background-color: rgb(220, 217, 217); 
+    width: 40vw;
+    border-radius: 7px;
+    top: 15%;
+    left: 20%;
+}
+.bill-dt{
+    margin: 10px 15px;
+}
+.invoice-input{
+    width: 97%;
+    height: 27px;
+    border: none;
+    border-radius: 7px;
+}

@@ -1,0 +1,9 @@
+.register-button{
+    width: 30%;
+    margin-bottom: 20px;
+    background-color:  rgb(172, 97, 247);
+    color: white;
+    border: none;
+    padding: 10px;
+    /* width: 100px; */
+}

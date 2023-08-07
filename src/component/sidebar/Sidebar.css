@@ -1,0 +1,24 @@
+.side-container{
+   margin: 5px 30px 5px 0px;
+}
+.side-container ul{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+   justify-content: center;
+}
+.side-container ul li{
+    list-style: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    
+    border-radius: 5px;
+}
+.lightGray{
+    background-color: rgb(198, 145, 251);
+}
+.link{
+    text-decoration: none;
+}

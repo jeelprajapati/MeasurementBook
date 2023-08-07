@@ -1,0 +1,47 @@
+.measurement-main-container{
+    width: 90vw;
+    margin: auto;
+    display: flex;
+    margin-top: 10px;
+    gap: 10px;
+}
+.measurement-left{
+    flex: 1;
+    background-color: rgb(172, 97, 247);
+    height: 83vh;
+}
+.measurement-right{
+    flex: 5;
+}
+.measurement-path{
+    margin: 7px 0px 0px 15px;
+}
+.measurement-path span{
+    color: rgb(172, 97, 247);
+}
+.measurement-title{
+    margin: 20px 10px;
+}
+.types-con{
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    width: 98%;
+}
+.type{
+    text-align: center;
+    flex:1;
+    border: 1px solid rgb(172, 97, 247);
+    padding: 7px;
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(122,117,122,1);
+    -moz-box-shadow: 0px 3px 5px 0px rgba(122,117,122,1);
+    box-shadow: 0px 3px 5px 0px rgba(122,117,122,1);
+}
+.type:nth-child(1){
+    border-radius: 13px 0 0 13px;
+    background-color: rgb(172, 97, 247);
+    color: white;
+}
+.type:nth-child(3){
+    border-radius: 0 13px 13px 0;
+}

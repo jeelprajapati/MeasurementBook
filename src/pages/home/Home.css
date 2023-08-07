@@ -1,0 +1,15 @@
+.home-container{
+    width: 90vw;
+    margin: auto;
+    display: flex;
+    margin-top: 10px;
+    gap: 10px;
+}
+.home-left{
+    flex: 1;
+    background-color: rgb(172, 97, 247);
+    height: 83vh;
+}
+.home-right{
+    flex: 5;
+}
