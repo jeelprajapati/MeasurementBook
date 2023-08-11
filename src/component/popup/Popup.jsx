@@ -1,20 +1,26 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Popup.css'
 import close from '../../image/close.svg'
 import makeRequesInstance from '../../makeRequest';
 import useFetch from '../../hooks/useFetch';
 import { useAlert } from 'react-alert'
+import { useNavigate } from 'react-router-dom';
 
 const Popup = ({setPopUp,setChange,change,input}) => {
   const[element,setElement]=useState(input);
   const[load,setLoad]=useState(false);
   const[err,setErr]=useState(null);
   const[clientId,setClientId]=useState(null);
+  const navigate=useNavigate();
   const makeRequest=makeRequesInstance(localStorage.getItem('token'))
   const organizationId=localStorage.getItem('organizationId')
   const alert=useAlert();
   const {loding,error,data}=useFetch({url:`Client?organizationId=${organizationId}&page=${1}&pageSize=${100}`,change});
-
+  useEffect(()=>{
+    if(data===null){
+      navigate('/client');
+    }
+  },[data,navigate])
   const handleDropDown=(e)=>{
     setClientId(e.target.value)
   }

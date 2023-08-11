@@ -6,8 +6,7 @@
     height: 80vh;
 }
 .login-container{
-    /* border: 1px solid  rgb(172, 97, 247); */
-    /* background-color: rgb(172, 97, 247); */
+    width: 28vw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,26 +25,28 @@
     width: 300px;
     height: 30px;
     margin:8px 30px 0 30px;
-    background-color: rgb(223, 193, 253);
     border: none;
+    border-bottom:1px solid rgb(172, 97, 247);
     outline: none;
 }
 .button-container{
     display: flex;
 }
 .login-button{
-    /* width: 89%; */
     margin-bottom: 40px;
     background-color:  rgb(172, 97, 247);
     color: white;
     border: none;
     padding: 10px;
-    width: 100px;
+    width: 150px;
+    border-radius: 17px;
 }
 .forget-button{
-    background-color: rgb(251, 138, 138);
-    color: white;
+    width: 150px;
+    border-radius: 17px;
+    background-color: transparent;
+    color: rgb(172, 97, 247);
+    border: 1px solid rgb(172, 97, 247);
     height: 37px;
-    border: none;
     margin: 0 10px;
 }

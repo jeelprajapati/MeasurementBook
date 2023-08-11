@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import './clientTable.css'
 import edit from '../../image/edit.svg'
 import deleteicon from '../../image/delete.svg'

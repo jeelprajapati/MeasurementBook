@@ -1,19 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Register.css";
 import makeRequesInstance from "../../makeRequest";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const Register = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [planId, setPlanID] = useState(null);
   const navigate = useNavigate();
   const makeRequest = makeRequesInstance(localStorage.getItem("token"));
+  useEffect(() => {
+    const getPlanId = async () => {
+      setLoading(true);
+      const res = await axios.get(
+        "http://billbookapi-env-1.eba-ue94tp4s.ap-south-1.elasticbeanstalk.com/api/Standard/GetPlans"
+      );
+      setPlanID(res.data);
+      setLoading(false);
+    };
+    return () => {
+      getPlanId();
+    };
+  }, []);
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
   const handleRegister = async (e) => {
     e.preventDefault();
-    const res = await makeRequest.post("/Authentication/register", data);
+    const res = await makeRequest.post("/Authentication/register/subscriber", data);
     if (res.status === 200) {
       navigate("/login");
       setLoading(false);
@@ -25,52 +40,61 @@ const Register = () => {
   };
 
   return (
-    <div className="main-login-container">
-      <div className="login-container">
-        <div className="login-title">Register</div>
-        <input
-          type="text"
-          placeholder="username"
-          name="username"
-          className="login-input"
-          onChange={handleChange}
-        />
-        <br />
-        <input
-          type="text"
-          placeholder="Name"
-          name="name"
-          className="login-input"
-          onChange={handleChange}
-        />
-        <br />
-        <input
-          type="email"
-          placeholder="Email"
-          name="email"
-          className="login-input"
-          onChange={handleChange}
-        />
-        <br />
-        <input
-          type="password"
-          placeholder="password"
-          name="password"
-          className="login-input"
-          onChange={handleChange}
-        />
-        <br />
-        <button className="register-button" onClick={handleRegister}>
-          Register
-        </button>
-        <br />
-        {loading && (
-          <div className="warning">
-            {error?.map((item) => (
-              <span>{item}</span>
-            ))}
+    <div className="main-register-container">
+      <div className="sub-container">
+        <div className="register-title">Register</div>
+        <div className="register-container">
+          <input
+            type="text"
+            placeholder="username*"
+            name="username"
+            className="register-input"
+            onChange={handleChange}
+          />
+          <br />
+          <input
+            type="text"
+            placeholder="Name*"
+            name="name"
+            className="register-input"
+            onChange={handleChange}
+          />
+          <br />
+          <input
+            type="email"
+            placeholder="Email*"
+            name="email"
+            className="register-input"
+            onChange={handleChange}
+          />
+          <br />
+          <input
+            type="password"
+            placeholder="password*"
+            name="password"
+            className="register-input"
+            onChange={handleChange}
+          />
+          <br />
+          <input
+            type="text"
+            placeholder="organizationname*"
+            name="organizationname"
+            className="register-input"
+            onChange={handleChange}
+          />
+          <br />
+          <select name="plan" className="register-select" id="" onChange={handleChange}>
+            <option value=""> select plan*</option>
+            {!loading &&
+              planId?.map((item) => (
+                <option value={item?.planID}>{item?.planName}</option>
+              ))}
+          </select>
           </div>
-        )}
+          <button className="register-button" onClick={handleRegister}>
+            Register
+          </button>
       </div>
     </div>
   );

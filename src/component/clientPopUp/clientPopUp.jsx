@@ -169,7 +169,7 @@ const ClientPopUp = ({ setInput,change,setChange, item, setItem, setUpdate, upda
         </div>
         <div className="client-container">
           {!loading && <select name="stateId" value={stateCode?stateCode:''} onChange={(e)=>setStateCode(e.target.value)} className="client-select" id="">
-            {state.filter((e)=>(e?.countryCode==countryCode)).map((item)=>(<option value={item?.id}>{item?.stateName}</option>))}
+            {state?.filter((e)=>(e?.countryCode==countryCode)).map((item)=>(<option value={item?.id}>{item?.stateName}</option>))}
           </select>}
             </div>
         <div className="client-container">
