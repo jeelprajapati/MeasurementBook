@@ -1,11 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 .pro-container{
     width: 98vw;
+    height: 95vh;
     margin: auto;
     display: flex;
     margin-top: 10px;
     gap: 10px;
     position: relative;
+    -webkit-box-shadow: 1px 1px 5px 0px rgba(172,97,247,1);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(172,97,247,1);
+    box-shadow: 1px 1px 5px 0px rgba(172,97,247,1);
+    border-radius: 8px;
 }
 .pro-left{
     background-color: rgb(172, 97, 247);
@@ -13,6 +18,7 @@
     border-radius: 9px;
 }
 .pro-right{
+    background-color: white;
 }
 .path{
     color:rgb(172, 97, 247);
