@@ -32,6 +32,7 @@ const Register = () => {
     const res = await makeRequest.post("/Authentication/register/subscriber", data);
     if (res.status === 200) {
       navigate("/login");
+      console.log(res)
       setLoading(false);
       setError(null);
     } else {

@@ -13,7 +13,7 @@ const Measure = () => {
   const location = useLocation().search.split("?");
   const billId = location[1].split("=")[1];
   const projectId = location[2].split("=")[1];
-  const [element, setElement] = useState({description:'',no:'',tags:''});
+  const [element, setElement] = useState({description:'',no:''});
   const [number, setNumber] = useState(-1);
   const [input, setInput] = useState(false);
   const [update, setUpdate] = useState(false);

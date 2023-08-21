@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import makeRequesInstance from '../../makeRequest'
 const Client = () => {
   const [input,setInput]=useState(false);
-  const [item,setItem]=useState({name:'',email:'',phoneNumber:'',gstin:'',pan:'',address:'',city:'',stateId:'',countryId:'',postalCode:''});
+  const [item,setItem]=useState({name:'',email:'',phoneNumber:'',gstin:'',pan:'',address:'',city:'',postalCode:''});
   const [country,setCountry]=useState(null);
   const [state,setState]=useState(null);
   const [update,setUpdate]=useState(false)
