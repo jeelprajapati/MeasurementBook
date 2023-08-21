@@ -1,7 +1,7 @@
 .bill-table-container{
     margin: 15px 0 0 15px;
     width: 100%; 
-    height:310px;
+    height:390px;
     background-color: rgb(227, 226, 226);
     overflow-y: scroll;
     border-radius: 18px;
@@ -26,11 +26,15 @@
   }
   .bill-th{
     padding: 10px;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
   }
   .bill-td{
     text-align: center;
     padding: 14px 10px;
     overflow-wrap: break-word;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
   }
   .bill-td span{
     display: block;

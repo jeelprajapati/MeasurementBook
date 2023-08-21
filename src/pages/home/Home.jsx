@@ -18,7 +18,8 @@ const Home = () => {
         <div className="home-left">
           <Sidebar id={1} />
         </div>
-        <div className="home-right">home</div>
+        <div className="home-right">
+          home</div>
       </div>
     </div>
   );

@@ -1,27 +1,31 @@
 .bill-main-container{
-    width: 90vw;
+    width: 98vw;
     margin: auto;
     display: flex;
     margin-top: 10px;
     gap: 10px;
 }
 .bill-left{
-    flex: 1;
     background-color: rgb(172, 97, 247);
-    height: 83vh;
+    height: 95vh;
+    border-radius: 9px;
 }
 .bill-right{
-    flex: 5;
     position: relative;
 }
 .bill-path{
-    margin: 7px 0px 0px 15px;
+    margin: 15px 0px 0px 15px;
+    font-family: 'Roboto', sans-serif;
 }
 .bill-path span{
     color: rgb(172, 97, 247);
 }
 .bill-summary{
     margin: 10px 15px;
+}
+.summary-title{
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
 }
 .summary-container{
     display: flex;
@@ -35,6 +39,10 @@
 }
 .bill-table{
     margin: 20px 15px;
+}
+.bill-table-title{
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
 }
 .bill-con{
     display: flex;
@@ -52,6 +60,7 @@
     margin: 10px 10px;
     border-radius: 7px;
     color: white;
+    font-family: 'Roboto', sans-serif;
 }
 .add-bill:hover{
     cursor: pointer;

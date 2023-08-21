@@ -34,6 +34,7 @@ const ClientTable = ({setInput,setItem,setUpdate,change,setChange,setCountry,set
   return (
     <div>
       <button className='client-add-button' onClick={handleAdd}>+ Add Client</button>
+      <div className="client-table-con">
       <table className="client-table">
         {/* ROW-1 */}
             <tr className="client-tr">
@@ -67,6 +68,7 @@ const ClientTable = ({setInput,setItem,setUpdate,change,setChange,setCountry,set
               </td>
             </tr>)))}  
           </table>
+          </div>
     </div>
   )
 }

@@ -10,6 +10,7 @@ import Excel from "../../component/excel/Excel";
 import Popup from "../../component/popup/Popup";
 const SingleProject = () => {
   const [open, setOpen] = useState(false);
+  const [Update,setUpdate]=useState(false)
   const [change, setChange] = useState(0);
   const [popUp, setPopUp] = useState(false);
   const [input, setInput] = useState(null);
@@ -26,6 +27,7 @@ const SingleProject = () => {
 
   const handlePopUP = (e) => {
     setInput(e);
+    setUpdate(true)
     setPopUp(true);
   };
   return (
@@ -41,7 +43,7 @@ const SingleProject = () => {
             </Link>
             {data?.projectName?.toUpperCase()}
           </div>
-          <h3 className={`${open ? "project-title blur" : "project-title"}`}>
+          <h3 className={`${open ? "pro-title blur" : "pro-title"}`}>
             Project Detail
           </h3>
           {!loding && (
@@ -49,7 +51,7 @@ const SingleProject = () => {
               <div className="entity">
                 <span>Contract No</span>
                 <span>:</span>
-                <span>{data?.id}</span>
+                <span>{data?.contractNo}</span>
               </div>
               <div className="entity">
                 <span>Project</span>
@@ -106,7 +108,7 @@ const SingleProject = () => {
               </button>
             </div>
             <div className="table">
-              <Table Id={id} change={change} setChange={setChange} />
+              <Table Id={id} change={change} setChange={setChange}/>
             </div>
           </div>
           {open && (
@@ -126,6 +128,8 @@ const SingleProject = () => {
                 setChange={setChange}
                 change={change}
                 input={input}
+                update={Update}
+                setUpdate={setUpdate}
               />
             </div>
           )}

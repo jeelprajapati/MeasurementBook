@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./Register.css";
 import makeRequesInstance from "../../makeRequest";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Sidebar from '../../component/sidebar/Sidebar.jsx'
 const Register = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -40,7 +41,11 @@ const Register = () => {
   };
 
   return (
-    <div className="main-register-container">
+    <>
+    <div style={{display:'flex'}}>
+    <div className="client-left"><Sidebar id={0}/></div>
+      <div className="register-right">
+      <div className="main-register-container">
       <div className="sub-container">
         <div className="register-title">Register</div>
         <div className="register-container">
@@ -95,8 +100,12 @@ const Register = () => {
           <button className="register-button" onClick={handleRegister}>
             Register
           </button>
+          <div className="link-login">Go To <Link to='/login'>Login</Link></div>
+      </div>
       </div>
     </div>
+    </div>
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Measurement.css";
 import Sidebar from "../../component/sidebar/Sidebar";
 import Measure from "../../component/measureBookTable/Measure";
@@ -15,7 +15,7 @@ const Measurement = () => {
           <Sidebar id={2} />
         </div>
         <div className="measurement-right">
-          <div className="measurement-con">
+          <div className='measurement-con'>
             <div className="measurement-path">
               <Link to={`/project`} className="bill-link">
                 PROJECT/
@@ -38,7 +38,7 @@ const Measurement = () => {
               <div className="type">R/F Steel MeasurementBook</div>
               <div className="type">Structural Steel MeasurementBook</div>
             </div>
-            <Measure />
+            <Measure/>
           </div>
         </div>
       </div>

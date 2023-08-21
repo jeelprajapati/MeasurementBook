@@ -3,16 +3,18 @@ import './Table.css'
 import add from '../../image/add.svg'
 import edit from '../../image/edit.svg'
 import deleteicon from '../../image/delete.svg'
+import copy from "../../image/copy-icon.svg";
 import useFetch from '../../hooks/useFetch'
 import makeRequesInstance from '../../makeRequest'
 import { useAlert } from 'react-alert'
 const Table = ({Id,change,setChange}) => {
-    const [element, setElement] = useState(null);
+    const [element, setElement] = useState({sorNo:'',item:'',hsn:'',stdUnitId:'',unit:'',rate:''});
     const [array, setArray] = useState(null);
     const [number, setNumber] = useState(-1);
     const [load,setLoad]=useState(false)
     const [input, setInput] = useState(false);
     const [update, setUpdate] = useState(false);
+    const [unit,setUnit]=useState(null);
     const [head,setHead]=useState('00000000-0000-0000-0000-000000000000');
     const [tail,setTail]=useState('00000000-0000-0000-0000-000000000000');
     const makeRequest=makeRequesInstance(localStorage.getItem('token'))
@@ -22,6 +24,28 @@ const Table = ({Id,change,setChange}) => {
       setLoad(loding)
       setArray(data?.items)
     },[loding,data])
+   
+    useEffect(()=>{
+      const getUnit=async()=>{
+        setLoad(true);
+        const res=await makeRequest.get('/Standard/GetStandardUnit');
+        setUnit(res.data);
+        setLoad(false);
+      }
+      return ()=>{
+        getUnit();
+      }
+    },[])
+
+    const inputValidation=(i)=>{
+      for (const key in i) {
+        console.log(i)
+        if(i[key]===''){
+          return false
+        }
+      }
+      return true
+    }
 
     // set input data
     const handleChange = (e) => {
@@ -56,39 +80,44 @@ const Table = ({Id,change,setChange}) => {
   
     // add element
     const handleAdd = async() => {
-      const responce=await makeRequest.post('/ContractItem',
-        {
-          "contractItemDTO": {
-            "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-            "sorNo":parseInt(element?.sorNo),
-            "item": element?.item,
-            "hsn": parseInt(element?.hsn),
-            "poQty": parseInt(element?.poQty),
-            "stdUnitId": parseInt(element?.stdUnitId),
-            "unit": element?.unit,
-            "rate": parseInt(element?.rate),
-            "projectId": Id
-          },
-          "head": head,
-          "tail": tail
-        })
-    if(responce.status===204){
-      alert.show('Added Sucessful',{type:'success'})
-      setElement(null)
-      setInput(false)
-      if(change===0){
-        setChange(1)
+      const success=inputValidation(element);
+      if(success){
+        const responce=await makeRequest.post('/ContractItem',
+          {
+            "contractItemDTO": {
+              "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+              "sorNo":parseInt(element?.sorNo),
+              "item": element?.item,
+              "hsn": parseInt(element?.hsn),
+              "poQty": parseInt(element?.poQty),
+              "stdUnitId": parseInt(element?.stdUnitId),
+              "unit": element?.unit,
+              "rate": parseInt(element?.rate),
+              "projectId": Id
+            },
+            "head": head,
+            "tail": tail
+          })
+        if(responce.status===204){
+         alert.show('Added Sucessful',{type:'success'})
+         setElement(null)
+         setInput(false)
+         if(change===0){
+          setChange(1)
+         }
+         else{
+          setChange(0)
+         }}
       }
       else{
-        setChange(0)
-      }}
+        alert.show('Please fill out all fields before submitting',{type:'error'})
+      }
     };
   
     // update element
     const handleUpdate = (i, item) => {
       setLoad(true);
       setUpdate(true);
-      console.log(item)
       array.splice(i, 1);
       setNumber(i - 1);
       setElement(item);
@@ -96,31 +125,37 @@ const Table = ({Id,change,setChange}) => {
     };
   
     //final Update
-  
     const finalUpdata=async()=>{
-      const responce=await makeRequest.put('/ContractItem',
-         {
-            "id": element?.id,
-            "sorNo":parseInt(element?.sorNo),
-            "item": element?.item,
-            "hsn": parseInt(element?.hsn),
-            "poQty": parseInt(element?.poQty),
-            "stdUnitId": parseInt(element?.stdUnitId),
-            "unit": element?.unit,
-            "rate": parseInt(element?.rate),
-            "projectId": element?.projectId
-          })
-      if(responce.status===204){
-        alert.show('Update Sucessful',{type:'success'})
-        setElement(null)
-        setUpdate(false)
-        if(change===0){
-          setChange(1)
-        }
-        else{
-          setChange(0)
-        }
-      }    
+      const success=inputValidation(element);
+      if(success){
+
+        const responce=await makeRequest.put('/ContractItem',
+           {
+              "id": element?.id,
+              "sorNo":parseInt(element?.sorNo),
+              "item": element?.item,
+              "hsn": parseInt(element?.hsn),
+              "poQty": parseInt(element?.poQty),
+              "stdUnitId": parseInt(element?.stdUnitId),
+              "unit": element?.unit,
+              "rate": parseInt(element?.rate),
+              "projectId": element?.projectId
+            })
+        if(responce.status===204){
+          alert.show('Update Sucessful',{type:'success'})
+          setElement(null)
+          setUpdate(false)
+          if(change===0){
+            setChange(1)
+          }
+          else{
+            setChange(0)
+          }
+        }    
+      }
+      else{
+        alert.show('Please fill out all fields before update',{type:'error'})
+      }
     }
     // delete element
     const handleDelete = async(i,id) => {
@@ -135,6 +170,16 @@ const Table = ({Id,change,setChange}) => {
         }
        }
     };
+
+  const handleCopy=(index,item)=>{
+      setLoad(true);
+      setHead(item?.id);
+      setTail(array[index+1]?.id);
+      setNumber(index);
+      setElement(item);
+      setInput(true);
+      setLoad(false);
+  }
   
   return (
     <div className="table">
@@ -144,7 +189,7 @@ const Table = ({Id,change,setChange}) => {
           <th className='th'>item</th>
           <th className='th'>hsn</th>
           <th className='th'>poQty</th>
-          <th className='th'>stdUnitId</th>
+          <th className='th'>stdUnit</th>
           <th className='th'>unit</th>
           <th className='th'>rate</th>
           <th className='th'>
@@ -157,13 +202,14 @@ const Table = ({Id,change,setChange}) => {
               <td className='td'><span>{item?.item}</span></td>
               <td className='td'><span>{item?.hsn}</span></td>
               <td className='td'><span>{item?.poQty}</span></td>
-              <td className='td'><span>{item?.stdUnitId}</span></td>
+              <td className='td'><span>{unit?.filter((i)=>(i?.id===item?.stdUnitId))[0]?.name}</span></td>
               <td className='td'><span>{item?.unit}</span></td>
               <td className='td'><span>{item?.rate}</span></td>
               <td className='td'>
-                <img onClick={() => {handleInput(index,item?.id)}} src={add} className='svg' alt="" />
-                <img onClick={() => handleUpdate(index, item)} src={edit} alt="" className='svg'  />
-                <img onClick={() => handleDelete(index,item?.id)} src={deleteicon} alt="" className='svg' />
+              <button className='btn-disabled' onClick={() => handleInput(index,item?.id)} disabled={(input||update)}><img src={add} className='svg' alt="" /></button>
+              <button className='btn-disabled' onClick={() => handleUpdate(index, item)} disabled={(input||update)}><img src={edit} alt="" className='svg'  /></button>
+              <button className='btn-disabled' onClick={()=>handleCopy(index,item)} disabled={(input||update)}><img src={copy} alt="" className='svg' /></button>
+              <button className='btn-disabled' onClick={() => handleDelete(index,item?.id)} disabled={(input||update)}><img src={deleteicon} alt="" className='svg' /></button>
               </td>
             </tr>
           ))}
@@ -204,12 +250,10 @@ const Table = ({Id,change,setChange}) => {
               />
             </td>
             <td className='td'>
-              <input
-                type="number"
-                name="stdUnitId"
-                value={element?.stdUnitId ? element.stdUnitId : ""}
-                onChange={handleChange}
-              />
+
+              <select name="stdUnitId" value={element?.stdUnitId ? element.stdUnitId : ""} onChange={handleChange} id="">
+                {!load && (unit?.map((item)=>(<option value={item?.id} key={item?.id}>{item?.name}</option>)))}
+              </select>
             </td>
             <td className='td'>
               <input
@@ -243,6 +287,9 @@ const Table = ({Id,change,setChange}) => {
                   className="btn red"
                   onClick={() => {
                     setInput(false);
+                    setElement(null);
+                    setHead(null);
+                    setTail(null);
                   }}>
                   close
                 </button>
@@ -258,13 +305,14 @@ const Table = ({Id,change,setChange}) => {
               <td className='td'><span>{item?.item}</span></td>
               <td className='td'><span>{item?.hsn}</span></td>
               <td className='td'><span>{item?.poQty}</span></td>
-              <td className='td'><span>{item?.stdUnitId}</span></td>
+              <td className='td'><span>{unit?.filter((i)=>(i?.id===item?.stdUnitId))[0]?.name}</span></td>
               <td className='td'><span>{item?.unit}</span></td>
               <td className='td'><span>{item?.rate}</span></td>
               <td className='td'>
-                <img onClick={() => handleInput(array?.slice(0, number + 1).length + index,item?.id)} src={add} className='svg' alt="" />
-                <img onClick={() => handleUpdate(array?.slice(0, number + 1).length + index,item)} src={edit} alt="" className='svg'  />
-                <img onClick={() => handleDelete(index,item?.id)} src={deleteicon} alt="" className='svg' />
+                <button className='btn-disabled' onClick={() => handleInput(array?.slice(0, number + 1).length + index,item?.id)} disabled={(input||update)}><img src={add} className='svg' alt="" /></button>
+                <button className='btn-disabled' onClick={() => handleUpdate(array?.slice(0, number + 1).length + index,item)} disabled={(input||update)}><img src={edit} alt="" className='svg'  /></button>
+                <button className='btn-disabled' onClick={() => handleCopy(array?.slice(0, number + 1).length + index,item)} disabled={(input||update)}><img src={copy} alt="" className='svg' /></button>
+                <button className='btn-disabled' onClick={() => handleDelete(index,item?.id)} disabled={(input||update)}><img src={deleteicon} alt="" className='svg' /></button>
               </td>
             </tr>
           ))}

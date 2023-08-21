@@ -1,26 +1,30 @@
 .measurement-main-container{
-    width: 90vw;
+    width: 98vw;
     margin: auto;
     display: flex;
     margin-top: 10px;
     gap: 10px;
 }
 .measurement-left{
-    flex: 1;
     background-color: rgb(172, 97, 247);
-    height: 83vh;
+    height: 95vh;
+    border-radius: 9px;
 }
 .measurement-right{
-    flex: 5;
+    position: relative;
 }
 .measurement-path{
-    margin: 7px 0px 0px 15px;
+    margin: 15px 0px 0px 15px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
 }
 .measurement-path span{
     color: rgb(172, 97, 247);
 }
 .measurement-title{
     margin: 20px 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
 }
 .types-con{
     margin: 10px;
@@ -32,6 +36,8 @@
     text-align: center;
     flex:1;
     border: 1px solid rgb(172, 97, 247);
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
     padding: 7px;
     -webkit-box-shadow: 0px 3px 5px 0px rgba(122,117,122,1);
     -moz-box-shadow: 0px 3px 5px 0px rgba(122,117,122,1);

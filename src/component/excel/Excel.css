@@ -15,8 +15,10 @@
     margin: 5px 0;
 }
 .excel-input span{
-    font-size: 17px;
+    font-size: 15px;
     margin: 7px 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
 }
 .excel-red{
     color: rgb(182, 9, 182);
@@ -28,6 +30,7 @@
     padding: 7px 15px;
     border-radius: 8px;
     margin: 5px 0;
+    font-family: 'Roboto', sans-serif;
 }
 .excel-button:hover{
     background-color: transparent;

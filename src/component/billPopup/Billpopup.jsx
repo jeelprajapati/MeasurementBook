@@ -17,6 +17,14 @@ const Billpopup = ({
   const [data, setData] = useState(item);
   const makeRequest = makeRequesInstance(localStorage.getItem("token"));
   const alert = useAlert();
+  const inputValidation=(i)=>{
+    for (const key in i) {
+      if(i[key]===''){
+        return false
+      }     
+    }
+    return true
+  }
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
@@ -27,28 +35,36 @@ const Billpopup = ({
   };
   const handleAdd = async (e) => {
     e.preventDefault();
-    const res = await makeRequest.post("/Bill", {
-      id: "08322639-9347-4750-e6ca-08db943cd121",
-      invoiceNo: "INV-2023080428",
-      name: data?.name,
-      invoiceDate: data?.invoiceDate,
-      typeBill: parseInt(data?.typeBill),
-      status: parseInt(data?.status),
-      projectId: Id,
-    });
-    if (res.status === 204) {
-      alert.show("Data Added Sucessfully", { type: "success" });
-      setOpen(false);
-      if (change === 1) {
-        setChange(0);
-      } else {
-        setChange(1);
+    const success=inputValidation(data);
+    if(success){
+      const res = await makeRequest.post("/Bill", {
+        id: "08322639-9347-4750-e6ca-08db943cd121",
+        invoiceNo: "INV-2023080428",
+        name: data?.name,
+        invoiceDate: data?.invoiceDate,
+        typeBill: parseInt(data?.typeBill),
+        status: parseInt(data?.status),
+        projectId: Id,
+      });
+      if (res.status === 204) {
+        alert.show("Data Added Sucessfully", { type: "success" });
+        setOpen(false);
+        if (change === 1) {
+          setChange(0);
+        } else {
+          setChange(1);
+        }
       }
+    }
+    else{
+      alert.show('Please fill out all fields before adding',{type:'error'});
     }
   };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+    const success=inputValidation(data);
+    if(success){
     const res = await makeRequest.put("/Bill", {
       id: data?.id,
       invoiceNo: data?.invoiceNo,
@@ -69,6 +85,10 @@ const Billpopup = ({
         setChange(1);
       }
     }
+  }
+  else{
+    alert.show('Please fill out all fields before updateing',{type:'error'});
+  }
   };
   return (
     <div className="bill-pop-container">

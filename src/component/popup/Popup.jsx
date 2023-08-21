@@ -1,75 +1,73 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import './Popup.css'
 import close from '../../image/close.svg'
 import makeRequesInstance from '../../makeRequest';
 import useFetch from '../../hooks/useFetch';
 import { useAlert } from 'react-alert'
-import { useNavigate } from 'react-router-dom';
 
-const Popup = ({setPopUp,setChange,change,input}) => {
+const Popup = ({setPopUp,setChange,change,input,update,setUpdate}) => {
   const[element,setElement]=useState(input);
-  const[load,setLoad]=useState(false);
-  const[err,setErr]=useState(null);
-  const[clientId,setClientId]=useState(null);
-  const navigate=useNavigate();
   const makeRequest=makeRequesInstance(localStorage.getItem('token'))
   const organizationId=localStorage.getItem('organizationId')
   const alert=useAlert();
   const {loding,error,data}=useFetch({url:`Client?organizationId=${organizationId}&page=${1}&pageSize=${100}`,change});
-  useEffect(()=>{
-    if(data===null){
-      navigate('/client');
+
+  const inputValidation=(i)=>{
+    for (const key in i) {
+      console.log(i)
+      if(i[key]===''){
+        return false
+      }
     }
-  },[data,navigate])
-  const handleDropDown=(e)=>{
-    setClientId(e.target.value)
+    return true
   }
 
   const added=async()=>{
-        setLoad(true)
-        const res=await makeRequest.post('/Project',{
-            "id":"3fa85f64-5717-4562-b3fc-2c963f66afa6",
-            "contractNo": element?.contractNo,
-            "contractDate": element?.contractDate,
-            "loiNo": parseInt(element?.loiNo),
-            "loiDate": element?.loiDate,
-            "projectName": element?.projectName,
-            "contractValidity": parseInt(element?.contractValidity),
-            "workCompletion": element?.workCompletion,
-            "clientId": clientId,
-            "members":[],
-            "organizationID":organizationId
-        })
-        if(res.status===204){
-          alert.show('Project Added Sucessful',{type:'success'})
-          if(change===0){
-            setChange(1)  
-          }
-          else{
-            setChange(0)  
-          }
+    const success=inputValidation(element);
+    if(success){
+      const res=await makeRequest.post('/Project',{
+          "id":"3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "contractNo": element?.contractNo,
+          "contractDate": element?.contractDate,
+          "loiNo": parseInt(element?.loiNo),
+          "loiDate": element?.loiDate,
+          "projectName": element?.projectName,
+          "contractValidity": parseInt(element?.contractValidity),
+          "workCompletion": element?.workCompletion,
+          "clientId": element?.clientId,
+          "members":[],
+          "organizationID":organizationId
+      })
+      if(res.status===204){
+        alert.show('Project Added Sucessfully',{type:'success'})
+        setPopUp(false)
+        if(change===0){
+          setChange(1)  
         }
-    setLoad(false)
+        else{
+          setChange(0)  
+        }
+      }
+    }
+    else{
+      alert.show('Please fill out all fields before adding',{type:'error'})
+    }
 }
 
   const handleClose=(e)=>{
     e.preventDefault()
-    setPopUp(false)
+    setPopUp(false);
+    setUpdate(false)
   }
 
   const handleChange=(e)=>{
     setElement({...element,[e.target.name]:e.target.value})
   }
 
-  const handleAddProject=(e)=>{
-    e.preventDefault();
-    added();
-    setPopUp(false)
-  }
-
   const handleUpdate=async(e)=>{
     e.preventDefault();
-      setLoad(true)
+    const success=inputValidation(element);
+    if(success){
       const res=await makeRequest.put('/Project',{
           "id":element?.id,
           "contractNo": element?.contractNo,
@@ -83,7 +81,6 @@ const Popup = ({setPopUp,setChange,change,input}) => {
           "members":[],
           "organizationID":element?.organizationID
       })
-      console.log(res)
       if(res.status===204){
         alert.show('Project Updated Sucessfully',{type:'success'})
         setPopUp(false)
@@ -93,21 +90,23 @@ const Popup = ({setPopUp,setChange,change,input}) => {
         else{
           setChange(0)  
         }
-      }
-  setLoad(false) 
+      } 
+    }
+    else{
+      alert.show('Please fill out all fields before Updateing',{type:'error'})
+    }
   }
   return (
     <div className='pop-container'>
-      <h3 className="add-title">{input?'Update Project':'Add New Project'}</h3>
+      <h3 className="add-title">{update?'Update Project':'Add New Project'}</h3>
       <div className="name-container">
         <label htmlFor="projectName">Client Name</label>
         <br />
-        <select className="pro-select" value={element?.clientId?element.clientId:''} onChange={handleDropDown}>
-          <option value="">Select client</option>
+        <select className="pro-select" name='clientId' value={element?.clientId?element.clientId:''} onChange={handleChange}>
+          <option>Select client</option>
           {!loding && data?.items.map((item)=>(<option value={`${item?.id}`}>{item?.name}</option>))}
         </select>
       </div>
-    
       <div className="name-container">
         <label htmlFor="projectName">Project Name</label>
         <br />
@@ -138,11 +137,6 @@ const Popup = ({setPopUp,setChange,change,input}) => {
       <div className="no-container">
         <label htmlFor="contractNo">Contract No</label>
         <br />
-        {/* <input
-            type="datetime-local"
-            value={combinedDateTime}
-            onChange={handleDateTimeChange}
-          /> */}
         <input type="text" id='contractNo' value={element?.contractNo?element.contractNo:''} className='Add-input' name='contractNo' onChange={handleChange}/>
       </div>
       <div className="loi-container">
@@ -150,9 +144,9 @@ const Popup = ({setPopUp,setChange,change,input}) => {
         <br />
         <input type="text" id='loiNo' value={element?.loiNo?element.loiNo:''} className='Add-input' name='loiNo' onChange={handleChange}/>
       </div>
-      {input?<button className="Add-Project" onClick={handleUpdate}>
+      {update?<button className="Add-Project" onClick={handleUpdate}>
         Update Project
-      </button>:<button className="Add-Project" onClick={handleAddProject}>
+      </button>:<button className="Add-Project" onClick={added}>
         + Add New Project
       </button>}
       <img src={close} onClick={handleClose} alt="" className="close" />

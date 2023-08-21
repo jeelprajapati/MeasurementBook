@@ -68,7 +68,7 @@ const Projects = () => {
             <div className="popup">
               <Popup
                 setPopUp={setPopUp}
-                input={null}
+                input={{contractNo:'',contractDate:'',loiNo:'',loiDate:'',projectName:'',contractValidity:'',workCompletion:'',clientId:''}}
                 setChange={setChange}
                 change={change}
               />

@@ -3,7 +3,6 @@ import {
   RouterProvider,
   Outlet
 } from "react-router-dom";
-import Navbar from "./component/navbar/Navbar";
 import Home from "./pages/home/Home";
 import Projects from "./pages/projects/Projects";
 import SingleProject from "./pages/singleProject/SingleProject";
@@ -17,7 +16,6 @@ const Layout=()=>{
   
   return(
     <>
-    <Navbar/>
     <Outlet/>
     </>
   )

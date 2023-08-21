@@ -12,24 +12,31 @@
 }
 .add-title{
     padding: 15px 10px 0 10px;
-    font-size: 19px;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
 }
 .name-container,.no-container,.loi-container,.validity-container{
     margin: 10px 15px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
 }
 .Add-input{
     width: 97%;
     height: 27px;
     border-radius: 5px;
     border: none;
+    font-family: 'Roboto', sans-serif;
 }
 .Add-Project{
     background-color: green;
     color: white;
     border: none;
-    font-size: 16px;
+    font-size: 15px;
     padding: 7px 10px;
     margin: 18px 25px 25px 25px;
+    font-family: 'Roboto', sans-serif;
 }
 .Add-Project:hover{
     cursor: pointer;

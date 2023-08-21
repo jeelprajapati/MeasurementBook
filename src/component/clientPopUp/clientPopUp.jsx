@@ -15,38 +15,54 @@ const ClientPopUp = ({ setInput,change,setChange, item, setItem, setUpdate, upda
   const handleChange = (e) => {
     setData({...data,[e.target.name]:e.target.value})
   };
+  const inputValidation=(i)=>{
+    for (const key in i) {
+      if(i[key]===''){
+        return false
+      }     
+    }
+    return true
+  }
   const handleUpdate=async(e)=>{
     e.preventDefault();
-    const responce= await makeRequest.put('/Client',{
-      'id':data?.id,
-      'name':data?.name,
-      'email':data?.email,
-      'phoneNumber':data?.phoneNumber,
-      'gstin':data?.gstin,
-      'pan':data?.pan,
-      'address':data?.address,
-      'city':data?.city,
-      'stateId':parseInt(stateCode),
-      'countryId':parseInt(countryCode),
-      'postalCode':data?.postalCode,
-      'organizationID':Id
-    })
-    if(responce.status===204){
-      alert.show('Data Updated Suceefully',{type:'success'})
-      setUpdate(false)
-      setItem(null)
-      setInput(false);
-      if(change===0){
-        setChange(1)
+    const success=inputValidation(data);
+    if(success){
+      const responce= await makeRequest.put('/Client',{
+        'id':data?.id,
+        'name':data?.name,
+        'email':data?.email,
+        'phoneNumber':data?.phoneNumber,
+        'gstin':data?.gstin,
+        'pan':data?.pan,
+        'address':data?.address,
+        'city':data?.city,
+        'stateId':parseInt(stateCode),
+        'countryId':parseInt(countryCode),
+        'postalCode':data?.postalCode,
+        'organizationID':Id
+      })
+      if(responce.status===204){
+        alert.show('Data Updated Suceefully',{type:'success'})
+        setUpdate(false)
+        setItem(null)
+        setInput(false);
+        if(change===0){
+          setChange(1)
+        }
+        else{
+          setChange(0)
+        }
       }
-      else{
-        setChange(0)
-      }
+    }
+    else{
+      alert.show('Please fill out all fields before updateing',{type:'error'});
     }
   }
 
   const handleAdd=async(e)=>{
     e.preventDefault();
+    const success=inputValidation(data);
+    if(success){
     const responce= await makeRequest.post('/Client',{
       'id':'ffdbd863-31ef-4054-c85c-08db84fefbf1',
       'name':data?.name,
@@ -75,6 +91,10 @@ const ClientPopUp = ({ setInput,change,setChange, item, setItem, setUpdate, upda
       }
     }
   }
+  else{
+    alert.show('Please fill out all fields before submiting',{type:'error'});
+  }
+}
   const handleSetCode=(e)=>{
     setLoading(true)
     setCountryCode(e.target.value);

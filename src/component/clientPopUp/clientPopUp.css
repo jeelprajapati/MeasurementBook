@@ -9,6 +9,8 @@
     text-align: center;
     padding-top: 15px;
     color: blue;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
 }
 .client-container{
     width: 45%;
@@ -26,7 +28,7 @@
     border: none;
     background-color: rgb(236, 233, 233);
     border-bottom: 1px solid rgb(172, 97, 247);
-    /* color: rgb(172, 97, 247); */
+    font-family: 'Roboto', sans-serif;
     outline: none;
 }
 .client-btn{
@@ -36,6 +38,7 @@
     border: none;
     padding: 10px 0;
     margin: 10px 20px 13px 32px;
+    font-family: 'Roboto', sans-serif;
 }
 .client-close{
     position: absolute;

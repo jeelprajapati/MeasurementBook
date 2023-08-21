@@ -1,3 +1,13 @@
+.client-table-con{
+    width: 100%;
+    border-radius: 10px;
+    height: 580px;
+    background-color: rgb(224, 224, 224);
+    overflow-y: scroll;
+}
+.client-table-con::-webkit-scrollbar{
+    display: none;
+}
 .client-table{
     background-color: rgb(224, 224, 224);
     border-radius: 10px;
@@ -12,7 +22,8 @@
 }
 .client-th{
     padding: 10px 0px;
-    font-size: 17px;   
+    font-size: 14px;   
+    font-family: 'Roboto', sans-serif;
 }
 .client-th:nth-child(1){
     border-radius: 10px 0 0 0px;
@@ -30,6 +41,8 @@
     padding: 10px 2px;
     overflow-wrap: break-word;
     text-align: center;
+    font-size: 13px;
+    font-family: 'Roboto', sans-serif;
 }
 .client-svg:hover{
     cursor: pointer;
@@ -44,6 +57,7 @@
     margin: 10px 10px;
     border-radius: 7px;
     color: white;
+    font-family: 'Roboto', sans-serif;
 }
 .client-add-button:hover{
     cursor: pointer;
@@ -58,4 +72,4 @@
 }
 .client-td span::-webkit-scrollbar{
     display: none;
-  }
+}

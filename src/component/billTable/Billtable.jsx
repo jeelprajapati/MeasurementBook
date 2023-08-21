@@ -7,7 +7,7 @@ import { Link, useLocation } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import makeRequesInstance from "../../makeRequest";
 import { useAlert } from "react-alert";
-const Billtable = ({ setOpen, change, setInput, setItem, setChange }) => {
+const Billtable = ({ setOpen, change, setInput, setItem, setChange ,open }) => {
   const Id = useLocation().search.split("?")[1].split("=")[1];
   const alert = useAlert();
   const projectname = useLocation().search.split("?")[2].split("=")[1];
@@ -74,23 +74,29 @@ const Billtable = ({ setOpen, change, setInput, setItem, setChange }) => {
                 </span>
               </td>
               <td className="bill-td">
-                <img
+                <button onClick={() => handleUpdate(item)} style={{margin:'0',padding:'0',backgroundColor:'transparent',border:'none'}} disabled={open}>
+                 <img
                   src={edit}
-                  onClick={() => handleUpdate(item)}
                   alt=""
                   className="svg"
-                />
-                <img
-                  src={deleteicon}
-                  onClick={() => handleDelete(item?.id)}
-                  alt=""
-                  className="svg"
-                />
+                  style={{width:'22px',height:'22px',cursor:'pointer'}}
+                 />
+                </button>
+                <button  onClick={() => handleDelete(item?.id)} style={{margin:'0',padding:'0',backgroundColor:'transparent',border:'none'}} disabled={open}>
+                  <img
+                   src={deleteicon}
+                   alt=""
+                   className="svg"
+                   style={{width:'22px',height:'22px',cursor:'pointer'}}
+                 />
+                </button>
                 <Link
                   to={`/measurementbook?billId=${item?.id}?projectId=${Id}?projectname=${projectname}?billname=${item?.name}`}
                   className="link"
                 >
-                  <img src={filesvg} alt="" className="svg" />
+                  <button style={{margin:'0',padding:'0',backgroundColor:'rgb(5, 187, 5)',border:'none'}}>
+                   <img src={filesvg} style={{width:'22px',height:'22px',filter:'invert(1)',cursor:'pointer'}} alt="" className="svg" />
+                  </button>
                 </Link>
               </td>
             </tr>
