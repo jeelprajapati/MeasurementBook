@@ -1,18 +1,18 @@
 .measurement-main-container{
     width: 98vw;
-    height: 95vh;
+    height: 97vh;
     margin: auto;
     display: flex;
     margin-top: 10px;
     gap: 10px;
     border-radius: 8px;
-    -webkit-box-shadow: 1px 1px 5px 0px rgba(172,97,247,1);
+    /* -webkit-box-shadow: 1px 1px 5px 0px rgba(172,97,247,1);
     -moz-box-shadow: 1px 1px 5px 0px rgba(172,97,247,1);
-    box-shadow: 1px 1px 5px 0px rgba(172,97,247,1);
+    box-shadow: 1px 1px 5px 0px rgba(172,97,247,1); */
 }
 .measurement-left{
     background-color: rgb(172, 97, 247);
-    height: 95vh;
+    height: 97vh;
     border-radius: 9px;
 }
 .measurement-right{

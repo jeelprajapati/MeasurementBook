@@ -1,7 +1,8 @@
 .table{
-    height: 310px;
+    height: 320px;
     overflow-y: auto;
     background-color: rgb(224, 224, 224);
+    border-radius: 10px;
 }
 .table::-webkit-scrollbar{
     display: none;
