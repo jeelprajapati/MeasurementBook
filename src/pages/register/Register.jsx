@@ -15,7 +15,7 @@ const Register = () => {
     const getPlanId = async () => {
       setLoading(true);
       const res = await axios.get(
-        "http://billbookapi-env-1.eba-ue94tp4s.ap-south-1.elasticbeanstalk.com/api/Standard/GetPlans"
+        "https://dev-api.measurekaro.com/api/Standard/GetPlans"
       );
       setPlanID(res.data);
       setLoading(false);

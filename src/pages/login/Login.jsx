@@ -24,7 +24,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://billbookapi-env-1.eba-ue94tp4s.ap-south-1.elasticbeanstalk.com/api/Authentication/login",
+        "https://dev-api.measurekaro.com/api/Authentication/login",
         data
       );
       if (res.status === 200) {

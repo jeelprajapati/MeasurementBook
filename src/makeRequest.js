@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const makeRequesInstance = (token) => {
   return axios.create({
-    baseURL: 'http://billbookapi-env-1.eba-ue94tp4s.ap-south-1.elasticbeanstalk.com/api',
+    baseURL: 'https://dev-api.measurekaro.com/api',
     headers: {
       'Authorization': `Bearer ${token}`
     }
