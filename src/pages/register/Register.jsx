@@ -14,10 +14,15 @@ const Register = () => {
   useEffect(() => {
     const getPlanId = async () => {
       setLoading(true);
-      const res = await axios.get(
+      try{
+        const res = await axios.get(
         "https://dev-api.measurekaro.com/api/Standard/GetPlans"
       );
       setPlanID(res.data);
+      }
+      catch(error){
+        console.log(error)
+      }
       setLoading(false);
     };
     return () => {
