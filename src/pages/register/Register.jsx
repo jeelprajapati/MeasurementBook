@@ -18,6 +18,7 @@ const Register = () => {
         const res = await axios.get(
         "https://dev-api.measurekaro.com/api/Standard/GetPlans"
       );
+      console.log(res.data);  
       setPlanID(res.data);
       }
       catch(error){
