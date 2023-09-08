@@ -38,7 +38,7 @@ const Billpopup = ({
     const success=inputValidation(data);
     if(success){
       const res = await makeRequest.post("/Bill", {
-        id: "08322639-9347-4750-e6ca-08db943cd121",
+        id: "00000000-0000-0000-0000-000000000000",
         invoiceNo: "INV-2023080428",
         name: data?.name,
         invoiceDate: data?.invoiceDate,
