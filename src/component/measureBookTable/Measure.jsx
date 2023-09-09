@@ -49,10 +49,7 @@ const Measure = () => {
       setContractItem(res.data?.items);
       setLoadInput(false);
     };
-
-    return () => {
       getContractItem();
-    };
   }, []);
   
   useEffect(()=>{
