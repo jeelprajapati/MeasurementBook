@@ -32,9 +32,7 @@ const Table = ({Id,change,setChange}) => {
         setUnit(res.data);
         setLoad(false);
       }
-      return ()=>{
         getUnit();
-      }
     },[])
 
     const inputValidation=(i)=>{
