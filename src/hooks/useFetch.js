@@ -16,9 +16,7 @@ const useFetch = ({ url, change }) => {
       }
       setLoding(false);
     };
-    return () => {
       fetchData();
-    };
   }, [url, change]);
   return { loding, error, data };
 };
