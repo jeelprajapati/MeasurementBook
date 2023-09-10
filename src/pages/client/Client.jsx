@@ -31,10 +31,8 @@ const Client = () => {
       const res=await makeRequest.get('/Standard/GetStates');
       setState(res.data)
     }
-    return ()=>{
       getCountry();
       getStates();
-    }
   },[])
 
   return (
