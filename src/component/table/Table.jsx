@@ -250,6 +250,7 @@ const Table = ({Id,change,setChange}) => {
             <td className='td'>
 
               <select name="stdUnitId" value={element?.stdUnitId ? element.stdUnitId : ""} onChange={handleChange} id="">
+                <option value="" disabled>select stdUnitId</option>  
                 {!load && (unit?.map((item)=>(<option value={item?.id} key={item?.id}>{item?.name}</option>)))}
               </select>
             </td>
