@@ -12,7 +12,7 @@ const options = {
   position: positions.TOP_RIGHT,
   timeout: 5000,
   type: PropTypes.oneOf(['info', 'success', 'error']),
-  offset: '60px',
+  offset: '30px',
   transition: transitions.SCALE
 }
 const root = ReactDOM.createRoot(document.getElementById('root'));
