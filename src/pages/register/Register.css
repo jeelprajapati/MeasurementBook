@@ -1,0 +1,72 @@
+.register-right{
+    flex: 3;
+    border-radius: 7px;
+}
+.main-register-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 97vh;
+    width: 100%;
+}
+.register-title{
+    width: 85%;
+    font-size: 18px;
+    color: rgb(172, 97, 247);
+    text-align: center;
+    margin: 15px 0px 0px 35px; 
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+}
+.register-button{
+    margin: 17px 0px 20px 30px; 
+    background-color:  rgb(172, 97, 247);
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 85%;
+    cursor: pointer;
+    border-radius: 17px;
+}
+.sub-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 12px 8px rgba(222,198,247,1);
+    -moz-box-shadow: 0px 0px 12px 8px rgba(222,198,247,1);
+    box-shadow: 0px 0px 12px 8px rgba(222,198,247,1);
+    gap: 5px;
+}
+.link-login{
+    text-align: center;
+    margin-bottom: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+}
+.register-container{
+    display: flex;
+    width: 34vw;
+    gap: 2px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.register-input{
+    width:200px;
+    height: 39px;
+    margin:10px 10px;
+    /* background-color: rgb(223, 193, 253); */
+    border: none;
+    outline: none;
+    border-bottom: 1px solid rgb(172, 97, 247);
+}
+.register-select{
+    width: 205px;
+    height: 39px;
+    margin:8px 12px 0 10px;
+    color: gray;
+    /* background-color: rgb(223, 193, 253); */
+    border: none;
+    outline: none;
+    border-bottom: 1px solid rgb(172, 97, 247);
+}

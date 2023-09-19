@@ -1,0 +1,34 @@
+.client-main-container{
+    width: 98vw;
+    height: 97vh;
+    margin: auto;
+    display: flex;
+    margin-top: 10px;
+    gap: 10px;
+    border-radius: 8px;
+}
+.client-left{
+    background-color: rgb(172, 97, 247);
+    height: 97vh;
+    border-radius: 9px;
+}
+.client-right{
+    position: relative;
+}
+.client-path{
+    color:rgb(172, 97, 247);
+    margin: 15px 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+}
+.client-title{
+    color: gray;
+    margin: 15px 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+.clientpopup{
+    position: absolute;
+    top: 8%;
+    left: 15%;
+}

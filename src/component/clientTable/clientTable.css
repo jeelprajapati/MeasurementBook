@@ -1,0 +1,75 @@
+.client-table-con{
+    width: 100%;
+    border-radius: 10px;
+    height: 595px;
+    background-color: rgb(224, 224, 224);
+    overflow-y: scroll;
+}
+.client-table-con::-webkit-scrollbar{
+    display: none;
+}
+.client-table{
+    background-color: rgb(224, 224, 224);
+    border-radius: 10px;
+    table-layout: fixed;
+    width: 100%;
+}
+.client-tr:nth-child(1){
+    position: sticky;
+    top:0;
+    background-color: rgb(172, 97, 247);
+    color: white;
+}
+.client-th{
+    padding: 10px 0px;
+    font-size: 14px;   
+    font-family: 'Roboto', sans-serif;
+}
+.client-th:nth-child(1){
+    border-radius: 10px 0 0 0px;
+}
+.client-th:nth-child(12){
+    border-radius: 0 10px 0 0;
+}
+.client-svg{
+    width: 20px;
+    height: 20px;
+    margin: 0 4px;
+}
+.client-td{
+    color: black;
+    padding: 10px 2px;
+    overflow-wrap: break-word;
+    text-align: center;
+    font-size: 13px;
+    font-family: 'Roboto', sans-serif;
+}
+.client-svg:hover{
+    cursor: pointer;
+}
+.client-add-button{
+    background-color: rgb(5, 187, 5);
+    border: none;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 10px;
+    border-radius: 7px;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+.client-add-button:hover{
+    cursor: pointer;
+}
+.client-td span{
+    background-color: white;
+    display: block;
+    padding: 5px 10px;
+    border-radius: 7px;
+    height: 30px;
+    overflow-y: scroll;
+}
+.client-td span::-webkit-scrollbar{
+    display: none;
+}

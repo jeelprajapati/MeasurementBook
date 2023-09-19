@@ -1,0 +1,126 @@
+.single-container{
+    width: 98vw;
+    height: 97vh;
+    margin: auto;
+    display: flex;
+    margin-top: 10px;
+    gap: 10px;
+    border-radius: 8px;
+}
+.single-left{
+    background-color: rgb(172, 97, 247);
+    height: 97vh;
+    border-radius: 9px;
+}
+.single-right{
+    position: relative;
+}
+.detail-box{
+    position: relative;
+    background-color: rgb(233, 230, 230);
+    margin: 10px 15px;
+    width: 50%;
+    height: 90px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.entity{
+    margin: 5px 40px;
+}
+.entity span{
+    margin: 3px;
+}
+.entity span:nth-child(1){
+    font-weight: 700;
+    font-size: 15px;
+    color: black;
+    font-family: 'Roboto', sans-serif;
+}
+.entity span:nth-child(3){
+    font-size: 15px;
+    font-family: 'Roboto', sans-serif;
+}
+.edit-btn{
+    position: absolute;
+    background-color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 7px;
+    right: 10px;
+}
+.edit-btn:hover{
+    cursor: pointer;
+    background-color: rgb(241, 239, 239);
+}
+.edit-img{
+  width: 20px;
+  height: 20px;
+}
+.goto{
+    margin: 10px 15px;
+    width: fit-content;
+}
+.goto button{
+    padding: 10px 25px;
+    background-color: rgb(3, 194, 3);
+    border: none;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+.goto button:hover{
+    cursor: pointer;
+}
+
+.table-container{
+    margin: 0px 15px;   
+}
+.table-title{
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+.single-page-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.excel-btn{
+   margin: 10px 15px;
+   padding: 10px 15px;
+   font-size: 14px;
+   border: none;
+   background-color: blue;
+   color: white;
+   border-radius: 7px;
+   border: 1px solid blue;
+   font-family: 'Roboto', sans-serif;
+}
+.excel-btn:hover{
+    cursor: pointer;
+    background-color: white;
+    color: blue;
+    border: 1px solid blue;
+}
+.excel-popup{
+    position: absolute;
+    /* border: 1px solid black; */
+    background-color: rgb(239, 237, 237);
+    border-radius: 10px;
+    top: 40%;
+    left: 20%;
+    -webkit-box-shadow: 0px 0px 12px 8px rgba(222,198,247,1);
+    -moz-box-shadow: 0px 0px 12px 8px rgba(222,198,247,1);
+    box-shadow: 0px 0px 12px 8px rgba(222,198,247,1);
+}
+.project-title{
+    color: black;
+    margin: 17px 10px;
+}
