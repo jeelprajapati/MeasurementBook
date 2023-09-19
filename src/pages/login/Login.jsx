@@ -14,11 +14,23 @@ const Login = () => {
   };
   const handleLoginAndSetId = async (token) => {
     const makeRequest = makeRequesInstance(token);
-    const res = await makeRequest.get("/Account/GetUserInfo");
-    localStorage.setItem(
-      "organizationId",
-      res.data.organizations[0].organizationID
-    );
+    try {
+      const res = await makeRequest.get("/Account/GetUserInfo");
+      localStorage.setItem(
+        "organizationId",
+        res.data.organizations[0].organizationID
+      );
+    } catch (error) {
+      if(error.response){
+        alert.show(error.response.data.title,{type:'info'})
+      }
+      else if(error.code==='ERR_NETWORK'){
+        alert.show(error.message,{type:'error'})
+      }
+      else{
+        alert.show('Iternal server error',{type:'error'})
+      }
+    }
   };
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -33,8 +45,18 @@ const Login = () => {
         navigate("/");
       }
     } catch (error) {
-      console.log(error);
-      alert.show("Invalid Username Or Password", { type: "error" });
+      if(error?.response.status===401){
+        alert.show('Invalid Username Or Password',{type:'error'})
+      }
+      else if(error.response){
+        alert.show(error.response.data.title,{type:'info'})
+      }
+      else if(error.code==='ERR_NETWORK'){
+        alert.show(error.message,{type:'error'})
+      }
+      else{
+        alert.show('Iternal server error',{type:'error'})
+      }
     }
   };
 

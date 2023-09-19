@@ -12,6 +12,7 @@ const Projects = () => {
   const [change, setChange] = useState(0);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  const [update,setUpdate]=useState(false);
   // const makeRequest=makeRequesInstance(localStorage.getItem('token'));
   // const alert=useAlert();
   const Id = localStorage.getItem("organizationId");
@@ -20,7 +21,7 @@ const Projects = () => {
       navigate("/login");
     }
   });
-  const { loding, error, data } = useFetch({
+  const { loding, data } = useFetch({
     url: `/Project?page=1&pageSize=100&organizationId=${Id}`,
     change,
   });
@@ -68,9 +69,11 @@ const Projects = () => {
             <div className="popup">
               <Popup
                 setPopUp={setPopUp}
-                input={{contractNo:'',contractDate:'',loiNo:'',loiDate:'',projectName:'',contractValidity:'',workCompletion:'',clientId:''}}
+                input={{contractNo:'',contractDate:'',loiNo:'',loiDate:'',projectName:'',contractValidity:'',clientId:''}}
                 setChange={setChange}
                 change={change}
+                update={update}
+                setUpdate={setUpdate}
               />
             </div>
           )}

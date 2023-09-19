@@ -12,7 +12,7 @@ const Billtable = ({ setOpen, change, setInput, setItem, setChange ,open }) => {
   const alert = useAlert();
   const projectname = useLocation().search.split("?")[2].split("=")[1];
   const makeRequest = makeRequesInstance(localStorage.getItem("token"));
-  const { loding, error, data } = useFetch({
+  const { loding, data } = useFetch({
     url: `/Bill/GetByProjectId?page=${1}&pageSize=${100}&projectId=${Id}`,
     change,
   });
@@ -33,9 +33,15 @@ const Billtable = ({ setOpen, change, setInput, setItem, setChange ,open }) => {
         }
       }
     } catch (error) {
-      alert.show("First delete measurebook record related to this bill", {
-        type: "info",
-      });
+      if(error.response){
+        alert.show(error.response.data.title,{type:'info'})
+      }
+      else if(error.code==='ERR_NETWORK'){
+        alert.show(error.message,{type:'error'})
+      }
+      else{
+        alert.show('Iternal server error',{type:'error'})
+      }
     }
   };
   return (
@@ -43,9 +49,9 @@ const Billtable = ({ setOpen, change, setInput, setItem, setChange ,open }) => {
       <table>
         <tr className="bill-tr">
           <th className="bill-th">Bill Name</th>
-          <th className="bill-th">Date</th>
-          <th className="bill-th">TypeBill</th>
-          <th className="bill-th">Inv No.</th>
+          <th className="bill-th">Invoice Date</th>
+          <th className="bill-th">Type</th>
+          <th className="bill-th">Reference No.</th>
           <th className="bill-th">Status</th>
           <th className="bill-th">Action</th>
         </tr>
@@ -90,14 +96,16 @@ const Billtable = ({ setOpen, change, setInput, setItem, setChange ,open }) => {
                    style={{width:'22px',height:'22px',cursor:'pointer'}}
                  />
                 </button>
-                <Link
+                {item?.status === 1?<Link
                   to={`/measurementbook?billId=${item?.id}?projectId=${Id}?projectname=${projectname}?billname=${item?.name}`}
                   className="link"
                 >
-                  <button style={{margin:'0',padding:'0',backgroundColor:'rgb(5, 187, 5)',border:'none'}}>
+                  <button style={{margin:'0',padding:'0',backgroundColor:'rgb(5, 187, 5)',border:'none'}} >
                    <img src={filesvg} style={{width:'22px',height:'22px',filter:'invert(1)',cursor:'pointer'}} alt="" className="svg" />
                   </button>
-                </Link>
+                </Link>:<button className="disabled" disabled style={{margin:'0',padding:'0',border:'none'}} >
+                   <img src={filesvg} style={{width:'22px',height:'22px',filter:'invert(1)'}} alt="" className="svg" />
+                  </button>}
               </td>
             </tr>
           ))}

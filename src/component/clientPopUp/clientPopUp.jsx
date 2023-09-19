@@ -3,215 +3,564 @@ import "./clientPopUp.css";
 import close from "../../image/close.svg";
 import makeRequesInstance from "../../makeRequest";
 import { useAlert } from "react-alert";
+import { useFormik } from "formik";
+import { clientScema } from "../../scemas";
 
-const ClientPopUp = ({ setInput,change,setChange, item, setItem, setUpdate, update,country,state }) => {
-  const [data, setData] = useState(item);
-  const Id=localStorage.getItem('organizationId');
-  const [countryCode,setCountryCode]=useState(item?.countryId);
-  const [loading,setLoading]=useState(false)
-  const [stateCode,setStateCode]=useState(item?.stateId);
-  const alert=useAlert();
-  const makeRequest=makeRequesInstance(localStorage.getItem('token'))
-  const handleChange = (e) => {
-    setData({...data,[e.target.name]:e.target.value})
-  };
-  const inputValidation=(i)=>{
-    for (const key in i) {
-      if(i[key]===''){
-        return false
-      }     
-    }
-    return true
-  }
-  const handleUpdate=async(e)=>{
-    e.preventDefault();
-    const success=inputValidation(data);
-    if(success){
-      const responce= await makeRequest.put('/Client',{
-        'id':data?.id,
-        'name':data?.name,
-        'email':data?.email,
-        'phoneNumber':data?.phoneNumber,
-        'gstin':data?.gstin,
-        'pan':data?.pan,
-        'address':data?.address,
-        'city':data?.city,
-        'stateId':parseInt(stateCode),
-        'countryId':parseInt(countryCode),
-        'postalCode':data?.postalCode,
-        'organizationID':Id
-      })
-      if(responce.status===204){
-        alert.show('Data Updated Suceefully',{type:'success'})
-        setUpdate(false)
-        setItem(null)
-        setInput(false);
-        if(change===0){
-          setChange(1)
+const ClientPopUp = ({
+  setInput,
+  change,
+  setChange,
+  item,
+  setItem,
+  setUpdate,
+  update,
+  country,
+  state,
+}) => {
+  const Id = localStorage.getItem("organizationId");
+  const alert = useAlert();
+  const makeRequest = makeRequesInstance(localStorage.getItem("token"));
+  
+  const addRequest = useFormik({
+    initialValues: item,
+    validationSchema: clientScema,
+    onSubmit: (value,action) => {
+      const handleAdd=async()=>{
+        try {
+          const responce = await makeRequest.post("/Client", {
+            id: "00000000-0000-0000-0000-000000000000",
+            name: value?.name,
+            email: value?.email,
+            phoneNumber: value?.phoneNumber,
+            gstin: value?.gstin,
+            pan: value?.pan,
+            address: value?.address,
+            city: value?.city,
+            stateId: parseInt(value?.stateId),
+            countryId: parseInt(value?.countryId),
+            postalCode: value?.postalCode,
+            organizationID: Id,
+          });
+          if (responce.status === 204) {
+            alert.show("Data Added Suceefully", { type: "success" });
+            action.resetForm();
+            setInput(false);
+            if (change === 0) {
+              setChange(1);
+            } else {
+              setChange(0);
+            }
+          }
+        } catch (error) {
+          if (error.response) {
+            alert.show(error.response.data.title, { type: "info" });
+          } else if (error.code === "ERR_NETWORK") {
+            alert.show(error.message, { type: "error" });
+          } else {
+            alert.show("Iternal server error", { type: "error" });
+          }
         }
-        else{
-          setChange(0)
+      }
+      handleAdd();
+    },
+  });
+  const upadteRequest = useFormik({
+    initialValues: item,
+    validationSchema: clientScema,
+    onSubmit: (value,action) => {
+      const handleUpdate=async()=>{
+        try {
+          const responce = await makeRequest.put("/Client", {
+            id: value?.id,
+            name: value?.name,
+            email: value?.email,
+            phoneNumber: value?.phoneNumber,
+            gstin: value?.gstin,
+            pan: value?.pan,
+            address: value?.address,
+            city: value?.city,
+            stateId: parseInt(value?.stateId),
+            countryId: parseInt(value?.countryId),
+            postalCode: value?.postalCode,
+            organizationID: Id,
+          });
+          if (responce.status === 204) {
+            alert.show("Data Updated Suceefully", { type: "success" });
+            action.resetForm();
+            setItem({name:'',email:'',phoneNumber:'',gstin:'',pan:'',address:'',city:'',countryId:'',stateId:'',postalCode:''});
+            setUpdate(false);
+            setInput(false)
+            if (change === 0) {
+              setChange(1);
+            } else {
+              setChange(0);
+            }
+          }
+        } catch (error) {
+          if (error.response) {
+            alert.show(error.response.data.title, { type: "info" });
+          } else if (error.code === "ERR_NETWORK") {
+            alert.show(error.message, { type: "error" });
+          } else {
+            alert.show("Iternal server error", { type: "error" });
+          }
         }
       }
-    }
-    else{
-      alert.show('Please fill out all fields before updateing',{type:'error'});
-    }
-  }
-
-  const handleAdd=async(e)=>{
-    e.preventDefault();
-    const success=inputValidation(data);
-    if(success){
-    const responce= await makeRequest.post('/Client',{
-      'id':'ffdbd863-31ef-4054-c85c-08db84fefbf1',
-      'name':data?.name,
-      'email':data?.email,
-      'phoneNumber':data?.phoneNumber,
-      'gstin':data?.gstin,
-      'pan':data?.pan,
-      'address':data?.address,
-      'city':data?.city,
-      'stateId':parseInt(stateCode),
-      'countryId':parseInt(countryCode),
-      'postalCode':data?.postalCode,
-      'organizationID':Id
-    })
-    if(responce.status===204){
-      alert.show('Data Added Suceefully',{type:'success'})
-      setCountryCode(null)
-      setInput(false);
-      setData(null);
-      setStateCode(null)
-      if(change===0){
-        setChange(1)
-      }
-      else{
-        setChange(0)
-      }
-    }
-  }
-  else{
-    alert.show('Please fill out all fields before submiting',{type:'error'});
-  }
-}
-  const handleSetCode=(e)=>{
-    setLoading(true)
-    setCountryCode(e.target.value);
-    setLoading(false)
-  }
+      handleUpdate();
+    },
+  });
   return (
     <div className="client-pop-container">
-      <h3 className="client-pop-title">{update?'Update Client':'Add New Client'}</h3>
+      <h3 className="client-pop-title">
+        {update ? "Update Client" : "Add New Client"}
+      </h3>
       <div className="flex-container">
         <div className="client-container">
           <input
             type="text"
             id="clientName"
-            placeholder="client Name"
+            placeholder="client Name *"
             className="client-Add-input"
-            value={data?.name?data.name:''}
             name="name"
-            onChange={handleChange}
+            value={update ? upadteRequest.values.name : addRequest.values.name}
+            onChange={
+              update ? upadteRequest.handleChange : addRequest.handleChange
+            }
+            onBlur={update ? upadteRequest.handleBlur : addRequest.handleBlur}
           />
+          {update ? (
+            upadteRequest.touched.name && upadteRequest.errors.name ? (
+              <p
+                style={{
+                  margin:'3px 0 0 0',
+                  fontSize: "13px",
+                  fontFamily:"'Roboto', sans-serif",
+                  color: "red",
+                  width: "200px",
+                }}
+              >{upadteRequest.errors.name}</p>
+            ) : null
+          ) : addRequest.touched.name && addRequest.errors.name ? (
+            <p
+              style={{
+                margin:'3px 0 0 0',
+                fontSize: "13px",
+                fontFamily:"'Roboto', sans-serif",
+                color: "red",
+                width: "200px",
+              }}
+            >{addRequest.errors.name}</p>
+          ) : null}
         </div>
         <div className="client-container">
           <input
             type="email"
             id="email"
-            placeholder="email"
-            value={data?.email?data.email:''}
+            placeholder="email *"
             className="client-Add-input"
             name="email"
-            onChange={handleChange}
+            value={
+              update ? upadteRequest.values.email : addRequest.values.email
+            }
+            onChange={
+              update ? upadteRequest.handleChange : addRequest.handleChange
+            }
+            onBlur={update ? upadteRequest.handleBlur : addRequest.handleBlur}
           />
+          {update ? (
+            upadteRequest.touched.email && upadteRequest.errors.email ? (
+              <p
+                style={{
+                  margin:'3px 0 0 0',
+                  fontSize: "13px",
+                  fontFamily:"'Roboto', sans-serif",
+                  color: "red",
+                  width: "200px",
+                }}
+              >{upadteRequest.errors.email}</p>
+            ) : null
+          ) : addRequest.touched.email && addRequest.errors.email ? (
+            <p
+              style={{
+                margin:'3px 0 0 0',
+                fontSize: "13px",
+                fontFamily:"'Roboto', sans-serif",
+                color: "red",
+                width: "200px",
+              }}
+            >{addRequest.errors.email}</p>
+          ) : null}
         </div>
         <div className="client-container">
           <input
             type="text"
             id="phoneNumber"
-            placeholder="phoneNumber"
-            value={data?.phoneNumber?data.phoneNumber:''}
+            placeholder="phoneNumber *"
             className="client-Add-input"
             name="phoneNumber"
-            onChange={handleChange}
+            value={
+              update
+                ? upadteRequest.values.phoneNumber
+                : addRequest.values.phoneNumber
+            }
+            onChange={
+              update ? upadteRequest.handleChange : addRequest.handleChange
+            }
+            onBlur={update ? upadteRequest.handleBlur : addRequest.handleBlur}
           />
+          {update ? (
+            upadteRequest.touched.phoneNumber &&
+            upadteRequest.errors.phoneNumber ? (
+              <p
+                style={{
+                  margin:'3px 0 0 0',
+                  fontSize: "13px",
+                  fontFamily:"'Roboto', sans-serif",
+                  color: "red",
+                  width: "200px",
+                }}
+              >{upadteRequest.errors.phoneNumber}</p>
+            ) : null
+          ) : addRequest.touched.phoneNumber &&
+            addRequest.errors.phoneNumber ? (
+            <p
+              style={{
+                margin:'3px 0 0 0',
+                fontSize: "13px",
+                fontFamily:"'Roboto', sans-serif",
+                color: "red",
+                width: "200px",
+              }}
+            >{addRequest.errors.phoneNumber}</p>
+          ) : null}
         </div>
         <div className="client-container">
           <input
             type="text"
             id="gstin"
             placeholder="Gatin"
-            value={data?.gstin?data.gstin:''}
             className="client-Add-input"
             name="gstin"
-            onChange={handleChange}
+            value={
+              update ? upadteRequest.values.gstin : addRequest.values.gstin
+            }
+            onChange={
+              update ? upadteRequest.handleChange : addRequest.handleChange
+            }
+            onBlur={update ? upadteRequest.handleBlur : addRequest.handleBlur}
           />
+          {update ? (
+            upadteRequest.touched.gstin && upadteRequest.errors.gstin ? (
+              <p
+                style={{
+                  margin:'3px 0 0 0',
+                  fontSize: "13px",
+                  fontFamily:"'Roboto', sans-serif",
+                  color: "red",
+                  width: "200px",
+                }}
+              >{upadteRequest.errors.gstin}</p>
+            ) : null
+          ) : addRequest.touched.gstin && addRequest.errors.gstin ? (
+            <p
+              style={{
+                margin:'3px 0 0 0',
+                fontSize: "13px",
+                fontFamily:"'Roboto', sans-serif",
+                color: "red",
+                width: "200px",
+              }}
+            >{addRequest.errors.gstin}</p>
+          ) : null}
         </div>
         <div className="client-container">
           <input
             type="text"
             id="pan"
             placeholder="pan"
-            value={data?.pan?data.pan:''}
             className="client-Add-input"
             name="pan"
-            onChange={handleChange}
+            value={update ? upadteRequest.values.pan : addRequest.values.pan}
+            onChange={
+              update ? upadteRequest.handleChange : addRequest.handleChange
+            }
+            onBlur={update ? upadteRequest.handleBlur : addRequest.handleBlur}
           />
+          {update ? (
+            upadteRequest.touched.pan && upadteRequest.errors.pan ? (
+              <p
+                style={{
+                  margin:'3px 0 0 0',
+                  fontSize: "13px",
+                  fontFamily:"'Roboto', sans-serif",
+                  color: "red",
+                  width: "200px",
+                }}
+              >{upadteRequest.errors.pan}</p>
+            ) : null
+          ) : addRequest.touched.pan && addRequest.errors.pan ? (
+            <p
+              style={{
+                margin:'3px 0 0 0',
+                fontSize: "13px",
+                fontFamily:"'Roboto', sans-serif",
+                color: "red",
+                width: "200px",
+              }}
+            >{addRequest.errors.pan}</p>
+          ) : null}
         </div>
         <div className="client-container">
           <input
             type="text"
             id="address"
-            placeholder="Address"
-            value={data?.address?data.address:''}
+            placeholder="Address *"
             className="client-Add-input"
             name="address"
-            onChange={handleChange}
+            value={
+              update ? upadteRequest.values.address : addRequest.values.address
+            }
+            onChange={
+              update ? upadteRequest.handleChange : addRequest.handleChange
+            }
+            onBlur={update ? upadteRequest.handleBlur : addRequest.handleBlur}
           />
+          {update ? (
+            upadteRequest.touched.address && upadteRequest.errors.address ? (
+              <p
+                style={{
+                  margin:'3px 0 0 0',
+                  fontSize: "13px",
+                  fontFamily:"'Roboto', sans-serif",
+                  color: "red",
+                  width: "200px",
+                }}
+              >{upadteRequest.errors.address}</p>
+            ) : null
+          ) : addRequest.touched.address && addRequest.errors.address ? (
+            <p
+              style={{
+                margin:'3px 0 0 0',
+                fontSize: "13px",
+                fontFamily:"'Roboto', sans-serif",
+                color: "red",
+                width: "200px",
+              }}
+            >{addRequest.errors.address}</p>
+          ) : null}
         </div>
         <div className="client-container">
           <input
             type="text"
             id="city"
-            placeholder="City"
-            value={data?.city?data.city:''}
+            placeholder="City *"
             className="client-Add-input"
             name="city"
-            onChange={handleChange}
+            value={update ? upadteRequest.values.city : addRequest.values.city}
+            onChange={
+              update ? upadteRequest.handleChange : addRequest.handleChange
+            }
+            onBlur={update ? upadteRequest.handleBlur : addRequest.handleBlur}
           />
+          {update ? (
+            upadteRequest.touched.city && upadteRequest.errors.city ? (
+              <p
+                style={{
+                  margin:'3px 0 0 0',
+                  fontSize: "13px",
+                  fontFamily:"'Roboto', sans-serif",
+                  color: "red",
+                  width: "200px",
+                }}
+              >{upadteRequest.errors.city}</p>
+            ) : null
+          ) : addRequest.touched.city && addRequest.errors.city ? (
+            <p
+              style={{
+                margin:'3px 0 0 0',
+                fontSize: "13px",
+                fontFamily:"'Roboto', sans-serif",
+                color: "red",
+                width: "200px",
+              }}
+            >{addRequest.errors.city}</p>
+          ) : null}
         </div>
         <div className="client-container">
-          <select name="countryId" value={countryCode?countryCode:''}  onChange={handleSetCode} className="client-select" id="">
-            <option value="">select country</option>
-            {country?.map((item)=>(<option value={item?.id}>{item?.countryName}</option>))}
+          <select
+            name="countryId"
+            value={
+              update
+                ? upadteRequest.values.countryId
+                : addRequest.values.countryId
+            }
+            onChange={
+              update ? upadteRequest.handleChange : addRequest.handleChange
+            }
+            onBlur={update ? upadteRequest.handleBlur : addRequest.handleBlur}
+            className="client-select"
+            id=""
+          >
+            <option value="" disabled>select country *</option>
+            {country?.map((item) => (
+              <option value={item?.id} key={item?.id}>
+                {item?.countryName}
+              </option>
+            ))}
           </select>
+
+          {update ? (
+            upadteRequest.touched.countryId &&
+            upadteRequest.errors.countryId ? (
+              <p
+                style={{
+                  margin:'3px 0 0 0',
+                  fontSize: "13px",
+                  fontFamily:"'Roboto', sans-serif",
+                  color: "red",
+                  width: "200px",
+                }}
+              >{upadteRequest.errors.countryId}</p>
+            ) : null
+          ) : addRequest.touched.countryId && addRequest.errors.countryId ? (
+            <p
+              style={{
+                margin:'3px 0 0 0',
+                fontSize: "13px",
+                fontFamily:"'Roboto', sans-serif",
+                color: "red",
+                width: "200px",
+              }}
+            >{addRequest.errors.countryId}</p>
+          ) : null}
         </div>
         <div className="client-container">
-          {!loading && <select name="stateId" value={stateCode?stateCode:''} onChange={(e)=>setStateCode(e.target.value)} className="client-select" id="">
-            {state?.filter((e)=>(e?.countryCode==countryCode)).map((item)=>(<option value={item?.id}>{item?.stateName}</option>))}
-          </select>}
-            </div>
+          { (
+            <select
+              name="stateId"
+              value={
+                update
+                  ? upadteRequest.values.stateId
+                  : addRequest.values.stateId
+              }
+              onChange={
+                update ? upadteRequest.handleChange : addRequest.handleChange
+              }
+              onBlur={
+                update ? upadteRequest.handleBlur : addRequest.handleBlur
+              }
+              className="client-select"
+              id=""
+              disabled={update
+                ? upadteRequest.values.countryId===''
+                : addRequest.values.countryId===''}
+            >
+              <option value="" disabled>select state *</option>
+              {state
+                ?.filter(
+                  (e) =>
+                    e?.countryCode ==
+                    (update
+                      ? upadteRequest.values.countryId
+                      : addRequest.values.countryId)
+                )
+                .map((item) => (
+                  <option value={item?.id} key={item?.id}>
+                    {item?.stateName}
+                  </option>
+                ))}
+            </select>
+          )}
+          {update ? (
+            upadteRequest.touched.stateId && upadteRequest.errors.stateId ? (
+              <p
+                style={{
+                  margin:'3px 0 0 0',
+                  fontSize: "13px",
+                  fontFamily:"'Roboto', sans-serif",
+                  color: "red",
+                  width: "200px",
+                }}
+              >{upadteRequest.errors.stateId}</p>
+            ) : null
+          ) : addRequest.touched.stateId && addRequest.errors.stateId ? (
+            <p
+              style={{
+                margin:'3px 0 0 0',
+                fontSize: "13px",
+                fontFamily:"'Roboto', sans-serif",
+                color: "red",
+                width: "200px",
+              }}
+            >{addRequest.errors.stateId}</p>
+          ) : null}
+        </div>
         <div className="client-container">
           <input
             type="text"
             id="postalCode"
-            placeholder="postalCode"
-            value={data?.postalCode?data.postalCode:''}
+            placeholder="postalCode *"
             className="client-Add-input"
             name="postalCode"
-            onChange={handleChange}
+            value={
+              update
+                ? upadteRequest.values.postalCode
+                : addRequest.values.postalCode
+            }
+            onChange={
+              update ? upadteRequest.handleChange : addRequest.handleChange
+            }
+            onBlur={update ? upadteRequest.handleBlur : addRequest.handleBlur}
           />
+          {update ? (
+            upadteRequest.touched.postalCode &&
+            upadteRequest.errors.postalCode ? (
+              <p
+                style={{
+                  margin:'3px 0 0 0',
+                  fontSize: "13px",
+                  fontFamily:"'Roboto', sans-serif",
+                  color: "red",
+                  width: "200px",
+                }}
+              >{upadteRequest.errors.postalCode}</p>
+            ) : null
+          ) : addRequest.touched.postalCode && addRequest.errors.postalCode ? (
+            <p
+              style={{
+                margin:'3px 0 0 0',
+                fontSize: "13px",
+                fontFamily:"'Roboto', sans-serif",
+                color: "red",
+                width: "200px",
+              }}
+            >{addRequest.errors.postalCode}</p>
+          ) : null}
         </div>
       </div>
       {update ? (
-        <button onClick={handleUpdate} className="client-btn">Update</button>
+        <input type="button" value='Update' onClick={upadteRequest.handleSubmit} className="client-btn"/>
       ) : (
-        <button onClick={handleAdd} className="client-btn">submit</button>
+        <input type="button" value=' submit' onClick={addRequest.handleSubmit} className="client-btn"/>
       )}
       <img
         src={close}
-        onClick={() => {setInput(false);setItem(null)}}
+        onClick={() => {
+          setInput(false);
+          setItem({
+            name: "",
+            email: "",
+            phoneNumber: "",
+            gstin: "",
+            pan: "",
+            address: "",
+            city: "",
+            countryId: "",
+            stateId: "",
+            postalCode: "",
+          });
+          setUpdate(false);
+        }}
         alt=""
         className="client-close"
       />

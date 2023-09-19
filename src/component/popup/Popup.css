@@ -10,17 +10,17 @@
     height: 30px;
     border-radius: 7px;
 }
+.project-lable{
+    font-size: 13px;
+    font-family: 'Roboto', sans-serif;
+}
 .add-title{
     padding: 15px 10px 0 10px;
-    font-size: 15px;
-    font-weight: bold;
+    font-size: 16px;
     font-family: 'Roboto', sans-serif;
 }
 .name-container,.no-container,.loi-container,.validity-container{
     margin: 10px 15px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 14px;
-    font-weight: bold;
 }
 .Add-input{
     width: 97%;
@@ -55,10 +55,12 @@
 .date-and-time{
     margin: 10px 15px;
     display: flex;
-    gap: 5px;
+    gap: 20px;
+    align-items: center;
 }
 .dt-input{
-    width: 180px;
+    width: 282px;
     border: none;
     height: 27px;
+    border-radius: 5px;
 }

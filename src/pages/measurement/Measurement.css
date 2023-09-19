@@ -6,9 +6,6 @@
     margin-top: 10px;
     gap: 10px;
     border-radius: 8px;
-    /* -webkit-box-shadow: 1px 1px 5px 0px rgba(172,97,247,1);
-    -moz-box-shadow: 1px 1px 5px 0px rgba(172,97,247,1);
-    box-shadow: 1px 1px 5px 0px rgba(172,97,247,1); */
 }
 .measurement-left{
     background-color: rgb(172, 97, 247);
@@ -21,7 +18,7 @@
 .measurement-path{
     margin: 15px 0px 0px 15px;
     font-family: 'Roboto', sans-serif;
-    font-size: 15px;
+    font-size: 14px;
 }
 .measurement-path span{
     color: rgb(172, 97, 247);

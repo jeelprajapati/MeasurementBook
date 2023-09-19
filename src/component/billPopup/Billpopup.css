@@ -9,6 +9,10 @@
 .bill-dt{
     margin: 10px 15px;
 }
+.bill-dt label{
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+}
 .invoice-input{
     width: 97%;
     height: 27px;

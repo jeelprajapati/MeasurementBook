@@ -31,8 +31,11 @@
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
   }
+  .measure-th:nth-child(1){
+    width: 150px;
+  }
   .measure-th:nth-child(2){
-    width: 270px;
+    width: 210px;
   }
   .measure-th:nth-child(8){
     width: 200px;
@@ -42,19 +45,20 @@
   }
   .measure-td{
     text-align: center;
-    padding: 14px 10px;
+    padding: 5px;
     width: fit-content;
     max-height:100px;
     overflow-wrap: wrap;
-    /* font-size: 13px;
-    font-family: 'Roboto', sans-serif; */
+    font-size: 13px;
+    font-family: 'Roboto', sans-serif;
     height: fit-content;
+    position: relative;
   }
   .measure-td:nth-child(8) span{
     width: 200px;
   }
   .measure-td:nth-child(9) span{
-    width: 105px;
+    width: 100px;
   }
   .measure-td span{
     display: flex;
@@ -70,7 +74,7 @@
     overflow-wrap:break-word;
   }
   .measure-td:nth-child(2) span{
-    width: 270px;
+    width: 210px;
     justify-content: flex-start;
   }
   .measure-td span::-webkit-scrollbar{
@@ -79,16 +83,16 @@
   .measure-input{
     display: flex;
     flex-wrap: wrap;
-    border: 1px solid rgb(172, 97, 247);
+    /* border: 1px solid rgb(172, 97, 247); */
     height: 40px;
     width: 95%;
     margin:3px 0;
-    padding: 7px;
+    padding: 8px 3px;
     border-radius: 7px;
     outline: none;
   } 
   .measure-td:nth-child(2) .measure-input{
-    width: 260px;
+    width: 210px;
   } 
 .dropdown-con{
   background-color: white;
@@ -98,9 +102,6 @@
   border: 1px solid rgb(172, 97, 247);
   left: -1px;
   border-top: none;
-}
-.dropdown{
-  padding: 7px 15px;
 }
 .dropdown-input{
   padding: 7px 0;
@@ -136,10 +137,10 @@ li{
 }
 .desc-input{
   background-color: white;
-  border: 1px solid rgb(172, 97, 247);
-  min-height: 48px;
-  width: 100%;
-  padding: 0 8px;
+  /* border: 1px solid rgb(172, 97, 247); */
+  min-height: 55px;
+  width: 94%;
+  padding: 0 3px;
   border-radius: 6px;
   outline: none;
 }

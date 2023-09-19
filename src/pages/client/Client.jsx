@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import makeRequesInstance from '../../makeRequest'
 const Client = () => {
   const [input,setInput]=useState(false);
-  const [item,setItem]=useState({name:'',email:'',phoneNumber:'',gstin:'',pan:'',address:'',city:'',postalCode:''});
+  const [item,setItem]=useState({name:'',email:'',phoneNumber:'',gstin:'',pan:'',address:'',city:'',countryId:'',stateId:'',postalCode:''});
   const [country,setCountry]=useState(null);
   const [state,setState]=useState(null);
   const [update,setUpdate]=useState(false)
@@ -24,12 +24,36 @@ const Client = () => {
 
   useEffect(()=>{
     const getCountry=async()=>{
-      const res=await makeRequest.get('/Standard/GetCountries');
-      setCountry(res.data)
+      try {
+        const res=await makeRequest.get('/Standard/GetCountries');
+        setCountry(res.data)
+      } catch (error) {
+        if(error.response){
+          alert.show(error.response.data.title,{type:'info'})
+        }
+        else if(error.code==='ERR_NETWORK'){
+          alert.show(error.message,{type:'error'})
+        }
+        else{
+          alert.show('Iternal server error',{type:'error'})
+        }
+      }
     }
     const getStates=async()=>{
-      const res=await makeRequest.get('/Standard/GetStates');
-      setState(res.data)
+      try {
+        const res=await makeRequest.get('/Standard/GetStates');
+        setState(res.data)
+      } catch (error) {
+        if(error.response){
+          alert.show(error.response.data.title,{type:'info'})
+        }
+        else if(error.code==='ERR_NETWORK'){
+          alert.show(error.message,{type:'error'})
+        }
+        else{
+          alert.show('Iternal server error',{type:'error'})
+        }
+      }
     }
       getCountry();
       getStates();
@@ -43,7 +67,7 @@ const Client = () => {
           <div className={`${input ? 'client-path blur':'client-path'}`}>client/</div>
           <h3 className={`${input ? 'client-title blur':'client-title'}`}>Client</h3>
           <div className={`${input && 'blur'}`}>
-            <ClientTable setInput={setInput} change={change} setItem={setItem} setUpdate={setUpdate} setChange={setChange}/>
+            <ClientTable setInput={setInput} change={change} setItem={setItem} setUpdate={setUpdate} setChange={setChange} country={country} state={state}/>
           </div>
           {input && (<div className="clientpopup">
             <ClientPopUp setInput={setInput} change={change} setChange={setChange} setItem={setItem} item={item} setUpdate={setUpdate} update={update} country={country} state={state}/>

@@ -26,7 +26,7 @@ const Sidebar = ({id}) => {
   const Id=localStorage.getItem('organizationId');
   useEffect(()=>{
     setToken(localStorage.getItem('token'))
-  },[])
+  },[Id,localStorage.getItem('token')])
   const navigate=useNavigate()
   const handleLogout=(e)=>{
     e.preventDefault();
@@ -35,7 +35,7 @@ const Sidebar = ({id}) => {
     setToken(localStorage.getItem('token'))
     navigate('/login')
   }
-
+ 
   return (
     <div className='sidebar-main-container'>
       <div className={`${sidebar?'side-container':'side-less-container'}`}>
@@ -67,7 +67,7 @@ const Sidebar = ({id}) => {
             </li></Link>
           </ul>
       </div>
-      {(Id && token)&&<div style={{cursor:'pointer'}} className={!sidebar?'logout':'logout-high'} onClick={handleLogout}>
+      {(token)&&<div style={{cursor:'pointer'}} className={!sidebar?'logout':'logout-high'} onClick={handleLogout}>
         <span style={{display:'flex',justifyContent:'center'}} className='sidebar-svg'><img src={logout} alt="" /></span>
         <span style={{color:'white',fontFamily:"'Roboto', sans-serif",fontSize:'14px',fontWeight:'bold'}} className={`${sidebar?'sidebar-name':'d-none'}`}>Logout</span>
       </div>}

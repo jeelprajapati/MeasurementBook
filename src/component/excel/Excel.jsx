@@ -4,6 +4,7 @@ import * as XLSX from 'xlsx'
 import './Excel.css'
 import makeRequesInstance from '../../makeRequest';
 import { useAlert } from 'react-alert'
+import { Link } from 'react-router-dom';
 const Excel = ({setOpen,projectId,setChange,change}) => {
   const[data,setData]=useState(null);
   const[loding,setLoding]=useState(false)
@@ -42,26 +43,33 @@ const Excel = ({setOpen,projectId,setChange,change}) => {
         const {__rowNum__,...other}=obj;
         return other
       })
-      const response=await makeRequest.post('/ContractItem/AddContractItemRange',{
-        "contractItems":[
-          ...newarray
-        ],
-        "projectID":`${projectId}`
-      })
-      if(response.status===204){
-        alert.show('Data Added sucessfully',{type:'success'});
-        setOpen(false)
-          if(change===0){
-            setChange(1)
-          }
-          else{
-            setChange(0)
-          }
-      }
-      else{
-        setLoding(true)
-        setError(response.response.data)
-        setLoding(false)
+      try {
+        const response=await makeRequest.post('/ContractItem/AddContractItemRange',{
+          "contractItems":[
+            ...newarray
+          ],
+          "projectID":`${projectId}`
+        })
+        if(response.status===204){
+          alert.show('Data Added sucessfully',{type:'success'});
+          setOpen(false)
+            if(change===0){
+              setChange(1)
+            }
+            else{
+              setChange(0)
+            }
+        } 
+      } catch (error) {
+        if(error.response){
+          alert.show(error.response.data.title,{type:'info'})
+        }
+        else if(error.code==='ERR_NETWORK'){
+          alert.show(error.message,{type:'error'})
+        }
+        else{
+          alert.show('Iternal server error',{type:'error'})
+        }
       }
     }
   }
@@ -76,7 +84,7 @@ const Excel = ({setOpen,projectId,setChange,change}) => {
           {loding&&<><br />
           <span>{error}</span></>}
           <br />
-          <span className='excel-red'>Data title in Excel file must be: sorNo , item , hsn , poQty , stdUnitId , unit , rate</span>
+          <span className='excel-red'>Download Reference Excel: <Link to='https://docs.google.com/spreadsheets/d/e/2PACX-1vQtekg2bf5eHdBdmpD2pWtDykbjJ7-3aX9aheH2jRR89zflLKIVvnfCKTedsqu9IwaJ0LzW5JNrCeof/pub?output=xlsx'>https://docs.google.com/spreadsheets/d/e/2PACX-1vQtekg2bf5eHdBdmpD2pWtDykbjJ7-3aX9aheH2jRR89zflLKIVvnfCKTedsqu9IwaJ0LzW5JNrCeof/pub?output=xlsx</Link></span>
         </div>
         <img src={close} onClick={()=>setOpen(false)} className='excel-img' alt="" />
     </div>

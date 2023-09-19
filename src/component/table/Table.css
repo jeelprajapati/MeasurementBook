@@ -1,5 +1,5 @@
 .table{
-    height: 320px;
+    height: 430px;
     overflow-y: auto;
     background-color: rgb(224, 224, 224);
     border-radius: 10px;
@@ -21,7 +21,7 @@
 }
 .th{
     padding: 10px 35px;
-    font-size: 15px;  
+    font-size: 14px;  
     font-family: 'Roboto', sans-serif; 
 }
 .th:nth-child(1){
@@ -37,11 +37,11 @@
 }
 .td{
     color: black;
-    padding: 10px 2px;
+    padding: 7px 2px;
     overflow-wrap: break-word;
     text-align: center;
     overflow-wrap: break-word;
-    font-size: 14px;
+    font-size: 13px;
     font-family: 'Roboto', sans-serif;
     margin: auto;
 }
@@ -56,7 +56,6 @@
     width: 92%;
     height: 25px;
     outline: none;
-    border: 1px solid rgb(172, 97, 247);
     border-radius: 6px;
 }
 .btn-disabled{
@@ -68,4 +67,10 @@
 }
 .btn-disabled:disabled{
     cursor: not-allowed;
+}
+.warning{
+    border:1px solid red;
+}
+.purple-border{
+    border: 1px solid rgb(172, 97, 247);
 }

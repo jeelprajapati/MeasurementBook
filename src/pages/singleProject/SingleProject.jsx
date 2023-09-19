@@ -8,23 +8,33 @@ import useFetch from "../../hooks/useFetch";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Excel from "../../component/excel/Excel";
 import Popup from "../../component/popup/Popup";
+import makeRequesInstance from "../../makeRequest";
 const SingleProject = () => {
   const [open, setOpen] = useState(false);
   const [Update,setUpdate]=useState(false)
   const [change, setChange] = useState(0);
   const [popUp, setPopUp] = useState(false);
   const [input, setInput] = useState(null);
+  const [client,setClient]=useState(null);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const Id = localStorage.getItem("organizationId");
+  const makeRequest=makeRequesInstance(token);
   useEffect(() => {
     if (!(token && Id)) {
       navigate("/login");
     }
   }, [navigate, token, Id]);
   const id = useLocation().pathname.split("/")[2];
-  const { loding, error, data } = useFetch({ url: `/Project/${id}`, change });
-
+  const { loding, data } = useFetch({ url: `/Project/${id}`, change });
+  useEffect(()=>{
+    // const {loding,data}=useFetch({url:`Client?page=${1}&pageSize=${100}&organizationId=${Id}`,})
+    const getClient=async()=>{
+       const res=await makeRequest.get(`Client?page=${1}&pageSize=${100}&organizationId=${Id}`)
+       setClient(res.data.items);
+    }
+    getClient();
+  },[])
   const handlePopUP = (e) => {
     setInput(e);
     setUpdate(true)
@@ -48,11 +58,11 @@ const SingleProject = () => {
           </h3>
           {!loding && (
             <div className={`${open ? "detail-box blur" : "detail-box"}`}>
-              <div className="entity">
+              {/* <div className="entity">
                 <span>Contract No</span>
                 <span>:</span>
                 <span>{data?.contractNo}</span>
-              </div>
+              </div> */}
               <div className="entity">
                 <span>Project</span>
                 <span>:</span>
@@ -61,18 +71,18 @@ const SingleProject = () => {
               <div className="entity">
                 <span>Client</span>
                 <span>:</span>
-                <span>{data?.clientId}</span>
+                <span>{client?.filter((item)=>(item?.id===data?.clientId))[0]?.name}</span>
               </div>
-              <div className="entity">
+              {/* <div className="entity">
                 <span>Contract Date</span>
                 <span>:</span>
                 <span>{data?.contractDate}</span>
-              </div>
-              <div className="entity">
+              </div> */}
+              {/* <div className="entity">
                 <span>Contract Validity</span>
                 <span>:</span>
                 <span>{data?.contractValidity} Days</span>
-              </div>
+              </div> */}
               <div className="edit-btn">
                 <img
                   className="edit-img"

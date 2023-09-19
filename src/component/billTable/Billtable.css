@@ -26,12 +26,12 @@
   }
   .bill-th{
     padding: 10px;
-    font-size: 14px;
+    font-size: 13px;
     font-family: 'Roboto', sans-serif;
   }
   .bill-td{
     text-align: center;
-    padding: 14px 10px;
+    padding: 7px 10px;
     overflow-wrap: break-word;
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
@@ -47,4 +47,7 @@
   .bill-td span::-webkit-scrollbar{
     display: none;
   }
-
+  .disabled{
+    cursor: not-allowed;
+    background-color: rgb(69, 121, 69);
+  }

@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const navigate = useNavigate();
   const Id = localStorage.getItem("organizationId");
-  console.log(Id);
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {

@@ -9,11 +9,14 @@ import useFetch from "../../hooks/useFetch";
 import makeRequesInstance from "../../makeRequest";
 import { useAlert } from "react-alert";
 import Tag from "../tagChips/Tag";
+import Warning from "../warning/Warning";
+import { useFormik } from "formik";
+import { measureTable } from "../../scemas";
 const Measure = () => {
   const location = useLocation().search.split("?");
   const billId = location[1].split("=")[1];
   const projectId = location[2].split("=")[1];
-  const [element, setElement] = useState({description:'',no:''});
+  const [element, setElement] = useState({description:'',no:'',contractItemId:''});
   const [number, setNumber] = useState(-1);
   const [input, setInput] = useState(false);
   const [update, setUpdate] = useState(false);
@@ -33,16 +36,19 @@ const Measure = () => {
   const [contractName, setContractName] = useState("");
   const [loadInput, setLoadInput] = useState(false);
   const [show,setShow]=useState(false)
+  const[isDelete,setIsDelete]=useState(false);
+  const[deleteId,setDeleteId]=useState(null);
+  const [warn,setWarn]=useState(false)
   const alert = useAlert();
   const makeRequest = makeRequesInstance(localStorage.getItem("token"));
-  const { loding, error, data } = useFetch({
+  const { loding, data } = useFetch({
     url: `/MeasurementBook/GetByBillId?page=${1}&pageSize=${100}&billId=${billId}`,
     change,
   });
 
   useEffect(() => {
     const getContractItem = async () => {
-      setLoadInput(true);
+      setLoadInput(true);  
       const res = await makeRequest.get(
         `/ContractItem/GetByProjectId?projectId=${projectId}&page=${1}&pageSize=${100}`
       );
@@ -89,6 +95,40 @@ const Measure = () => {
     setArray(data?.items);
   }, [loding, data]);
   
+  useEffect(()=>{
+    const deleteData=async()=>{
+      try {
+        const res = await makeRequest.delete(
+          `MeasurementBook?measurementBookId=${deleteId}`
+        );
+        if (res.status === 204) {
+          setIsDelete(false);
+          setWarn(false);
+          alert.show("Data Deleted Sucessfully", { type: "success" });
+          if (change === 0) {
+            setChange(1);
+          } else {
+            setChange(0);
+          }
+        }
+      } catch (error) {
+        setIsDelete(false);
+        setWarn(false);
+        if(error.response){
+          alert.show(error.response.data.title,{type:'info'})
+        }
+        else if(error.code==='ERR_NETWORK'){
+          alert.show(error.message,{type:'error'})
+        }
+        else{
+          alert.show('Iternal server error',{type:'error'})
+        }
+      }
+    }
+    if(isDelete){
+       deleteData();
+    }
+  },[isDelete])
   const inputValidation=(i)=>{
     for (const key in i) {
       if(i[key]===''){
@@ -117,7 +157,7 @@ const Measure = () => {
     setElement(item);
     setUpdate(true);
     setTags(item?.tags);
-    setContractId(item?. contractItemId);
+    setContractId(item?.contractItemId);
     setContractName(
       contractItem?.filter((i) => i?.id === item?.contractItemId)[0]?.item
     );
@@ -131,37 +171,7 @@ const Measure = () => {
     const success1=inputValidation(element)
     const success2=inputValidation(contractId)
     if(success1&&success2){
-      const res = await makeRequest.post("/MeasurementBook", {
-        measurementBookDTO: {
-          id: "00000000-0000-0000-0000-000000000000",
-          description: element?.description,
-          no: parseFloat(element?.no)||0,
-          l: parseFloat(element?.l)||0,
-          b: parseFloat(element?.b)||0,
-          d_H: parseFloat(element?.d_H)||0,
-          subtotal: 0,
-          remark: "string",
-          contractItemId: contractId,
-          tags: tags,
-          billId: billId,
-        },
-        head: head,
-        tail: tail,
-      });
-      if (res.status === 204) {
-        alert.show("Data Added Sucessfully", { type: "success" });
-        setInput(false);
-        setElement(null);
-        setTags("");
-        setNumber(-1);
-        setContractId(null);
-        setContractName("");
-        if (change === 1) {
-          setChange(0);
-        } else {
-          setChange(1);
-        }
-      }
+     
     }
     else{
       alert.show('Please fill out all fields before submitting',{type:'error'});
@@ -173,50 +183,15 @@ const Measure = () => {
     const success1=inputValidation(element)
     const success2=inputValidation(contractId)
     if(success1&&success2){
-    const res = await makeRequest.put("/MeasurementBook", {
-      id: element?.id,
-      description: element?.description,
-      no: parseFloat(element?.no),
-      l: parseFloat(element?.l),
-      b: parseFloat(element?.b),
-      d_H: parseFloat(element?.d_H),
-      subtotal: parseFloat(element?.subtotal),
-      remark: "string",
-      contractItemId: contractId,
-      tags: tags,
-      billId: billId,
-    });
-    if (res.status === 204) {
-      alert.show("Data Updated Sucessfully", { type: "success" });
-      setUpdate(false);
-      setElement(null);
-      setTags("");
-      setNumber(-1);
-      setContractId(null);
-      setContractName("");
-      if (change === 1) {
-        setChange(0);
-      } else {
-        setChange(1);
-      }
-    }
+      
   }
   else{
     alert.show('Please fill out all fields before updateing',{type:'error'});
   }
 };
   const handleDelete = async (id) => {
-    const res = await makeRequest.delete(
-      `MeasurementBook?measurementBookId=${id}`
-    );
-    if (res.status === 204) {
-      alert.show("Data Deleted Sucessfully", { type: "success" });
-      if (change === 0) {
-        setChange(1);
-      } else {
-        setChange(0);
-      }
-    }
+    setDeleteId(id);
+    setWarn(true);
   };
 
   const handleCopy = (index, item) => {
@@ -235,6 +210,108 @@ const Measure = () => {
     setContractName(i?.item);
     setShow(false)
   };
+
+  const addFormik=useFormik({
+    initialValues:element,
+    validationSchema:measureTable,
+    onSubmit:(value)=>{
+       const handleAdd=async()=>{
+        try {
+          const res = await makeRequest.post("/MeasurementBook", {
+            measurementBookDTO: {
+              id: "00000000-0000-0000-0000-000000000000",
+              description: value?.description,
+              no: parseFloat(value?.no)||0,
+              l: parseFloat(value?.l)||0,
+              b: parseFloat(value?.b)||0,
+              d_H: parseFloat(value?.d_H)||0,
+              subtotal: 0,
+              remark: "string",
+              contractItemId: value.contractItemId,
+              tags: tags,
+              billId: billId,
+            },
+            head: head,
+            tail: tail,
+          });
+          if (res.status === 204) {
+            alert.show("Data Added Sucessfully", { type: "success" });
+            setInput(false);
+            setElement(null);
+            setTags("");
+            setNumber(-1);
+            setContractId(null);
+            setContractName("");
+            if (change === 1) {
+              setChange(0);
+            } else {
+              setChange(1);
+            }
+          }
+        } catch (error) {
+          if(error.response){
+            alert.show(error.response.data.title,{type:'info'})
+          }
+          else if(error.code==='ERR_NETWORK'){
+            alert.show(error.message,{type:'error'})
+          }
+          else{
+            alert.show('Iternal server error',{type:'error'})
+          }
+        }
+       }
+       handleAdd();
+    }
+  })
+
+  const updateFormik=useFormik({
+    initialValues:element,
+    validationSchema:measureTable,
+    onSubmit:(value)=>{
+      const handleUpdate=async()=>{
+        try { 
+          const res = await makeRequest.put("/MeasurementBook", {
+            id: value?.id,
+            description: value?.description,
+            no: parseFloat(value?.no),
+            l: parseFloat(element?.l),
+            b: parseFloat(element?.b),
+            d_H: parseFloat(element?.d_H),
+            subtotal: parseFloat(element?.subtotal),
+            remark: "string",
+            contractItemId: value.contractItemId,
+            tags: tags,
+            billId: billId,
+          });
+          if (res.status === 204) {
+            alert.show("Data Updated Sucessfully", { type: "success" });
+            setUpdate(false);
+            setElement(null);
+            setTags("");
+            setNumber(-1);
+            setContractId(null);
+            setContractName("");
+            if (change === 1) {
+              setChange(0);
+            } else {
+              setChange(1);
+            }
+          }
+        } catch (error) {
+          if(error.response){
+            alert.show(error.response.data.title,{type:'info'})
+          }
+          else if(error.code==='ERR_NETWORK'){
+            alert.show(error.message,{type:'error'})
+          }
+          else{
+            alert.show('Iternal server error',{type:'error'})
+          }
+        }
+      }
+      handleUpdate();
+    }
+  })
   return (
     <div className="measure-table-container">
       <table>
@@ -287,7 +364,7 @@ const Measure = () => {
                 <span>{item?.d_H}</span>
               </td>
               <td className="measure-td">
-                <span>{item?.subtotal.toFixed(2)}</span>
+                <span>{item?.subtotal.toFixed(3)}</span>
               </td>
               <td className="measure-td">
                 <Tag table={true} tags={item?.tags} setTags={setTags} />
@@ -304,7 +381,7 @@ const Measure = () => {
                 </button>
                 <button
                   className="measure-img-btn"
-                  onClick={() => handleUpdate(index, item)}
+                  onClick={() => {handleUpdate(index, item);updateFormik.setValues(item);}}
                   disabled={input || update}
                 >
                   <img src={edit} alt="" className="svg" />
@@ -337,7 +414,11 @@ const Measure = () => {
                   setContractName(e.target.value);
                   setShow(true);
                 }}
-                className="measure-input"
+                className={`${
+                  ((updateFormik.errors.contractItemId && updateFormik.touched.contractItemId) ||
+                    (addFormik.errors.contractItemId && addFormik.touched.contractItemId)) ?
+                  "measure-input warning":"measure-input purple-border"
+                }`}
               />
                {(!load && show) && <ul
                 style={{
@@ -349,15 +430,19 @@ const Measure = () => {
                   justifyContent: "center",
                   margin: "0",
                   padding: "0",
-                  width: "85px",
-                  top: "82%",
+                  width: "93%",
+                  top: "88%",
+                  zIndex:'2',
                   border: "1px solid rgb(172, 97, 247)",
                 }}>
-                  {contractItem?.filter((e) => e?.item?.includes(contractName))
+                  {contractItem?.filter((e) => e?.item?.toUpperCase().includes(contractName.toUpperCase()))
                     ?.map((i) => (
                       <li
                         className="measure-li"
-                        onClick={() => handleContractItem(i)}
+                        onClick={() => {
+                          handleContractItem(i);
+                          update?updateFormik.setValues({...updateFormik.values,contractItemId:i?.id}):addFormik.setValues({...addFormik.values,contractItemId:i?.id})
+                        }}
                       >
                         {i?.item}
                       </li>
@@ -368,9 +453,14 @@ const Measure = () => {
               <textarea
                 type="text"
                 name="description"
-                className="desc-input"
-                onChange={handleChange}
-                value={element?.description}
+                className={`${
+                  ((updateFormik.errors.description && updateFormik.touched.description) ||
+                    (addFormik.errors.description && addFormik.touched.description)) ?
+                  "desc-input warning":"desc-input purple-border"
+                }`}
+                onChange={update?updateFormik.handleChange:addFormik.handleChange}
+                value={update?updateFormik.values.description:addFormik.values.description}
+                onBlur={update?updateFormik.handleBlur:addFormik.handleBlur}
               ></textarea>
             </td>
             <td className="measure-td">
@@ -378,9 +468,14 @@ const Measure = () => {
                 type="number"
                 name="no"
                 min={0}
-                value={element?.no ? element.no : ''}
-                onChange={handleChange}
-                className="measure-input"
+                onChange={update?updateFormik.handleChange:addFormik.handleChange}
+                value={update?updateFormik.values.no:addFormik.values.no}
+                onBlur={update?updateFormik.handleBlur:addFormik.handleBlur}
+                className={`${
+                  ((updateFormik.errors.no && updateFormik.touched.no) ||
+                    (addFormik.errors.no && addFormik.touched.no)) ?
+                  "measure-input warning":"measure-input purple-border"
+                }`}
               />
             </td>
             <td className="measure-td">
@@ -392,7 +487,7 @@ const Measure = () => {
                   name="l"
                   value={element?.l ? element.l : ''}
                   onChange={handleChange}
-                  className="measure-input"
+                  className="measure-input purple-border"
                   disabled={!l}
                 />
               )}
@@ -406,7 +501,7 @@ const Measure = () => {
                   min={0}
                   value={element?.b ? element.b : ''}
                   onChange={handleChange}
-                  className="measure-input"
+                  className="measure-input purple-border"
                   disabled={!b}
                 />
               )}
@@ -420,7 +515,7 @@ const Measure = () => {
                   min={0}
                   value={element?.d_H ? element.d_H : ''}
                   onChange={handleChange}
-                  className="measure-input"
+                  className="measure-input purple-border"
                   disabled={!h}
                 />
               )}
@@ -434,36 +529,47 @@ const Measure = () => {
                 disabled
                 value={element?.subtotal ? element.subtotal : 0}
                 onChange={handleChange}
-                className="measure-input"
+                className="measure-input purple-border"
               />
             </td>
             <td className="measure-td">
-              <Tag table={false} tags={tags} setTags={setTags} />
+              <Tag 
+              table={false} 
+              tags={tags} 
+              setTags={setTags} 
+              />
             </td>
             <td className="measure-td">
               {update ? (
-                <button className="btn" onClick={handelFinalUpdata}>
-                  Update
-                </button>
+                <input type="button" value='Update' className="btn" onClick={updateFormik.handleSubmit}/>
               ) : (
-                <button className="btn" onClick={handleAdd}>
-                  Add
-                </button>
+                <input type="button" value='Add' className="btn" onClick={addFormik.handleSubmit}/>
               )}
-              {!(array.length === 0 || update) && (
+              {!(array.length === 0) && (
                 <button
-                  className="btn red"
+                  className="btn"
                   onClick={() => {
                     setInput(false);
-                    setUpdate(false);
                     setTags("");
                     setContractId(null);
                     setNumber(-1);
                     setElement(null);
                     setContractName("");
+                    setShow(false);
                     setL(false);
                     setB(false);
                     setH(false);
+                    addFormik.resetForm();
+                    if(update){
+                      updateFormik.resetForm();
+                      setUpdate(false);
+                      if(change===1){
+                        setChange(0);
+                      }
+                      else{
+                        setChange(1)
+                      }
+                    }
                   }}>
                   close
                 </button>
@@ -500,16 +606,16 @@ const Measure = () => {
                 <span>{item?.no}</span>
               </td>
               <td className="measure-td">
-                <span>{item?.l}</span>
+                <span>{item?.l.toFixed(3)}</span>
               </td>
               <td className="measure-td">
-                <span>{item?.b}</span>
+                <span>{item?.b.toFixed(3)}</span>
               </td>
               <td className="measure-td">
-                <span>{item?.d_H}</span>
+                <span>{item?.d_H.toFixed(3)}</span>
               </td>
               <td className="measure-td">
-                <span>{item?.subtotal.toFixed(2)}</span>
+                <span>{item?.subtotal.toFixed(3)}</span>
               </td>
               <td className="measure-td">
                 <Tag table={true} tags={item?.tags} setTags={setTags} />
@@ -529,11 +635,13 @@ const Measure = () => {
                 </button>
                 <button
                   className="measure-img-btn"
-                  onClick={() =>
+                  onClick={() =>{
                     handleUpdate(
                       array?.slice(0, number + 1).length + index,
                       item
                     )
+                    updateFormik.setValues(item);
+                  }
                   }
                   disabled={input || update}
                 >
@@ -559,6 +667,7 @@ const Measure = () => {
             </tr>
           ))}
       </table>
+      {warn && <Warning setIsDelete={setIsDelete} setWarn={setWarn}/>}
     </div>
   );
 };

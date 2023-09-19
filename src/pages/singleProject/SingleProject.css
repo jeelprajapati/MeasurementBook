@@ -5,9 +5,6 @@
     display: flex;
     margin-top: 10px;
     gap: 10px;
-    /* -webkit-box-shadow: 1px 1px 5px 0px rgba(172,97,247,1);
-    -moz-box-shadow: 1px 1px 5px 0px rgba(172,97,247,1);
-    box-shadow: 1px 1px 5px 0px rgba(172,97,247,1); */
     border-radius: 8px;
 }
 .single-left{
@@ -22,8 +19,8 @@
     position: relative;
     background-color: rgb(233, 230, 230);
     margin: 10px 15px;
-    width: 60%;
-    height: 200px;
+    width: 50%;
+    height: 90px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -37,12 +34,12 @@
 }
 .entity span:nth-child(1){
     font-weight: 700;
-    font-size: 16px;
+    font-size: 15px;
     color: black;
     font-family: 'Roboto', sans-serif;
 }
 .entity span:nth-child(3){
-    font-size: 16px;
+    font-size: 15px;
     font-family: 'Roboto', sans-serif;
 }
 .edit-btn{
