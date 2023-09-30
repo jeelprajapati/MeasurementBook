@@ -34,7 +34,7 @@
     padding: 10px;
     text-align: center;
     cursor: pointer;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
     font-weight: bold;
     font-size: 14px;
     border-radius: 5px;
@@ -57,7 +57,7 @@
     justify-content: flex-start;
 }
 .lightGray{
-    background-color: rgb(198, 145, 251);
+    background-color: #757474;
 }
 .link{
     text-decoration: none;
@@ -103,7 +103,7 @@
     width: fit-content;
     transform: translateX(4.6rem);
     color: white;
-    background-color: blue;
+    background-color: #333333;
     border-radius: 0 10px 10px 10px;
     padding: 12px;
     
@@ -137,7 +137,7 @@
    width: fit-content;
    transform: translateX(4.4rem);
    color: white;
-   background-color: blue;
+   background-color: #333333;
    border-radius: 0 10px 10px 10px;
    padding: 12px;
 }

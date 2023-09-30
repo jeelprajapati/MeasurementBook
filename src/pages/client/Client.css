@@ -8,7 +8,7 @@
     border-radius: 8px;
 }
 .client-left{
-    background-color: rgb(172, 97, 247);
+    background-color: #333333;
     height: 97vh;
     border-radius: 9px;
 }
@@ -16,19 +16,23 @@
     position: relative;
 }
 .client-path{
-    color:rgb(172, 97, 247);
+    color:#333333;
     margin: 15px 10px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
     font-size: 14px;
 }
 .client-title{
     color: gray;
     margin: 15px 10px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
     font-size: 16px;
 }
 .clientpopup{
-    position: absolute;
-    top: 8%;
-    left: 15%;
+    position:fixed;
+    left: 50%;
+    top: 50%;
+    -ms-transform: translate(-50%,-50%);
+    -moz-transform:translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+     transform: translate(-50%,-50%);
 }

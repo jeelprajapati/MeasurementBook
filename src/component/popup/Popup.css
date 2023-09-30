@@ -12,12 +12,12 @@
 }
 .project-lable{
     font-size: 13px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
 }
 .add-title{
     padding: 15px 10px 0 10px;
     font-size: 16px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
 }
 .name-container,.no-container,.loi-container,.validity-container{
     margin: 10px 15px;
@@ -27,7 +27,7 @@
     height: 27px;
     border-radius: 5px;
     border: none;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
 }
 .Add-Project{
     background-color: green;
@@ -36,7 +36,7 @@
     font-size: 15px;
     padding: 7px 10px;
     margin: 18px 25px 25px 25px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
 }
 .Add-Project:hover{
     cursor: pointer;

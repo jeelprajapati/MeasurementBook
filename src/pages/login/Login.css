@@ -23,9 +23,9 @@
 }
 .login-title{
     font-size: 16px;
-    color:  rgb(172, 97, 247); 
+    color:  #333333; 
     margin: 12px 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
     font-weight: bold;
 }
 .login-input{
@@ -33,23 +33,22 @@
     height: 30px;
     margin:8px 30px 0 30px;
     border: none;
-    border-bottom:1px solid rgb(172, 97, 247);
+    border-bottom:1px solid #333333;
     outline: none;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
 }
 .button-container{
     display: flex;
 }
 .login-button{
     margin-bottom: 25px;
-    background-color:  rgb(172, 97, 247);
+    background-color:  #333333;
     color: white;
     border: none;
     padding: 10px;
     width: 150px;
     border-radius: 17px;
-    cursor: pointer;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
     font-size: 14px;
     font-weight: bold;
 }
@@ -57,17 +56,22 @@
     width: 150px;
     border-radius: 17px;
     background-color: transparent;
-    color: rgb(172, 97, 247);
-    border: 1px solid rgb(172, 97, 247);
+    color: #333333;
+    border: 1px solid #333333;
     height: 37px;
     margin: 0 10px;
-    cursor: pointer;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
     font-size: 14px;
     font-weight: bold;
 }
 .link-register{
     margin-bottom: 15px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
     font-size: 14px;
+}
+.reload{
+    cursor: progress;
+}
+.pointer{
+    cursor: pointer;
 }

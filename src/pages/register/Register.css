@@ -12,15 +12,15 @@
 .register-title{
     width: 85%;
     font-size: 18px;
-    color: rgb(172, 97, 247);
+    color: #333333;
     text-align: center;
     margin: 15px 0px 0px 35px; 
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
     font-weight: bold;
 }
 .register-button{
     margin: 17px 0px 20px 30px; 
-    background-color:  rgb(172, 97, 247);
+    background-color:  #333333;
     color: white;
     border: none;
     padding: 10px;
@@ -41,7 +41,7 @@
 .link-login{
     text-align: center;
     margin-bottom: 10px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
     font-size: 14px;
 }
 .register-container{
@@ -58,7 +58,7 @@
     /* background-color: rgb(223, 193, 253); */
     border: none;
     outline: none;
-    border-bottom: 1px solid rgb(172, 97, 247);
+    border-bottom: 1px solid #333333;
 }
 .register-select{
     width: 205px;
@@ -68,5 +68,5 @@
     /* background-color: rgb(223, 193, 253); */
     border: none;
     outline: none;
-    border-bottom: 1px solid rgb(172, 97, 247);
+    border-bottom: 1px solid #333333;
 }

@@ -21,19 +21,19 @@
   .bill-tr:nth-child(1){
     width: 100%;
     height: fit-content;
-    background-color:rgb(172, 97, 247);
+    background-color:#333333;
     color: white;
   }
   .bill-th{
     padding: 10px;
     font-size: 13px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
   }
   .bill-td{
     text-align: center;
     padding: 7px 10px;
     overflow-wrap: break-word;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
     font-size: 14px;
   }
   .bill-td span{

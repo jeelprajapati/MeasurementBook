@@ -61,7 +61,7 @@
 }
 .allTag{
     position: absolute;
-    border:1px solid rgb(172, 97, 247);
+    border:1px solid #333333;
     border-radius: 5px;
     min-height: 80px;
     width: 212px; 
@@ -69,7 +69,6 @@
     background-color: white;
     display: flex;
     flex-wrap: wrap;
-    top: 91%;
     z-index: 2;
 }
 .allTag p{

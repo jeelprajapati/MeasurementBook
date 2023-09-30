@@ -88,7 +88,7 @@ const Register = () => {
                 <div>
                   <input
                     type="text"
-                    placeholder="username*"
+                    placeholder="Username*"
                     className="register-input"
                     name="username"
                     value={values.username}
@@ -100,7 +100,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto', sans-serif",
+                        fontFamily:"'Roboto'",
                         color: "red",
                         width: "200px",
                       }}
@@ -110,7 +110,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto', sans-serif",
+                        fontFamily:"'Roboto'",
                         color: "red",
                         width: "200px",
                       }}>
@@ -133,7 +133,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto', sans-serif",
+                        fontFamily:"'Roboto'",
                         color: "red",
                         width: "200px",
                       }}>
@@ -142,7 +142,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto', sans-serif",
+                        fontFamily:"'Roboto'",
                         color: "red",
                         width: "200px",
                       }}>
@@ -165,7 +165,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto', sans-serif",
+                        fontFamily:"'Roboto'",
                         color: "red",
                         width: "200px",
                       }}
@@ -175,7 +175,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto', sans-serif",
+                        fontFamily:"'Roboto'",
                         color: "red",
                         width: "200px",
                       }}>
@@ -186,7 +186,7 @@ const Register = () => {
                 <div>
                   <input
                     type="password"
-                    placeholder="password*"
+                    placeholder="Password*"
                     name="password"
                     className="register-input"
                     value={values.password}
@@ -198,7 +198,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto', sans-serif",
+                        fontFamily:"'Roboto'",
                         color: "red",
                         width: "200px",
                       }}
@@ -208,7 +208,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto', sans-serif",
+                        fontFamily:"'Roboto'",
                         color: "red",
                         width: "200px",
                       }}>
@@ -219,7 +219,7 @@ const Register = () => {
                 <div>
                   <input
                     type="text"
-                    placeholder="organizationname*"
+                    placeholder="Organization Name*"
                     name="organizationname"
                     className="register-input"
                     value={values.organizationname}
@@ -231,7 +231,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto', sans-serif",
+                        fontFamily:"'Roboto'",
                         color: "red",
                         width: "200px",
                       }}
@@ -241,7 +241,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto', sans-serif",
+                        fontFamily:"'Roboto'",
                         color: "red",
                         width: "200px",
                       }}>
@@ -258,7 +258,7 @@ const Register = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                   >
-                    <option value=""> select plan*</option>
+                    <option value=""> Select Plan*</option>
                     {!loading &&
                       planId?.map((item) => (
                         <option value={item?.planID}>{item?.planName}</option>
@@ -269,7 +269,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto', sans-serif",
+                        fontFamily:"'Roboto'",
                         color: "red",
                         width: "200px",
                       }}
@@ -279,7 +279,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto', sans-serif",
+                        fontFamily:"'Roboto'",
                         color: "red",
                         width: "200px",
                       }}>

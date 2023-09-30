@@ -56,7 +56,7 @@ const Projects = () => {
               <div className="plus">+</div>
             </div>
             {!loding &&
-              data?.items.map((item, index) => (
+              data?.items?.slice(0)?.reverse()?.map((item, index) => (
                 <Link to={`/project/${item.id}`} className="link">
                   <div className={`${index === 0 ? "box green" : "box"}`}>
                     <div className="c-name">{item.projectName}</div>

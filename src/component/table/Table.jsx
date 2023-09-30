@@ -126,13 +126,13 @@ const Table = ({ Id, change, setChange }) => {
           const responce = await makeRequest.post("/ContractItem", {
             contractItemDTO: {
               id: "00000000-0000-0000-0000-000000000000",
-              sorNo: parseInt(value?.sorNo||0),
+              sorNo: parseInt(value?.sorNo || 0),
               item: value?.item,
-              hsn: parseInt(value?.hsn||0),
+              hsn: parseInt(value?.hsn || 0),
               poQty: parseInt(value?.poQty),
               stdUnitId: parseInt(value?.stdUnitId),
               unit: value?.unit,
-              rate: parseInt(value?.rate||0),
+              rate: parseInt(value?.rate || 0),
               projectId: Id,
             },
             head: head,
@@ -171,13 +171,13 @@ const Table = ({ Id, change, setChange }) => {
         try {
           const responce = await makeRequest.put("/ContractItem", {
             id: value?.id,
-            sorNo: parseInt(value?.sorNo||0),
+            sorNo: parseInt(value?.sorNo || 0),
             item: value?.item,
-            hsn: parseInt(value?.hsn||0),
+            hsn: parseInt(value?.hsn || 0),
             poQty: parseInt(value?.poQty),
             stdUnitId: parseInt(value?.stdUnitId),
             unit: value?.unit,
-            rate: parseInt(value?.rate||0),
+            rate: parseInt(value?.rate || 0),
             projectId: value?.projectId,
           });
           if (responce.status === 204) {
@@ -260,7 +260,10 @@ const Table = ({ Id, change, setChange }) => {
                 </button>
                 <button
                   className="btn-disabled"
-                  onClick={() => {handleUpdate(index, item);updateFormik.setValues(item);}}
+                  onClick={() => {
+                    handleUpdate(index, item);
+                    updateFormik.setValues(item);
+                  }}
                   disabled={input || update}
                 >
                   <img src={edit} alt="" className="svg" />
@@ -290,11 +293,7 @@ const Table = ({ Id, change, setChange }) => {
               <input
                 type="number"
                 name="sorNo"
-                className={`${
-                  ((updateFormik.errors.sorNo && updateFormik.touched.sorNo) ||
-                    (addFormik.errors.sorNo && addFormik.touched.sorNo)) ?
-                  "warning":"purple-border"
-                }`}
+                className="purple-border"
                 value={
                   update ? updateFormik.values.sorNo : addFormik.values.sorNo
                 }
@@ -309,9 +308,10 @@ const Table = ({ Id, change, setChange }) => {
                 type="text"
                 name="item"
                 className={`${
-                  ((updateFormik.errors.item && updateFormik.touched.item) ||
-                    (addFormik.errors.item && addFormik.touched.item)) ?
-                  "warning":"purple-border"
+                  (updateFormik.errors.item && updateFormik.touched.item) ||
+                  (addFormik.errors.item && addFormik.touched.item)
+                    ? "warning"
+                    : "purple-border"
                 }`}
                 value={
                   update ? updateFormik.values.item : addFormik.values.item
@@ -321,6 +321,35 @@ const Table = ({ Id, change, setChange }) => {
                 }
                 onBlur={update ? updateFormik.handleBlur : addFormik.handleBlur}
               />
+              {update ? (
+                updateFormik.touched.item && updateFormik.errors.item ? (
+                  <p
+                    style={{
+                      margin: "3px 0 0 0",
+                      fontSize: "14px",
+                      fontFamily: "'Roboto'",
+                      color: "red",
+                      width: "164px",
+                      height: "17px",
+                    }}
+                  >
+                    {updateFormik.errors.item}
+                  </p>
+                ) : null
+              ) : addFormik.touched.item && addFormik.errors.item ? (
+                <p
+                  style={{
+                    margin: "3px 0 0 0",
+                    fontSize: "14px",
+                    fontFamily: "'Roboto'",
+                    color: "red",
+                    width: "164px",
+                    height: "17px",
+                  }}
+                >
+                  {addFormik.errors.item}
+                </p>
+              ) : null}
             </td>
             <td className="td">
               <input
@@ -329,9 +358,10 @@ const Table = ({ Id, change, setChange }) => {
                 min={0}
                 name="poQty"
                 className={`${
-                  ((updateFormik.errors.poQty && updateFormik.touched.poQty) ||
-                    (addFormik.errors.poQty && addFormik.touched.poQty)) ?
-                  "warning":"purple-border"
+                  (updateFormik.errors.poQty && updateFormik.touched.poQty) ||
+                  (addFormik.errors.poQty && addFormik.touched.poQty)
+                    ? "warning"
+                    : "purple-border"
                 }`}
                 value={
                   update ? updateFormik.values.poQty : addFormik.values.poQty
@@ -341,16 +371,45 @@ const Table = ({ Id, change, setChange }) => {
                 }
                 onBlur={update ? updateFormik.handleBlur : addFormik.handleBlur}
               />
+              {update ? (
+                updateFormik.touched.poQty && updateFormik.errors.poQty ? (
+                  <p
+                    style={{
+                      margin: "3px 0 0 0",
+                      fontSize: "14px",
+                      fontFamily: "'Roboto'",
+                      color: "red",
+                      width: "164px",
+                      height: "17px",
+                    }}
+                  >
+                    {updateFormik.errors.poQty}
+                  </p>
+                ) : null
+              ) : addFormik.touched.poQty && addFormik.errors.poQty ? (
+                <p
+                  style={{
+                    margin: "3px 0 0 0",
+                    fontSize: "14px",
+                    fontFamily: "'Roboto'",
+                    color: "red",
+                    width: "164px",
+                    height: "17px",
+                  }}
+                >
+                  {addFormik.errors.poQty}
+                </p>
+              ) : null}
             </td>
             <td className="td">
               <select
                 name="stdUnitId"
                 className={`${
-                  ((updateFormik.errors.stdUnitId &&
+                  (updateFormik.errors.stdUnitId &&
                     updateFormik.touched.stdUnitId) ||
-                    (addFormik.errors.stdUnitId &&
-                      addFormik.touched.stdUnitId)) ?
-                  "warning":"purple-border"
+                  (addFormik.errors.stdUnitId && addFormik.touched.stdUnitId)
+                    ? "warning"
+                    : "purple-border"
                 }`}
                 value={
                   update
@@ -372,15 +431,46 @@ const Table = ({ Id, change, setChange }) => {
                     </option>
                   ))}
               </select>
+              {update ? (
+                updateFormik.touched.stdUnitId &&
+                updateFormik.errors.stdUnitId ? (
+                  <p
+                    style={{
+                      margin: "3px 0 0 0",
+                      fontSize: "14px",
+                      fontFamily: "'Roboto'",
+                      color: "red",
+                      width: "164px",
+                      height: "17px",
+                    }}
+                  >
+                    {updateFormik.errors.stdUnitId}
+                  </p>
+                ) : null
+              ) : addFormik.touched.stdUnitId && addFormik.errors.stdUnitId ? (
+                <p
+                  style={{
+                    margin: "3px 0 0 0",
+                    fontSize: "14px",
+                    fontFamily: "'Roboto'",
+                    color: "red",
+                    width: "164px",
+                    height: "17px",
+                  }}
+                >
+                  {addFormik.errors.stdUnitId}
+                </p>
+              ) : null}
             </td>
             <td className="td">
               <input
                 type="text"
                 name="unit"
                 className={`${
-                  ((updateFormik.errors.unit && updateFormik.touched.unit) ||
-                    (addFormik.errors.unit && addFormik.touched.unit)) ?
-                  "warning":"purple-border"
+                  (updateFormik.errors.unit && updateFormik.touched.unit) ||
+                  (addFormik.errors.unit && addFormik.touched.unit)
+                    ? "warning"
+                    : "purple-border"
                 }`}
                 value={
                   update ? updateFormik.values.unit : addFormik.values.unit
@@ -390,6 +480,35 @@ const Table = ({ Id, change, setChange }) => {
                 }
                 onBlur={update ? updateFormik.handleBlur : addFormik.handleBlur}
               />
+              {update ? (
+                updateFormik.touched.unit && updateFormik.errors.unit ? (
+                  <p
+                    style={{
+                      margin: "3px 0 0 0",
+                      fontSize: "14px",
+                      fontFamily: "'Roboto'",
+                      color: "red",
+                      width: "164px",
+                      height: "17px",
+                    }}
+                  >
+                    {updateFormik.errors.unit}
+                  </p>
+                ) : null
+              ) : addFormik.touched.unit && addFormik.errors.unit ? (
+                <p
+                  style={{
+                    margin: "3px 0 0 0",
+                    fontSize: "14px",
+                    fontFamily: "'Roboto'",
+                    color: "red",
+                    width: "164px",
+                    height: "17px",
+                  }}
+                >
+                  {addFormik.errors.unit}
+                </p>
+              ) : null}
             </td>
             <td className="td">
               <input
@@ -398,9 +517,10 @@ const Table = ({ Id, change, setChange }) => {
                 min={0}
                 name="rate"
                 className={`${
-                  ((updateFormik.errors.rate && updateFormik.touched.rate) ||
-                    (addFormik.errors.rate && addFormik.touched.rate)) ?
-                  "warning":"purple-border"
+                  (updateFormik.errors.rate && updateFormik.touched.rate) ||
+                  (addFormik.errors.rate && addFormik.touched.rate)
+                    ? "warning"
+                    : "purple-border"
                 }`}
                 value={
                   update ? updateFormik.values.rate : addFormik.values.rate
@@ -416,9 +536,10 @@ const Table = ({ Id, change, setChange }) => {
                 type="number"
                 name="hsn"
                 className={`${
-                  ((updateFormik.errors.hsn && updateFormik.touched.hsn) ||
-                    (addFormik.errors.hsn && addFormik.touched.hsn)) ?
-                  "warning":"purple-border"
+                  (updateFormik.errors.hsn && updateFormik.touched.hsn) ||
+                  (addFormik.errors.hsn && addFormik.touched.hsn)
+                    ? "warning"
+                    : "purple-border"
                 }`}
                 value={update ? updateFormik.values.hsn : addFormik.values.hsn}
                 onChange={
@@ -455,7 +576,7 @@ const Table = ({ Id, change, setChange }) => {
                   setTail(null);
                   setNumber(-1);
                   if (update) {
-                    updateFormik.resetForm()
+                    updateFormik.resetForm();
                     if (change === 1) {
                       setChange(0);
                     } else {

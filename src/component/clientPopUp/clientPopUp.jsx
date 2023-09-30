@@ -119,7 +119,7 @@ const ClientPopUp = ({
           <input
             type="text"
             id="clientName"
-            placeholder="client Name *"
+            placeholder="Client Name *"
             className="client-Add-input"
             name="name"
             value={update ? upadteRequest.values.name : addRequest.values.name}
@@ -134,7 +134,7 @@ const ClientPopUp = ({
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "13px",
-                  fontFamily:"'Roboto', sans-serif",
+                  fontFamily:"'Roboto'",
                   color: "red",
                   width: "200px",
                 }}
@@ -145,7 +145,7 @@ const ClientPopUp = ({
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "13px",
-                fontFamily:"'Roboto', sans-serif",
+                fontFamily:"'Roboto'",
                 color: "red",
                 width: "200px",
               }}
@@ -156,7 +156,7 @@ const ClientPopUp = ({
           <input
             type="email"
             id="email"
-            placeholder="email *"
+            placeholder="Email *"
             className="client-Add-input"
             name="email"
             value={
@@ -173,7 +173,7 @@ const ClientPopUp = ({
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "13px",
-                  fontFamily:"'Roboto', sans-serif",
+                  fontFamily:"'Roboto'",
                   color: "red",
                   width: "200px",
                 }}
@@ -184,7 +184,7 @@ const ClientPopUp = ({
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "13px",
-                fontFamily:"'Roboto', sans-serif",
+                fontFamily:"'Roboto'",
                 color: "red",
                 width: "200px",
               }}
@@ -195,7 +195,7 @@ const ClientPopUp = ({
           <input
             type="text"
             id="phoneNumber"
-            placeholder="phoneNumber *"
+            placeholder="Phone Number *"
             className="client-Add-input"
             name="phoneNumber"
             value={
@@ -215,7 +215,7 @@ const ClientPopUp = ({
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "13px",
-                  fontFamily:"'Roboto', sans-serif",
+                  fontFamily:"'Roboto'",
                   color: "red",
                   width: "200px",
                 }}
@@ -227,7 +227,7 @@ const ClientPopUp = ({
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "13px",
-                fontFamily:"'Roboto', sans-serif",
+                fontFamily:"'Roboto'",
                 color: "red",
                 width: "200px",
               }}
@@ -238,7 +238,7 @@ const ClientPopUp = ({
           <input
             type="text"
             id="gstin"
-            placeholder="Gatin"
+            placeholder="GSTIN"
             className="client-Add-input"
             name="gstin"
             value={
@@ -255,7 +255,7 @@ const ClientPopUp = ({
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "13px",
-                  fontFamily:"'Roboto', sans-serif",
+                  fontFamily:"'Roboto'",
                   color: "red",
                   width: "200px",
                 }}
@@ -266,7 +266,7 @@ const ClientPopUp = ({
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "13px",
-                fontFamily:"'Roboto', sans-serif",
+                fontFamily:"'Roboto'",
                 color: "red",
                 width: "200px",
               }}
@@ -277,7 +277,7 @@ const ClientPopUp = ({
           <input
             type="text"
             id="pan"
-            placeholder="pan"
+            placeholder="PAN No."
             className="client-Add-input"
             name="pan"
             value={update ? upadteRequest.values.pan : addRequest.values.pan}
@@ -292,7 +292,7 @@ const ClientPopUp = ({
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "13px",
-                  fontFamily:"'Roboto', sans-serif",
+                  fontFamily:"'Roboto'",
                   color: "red",
                   width: "200px",
                 }}
@@ -303,7 +303,7 @@ const ClientPopUp = ({
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "13px",
-                fontFamily:"'Roboto', sans-serif",
+                fontFamily:"'Roboto'",
                 color: "red",
                 width: "200px",
               }}
@@ -331,7 +331,7 @@ const ClientPopUp = ({
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "13px",
-                  fontFamily:"'Roboto', sans-serif",
+                  fontFamily:"'Roboto'",
                   color: "red",
                   width: "200px",
                 }}
@@ -342,7 +342,7 @@ const ClientPopUp = ({
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "13px",
-                fontFamily:"'Roboto', sans-serif",
+                fontFamily:"'Roboto'",
                 color: "red",
                 width: "200px",
               }}
@@ -368,7 +368,7 @@ const ClientPopUp = ({
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "13px",
-                  fontFamily:"'Roboto', sans-serif",
+                  fontFamily:"'Roboto'",
                   color: "red",
                   width: "200px",
                 }}
@@ -379,7 +379,7 @@ const ClientPopUp = ({
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "13px",
-                fontFamily:"'Roboto', sans-serif",
+                fontFamily:"'Roboto'",
                 color: "red",
                 width: "200px",
               }}
@@ -401,7 +401,7 @@ const ClientPopUp = ({
             className="client-select"
             id=""
           >
-            <option value="" disabled>select country *</option>
+            <option value="" disabled>Select Country *</option>
             {country?.map((item) => (
               <option value={item?.id} key={item?.id}>
                 {item?.countryName}
@@ -416,7 +416,7 @@ const ClientPopUp = ({
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "13px",
-                  fontFamily:"'Roboto', sans-serif",
+                  fontFamily:"'Roboto'",
                   color: "red",
                   width: "200px",
                 }}
@@ -427,7 +427,7 @@ const ClientPopUp = ({
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "13px",
-                fontFamily:"'Roboto', sans-serif",
+                fontFamily:"'Roboto'",
                 color: "red",
                 width: "200px",
               }}
@@ -455,7 +455,7 @@ const ClientPopUp = ({
                 ? upadteRequest.values.countryId===''
                 : addRequest.values.countryId===''}
             >
-              <option value="" disabled>select state *</option>
+              <option value="" disabled>Select State *</option>
               {state
                 ?.filter(
                   (e) =>
@@ -477,7 +477,7 @@ const ClientPopUp = ({
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "13px",
-                  fontFamily:"'Roboto', sans-serif",
+                  fontFamily:"'Roboto'",
                   color: "red",
                   width: "200px",
                 }}
@@ -488,7 +488,7 @@ const ClientPopUp = ({
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "13px",
-                fontFamily:"'Roboto', sans-serif",
+                fontFamily:"'Roboto'",
                 color: "red",
                 width: "200px",
               }}
@@ -499,7 +499,7 @@ const ClientPopUp = ({
           <input
             type="text"
             id="postalCode"
-            placeholder="postalCode *"
+            placeholder="Postal Code *"
             className="client-Add-input"
             name="postalCode"
             value={
@@ -519,7 +519,7 @@ const ClientPopUp = ({
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "13px",
-                  fontFamily:"'Roboto', sans-serif",
+                  fontFamily:"'Roboto'",
                   color: "red",
                   width: "200px",
                 }}
@@ -530,7 +530,7 @@ const ClientPopUp = ({
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "13px",
-                fontFamily:"'Roboto', sans-serif",
+                fontFamily:"'Roboto'",
                 color: "red",
                 width: "200px",
               }}
@@ -541,7 +541,7 @@ const ClientPopUp = ({
       {update ? (
         <input type="button" value='Update' onClick={upadteRequest.handleSubmit} className="client-btn"/>
       ) : (
-        <input type="button" value=' submit' onClick={addRequest.handleSubmit} className="client-btn"/>
+        <input type="button" value='Submit' onClick={addRequest.handleSubmit} className="client-btn"/>
       )}
       <img
         src={close}

@@ -115,7 +115,7 @@ const Billpopup = ({
       <h3 className="add-title">{input ? "Update" : "Add"} Bill</h3>
 
       <div className="name-container">
-        <label style={{fontFamily:"'Roboto', sans-serif",fontSize:'14px'}} htmlFor="projectName">Bill Name <span style={{color:'red',fontSize:'14px'}}>*</span></label>
+        <label style={{fontFamily:"'Roboto'",fontSize:'14px'}} htmlFor="projectName">Bill Name <span style={{color:'red',fontSize:'14px'}}>*</span></label>
         <br />
         <input
           type="text"
@@ -132,7 +132,7 @@ const Billpopup = ({
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "13px",
-                  fontFamily:"'Roboto', sans-serif",
+                  fontFamily:"'Roboto'",
                   color: "red",
                   width: "200px",
                 }}
@@ -143,7 +143,7 @@ const Billpopup = ({
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "13px",
-                fontFamily:"'Roboto', sans-serif",
+                fontFamily:"'Roboto'",
                 color: "red",
                 width: "200px",
               }}
@@ -168,7 +168,7 @@ const Billpopup = ({
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "13px",
-                  fontFamily:"'Roboto', sans-serif",
+                  fontFamily:"'Roboto'",
                   color: "red",
                   width: "200px",
                 }}
@@ -179,7 +179,7 @@ const Billpopup = ({
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "13px",
-                fontFamily:"'Roboto', sans-serif",
+                fontFamily:"'Roboto'",
                 color: "red",
                 width: "200px",
               }}
@@ -187,7 +187,7 @@ const Billpopup = ({
           ) : null}
       </div>
       <div className="no-container">
-        <label style={{fontFamily:"'Roboto', sans-serif",fontSize:'14px'}} htmlFor="typeBill">Type <span style={{color:'red',fontSize:'14px'}}>*</span></label>
+        <label style={{fontFamily:"'Roboto'",fontSize:'14px'}} htmlFor="typeBill">Type <span style={{color:'red',fontSize:'14px'}}>*</span></label>
         <br />
         <select
           name="typeBill"
@@ -207,7 +207,7 @@ const Billpopup = ({
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "13px",
-                  fontFamily:"'Roboto', sans-serif",
+                  fontFamily:"'Roboto'",
                   color: "red",
                   width: "200px",
                 }}
@@ -218,7 +218,7 @@ const Billpopup = ({
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "13px",
-                fontFamily:"'Roboto', sans-serif",
+                fontFamily:"'Roboto'",
                 color: "red",
                 width: "200px",
               }}
@@ -226,7 +226,7 @@ const Billpopup = ({
           ) : null}
       </div>
       <div className="loi-container">
-        <label style={{fontFamily:"'Roboto', sans-serif",fontSize:'14px'}} htmlFor="status">Status <span style={{color:'red',fontSize:'14px'}}>*</span></label>
+        <label style={{fontFamily:"'Roboto'",fontSize:'14px'}} htmlFor="status">Status <span style={{color:'red',fontSize:'14px'}}>*</span></label>
         <br />
         <select
           name="status"
@@ -247,7 +247,7 @@ const Billpopup = ({
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "13px",
-                  fontFamily:"'Roboto', sans-serif",
+                  fontFamily:"'Roboto'",
                   color: "red",
                   width: "200px",
                 }}
@@ -258,7 +258,7 @@ const Billpopup = ({
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "13px",
-                fontFamily:"'Roboto', sans-serif",
+                fontFamily:"'Roboto'",
                 color: "red",
                 width: "200px",
               }}

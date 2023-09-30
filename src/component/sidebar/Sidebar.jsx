@@ -69,7 +69,7 @@ const Sidebar = ({id}) => {
       </div>
       {(token)&&<div style={{cursor:'pointer'}} className={!sidebar?'logout':'logout-high'} onClick={handleLogout}>
         <span style={{display:'flex',justifyContent:'center'}} className='sidebar-svg'><img src={logout} alt="" /></span>
-        <span style={{color:'white',fontFamily:"'Roboto', sans-serif",fontSize:'14px',fontWeight:'bold'}} className={`${sidebar?'sidebar-name':'d-none'}`}>Logout</span>
+        <span style={{color:'white',fontFamily:"'Roboto'",fontSize:'14px',fontWeight:'bold'}} className={`${sidebar?'sidebar-name':'d-none'}`}>Logout</span>
       </div>}
     </div>
   )

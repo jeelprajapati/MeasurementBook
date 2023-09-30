@@ -8,7 +8,7 @@
     border-radius: 8px;
 }
 .bill-left{
-    background-color: rgb(172, 97, 247);
+    background-color: #333333;
     height: 97vh;
     border-radius: 9px;
 }
@@ -18,16 +18,16 @@
 .bill-path{
     margin: 15px 0px 0px 15px;
     font-size: 14px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
 }
 .bill-path span{
-    color: rgb(172, 97, 247);
+    color: #333333;
 }
 .bill-summary{
     margin: 10px 15px;
 }
 .summary-title{
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
     font-size: 16px;
 }
 .summary-container{
@@ -44,7 +44,7 @@
     margin: 20px 15px;
 }
 .bill-table-title{
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
     font-size: 16px;
 }
 .bill-con{
@@ -63,7 +63,7 @@
     margin: 10px 10px;
     border-radius: 7px;
     color: white;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
 }
 .add-bill:hover{
     cursor: pointer;

@@ -16,7 +16,7 @@ const Measure = () => {
   const location = useLocation().search.split("?");
   const billId = location[1].split("=")[1];
   const projectId = location[2].split("=")[1];
-  const [element, setElement] = useState({description:'',no:'',contractItemId:''});
+  const [element, setElement] = useState({description:'',no:''});
   const [number, setNumber] = useState(-1);
   const [input, setInput] = useState(false);
   const [update, setUpdate] = useState(false);
@@ -129,14 +129,7 @@ const Measure = () => {
        deleteData();
     }
   },[isDelete])
-  const inputValidation=(i)=>{
-    for (const key in i) {
-      if(i[key]===''){
-        return false
-      }     
-    }
-    return true
-  }
+ 
   const handleChange = (e) => {
     setElement({ ...element, [e.target.name]: e.target.value });
   };
@@ -166,56 +159,23 @@ const Measure = () => {
     setLoad(false);
   };
 
-  const handleAdd = async (e) => {
-    e.preventDefault();
-    const success1=inputValidation(element)
-    const success2=inputValidation(contractId)
-    if(success1&&success2){
-     
-    }
-    else{
-      alert.show('Please fill out all fields before submitting',{type:'error'});
-    }
-  };
-
-  const handelFinalUpdata = async (e) => {
-    e.preventDefault();
-    const success1=inputValidation(element)
-    const success2=inputValidation(contractId)
-    if(success1&&success2){
-      
-  }
-  else{
-    alert.show('Please fill out all fields before updateing',{type:'error'});
-  }
-};
   const handleDelete = async (id) => {
     setDeleteId(id);
     setWarn(true);
   };
 
-  const handleCopy = (index, item) => {
-    setElement(item);
-    setNumber(index);
-    setTags(item?.tags);
-    setHead(item?.id);
-    setContractId(item?.contractItemId);
-    setContractName(contractItem?.filter((i) => i?.id === item?.contractItemId)[0]?.item);
-    setTail(array[index + 1]?.id);
-    setInput(true);
-  };
-
+  
   const handleContractItem = (i) => {
     setContractId(i?.id);
     setContractName(i?.item);
     setShow(false)
   };
-
+  
   const addFormik=useFormik({
     initialValues:element,
     validationSchema:measureTable,
     onSubmit:(value)=>{
-       const handleAdd=async()=>{
+      const handleAdd=async()=>{
         try {
           const res = await makeRequest.post("/MeasurementBook", {
             measurementBookDTO: {
@@ -236,6 +196,7 @@ const Measure = () => {
           });
           if (res.status === 204) {
             alert.show("Data Added Sucessfully", { type: "success" });
+            addFormik.resetForm();
             setInput(false);
             setElement(null);
             setTags("");
@@ -263,7 +224,7 @@ const Measure = () => {
        handleAdd();
     }
   })
-
+  
   const updateFormik=useFormik({
     initialValues:element,
     validationSchema:measureTable,
@@ -285,6 +246,7 @@ const Measure = () => {
           });
           if (res.status === 204) {
             alert.show("Data Updated Sucessfully", { type: "success" });
+            updateFormik.resetForm();
             setUpdate(false);
             setElement(null);
             setTags("");
@@ -312,6 +274,17 @@ const Measure = () => {
       handleUpdate();
     }
   })
+  const handleCopy = (index, item) => {
+    setElement(item);
+    addFormik.setValues(item)
+    setNumber(index);
+    setTags(item?.tags);
+    setHead(item?.id);
+    setContractId(item?.contractItemId);
+    setContractName(contractItem?.filter((i) => i?.id === item?.contractItemId)[0]?.item);
+    setTail(array[index + 1]?.id);
+    setInput(true);
+  };
   return (
     <div className="measure-table-container">
       <table>
@@ -414,11 +387,7 @@ const Measure = () => {
                   setContractName(e.target.value);
                   setShow(true);
                 }}
-                className={`${
-                  ((updateFormik.errors.contractItemId && updateFormik.touched.contractItemId) ||
-                    (addFormik.errors.contractItemId && addFormik.touched.contractItemId)) ?
-                  "measure-input warning":"measure-input purple-border"
-                }`}
+                className="measure-input purple-border"
               />
                {(!load && show) && <ul
                 style={{
@@ -433,7 +402,7 @@ const Measure = () => {
                   width: "93%",
                   top: "88%",
                   zIndex:'2',
-                  border: "1px solid rgb(172, 97, 247)",
+                  border: "1px solid #333333",
                 }}>
                   {contractItem?.filter((e) => e?.item?.toUpperCase().includes(contractName.toUpperCase()))
                     ?.map((i) => (
@@ -441,7 +410,6 @@ const Measure = () => {
                         className="measure-li"
                         onClick={() => {
                           handleContractItem(i);
-                          update?updateFormik.setValues({...updateFormik.values,contractItemId:i?.id}):addFormik.setValues({...addFormik.values,contractItemId:i?.id})
                         }}
                       >
                         {i?.item}

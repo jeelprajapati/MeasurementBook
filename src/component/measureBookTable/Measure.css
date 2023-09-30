@@ -21,14 +21,15 @@
   .measure-tr:nth-child(1){
     width: 100%;
     height: fit-content;
-    background-color:rgb(172, 97, 247);
+    background-color:#333333;
     color: white;
     position: sticky;
     top: 0;
+    z-index: 2;
   }
   .measure-th{
     padding: 10px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
     font-size: 14px;
   }
   .measure-th:nth-child(1){
@@ -50,7 +51,7 @@
     max-height:100px;
     overflow-wrap: wrap;
     font-size: 13px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
     height: fit-content;
     position: relative;
   }
@@ -83,7 +84,7 @@
   .measure-input{
     display: flex;
     flex-wrap: wrap;
-    /* border: 1px solid rgb(172, 97, 247); */
+    /* border: 1px solid #333333; */
     height: 40px;
     width: 95%;
     margin:3px 0;
@@ -99,7 +100,7 @@
   width: 100%;
   background-color: rgb(242, 240, 240);
   position: absolute;
-  border: 1px solid rgb(172, 97, 247);
+  border: 1px solid #333333;
   left: -1px;
   border-top: none;
 }
@@ -137,7 +138,7 @@ li{
 }
 .desc-input{
   background-color: white;
-  /* border: 1px solid rgb(172, 97, 247); */
+  /* border: 1px solid #333333; */
   min-height: 55px;
   width: 94%;
   padding: 0 3px;

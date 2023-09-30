@@ -13,7 +13,7 @@
     border-radius: 8px;
 }
 .pro-left{
-    background-color: rgb(172, 97, 247);
+    background-color: #333333;
     height: 97vh;
     border-radius: 9px;
 }
@@ -21,15 +21,15 @@
     background-color: white;
 }
 .path{
-    color:rgb(172, 97, 247);
+    color:#333333;
     margin: 15px 10px;
     font-size: 14px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
 }
 .pro-title{
     color: gray;
     margin: 15px 10px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
     font-size: 16px;
 }
 .box-container{
@@ -52,7 +52,7 @@
 .plus{
     padding: 5px;
     font-size: 100px;
-    color: rgb(172, 97, 247);
+    color: #333333;
 }
 .box{
     width: 180px;
@@ -61,7 +61,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color:rgb(172, 97, 247);
+    background-color:#333333;
     position: relative;
 }
 .box:hover{
@@ -71,7 +71,7 @@
     color: white;
     font-size: 17px;
     margin:0 30px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto';
 }
 .boxs{
     display: flex;
