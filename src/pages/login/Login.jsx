@@ -4,7 +4,6 @@ import makeRequesInstance from "../../makeRequest";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAlert } from "react-alert";
-import Sidebar from '../../component/sidebar/Sidebar.jsx'
 const Login = () => {
   const [data, setData] = useState(null);
   const [loading,setLoading]=useState(false);
@@ -86,8 +85,6 @@ const Login = () => {
 
   return (
     <div className="main-login-container">
-       <div className="client-left"><Sidebar id={0}/></div>
-        <div className="login-right">
       <div className="login-container">
         <div className="login-title">Login</div>
         <input
@@ -115,7 +112,6 @@ const Login = () => {
         <div className="link-register">
           Go to register <Link to='/register'>Register</Link>
         </div>
-      </div>
       </div>
     </div>
   );

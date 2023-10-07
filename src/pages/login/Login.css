@@ -1,14 +1,6 @@
 .main-login-container{
-    display: flex;
     border-radius: 8px;
-}
-.login-right{
-    flex: 3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 97vh;
-    justify-content: center;
+    position: relative;
 }
 .login-container{
     width: 28vw;
@@ -16,15 +8,22 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
+    border-radius: 5px;
     -webkit-box-shadow: 0px 0px 12px 8px rgba(222,198,247,1);
     -moz-box-shadow: 0px 0px 12px 8px rgba(222,198,247,1);
     box-shadow: 0px 0px 12px 8px rgba(222,198,247,1);
+    position:fixed;
+    left: 50%;
+    top: 50%;
+    -ms-transform: translate(-50%,-50%);
+    -moz-transform:translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
 }
 .login-title{
-    font-size: 16px;
+    font-size: 18px;
     color:  #333333; 
-    margin: 12px 0;
+    margin: 20px 0;
     font-family: 'Roboto';
     font-weight: bold;
 }
@@ -32,9 +31,9 @@
     width: 300px;
     height: 30px;
     margin:8px 30px 0 30px;
-    border: none;
-    border-bottom:1px solid #333333;
-    outline: none;
+    outline-color: #333333;
+    padding: 10px;
+    border: 1px solid rgb(223, 221, 221);
     font-family: 'Roboto';
 }
 .button-container{
@@ -47,14 +46,14 @@
     border: none;
     padding: 10px;
     width: 150px;
-    border-radius: 17px;
+    border-radius: 3px;
     font-family: 'Roboto';
     font-size: 14px;
     font-weight: bold;
 }
 .forget-button{
     width: 150px;
-    border-radius: 17px;
+    border-radius: 3px;
     background-color: transparent;
     color: #333333;
     border: 1px solid #333333;
@@ -65,7 +64,7 @@
     font-weight: bold;
 }
 .link-register{
-    margin-bottom: 15px;
+    margin: 7px 0 30px 0;
     font-family: 'Roboto';
     font-size: 14px;
 }

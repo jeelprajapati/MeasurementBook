@@ -3,7 +3,6 @@ import "./Register.css";
 import makeRequesInstance from "../../makeRequest";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Sidebar from "../../component/sidebar/Sidebar.jsx";
 import { useAlert } from "react-alert";
 import { useFormik } from "formik";
 import { signUpScema } from "../../scemas";
@@ -43,7 +42,7 @@ const Register = () => {
       setLoading(false);
     };
     getPlanId();
-  }, []);
+  }, [alert]);
 
   const {values,handleBlur,handleChange,handleSubmit,errors,touched}=useFormik({
     initialValues:intialvalue,
@@ -75,12 +74,6 @@ const Register = () => {
   })
 
   return (
-    <>
-      <div style={{ display: "flex" }}>
-        <div className="client-left">
-          <Sidebar id={0} />
-        </div>
-        <div className="register-right">
           <div className="main-register-container">
             <div className="sub-container">
               <div className="register-title">Register</div>
@@ -293,9 +286,6 @@ const Register = () => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </>
   );
 };
 

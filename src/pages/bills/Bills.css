@@ -1,67 +1,77 @@
 .bill-main-container{
-    width: 98vw;
-    height: 97vh;
-    margin: auto;
+    width: 100vw;
+    height: 100vh;
     display: flex;
-    margin-top: 10px;
-    gap: 10px;
     border-radius: 8px;
 }
 .bill-left{
     background-color: #333333;
-    height: 97vh;
-    border-radius: 9px;
+    height: 100vh;
+    border-radius: 3px;
 }
 .bill-right{
     position: relative;
+    background-color: rgb(238, 237, 237);
+    padding:7px;
+    display: flex;
+    flex-direction: column;
+    gap:7px;
+}
+.bill-top{
+    width: 100%;
+    background-color: white;
 }
 .bill-path{
-    margin: 15px 0px 0px 15px;
     font-size: 14px;
     font-family: 'Roboto';
+    margin: 10px;
 }
 .bill-path span{
     color: #333333;
 }
-.bill-summary{
-    margin: 10px 15px;
+.bill-middle{
+    width: 100%;
+    background-color: white;
 }
 .summary-title{
     font-family: 'Roboto';
     font-size: 16px;
+    margin: 10px;
 }
 .summary-container{
     display: flex;
     justify-content: space-between;
+    margin:10px 20px;
 }
 .summary-box{
     width: 200px;
     height: 130px;
-    border-radius: 10px;
-    background-color: rgb(214, 214, 214);
+    border-radius: 5px;
+    background-color: rgb(247 247 247);
 }
-.bill-table{
-    margin: 20px 15px;
+.bill-footer{
+    background-color: white;
 }
 .bill-table-title{
     font-family: 'Roboto';
-    font-size: 16px;
+    font-size: 18px;
 }
 .bill-con{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 0px 15px;
 }
 .add-bill{
-    background-color: rgb(5, 187, 5);
+    background-color: #5b69e9;
     border: none;
+    font-weight: 600;
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 10px 10px;
-    border-radius: 7px;
+    border-radius: 5px;
     color: white;
     font-family: 'Roboto';
 }

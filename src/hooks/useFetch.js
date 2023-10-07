@@ -5,11 +5,11 @@ import { useAlert } from "react-alert";
 const useFetch = ({ url, change }) => {
   const [data, setdata] = useState(null);
   const [loding, setLoding] = useState(false);
-  const makeRequest = makeRequesInstance(localStorage.getItem("token"));
   const alert=useAlert();
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const makeRequest = makeRequesInstance(localStorage.getItem("token"));
         const res = await makeRequest.get(url);
         setdata(res.data);
       } catch (error) {
@@ -26,7 +26,7 @@ const useFetch = ({ url, change }) => {
       setLoding(false);
     };
       fetchData();
-  }, [url, change]);
+  }, [url, change,alert]);
   return { loding, data };
 };
 

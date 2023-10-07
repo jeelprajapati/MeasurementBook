@@ -7,8 +7,6 @@ import { useAlert } from 'react-alert'
 import { Link } from 'react-router-dom';
 const Excel = ({setOpen,projectId,setChange,change}) => {
   const[data,setData]=useState(null);
-  const[loding,setLoding]=useState(false)
-  const[error,setError]=useState(null);
   const alert=useAlert();
   const makeRequest=makeRequesInstance(localStorage.getItem('token'));
   const handleFile=(e)=>{
@@ -18,12 +16,11 @@ const Excel = ({setOpen,projectId,setChange,change}) => {
        const reader= new FileReader();
        reader.readAsArrayBuffer(file);
        reader.onload=(e)=>{
-         setError(null);
          setData(e.target.result)
        }
      }
      else{
-       setError('please select excel file')
+      alert.show('please select excel file',{type:'error'})
      } 
   }
 
@@ -81,8 +78,6 @@ const Excel = ({setOpen,projectId,setChange,change}) => {
           <input type="file" onChange={handleFile}/>
           <br/>
           <button className="excel-button" onClick={handleSubmit}>submit</button>
-          {loding&&<><br />
-          <span>{error}</span></>}
           <br />
           <span className='excel-red'>Download Reference Excel Format: <Link to='https://docs.google.com/spreadsheets/d/e/2PACX-1vQtekg2bf5eHdBdmpD2pWtDykbjJ7-3aX9aheH2jRR89zflLKIVvnfCKTedsqu9IwaJ0LzW5JNrCeof/pub?output=xlsx'>https://docs.google.com/spreadsheets/d/e/2PACX-1vQtekg2bf5eHdBdmpD2pWtDykbjJ7-3aX9aheH2jRR89zflLKIVvnfCKTedsqu9IwaJ0LzW5JNrCeof/pub?output=xlsx</Link></span>
         </div>

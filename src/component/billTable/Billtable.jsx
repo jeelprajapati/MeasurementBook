@@ -49,9 +49,9 @@ const Billtable = ({ setOpen, change, setInput, setItem, setChange ,open }) => {
       <table>
         <tr className="bill-tr">
           <th className="bill-th">Bill Name</th>
-          <th className="bill-th">Invoice Date</th>
+          <th className="bill-th" colSpan={2}>Invoice Date</th>
           <th className="bill-th">Type</th>
-          <th className="bill-th">Reference No.</th>
+          <th className="bill-th" colSpan={2}>Reference No.</th>
           <th className="bill-th">Status</th>
           <th className="bill-th">Action</th>
         </tr>
@@ -61,22 +61,24 @@ const Billtable = ({ setOpen, change, setInput, setItem, setChange ,open }) => {
               <td className="bill-td">
                 <span>{item?.name}</span>
               </td>
-              <td className="bill-td">
+              <td className="bill-td" colSpan={2}>
                 <span>{item?.invoiceDate}</span>
               </td>
               <td className="bill-td">
                 <span>{item?.typeBill === 1 ? "RA" : "Final"}</span>
               </td>
-              <td className="bill-td">
+              <td className="bill-td" colSpan={2}>
                 <span>{item?.invoiceNo}</span>
               </td>
               <td className="bill-td">
-                <span>
+                <span >
+                  <p className={`${item.status===1?'yellow status':'status Green'}`}>
                   {item?.status === 1
                     ? "Draft"
                     : item?.status === 2
                     ? "Submitted"
                     : "Accepted"}
+                  </p>
                 </span>
               </td>
               <td className="bill-td">
@@ -100,7 +102,7 @@ const Billtable = ({ setOpen, change, setInput, setItem, setChange ,open }) => {
                   to={`/measurementbook?billId=${item?.id}?projectId=${Id}?projectname=${projectname}?billname=${item?.name}`}
                   className="link"
                 >
-                  <button style={{margin:'0',padding:'0',backgroundColor:'rgb(5, 187, 5)',border:'none'}} >
+                  <button style={{margin:'0',padding:'0',backgroundColor:'rgb(20 167 103)',border:'none'}} >
                    <img src={filesvg} style={{width:'22px',height:'22px',filter:'invert(1)',cursor:'pointer'}} alt="" className="svg" />
                   </button>
                 </Link>:<button className="disabled" disabled style={{margin:'0',padding:'0',border:'none'}} >

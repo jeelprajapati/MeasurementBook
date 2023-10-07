@@ -1,10 +1,10 @@
 .bill-table-container{
-    margin: 15px 0 0 15px;
-    width: 100%; 
-    height:410px;
-    background-color: rgb(227, 226, 226);
+    margin:0 10px 10px;
+    width: 98.5%; 
+    height:440px;
+    background-color: rgb(241 241 241);
     overflow-y: scroll;
-    border-radius: 18px;
+    border-radius: 10px;
 }
 .bill-table-container::-webkit-scrollbar{
     display: none;
@@ -31,17 +31,21 @@
   }
   .bill-td{
     text-align: center;
-    padding: 7px 10px;
+    padding: 6px 1px;
     overflow-wrap: break-word;
     font-family: 'Roboto';
     font-size: 14px;
+    height: 0;
   }
   .bill-td span{
     display: block;
     background-color: white;
-    padding: 4px 10px;
-    border-radius: 5px;
-    height: 30px;
+    padding: 10px 10px;
+    border-radius: 2px;
+    height: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow-y: scroll;
   }
   .bill-td span::-webkit-scrollbar{
@@ -49,5 +53,16 @@
   }
   .disabled{
     cursor: not-allowed;
-    background-color: rgb(69, 121, 69);
+    background-color: #71cea5;
+  }
+  .status{
+    width: 100px;
+    height: 24px;
+    font-weight: 600;
+  }
+  .yellow{
+    color: #fa7773;
+  }
+  .Green{
+    color: #077d4a;
   }

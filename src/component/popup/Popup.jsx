@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Popup.css";
 import close from "../../image/close.svg";
 import makeRequesInstance from "../../makeRequest";
@@ -131,7 +131,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
           onChange={update ? updateFormik.handleChange : addFormik.handleChange}
           onBlur={update ? updateFormik.handleBlur : addFormik.handleBlur}
         >
-          <option>Select client</option>
+          <option value="" disabled>Select Client</option>
           {!loding &&
             data?.items.map((item) => (
               <option value={`${item?.id}`} key={item?.id}>
@@ -215,12 +215,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
           <input
             type="text"
             id="contractNo"
-            style={{
-              width: "260px",
-              height: "27px",
-              borderRadius: "5px",
-              border: "none",
-            }}
+            className="dt-input"
             name="contractNo"
             value={
               update
@@ -310,12 +305,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
           <input
             type="text"
             id="contractValidity"
-            style={{
-              width: "260px",
-              height: "27px",
-              borderRadius: "5px",
-              border: "none",
-            }}
+            className="dt-input"
             name="contractValidity"
             value={
               update

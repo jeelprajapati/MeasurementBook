@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import close from "../../image/close.svg";
 import "./Billpopup.css";
 import makeRequesInstance from "../../makeRequest";

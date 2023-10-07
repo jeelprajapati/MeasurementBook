@@ -4,6 +4,7 @@ import Sidebar from "../../component/sidebar/Sidebar.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import Popup from "../../component/popup/Popup";
 import useFetch from "../../hooks/useFetch";
+import search from "../../image/search.svg"
 // import makeRequesInstance from "../../makeRequest";
 // import { useAlert } from "react-alert";
 
@@ -47,24 +48,31 @@ const Projects = () => {
           <Sidebar id={2} />
         </div>
         <div className="pro-right">
-          <div className={`${popUp ? "path blur" : "path"}`}>PROJECT/</div>
-          <h3 className={`${popUp ? "pro-title blur" : "pro-title"}`}>
-            Projects
-          </h3>
-          <div className={`${popUp ? "box-container blur" : "box-container"}`}>
-            <div className="add-box" onClick={handlePopUp}>
-              <div className="plus">+</div>
-            </div>
-            {!loding &&
-              data?.items?.slice(0)?.reverse()?.map((item, index) => (
-                <Link to={`/project/${item.id}`} className="link">
-                  <div className={`${index === 0 ? "box green" : "box"}`}>
+          <div className="project-top">
+            <div className={`${popUp ? "path blur" : "path"}`}>Projects/</div>
+            <div className="search">
+              <img src={search} style={{padding:'0 6px'}} alt="" />
+              <input type="text" placeholder="search"/>
+          </div>
+          </div>
+          <div className="project-main">
+            <h3 className={`${popUp ? "pro-title blur" : "pro-title"}`}>
+              Projects
+            </h3>
+            <div className={`${popUp ? "box-container blur" : "box-container"}`}>
+              <div className="add-box" onClick={handlePopUp}>
+                <div className="plus">+</div>
+              </div>
+              {!loding &&
+               data?.items?.slice(0)?.reverse()?.map((item, index) => (
+                <Link to={`/project/${item.id}`} className="link color-box" key={item?.id}>
+                  <div className='box'>
                     <div className="c-name">{item.projectName}</div>
                   </div>
                 </Link>
               ))}
+            </div>
           </div>
-
           {popUp && (
             <div className="popup">
               <Popup

@@ -15,7 +15,6 @@ const Client = () => {
   const navigate=useNavigate();
   const Id=localStorage.getItem('organizationId');
   const token=localStorage.getItem('token')
-  const makeRequest=makeRequesInstance(localStorage.getItem('token'));
   useEffect(()=>{
     if(!(token && Id)){
          navigate('/login')
@@ -25,6 +24,7 @@ const Client = () => {
   useEffect(()=>{
     const getCountry=async()=>{
       try {
+        const makeRequest=makeRequesInstance(localStorage.getItem('token'));
         const res=await makeRequest.get('/Standard/GetCountries');
         setCountry(res.data)
       } catch (error) {
@@ -41,6 +41,7 @@ const Client = () => {
     }
     const getStates=async()=>{
       try {
+        const makeRequest=makeRequesInstance(localStorage.getItem('token'));
         const res=await makeRequest.get('/Standard/GetStates');
         setState(res.data)
       } catch (error) {
@@ -64,9 +65,11 @@ const Client = () => {
       <div className="client-main-container">
         <div className="client-left"><Sidebar id={3}/></div>
         <div className="client-right">
-          <div className={`${input ? 'client-path blur':'client-path'}`}>client/</div>
-          <h3 className={`${input ? 'client-title blur':'client-title'}`}>Client</h3>
-          <div className={`${input && 'blur'}`}>
+          <div className="client-top">
+            <div className={`${input ? 'client-path blur':'client-path'}`}>Client/</div>
+          </div>
+          <div className={`${input ?'client-main blur':'client-main'}`}>
+            <h2 className={`${input ? 'client-title blur':'client-title'}`}>Client</h2>
             <ClientTable setInput={setInput} change={change} setItem={setItem} setUpdate={setUpdate} setChange={setChange} country={country} state={state}/>
           </div>
           {input && (<div className="clientpopup">

@@ -1,16 +1,15 @@
 .measure-table-container{
-    margin: 15px 0 0 15px;
-    width: 98%; 
-    height:580px;
-    background-color: rgb(224, 224, 224);
+    width: 99%; 
+    height:540px;
+    background-color: rgb(241 241 241);
     overflow-y: scroll;
-    border-radius: 18px;
+    border-radius: 8px;
+    margin: 0 7px;
 }
 .measure-table-container::-webkit-scrollbar{
     display: none;
   }
   .measure-table-container table{
-    border-radius: 15px;
     width: 100%;
     table-layout: fixed;
   }
@@ -32,69 +31,43 @@
     font-family: 'Roboto';
     font-size: 14px;
   }
-  .measure-th:nth-child(1){
-    width: 150px;
-  }
-  .measure-th:nth-child(2){
-    width: 210px;
-  }
-  .measure-th:nth-child(8){
-    width: 200px;
-  }
-  .measure-th:nth-child(9){
-    width: 110px;
-  }
   .measure-td{
     text-align: center;
-    padding: 5px;
+    padding: 4px 2px;
     width: fit-content;
-    max-height:100px;
     overflow-wrap: wrap;
+    height: 0px;
     font-size: 13px;
     font-family: 'Roboto';
-    height: fit-content;
     position: relative;
-  }
-  .measure-td:nth-child(8) span{
-    width: 200px;
-  }
-  .measure-td:nth-child(9) span{
-    width: 100px;
   }
   .measure-td span{
     display: flex;
     align-items: center;
     justify-content: center;
     margin:3px 0;
-    height: 40px;
+    height: 90%;
     flex-wrap: wrap;
     overflow-y: hidden;
     background-color: white;
     padding: 5px 2px;
-    border-radius: 5px;
+    border-radius: 1px;
     overflow-wrap:break-word;
-  }
-  .measure-td:nth-child(2) span{
-    width: 210px;
-    justify-content: flex-start;
-  }
-  .measure-td span::-webkit-scrollbar{
-    display: none;
+
   }
   .measure-input{
     display: flex;
     flex-wrap: wrap;
-    /* border: 1px solid #333333; */
     height: 40px;
     width: 95%;
     margin:3px 0;
     padding: 8px 3px;
-    border-radius: 7px;
+    border-radius: 3px;
     outline: none;
   } 
-  .measure-td:nth-child(2) .measure-input{
-    width: 210px;
-  } 
+.measure-td:nth-child(2) .measure-input{
+  width: 210px;
+} 
 .dropdown-con{
   background-color: white;
   width: 100%;
@@ -138,7 +111,6 @@ li{
 }
 .desc-input{
   background-color: white;
-  /* border: 1px solid #333333; */
   min-height: 55px;
   width: 94%;
   padding: 0 3px;
@@ -151,4 +123,28 @@ li{
 }
 .measure-li:hover{
   background-color: rgb(192, 192, 192);
+}
+.measure-filter{
+  display: flex;
+  gap: 10px;
+  margin: 10px;
+  align-items: center;
+}
+.clear{
+  font-family: 'Roboto';
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.measure-dropdown{
+  background-color: white;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(207,203,207,1);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(207,203,207,1);
+  box-shadow: 0px 0px 5px 0px rgba(207,203,207,1);
+  position: absolute;
+  width: 225px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #333333;
+  z-index: 3;
 }

@@ -27,7 +27,6 @@ const Table = ({ Id, change, setChange }) => {
   const [unit, setUnit] = useState(null);
   const [head, setHead] = useState("00000000-0000-0000-0000-000000000000");
   const [tail, setTail] = useState("00000000-0000-0000-0000-000000000000");
-  const makeRequest = makeRequesInstance(localStorage.getItem("token"));
   const alert = useAlert();
   const { loding, data } = useFetch({
     url: `/ContractItem/GetByProjectId?projectId=${Id}&page=${1}&pageSize=${100}`,
@@ -35,12 +34,18 @@ const Table = ({ Id, change, setChange }) => {
   });
   useEffect(() => {
     setLoad(loding);
+    if(data?.items?.length===0){
+      setInput(true);
+      setHead("00000000-0000-0000-0000-000000000000");
+      setTail("00000000-0000-0000-0000-000000000000");
+    }
     setArray(data?.items);
   }, [loding, data]);
 
   useEffect(() => {
     const getUnit = async () => {
       setLoad(true);
+      const makeRequest = makeRequesInstance(localStorage.getItem("token"));
       const res = await makeRequest.get("/Standard/GetStandardUnit");
       setUnit(res.data);
       setLoad(false);
@@ -48,81 +53,13 @@ const Table = ({ Id, change, setChange }) => {
     getUnit();
   }, []);
 
-  const handleFirstElement = () => {
-    setInput(true);
-    setNumber(-1);
-    setHead("00000000-0000-0000-0000-000000000000");
-    if (array) {
-      setTail(array[0]?.id);
-    } else {
-      setTail("00000000-0000-0000-0000-000000000000");
-    }
-  };
-
-  // set index using index we can divide array into two part & set head and tail;
-  const handleInput = (i, id) => {
-    setInput(true);
-    setNumber(i);
-    setHead(id);
-
-    if (array.length > i + 1) {
-      setTail(array[i + 1]?.id);
-    } else if (array.length == i + 1) {
-      setTail("00000000-0000-0000-0000-000000000000");
-    }
-  };
-
-  // update element
-  const handleUpdate = (i, item) => {
-    setLoad(true);
-    setUpdate(true);
-    array.splice(i, 1);
-    setNumber(i - 1);
-    setElement(item);
-    setLoad(false);
-  };
-
-  // delete element
-  const handleDelete = async (i, id) => {
-    try {
-      const res = await makeRequest.delete(
-        `/ContractItem?contractItemId=${id}`
-      );
-      if (res.status === 204) {
-        alert.show("Deleted Sucessfully", { type: "success" });
-        if (change === 0) {
-          setChange(1);
-        } else {
-          setChange(0);
-        }
-      }
-    } catch (error) {
-      if (error.response) {
-        alert.show(error.response.data.title, { type: "info" });
-      } else if (error.code === "ERR_NETWORK") {
-        alert.show(error.message, { type: "error" });
-      } else {
-        alert.show("Iternal server error", { type: "error" });
-      }
-    }
-  };
-
-  const handleCopy = (index, item) => {
-    setLoad(true);
-    setHead(item?.id);
-    setTail(array[index + 1]?.id);
-    setNumber(index);
-    setElement(item);
-    setInput(true);
-    setLoad(false);
-  };
-
   const addFormik = useFormik({
     initialValues: element,
     validationSchema: contractTable,
     onSubmit: (value, action) => {
       const handleAdd = async () => {
         try {
+          const makeRequest = makeRequesInstance(localStorage.getItem("token"));
           const responce = await makeRequest.post("/ContractItem", {
             contractItemDTO: {
               id: "00000000-0000-0000-0000-000000000000",
@@ -169,6 +106,7 @@ const Table = ({ Id, change, setChange }) => {
     onSubmit: (value, action) => {
       const handleUpdate = async () => {
         try {
+          const makeRequest = makeRequesInstance(localStorage.getItem("token"));
           const responce = await makeRequest.put("/ContractItem", {
             id: value?.id,
             sorNo: parseInt(value?.sorNo || 0),
@@ -204,25 +142,78 @@ const Table = ({ Id, change, setChange }) => {
       handleUpdate();
     },
   });
+
+  // set index using index we can divide array into two part & set head and tail;
+  const handleInput = (i, id) => {
+    setInput(true);
+    setNumber(i);
+    setHead(id);
+
+    if (array.length > i + 1) {
+      setTail(array[i + 1]?.id);
+    } else if (array.length === i + 1) {
+      setTail("00000000-0000-0000-0000-000000000000");
+    }
+  };
+
+  // update element
+  const handleUpdate = (i, item) => {
+    setLoad(true);
+    setUpdate(true);
+    array.splice(i, 1);
+    setNumber(i - 1);
+    setElement(item);
+    setLoad(false);
+  };
+
+  // delete element
+  const handleDelete = async (i, id) => {
+    try {
+      const makeRequest = makeRequesInstance(localStorage.getItem("token"));
+      const res = await makeRequest.delete(
+        `/ContractItem?contractItemId=${id}`
+      );
+      if (res.status === 204) {
+        alert.show("Deleted Sucessfully", { type: "success" });
+        if (change === 0) {
+          setChange(1);
+        } else {
+          setChange(0);
+        }
+      }
+    } catch (error) {
+      if (error.response) {
+        alert.show(error.response.data.title, { type: "info" });
+      } else if (error.code === "ERR_NETWORK") {
+        alert.show(error.message, { type: "error" });
+      } else {
+        alert.show("Iternal server error", { type: "error" });
+      }
+    }
+  };
+
+  const handleCopy = (index, item) => {
+    setLoad(true);
+    setHead(item?.id);
+    setTail(array[index + 1]?.id);
+    setNumber(index);
+    addFormik.setValues(item);
+    setInput(true);
+    setLoad(false);
+  };
+
   return (
     <div className="table">
       <table className="tb">
         <tr className="tr">
           <th className="th">Item Code</th>
-          <th className="th">Description *</th>
+          <th className="th" colSpan={2}>Description *</th>
           <th className="th">Work Order Quantity *</th>
-          <th className="th">Measure Type *</th>
+          <th className="th" >Measure Type *</th>
           <th className="th">UOM *</th>
           <th className="th">Rate</th>
           <th className="th">HSN</th>
-          <th className="th">
-            <img
-              src={add}
-              onClick={handleFirstElement}
-              className="svg"
-              alt=""
-            />
-          </th>
+          <th className="th">Actions</th>
         </tr>
         {!load &&
           array?.slice(0, number + 1)?.map((item, index) => (
@@ -230,7 +221,7 @@ const Table = ({ Id, change, setChange }) => {
               <td className="td">
                 <span>{item?.sorNo}</span>
               </td>
-              <td className="td">
+              <td className="td" colSpan={2}>
                 <span>{item?.item}</span>
               </td>
               <td className="td">
@@ -303,7 +294,7 @@ const Table = ({ Id, change, setChange }) => {
                 onBlur={update ? updateFormik.handleBlur : addFormik.handleBlur}
               />
             </td>
-            <td className="td">
+            <td className="td" colSpan={2}>
               <input
                 type="text"
                 name="item"
@@ -558,7 +549,7 @@ const Table = ({ Id, change, setChange }) => {
                   Submit
                 </button>
               )}
-              <button
+              {array.length!==0 && <button
                 className="btn"
                 onClick={() => {
                   setInput(false);
@@ -587,7 +578,7 @@ const Table = ({ Id, change, setChange }) => {
                 }}
               >
                 close
-              </button>
+              </button>}
             </td>
           </tr>
         )}
@@ -599,7 +590,7 @@ const Table = ({ Id, change, setChange }) => {
               <td className="td">
                 <span>{item?.sorNo}</span>
               </td>
-              <td className="td">
+              <td className="td" colSpan={2}>
                 <span>{item?.item}</span>
               </td>
               <td className="td">

@@ -1,29 +1,42 @@
 .client-main-container{
-    width: 98vw;
-    height: 97vh;
-    margin: auto;
+    width: 100vw;
+    height: 100vh;
     display: flex;
-    margin-top: 10px;
-    gap: 10px;
     border-radius: 8px;
 }
 .client-left{
     background-color: #333333;
-    height: 97vh;
-    border-radius: 9px;
+    height: 100vh;
+    border-radius: 3px;
 }
 .client-right{
     position: relative;
+    background-color: rgb(238, 237, 237);
+    padding:7px;
+    width: 100%;
+    display: flex;
+    gap:7px;
+    flex-direction: column;
+}
+.client-top{
+    width: 100%;
+    background-color: white;
 }
 .client-path{
     color:#333333;
-    margin: 15px 10px;
+    margin: 0 10px;
     font-family: 'Roboto';
     font-size: 14px;
+    padding: 7px;
+}
+.client-main{
+    width: 98.5%;
+    height: 92%;
+    background-color: white;
+    padding: 10px;
 }
 .client-title{
-    color: gray;
-    margin: 15px 10px;
+    margin: 5px 4px 15px 4px;
     font-family: 'Roboto';
     font-size: 16px;
 }

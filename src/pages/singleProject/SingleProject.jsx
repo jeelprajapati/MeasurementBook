@@ -11,15 +11,14 @@ import Popup from "../../component/popup/Popup";
 import makeRequesInstance from "../../makeRequest";
 const SingleProject = () => {
   const [open, setOpen] = useState(false);
-  const [Update,setUpdate]=useState(false)
+  const [Update, setUpdate] = useState(false);
   const [change, setChange] = useState(0);
   const [popUp, setPopUp] = useState(false);
   const [input, setInput] = useState(null);
-  const [client,setClient]=useState(null);
+  const [client, setClient] = useState(null);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const Id = localStorage.getItem("organizationId");
-  const makeRequest=makeRequesInstance(token);
   useEffect(() => {
     if (!(token && Id)) {
       navigate("/login");
@@ -27,17 +26,20 @@ const SingleProject = () => {
   }, [navigate, token, Id]);
   const id = useLocation().pathname.split("/")[2];
   const { loding, data } = useFetch({ url: `/Project/${id}`, change });
-  useEffect(()=>{
-    // const {loding,data}=useFetch({url:`Client?page=${1}&pageSize=${100}&organizationId=${Id}`,})
-    const getClient=async()=>{
-       const res=await makeRequest.get(`Client?page=${1}&pageSize=${100}&organizationId=${Id}`)
-       setClient(res.data.items);
-    }
+  useEffect(() => {
+    const getClient = async () => {
+      const orgId=localStorage.getItem("organizationId");
+      const makeRequest = makeRequesInstance(localStorage.getItem("token"));
+      const res = await makeRequest.get(
+        `Client?page=${1}&pageSize=${100}&organizationId=${orgId}`
+      );
+      setClient(res.data.items);
+    };
     getClient();
-  },[])
+  }, []);
   const handlePopUP = (e) => {
     setInput(e);
-    setUpdate(true)
+    setUpdate(true);
     setPopUp(true);
   };
   return (
@@ -46,79 +48,76 @@ const SingleProject = () => {
         <div className="single-left">
           <Sidebar id={2} />
         </div>
-        <div className="single-right">
-          <div className={`${open ? "path blur" : "path"}`}>
-            <Link to={`/project`} className="bill-link">
-              PROJECT/
-            </Link>
-            {data?.projectName?.toUpperCase()}
-          </div>
-          <h3 className={`${open ? "pro-title blur" : "pro-title"}`}>
-            Project Detail
-          </h3>
-          {!loding && (
-            <div className={`${open ? "detail-box blur" : "detail-box"}`}>
-              {/* <div className="entity">
-                <span>Contract No</span>
-                <span>:</span>
-                <span>{data?.contractNo}</span>
-              </div> */}
-              <div className="entity">
-                <span>Project</span>
-                <span>:</span>
-                <span>{data?.projectName}</span>
-              </div>
-              <div className="entity">
-                <span>Client</span>
-                <span>:</span>
-                <span>{client?.filter((item)=>(item?.id===data?.clientId))[0]?.name}</span>
-              </div>
-              {/* <div className="entity">
-                <span>Contract Date</span>
-                <span>:</span>
-                <span>{data?.contractDate}</span>
-              </div> */}
-              {/* <div className="entity">
-                <span>Contract Validity</span>
-                <span>:</span>
-                <span>{data?.contractValidity} Days</span>
-              </div> */}
-              <div className="edit-btn">
-                <img
-                  className="edit-img"
-                  onClick={() => handlePopUP(data)}
-                  src={pencil}
-                  alt=""
-                />
-              </div>
+        <div className='single-right'>
+          <div className={`${popUp?'contract-top blur':'contract-top'}`}>
+            <div className={`${open ? "path blur" : "path"}`}>
+              <Link to={`/project`} className="bill-link">
+                Projects/
+              </Link>
+              {data?.projectName[0]?.toUpperCase()+(data?.projectName)?.slice(1)}
             </div>
-          )}
-          <div className={`${open ? "goto blur" : "goto"}`}>
-            <Link
-              to={`/bills?projectid=${data?.id}?projectname=${data?.projectName}`}
-              className="link">
-              <button>
-                Goto bills
-                <img src={arrow} className="arrow" alt="" />
-              </button>
-            </Link>
           </div>
-          <div
-            className={`${open ? "table-container blur" : "table-container"}`}
-          >
-            <div className="single-page-container">
-              <h3 className="table-title">Contract Item</h3>
-              <button
-                className="excel-btn"
-                onClick={() => {
-                  setOpen(true);
-                }}
+          <div className={`${popUp?'contract-middle blur':'contract-middle'}`}>
+            <h3 className={`${open ? "contract-title blur" : "contract-title"}`}>
+              Project Detail
+            </h3>
+            {!loding && (
+              <div className={`${open ? "detail-box blur" : "detail-box"}`}>
+                <div className="entity">
+                  <span>Project</span>
+                  <span>:</span>
+                  <span>{data?.projectName}</span>
+                </div>
+                <div className="entity">
+                  <span>Client</span>
+                  <span>:</span>
+                  <span>
+                    {
+                      client?.filter((item) => item?.id === data?.clientId)[0]
+                        ?.name
+                    }
+                  </span>
+                </div>
+                <div className="edit-btn">
+                  <img
+                    className="edit-img"
+                    onClick={() => handlePopUP(data)}
+                    src={pencil}
+                    alt=""
+                  />
+                </div>
+              </div>
+            )}
+            <div className={`${open ? "goto blur" : "goto"}`}>
+              <Link
+                to={`/bills?projectid=${data?.id}?projectname=${data?.projectName}`}
+                className="link"
               >
-                Add Excel
-              </button>
+                <button>
+                  Goto Bills
+                  <img src={arrow} className="arrow" alt="" />
+                </button>
+              </Link>
             </div>
-            <div className="table">
-              <Table Id={id} change={change} setChange={setChange}/>
+          </div>
+          <div className={`${popUp?'contract-footer blur':'contract-footer'}`}>
+            <div
+              className={`${open ? "table-container blur" : "table-container"}`}
+            >
+              <div className="single-page-container">
+                <h3 className="table-title">Contract Item</h3>
+                <button
+                  className="excel-btn"
+                  onClick={() => {
+                    setOpen(true);
+                  }}
+                >
+                  Add Excel
+                </button>
+              </div>
+              <div className="table">
+                <Table Id={id} change={change} setChange={setChange} />
+              </div>
             </div>
           </div>
           {open && (

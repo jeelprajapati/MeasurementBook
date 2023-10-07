@@ -5,13 +5,13 @@ import deleteicon from "../../image/delete.svg";
 import add from "../../image/add.svg";
 import copy from "../../image/copy-icon.svg";
 import { useLocation } from "react-router-dom";
-import useFetch from "../../hooks/useFetch";
 import makeRequesInstance from "../../makeRequest";
 import { useAlert } from "react-alert";
 import Tag from "../tagChips/Tag";
 import Warning from "../warning/Warning";
 import { useFormik } from "formik";
 import { measureTable } from "../../scemas";
+import Filter from "../filter/Filter.jsx"
 const Measure = () => {
   const location = useLocation().search.split("?");
   const billId = location[1].split("=")[1];
@@ -36,19 +36,45 @@ const Measure = () => {
   const [contractName, setContractName] = useState("");
   const [loadInput, setLoadInput] = useState(false);
   const [show,setShow]=useState(false)
-  const[isDelete,setIsDelete]=useState(false);
-  const[deleteId,setDeleteId]=useState(null);
+  const [isDelete,setIsDelete]=useState(false);
+  const [deleteId,setDeleteId]=useState(null);
   const [warn,setWarn]=useState(false)
+  const [filter,setFilter]=useState([]);
+  const [filterTag,setFiltertag]=useState([])
   const alert = useAlert();
-  const makeRequest = makeRequesInstance(localStorage.getItem("token"));
-  const { loding, data } = useFetch({
-    url: `/MeasurementBook/GetByBillId?page=${1}&pageSize=${100}&billId=${billId}`,
-    change,
-  });
+  useEffect(()=>{
+     const getData=async()=>{
+      setLoad(true)
+      const makeRequest = makeRequesInstance(localStorage.getItem("token"));
+      const res=await makeRequest.post('/MeasurementBook/GetByBillId',{
+          "billId": billId,
+          "page": 1,
+          "pageSize": 100,
+          "filter": filter
+      })
+      if (res.data.items.length === 0 && filter.length===0) {
+        setInput(true);
+      }
+      setArray(res.data.items);
+      console.log(res.data.items)
+      setLoad(false);
+     }
+     getData();
+  },[filter,change,billId,projectId])
+
+  useEffect(()=>{
+    const getTag=async()=>{
+      const makeRequest = makeRequesInstance(localStorage.getItem("token"));
+      const res=await makeRequest.get(`/MeasurementBook/GetTagsByBillId?billid=${billId}`)
+      setFiltertag(res.data)
+    }
+    getTag()
+  },[change,billId])
 
   useEffect(() => {
     const getContractItem = async () => {
       setLoadInput(true);  
+      const makeRequest = makeRequesInstance(localStorage.getItem("token"));
       const res = await makeRequest.get(
         `/ContractItem/GetByProjectId?projectId=${projectId}&page=${1}&pageSize=${100}`
       );
@@ -56,7 +82,7 @@ const Measure = () => {
       setLoadInput(false);
     };
       getContractItem();
-  }, []);
+  }, [change,projectId]);
   
   useEffect(()=>{
    setLoadInput(true) 
@@ -82,22 +108,12 @@ const Measure = () => {
     setH(false);
    }
    setLoadInput(false) 
-  },[contractId])
-
-  useEffect(() => {
-    if (data?.items.length == 0) {
-      setInput(true);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    setLoad(loding);
-    setArray(data?.items);
-  }, [loding, data]);
+  },[contractId,contractItem])
   
   useEffect(()=>{
     const deleteData=async()=>{
       try {
+        const makeRequest = makeRequesInstance(localStorage.getItem("token"));
         const res = await makeRequest.delete(
           `MeasurementBook?measurementBookId=${deleteId}`
         );
@@ -126,9 +142,9 @@ const Measure = () => {
       }
     }
     if(isDelete){
-       deleteData();
+      deleteData();
     }
-  },[isDelete])
+  },[isDelete,alert,change,deleteId])
  
   const handleChange = (e) => {
     setElement({ ...element, [e.target.name]: e.target.value });
@@ -140,7 +156,7 @@ const Measure = () => {
     setHead(id);
     if (array.length > i + 1) {
       setTail(array[i + 1]?.id);
-    } else if (array.length == i + 1) {
+    } else if (array.length === i + 1) {
       setTail("00000000-0000-0000-0000-000000000000");
     }
   };
@@ -170,13 +186,13 @@ const Measure = () => {
     setContractName(i?.item);
     setShow(false)
   };
-  
   const addFormik=useFormik({
     initialValues:element,
     validationSchema:measureTable,
     onSubmit:(value)=>{
       const handleAdd=async()=>{
         try {
+          const makeRequest = makeRequesInstance(localStorage.getItem("token"));
           const res = await makeRequest.post("/MeasurementBook", {
             measurementBookDTO: {
               id: "00000000-0000-0000-0000-000000000000",
@@ -187,7 +203,7 @@ const Measure = () => {
               d_H: parseFloat(value?.d_H)||0,
               subtotal: 0,
               remark: "string",
-              contractItemId: value.contractItemId,
+              contractItemId: contractId,
               tags: tags,
               billId: billId,
             },
@@ -210,10 +226,13 @@ const Measure = () => {
             }
           }
         } catch (error) {
-          if(error.response){
+          if(error.response.data.title){
             alert.show(error.response.data.title,{type:'info'})
           }
           else if(error.code==='ERR_NETWORK'){
+            alert.show(error.message,{type:'error'})
+          }
+          else if(error.code==='ERR_BAD_REQUEST'){
             alert.show(error.message,{type:'error'})
           }
           else{
@@ -231,6 +250,7 @@ const Measure = () => {
     onSubmit:(value)=>{
       const handleUpdate=async()=>{
         try { 
+          const makeRequest = makeRequesInstance(localStorage.getItem("token"));
           const res = await makeRequest.put("/MeasurementBook", {
             id: value?.id,
             description: value?.description,
@@ -240,7 +260,7 @@ const Measure = () => {
             d_H: parseFloat(element?.d_H),
             subtotal: parseFloat(element?.subtotal),
             remark: "string",
-            contractItemId: value.contractItemId,
+            contractItemId: contractId,
             tags: tags,
             billId: billId,
           });
@@ -285,31 +305,43 @@ const Measure = () => {
     setTail(array[index + 1]?.id);
     setInput(true);
   };
+
+  const handleClear=()=>{
+    if(filter.length!==0){
+      setFilter([]);
+    }
+  }
   return (
+    <>
+    <div className="measure-filter">
+       <Filter type={"ContractItem"} item={contractItem} filter={filter} setFilter={setFilter} filterColumn={1} max={360} min={192} average={240}/>
+       <Filter type={"Tags"} item={filterTag} filter={filter} setFilter={setFilter} filterColumn={2} max={360} min={150} average={190}/>
+       <span className="clear" onClick={handleClear}>Clear all</span>
+    </div>
     <div className="measure-table-container">
       <table>
         <tr className="measure-tr">
-          <th className="measure-th">Contract Item</th>
-          <th className="measure-th">Description</th>
-          <th className="measure-th">No</th>
+          <th className="measure-th" colSpan={2}>Contract Item *</th>
+          <th className="measure-th" colSpan={2}>Description *</th>
+          <th className="measure-th">No *</th>
           <th className="measure-th">L</th>
           <th className="measure-th">B</th>
           <th className="measure-th">D/H</th>
           <th className="measure-th">Subtotal</th>
-          <th className="measure-th">Tags</th>
-          <th className="measure-th">Action</th>
+          <th className="measure-th" colSpan={2}>Tags</th>
+          <th className="measure-th" colSpan={3/2}>Action</th>
         </tr>
         {!load &&
           array?.slice(0, number + 1)?.map((item, index) => (
             <tr className="measure-tr" key={item?.id}>
-              <td className="measure-td">
+              <td className="measure-td" colSpan={2}>
                 {contractItem
                   ?.filter((i) => i?.id === item?.contractItemId)
                   ?.map((e) => (
                     <span>{e?.item}</span>
                   ))}
               </td>
-              <td className="measure-td">
+              <td className="measure-td" colSpan={2}>
                 <span
                   style={
                     (content && clickIndex === index)
@@ -339,10 +371,10 @@ const Measure = () => {
               <td className="measure-td">
                 <span>{item?.subtotal.toFixed(3)}</span>
               </td>
-              <td className="measure-td">
+              <td className="measure-td" colSpan={2}>
                 <Tag table={true} tags={item?.tags} setTags={setTags} />
               </td>
-              <td className="measure-td">
+              <td className="measure-td" colSpan={3/2}>
                 <button
                   className="measure-img-btn"
                   onClick={() => {
@@ -378,7 +410,7 @@ const Measure = () => {
           ))}
         {!load && (input || update) && (
           <tr>
-            <td className="measure-td" style={{ position: "relative" }}>
+            <td className="measure-td" style={{ position: "relative" }} colSpan={2}>
               <input
                 type="text"
                 placeholder="search.."
@@ -389,21 +421,7 @@ const Measure = () => {
                 }}
                 className="measure-input purple-border"
               />
-               {(!load && show) && <ul
-                style={{
-                  position: "absolute",
-                  backgroundColor: "white",
-                  display: "flex",
-                  alignItems: "center",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  margin: "0",
-                  padding: "0",
-                  width: "93%",
-                  top: "88%",
-                  zIndex:'2',
-                  border: "1px solid #333333",
-                }}>
+               {(!load && show) && <ul className="measure-dropdown">
                   {contractItem?.filter((e) => e?.item?.toUpperCase().includes(contractName.toUpperCase()))
                     ?.map((i) => (
                       <li
@@ -411,25 +429,26 @@ const Measure = () => {
                         onClick={() => {
                           handleContractItem(i);
                         }}
+                        key={i?.id}
                       >
                         {i?.item}
                       </li>
                     ))}
               </ul>}
             </td>
-            <td className="measure-td">
-              <textarea
+            <td className="measure-td" colSpan={2}>
+              <input
                 type="text"
                 name="description"
                 className={`${
                   ((updateFormik.errors.description && updateFormik.touched.description) ||
                     (addFormik.errors.description && addFormik.touched.description)) ?
-                  "desc-input warning":"desc-input purple-border"
+                  "measure-input warning":"measure-input purple-border"
                 }`}
                 onChange={update?updateFormik.handleChange:addFormik.handleChange}
                 value={update?updateFormik.values.description:addFormik.values.description}
                 onBlur={update?updateFormik.handleBlur:addFormik.handleBlur}
-              ></textarea>
+              />
             </td>
             <td className="measure-td">
               <input
@@ -500,14 +519,14 @@ const Measure = () => {
                 className="measure-input purple-border"
               />
             </td>
-            <td className="measure-td">
+            <td className="measure-td" colSpan={2}>
               <Tag 
               table={false} 
               tags={tags} 
               setTags={setTags} 
               />
             </td>
-            <td className="measure-td">
+            <td className="measure-td" colSpan={3/2}>
               {update ? (
                 <input type="button" value='Update' className="btn" onClick={updateFormik.handleSubmit}/>
               ) : (
@@ -548,14 +567,14 @@ const Measure = () => {
         {!load &&
           array?.slice(number + 1)?.map((item, index) => (
             <tr className="measure-tr" key={item?.id}>
-              <td className="measure-td">
+              <td className="measure-td" colSpan={2}>
                 {contractItem
                   ?.filter((i) => i?.id === item?.contractItemId)
                   ?.map((e) => (
                     <span>{e?.item}</span>
                   ))}
               </td>
-              <td className="measure-td">
+              <td className="measure-td" colSpan={2}>
                 <span
                   style={
                     content && clickIndex === index
@@ -585,10 +604,10 @@ const Measure = () => {
               <td className="measure-td">
                 <span>{item?.subtotal.toFixed(3)}</span>
               </td>
-              <td className="measure-td">
+              <td className="measure-td" colSpan={2}>
                 <Tag table={true} tags={item?.tags} setTags={setTags} />
               </td>
-              <td className="measure-td">
+              <td className="measure-td" colSpan={3/2}>
                 <button
                   className="measure-img-btn"
                   onClick={() => {
@@ -637,6 +656,7 @@ const Measure = () => {
       </table>
       {warn && <Warning setIsDelete={setIsDelete} setWarn={setWarn}/>}
     </div>
+    </>
   );
 };
 

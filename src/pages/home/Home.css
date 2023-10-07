@@ -1,16 +1,14 @@
 .home-container{
-    width: 98vw;
-    height: 95vh;
-    margin: auto;
+    width: 100vw;
+    height: 100vh;
     display: flex;
-    margin-top: 10px;
-    gap: 10px;
     border-radius: 8px;
 }
 .home-left{
     background-color: #333333;
-    height: 95vh;
-    border-radius: 9px;
+    height: 100vh;
+    border-radius: 3px;
 }
 .home-right{
+    width: 100%;
 }

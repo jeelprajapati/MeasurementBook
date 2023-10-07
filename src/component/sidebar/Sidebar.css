@@ -7,14 +7,14 @@
    width: 15.2rem;
    transition: all 0.5s ease;
    display: flex;
-   height: 85vh;
+   height: 92vh;
    flex-direction: column;
    justify-content: space-between;
-   border-radius: 7px;
+   border-radius: 3px;
 }
 .side-less-container{
    width: 4.4rem;
-   height: 85vh;
+   height: 92vh;
    transition: all 0.5s ease;
    display: flex;
    flex-direction: column;
@@ -32,8 +32,8 @@
     list-style: none;
     color: white;
     padding: 10px;
-    text-align: center;
     cursor: pointer;
+    text-align: center;
     font-family: 'Roboto';
     font-weight: bold;
     font-size: 14px;
@@ -41,10 +41,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* transform: translateX(10rem); */
+    position: relative;
 }
 .sidebar-svg{
-    flex: 1;
+   flex: 1;
 }
 .sidebar-svg img{
     border: 1px solid white;
@@ -57,14 +57,13 @@
     justify-content: flex-start;
 }
 .lightGray{
-    background-color: #757474;
+    background-color: #4e4d4d;
 }
 .link{
     text-decoration: none;
 }
 .target{
     border: 1px solid white;
-    /* padding: 2px; */
     border-radius: 4px;
     width: 24px;
     height: 24px;
@@ -81,72 +80,60 @@
 .nav-logo{
    width: 40px;
    height: 40px;
-   background-color: purple;
+   background-color: rgb(246, 245, 245);
    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
  .d-none{
-    display: none;
+   display: none;
  }
- .side-less-container ul li:hover{
-    padding: 5px 0;
+ .icon-name{
+   display: none;
+ }
+ .side-less-container ul li:hover .icon-name{
+   display: block;
+   position: absolute;
+   left: 5.0rem;
+   background-color: white;
+   color: var(--background-color);
+   color: black;
+   border-radius: 0.4rem;
+   padding: 0.5rem 0.9rem;
+   font-size: 14px;
+   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+   top: 50%;
+   transform: translateY(-50%);
+   transition: all 0.5s ease;
+   opacity: 1;
+   z-index: 3;
 }
-.side-less-container ul li:hover .sidebar-svg{
-    position: fixed;
-}
-.side-less-container ul li:hover .d-none{
-    display: block;
-    float: left;
-    z-index: 2;
-    width: fit-content;
-    transform: translateX(4.6rem);
-    color: white;
-    background-color: #333333;
-    border-radius: 0 10px 10px 10px;
-    padding: 12px;
-    
- }
- .side-less-container ul li:hover .target{
-    margin: 5px 0;
- }
- .navigation{
-    border-bottom: 2px solid white;
-    width: 14px;
-    padding: 2px;
- }
- .target span:nth-child(3){
-    margin-bottom:3px;
- }
- .side-less-container ul li:hover .nav-logo{
-    margin: 6px 0;
- }
- .logout{
+.logout{
    display: flex;
    align-items: center;
+   position: relative;
  }
  .logout-high{
    display: flex;
    align-items: center;
  }
- .logout:hover .d-none{
+ .logout:hover .icon-name{
    display: block;
-   float: left;
-   z-index: 2;
-   width: fit-content;
-   transform: translateX(4.4rem);
-   color: white;
-   background-color: #333333;
-   border-radius: 0 10px 10px 10px;
-   padding: 12px;
+   position: absolute;
+   left: 5.0rem;
+   background-color: white;
+   color: var(--background-color);
+   color: black;
+   border-radius: 0.4rem;
+   padding: 0.5rem 0.9rem;
+   font-size: 15px;
+   font-weight: 500;
+   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+   top: 50%;
+   transform: translateY(-50%);
+   transition: all 0.5s ease;
+   opacity: 1;
+   z-index: 3;
 }
-.logout:hover .sidebar-svg{
-   position: fixed;
-   padding: 1px;
-   margin: 0 20px 16px 20px;
-}
-.logout:hover{
-   width: fit-content;
-}
-
+ 

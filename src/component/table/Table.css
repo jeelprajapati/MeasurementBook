@@ -1,8 +1,9 @@
 .table{
-    height: 430px;
+    height: 405px;
     overflow-y: auto;
-    background-color: rgb(224, 224, 224);
-    border-radius: 10px;
+    background-color: rgb(241 241 241);
+    border-radius: 5px;
+    margin-bottom: 7px;
 }
 .table::-webkit-scrollbar{
     display: none;
@@ -25,10 +26,10 @@
     font-family: 'Roboto'; 
 }
 .th:nth-child(1){
-    border-radius: 10px 0 0 0px;
+    border-radius: 5px 0 0 0px;
 }
-.th:nth-child(9){
-    border-radius: 0 10px 0 0;
+.th:nth-child(8){
+    border-radius: 0 5px 0 0;
 }
 .svg{
     width: 17px;
@@ -37,26 +38,33 @@
 }
 .td{
     color: black;
-    padding: 7px 2px;
+    padding: 4px 1px;
     overflow-wrap: break-word;
     text-align: center;
     overflow-wrap: break-word;
     font-size: 13px;
     font-family: 'Roboto';
-    margin: auto;
+    height: 0;
 }
 .td span{
     background-color: white;
-    width: 86%;
-    display: block;
-    padding: 5px 10px;
-    border-radius: 7px;
+    width: 99%;
+    min-height: 35px;
+    height: 94%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 0px;
+    border-radius: 2px;
+    margin: 0 auto;
 }
 .td input,.td select{
-    width: 92%;
-    height: 25px;
+    width: 96%;
     outline: none;
-    border-radius: 6px;
+    border-radius: 2px;
+    margin: 0 auto;
+    min-height: 35px;
+    height: fit-content;
 }
 .btn-disabled{
     background-color: transparent;

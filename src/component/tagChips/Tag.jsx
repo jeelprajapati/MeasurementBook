@@ -19,12 +19,12 @@ const Tag = ({tags,setTags,table}) => {
           setLoading(false)
         }
     }
-    const handleClick=(tag)=>{
-      setLoading(true);
-      console.log(tag)
-      setTags(tags.concat(',',tag));
-      setLoading(false);
-    }
+    // const handleClick=(tag)=>{
+    //   setLoading(true);
+    //   console.log(tag)
+    //   setTags(tags.concat(',',tag));
+    //   setLoading(false);
+    // }
     const handleRemove=(string)=>{
       setLoading(true); 
       setTags(tags.replace(`,${string}`,""));
@@ -42,12 +42,12 @@ const Tag = ({tags,setTags,table}) => {
         {!table &&<div className='tag-close-icon' onClick={()=>handleRemove(tag)}>x</div>}
       </li>))}
     </ul>
-      {!table && <input placeholder='Enter For Add Tag' type="text" id='tag' className='tag-input' value={chip} onChange={handleChange} onKeyDown={handleCreateChip} />}  
+      {!table && <input placeholder='Add Tags' type="text" id='tag' className='tag-input' value={chip} onChange={handleChange} onKeyDown={handleCreateChip} />}  
     </div>
-    {!(table && localStorage.getItem('tag')) && <div className='allTag'>
+    {/* {!(table && localStorage.getItem('tag')) && <div className='allTag'>
          <div style={{width:'210px'}}>Recent Used Tag. Click For Use It!</div>
         {localStorage.getItem('tag')?.split(',').filter((item)=>(item!=='' && item?.toUpperCase().includes(chip.toUpperCase()))).map((item,index)=>(<p key={index} onClick={()=>handleClick(item)}>{item}</p>))}
-    </div>}
+  </div>} */}
     </>
   )
 }

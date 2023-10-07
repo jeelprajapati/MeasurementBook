@@ -1,16 +1,14 @@
 .client-table-con{
     width: 100%;
-    border-radius: 10px;
-    height: 595px;
-    background-color: rgb(224, 224, 224);
+    border-radius: 5px;
+    height: 590px;
+    background-color: rgb(241 241 241);
     overflow-y: scroll;
 }
 .client-table-con::-webkit-scrollbar{
     display: none;
 }
 .client-table{
-    background-color: rgb(224, 224, 224);
-    border-radius: 10px;
     table-layout: fixed;
     width: 100%;
 }
@@ -26,10 +24,10 @@
     font-family: 'Roboto';
 }
 .client-th:nth-child(1){
-    border-radius: 10px 0 0 0px;
+    border-radius: 5px 0 0 0px;
 }
 .client-th:nth-child(12){
-    border-radius: 0 10px 0 0;
+    border-radius: 0 5px 0 0;
 }
 .client-svg{
     width: 20px;
@@ -38,9 +36,10 @@
 }
 .client-td{
     color: black;
-    padding: 10px 2px;
+    padding: 4px 2px;
     overflow-wrap: break-word;
     text-align: center;
+    height: 0;
     font-size: 13px;
     font-family: 'Roboto';
 }
@@ -48,15 +47,16 @@
     cursor: pointer;
 }
 .client-add-button{
-    background-color: rgb(5, 187, 5);
+    background-color: #5b69e9;
     border: none;
     padding: 10px 15px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 10px 10px;
-    border-radius: 7px;
+    margin: 10px 0px;
+    border-radius: 5px;
     color: white;
+    font-weight: 600;
     font-family: 'Roboto';
 }
 .client-add-button:hover{
@@ -64,9 +64,12 @@
 }
 .client-td span{
     background-color: white;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 5px 10px;
-    border-radius: 7px;
+    height: 100%;
+    border-radius: 3px;
     height: 30px;
     overflow-y: scroll;
 }

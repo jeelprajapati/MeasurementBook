@@ -3,6 +3,7 @@ import {
   RouterProvider,
   Outlet
 } from "react-router-dom";
+import './App.css'
 import Home from "./pages/home/Home";
 import Projects from "./pages/projects/Projects";
 import SingleProject from "./pages/singleProject/SingleProject";

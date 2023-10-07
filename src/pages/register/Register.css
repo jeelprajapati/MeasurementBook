@@ -1,32 +1,31 @@
-.register-right{
-    flex: 3;
-    border-radius: 7px;
-}
 .main-register-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 97vh;
-    width: 100%;
+    position:fixed;
+    left: 50%;
+    top: 50%;
+    -ms-transform: translate(-50%,-50%);
+    -moz-transform:translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
 }
 .register-title{
     width: 85%;
     font-size: 18px;
     color: #333333;
     text-align: center;
-    margin: 15px 0px 0px 35px; 
+    margin: 25px 0px 15px 35px; 
     font-family: 'Roboto';
     font-weight: bold;
 }
 .register-button{
-    margin: 17px 0px 20px 30px; 
+    width: 100%;
+    margin: auto;
     background-color:  #333333;
     color: white;
     border: none;
     padding: 10px;
     width: 85%;
     cursor: pointer;
-    border-radius: 17px;
+    border-radius: 3px;
 }
 .sub-container{
     display: flex;
@@ -40,7 +39,7 @@
 }
 .link-login{
     text-align: center;
-    margin-bottom: 10px;
+    margin:20px 0 25px 0;
     font-family: 'Roboto';
     font-size: 14px;
 }
@@ -53,20 +52,18 @@
 }
 .register-input{
     width:200px;
-    height: 39px;
+    height: 30px;
     margin:10px 10px;
-    /* background-color: rgb(223, 193, 253); */
-    border: none;
-    outline: none;
-    border-bottom: 1px solid #333333;
+    outline-color: #333333;
+    padding: 10px;
+    border: 1px solid rgb(223, 221, 221);
 }
 .register-select{
     width: 205px;
-    height: 39px;
+    height: 52px;
     margin:8px 12px 0 10px;
     color: gray;
-    /* background-color: rgb(223, 193, 253); */
-    border: none;
-    outline: none;
-    border-bottom: 1px solid #333333;
+    outline-color: #333333;
+    padding: 10px;
+    border: 1px solid rgb(223, 221, 221);
 }

@@ -21,21 +21,15 @@
     font-weight: bold;
 }
 .excel-red{
-    color: rgb(182, 9, 182);
+    color: #333333;
 }
 .excel-button{
-    background-color: rgb(20, 152, 20);
+    background-color: #333333;
     color: white;
-    border: 1px solid green;
     padding: 7px 15px;
-    border-radius: 8px;
+    border-radius: 5px;
     margin: 5px 0;
     font-family: 'Roboto';
-}
-.excel-button:hover{
-    background-color: transparent;
-    color: green;
-    border: 1px solid green;
     cursor: pointer;
 }
 .excel-img{

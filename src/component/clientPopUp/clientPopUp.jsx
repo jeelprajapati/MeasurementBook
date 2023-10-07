@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./clientPopUp.css";
 import close from "../../image/close.svg";
 import makeRequesInstance from "../../makeRequest";
@@ -459,7 +459,7 @@ const ClientPopUp = ({
               {state
                 ?.filter(
                   (e) =>
-                    e?.countryCode ==
+                    e?.countryCode ===
                     (update
                       ? upadteRequest.values.countryId
                       : addRequest.values.countryId)

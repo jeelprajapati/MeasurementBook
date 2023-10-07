@@ -1,16 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import PropTypes from 'prop-types';
 import { transitions, positions, Provider as AlertProvider } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
-
+const validTypes = ['info', 'success', 'error'];
 const options = {
   position: positions.TOP_RIGHT,
   timeout: 5000,
-  type: PropTypes.oneOf(['info', 'success', 'error']),
+  type: 'info',
   offset: '30px',
   transition: transitions.SCALE
+}
+if (validTypes.includes(options.type)) {
+  console.log('Valid type:', options.type);
+} else {
+  options.type = 'info';
+  console.log('Invalid type, set to default:', options.type);
 }
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

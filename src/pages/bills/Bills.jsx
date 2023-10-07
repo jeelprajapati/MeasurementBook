@@ -8,7 +8,7 @@ import { Link, useLocation } from 'react-router-dom'
 const Bills = () => {
   const loaction=useLocation().search.split('?');
   const projectId=loaction[1].split('=')[1];
-  const projectname=loaction[2].split('=')[1];
+  const projectname=loaction[2].split('=')[1].replaceAll('%20',' ');
   const [open,setOpen]=useState(false)
   const[change,setChange]=useState(0)
   const [item,setItem]=useState({name:'',invoiceDate:'',typeBill:'',status:''})
@@ -19,10 +19,12 @@ const Bills = () => {
         <div className="bill-left"><Sidebar id={2}/>
         </div>
         <div className="bill-right">
-            <div className={`${open?'bills blur':'bills'}`}>
+              <div className={`${open?'bill-top blur':'bill-top'}`}>
                 <div className="bill-path">
-                <Link to={`/project`} className='bill-link'>PROJECT</Link>/<Link to={`/project/${projectId}`} className='bill-link'>{projectname.toUpperCase()} / </Link> <span>BILLS</span>
+                <Link to={`/project`} className='bill-link'>Projects</Link>/<Link to={`/project/${projectId}`} className='bill-link'>{projectname[0].toUpperCase()+projectname.slice(1)} / </Link> <span>Bills</span>
                 </div>
+              </div>
+              <div className={`${open?'bill-middle blur':'bill-middle'}`}>
                 <div className="bill-summary">
                     <h3 className="summary-title">
                       Summary
@@ -34,6 +36,8 @@ const Bills = () => {
                       <div className="summary-box"></div>
                     </div>
                 </div>
+              </div>
+              <div className={`${open?'bill-footer blur':'bill-footer'}`}>
                 <div className="bill-table">
                   <div className="bill-con">
                    <h3 className="bill-table-title">Bills</h3>
@@ -41,7 +45,7 @@ const Bills = () => {
                   </div>
                   <Billtable setOpen={setOpen} change={change} setItem={setItem} setInput={setInput} setChange={setChange} open={open}/>
                 </div>
-            </div>
+              </div>
           {open && <Billpopup setOpen={setOpen} input={input} item={item} setItem={setItem} setInput={setInput} setChange={setChange} change={change}/>}
         </div>
       </div>
