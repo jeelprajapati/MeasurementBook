@@ -16,7 +16,7 @@ const Measure = () => {
   const location = useLocation().search.split("?");
   const billId = location[1].split("=")[1];
   const projectId = location[2].split("=")[1];
-  const [element, setElement] = useState({description:'',no:''});
+  const [element, setElement] = useState({description:'',no:'',l:'',b:'',d_H:''});
   const [number, setNumber] = useState(-1);
   const [input, setInput] = useState(false);
   const [update, setUpdate] = useState(false);
@@ -192,6 +192,23 @@ const Measure = () => {
     onSubmit:(value)=>{
       const handleAdd=async()=>{
         try {
+          console.log( {
+            measurementBookDTO: {
+              id: "00000000-0000-0000-0000-000000000000",
+              description: value?.description,
+              no: parseFloat(value?.no)||0,
+              l: parseFloat(value?.l===''?'0':value?.l),
+              b: parseFloat(value?.b===''?'0':value?.b),
+              d_H: parseFloat(value?.d_H===''?'0':value?.d_H),
+              subtotal: 0,
+              remark: "string",
+              contractItemId: contractId,
+              tags: tags,
+              billId: billId,
+            },
+            head: head,
+            tail: tail,
+          })
           const makeRequest = makeRequesInstance(localStorage.getItem("token"));
           const res = await makeRequest.post("/MeasurementBook", {
             measurementBookDTO: {
@@ -255,10 +272,10 @@ const Measure = () => {
             id: value?.id,
             description: value?.description,
             no: parseFloat(value?.no),
-            l: parseFloat(element?.l),
-            b: parseFloat(element?.b),
-            d_H: parseFloat(element?.d_H),
-            subtotal: parseFloat(element?.subtotal),
+            l: parseFloat(value?.l),
+            b: parseFloat(value?.b),
+            d_H: parseFloat(value?.d_H),
+            subtotal: parseFloat(value?.subtotal),
             remark: "string",
             contractItemId: contractId,
             tags: tags,
@@ -472,8 +489,10 @@ const Measure = () => {
                   step='any'
                   min={0}
                   name="l"
-                  value={element?.l ? element.l : ''}
-                  onChange={handleChange}
+                  onChange={update?updateFormik.handleChange:addFormik.handleChange}
+                  value={update?updateFormik.values.l:addFormik.values.l}
+                  // value={element?.l ? element.l : ''}
+                  // onChange={handleChange}
                   className="measure-input purple-border"
                   disabled={!l}
                 />
@@ -486,8 +505,8 @@ const Measure = () => {
                   name="b"
                   step='any'
                   min={0}
-                  value={element?.b ? element.b : ''}
-                  onChange={handleChange}
+                  onChange={update?updateFormik.handleChange:addFormik.handleChange}
+                  value={update?updateFormik.values.b:addFormik.values.b}
                   className="measure-input purple-border"
                   disabled={!b}
                 />
@@ -500,8 +519,8 @@ const Measure = () => {
                   name="d_H"
                   step='any'
                   min={0}
-                  value={element?.d_H ? element.d_H : ''}
-                  onChange={handleChange}
+                  onChange={update?updateFormik.handleChange:addFormik.handleChange}
+                  value={update?updateFormik.values.d_H:addFormik.values.d_H}
                   className="measure-input purple-border"
                   disabled={!h}
                 />
