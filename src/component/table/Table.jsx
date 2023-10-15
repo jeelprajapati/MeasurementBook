@@ -9,6 +9,8 @@ import makeRequesInstance from "../../makeRequest";
 import { useAlert } from "react-alert";
 import { useFormik } from "formik";
 import { contractTable } from "../../scemas";
+import yes from "../../image/yes.svg"
+import no from "../../image/no.svg"
 const Table = ({ Id, change, setChange }) => {
   const [element, setElement] = useState({
     sorNo: "",
@@ -27,6 +29,7 @@ const Table = ({ Id, change, setChange }) => {
   const [unit, setUnit] = useState(null);
   const [head, setHead] = useState("00000000-0000-0000-0000-000000000000");
   const [tail, setTail] = useState("00000000-0000-0000-0000-000000000000");
+  const [isDelete,setIsDelete]=useState(null);
   const alert = useAlert();
   const { loding, data } = useFetch({
     url: `/ContractItem/GetByProjectId?projectId=${Id}&page=${1}&pageSize=${100}`,
@@ -167,11 +170,11 @@ const Table = ({ Id, change, setChange }) => {
   };
 
   // delete element
-  const handleDelete = async (i, id) => {
+  const handleDelete = async () => {
     try {
       const makeRequest = makeRequesInstance(localStorage.getItem("token"));
       const res = await makeRequest.delete(
-        `/ContractItem?contractItemId=${id}`
+        `/ContractItem?contractItemId=${isDelete}`
       );
       if (res.status === 204) {
         alert.show("Deleted Sucessfully", { type: "success" });
@@ -190,6 +193,7 @@ const Table = ({ Id, change, setChange }) => {
         alert.show("Iternal server error", { type: "error" });
       }
     }
+    setIsDelete(null);
   };
 
   const handleCopy = (index, item) => {
@@ -241,7 +245,10 @@ const Table = ({ Id, change, setChange }) => {
               <td className="td">
                 <span>{item?.hsn}</span>
               </td>
-              <td className="td">
+              {isDelete===item?.id?<td className="td">
+                <button className="contract-yes" onClick={handleDelete}><img src={yes} alt="" /></button>
+                <button className="contract-no" onClick={()=>{setIsDelete(null)}}><img src={no} alt="" /></button>
+                </td>:<td className="td">
                 <button
                   className="btn-disabled"
                   onClick={() => handleInput(index, item?.id)}
@@ -268,12 +275,12 @@ const Table = ({ Id, change, setChange }) => {
                 </button>
                 <button
                   className="btn-disabled"
-                  onClick={() => handleDelete(index, item?.id)}
+                  onClick={() => {setIsDelete(item?.id)}}
                   disabled={input || update}
                 >
                   <img src={deleteicon} alt="" className="svg" />
                 </button>
-              </td>
+              </td>}
             </tr>
           ))}
 
@@ -610,7 +617,10 @@ const Table = ({ Id, change, setChange }) => {
               <td className="td">
                 <span>{item?.hsn}</span>
               </td>
-              <td className="td">
+              {isDelete===item?.id?<td className="td">
+                <button className="contract-yes" onClick={handleDelete}><img src={yes} alt="" /></button>
+                <button className="contract-no" onClick={()=>{setIsDelete(null)}}><img src={no} alt="" /></button>
+                </td>:<td className="td">
                 <button
                   className="btn-disabled"
                   onClick={() =>
@@ -647,12 +657,12 @@ const Table = ({ Id, change, setChange }) => {
                 </button>
                 <button
                   className="btn-disabled"
-                  onClick={() => handleDelete(index, item?.id)}
+                  onClick={() => {setIsDelete(item?.id)}}
                   disabled={input || update}
                 >
                   <img src={deleteicon} alt="" className="svg" />
                 </button>
-              </td>
+              </td>}
             </tr>
           ))}
       </table>

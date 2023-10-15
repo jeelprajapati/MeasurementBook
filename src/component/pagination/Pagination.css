@@ -1,0 +1,28 @@
+.pagination-con{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.pagination-btn{
+    width: 100px;
+    height: 40px;
+    background-color:#5b69e9;
+    color: white;
+    border: none;
+    font-size: 15px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: 'Roboto';
+}
+.prv img{
+    transform: rotate(180deg);
+}
+.pagination-btn:disabled{
+    background-color: #8f97e0;
+    cursor: not-allowed;
+}

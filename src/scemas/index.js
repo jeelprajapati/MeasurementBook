@@ -58,5 +58,5 @@ export const contractTable=Yup.object({
 export const measureTable=Yup.object({
   description:Yup.string().required("Description is Required!"),
   no:Yup.string().required("No is Required!"),
-  // contractItemId:Yup.string().required("Contract Item is Required!")
+  contractItemId:Yup.string().required("Contract Item is Required!")
 })

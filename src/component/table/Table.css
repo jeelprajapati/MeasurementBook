@@ -82,3 +82,19 @@
 .purple-border{
     border: 1px solid #333333;
 }
+.contract-yes{
+   background-color: #333333;
+   border: none;
+   margin: 0 4px;
+   cursor: pointer;
+   width: 30px;
+   height: 30px;
+}
+.contract-no{
+    background-color: white;
+    border: none;
+    margin: 0 4px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+ }

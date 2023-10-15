@@ -110,7 +110,7 @@ const Login = () => {
           <button className={`${loading?'forget-button reload':'forget-button pointer'}`}>Forget Password</button>
         </div>
         <div className="link-register">
-          Go to register <Link to='/register'>Register</Link>
+          Don't have an account ? <Link to='/register'>sign up</Link>
         </div>
       </div>
     </div>

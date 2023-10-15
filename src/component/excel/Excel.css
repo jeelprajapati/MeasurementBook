@@ -30,6 +30,7 @@
     border-radius: 5px;
     margin: 5px 0;
     font-family: 'Roboto';
+    font-weight: 600;
     cursor: pointer;
 }
 .excel-img{

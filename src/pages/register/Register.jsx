@@ -282,7 +282,7 @@ const Register = () => {
               </div>
               <input type='button' value='Register' className="register-button" onClick={handleSubmit} />
               <div className="link-login">
-                Go To <Link to="/login">Login</Link>
+                Do have an account ? <Link to="/login">sign in</Link>
               </div>
             </div>
           </div>

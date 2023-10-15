@@ -20,7 +20,6 @@ const ClientPopUp = ({
   const Id = localStorage.getItem("organizationId");
   const alert = useAlert();
   const makeRequest = makeRequesInstance(localStorage.getItem("token"));
-  
   const addRequest = useFormik({
     initialValues: item,
     validationSchema: clientScema,
@@ -459,7 +458,7 @@ const ClientPopUp = ({
               {state
                 ?.filter(
                   (e) =>
-                    e?.countryCode ===
+                    e?.countryCode?.toString() ===
                     (update
                       ? upadteRequest.values.countryId
                       : addRequest.values.countryId)

@@ -207,7 +207,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
       </div>
 
       <div className="date-and-time">
-        <div>
+        <div style={{flex:'1'}}>
           <label htmlFor="contractNo" className="project-lable">
             Contract No <span style={{color:'red',fontSize:'14px'}}>*</span>
           </label>
@@ -216,6 +216,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
             type="text"
             id="contractNo"
             className="dt-input"
+            style={{width:'92%'}}
             name="contractNo"
             value={
               update
@@ -251,7 +252,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
             >{addFormik.errors.contractNo}</p>
           ) : null}
         </div>
-        <div>
+        <div style={{flex:'1'}}>
           <label htmlFor="contractDate" className="project-lable">
             Date of Contract <span style={{color:'red',fontSize:'14px'}}>*</span>
           </label>
@@ -260,6 +261,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
             type="date"
             id="contractDate"
             className="dt-input"
+            style={{width:'92%'}}
             name="contractDate"
             value={
               update
@@ -297,7 +299,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
         </div>
       </div>
       <div className="date-and-time">
-        <div>
+        <div style={{flex:'1'}}>
           <label htmlFor="contractValidity" className="project-lable">
             Duration (in days)
           </label>
@@ -306,6 +308,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
             type="text"
             id="contractValidity"
             className="dt-input"
+            style={{width:'92%'}}
             name="contractValidity"
             value={
               update
@@ -318,7 +321,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
             onBlur={update ? updateFormik.handleBlur : addFormik.handleBlur}
           />
         </div>
-        <div>
+        <div style={{flex:'1'}}>
           <label htmlFor="loiDate" className="project-lable">
             Project Start Date <span style={{color:'red',fontSize:'14px'}}>*</span>
           </label>
@@ -327,6 +330,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
             type="date"
             id="loiDate"
             className="dt-input"
+            style={{width:'92%'}}
             name="loiDate"
             value={
               update  

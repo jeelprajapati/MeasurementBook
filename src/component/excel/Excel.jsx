@@ -77,7 +77,7 @@ const Excel = ({setOpen,projectId,setChange,change}) => {
           <br />
           <input type="file" onChange={handleFile}/>
           <br/>
-          <button className="excel-button" onClick={handleSubmit}>submit</button>
+          <button className="excel-button" onClick={handleSubmit}>Submit</button>
           <br />
           <span className='excel-red'>Download Reference Excel Format: <Link to='https://docs.google.com/spreadsheets/d/e/2PACX-1vQtekg2bf5eHdBdmpD2pWtDykbjJ7-3aX9aheH2jRR89zflLKIVvnfCKTedsqu9IwaJ0LzW5JNrCeof/pub?output=xlsx'>https://docs.google.com/spreadsheets/d/e/2PACX-1vQtekg2bf5eHdBdmpD2pWtDykbjJ7-3aX9aheH2jRR89zflLKIVvnfCKTedsqu9IwaJ0LzW5JNrCeof/pub?output=xlsx</Link></span>
         </div>

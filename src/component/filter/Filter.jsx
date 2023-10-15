@@ -75,11 +75,11 @@ const Filter = ({type,item,filter,setFilter,filterColumn,max,min,average}) => {
             <input type="text" placeholder={`Search For ${type}`} onChange={handleChange}/>
           </div>
           {type==="Tags" ? <div className="tags" style={{display:"flex",flexWrap:"wrap",margin:"5px"}}>
-            {item?.filter((i)=>(filterColumn===1?i?.item.toUpperCase().includes(searchVal.toUpperCase()):i.toUpperCase().includes(searchVal.toUpperCase()))).map((i)=>(<div className="tag" style={{cursor:"pointer"}} onClick={()=>handleSelect(filterColumn===1?i?.item:i)}>
+            {item?.filter((i)=>(filterColumn===1?i?.item.toUpperCase().includes(searchVal.toUpperCase()):i.toUpperCase().includes(searchVal.toUpperCase())))?.map((i)=>(<div className="tag" style={{cursor:"pointer"}} onClick={()=>handleSelect(filterColumn===1?i?.item:i)}>
               {filterColumn===1?i?.item:i}
             </div>))}
             </div>:<div className="filter-item">
-            {item?.filter((i)=>(filterColumn===1?i?.item.toUpperCase().includes(searchVal.toUpperCase()):i.toUpperCase().includes(searchVal.toUpperCase()))).map((i)=>(<div className="Fi" onClick={()=>handleSelect(filterColumn===1?i?.item:i)}>
+            {item?.filter((i)=>(filterColumn===1?i?.item.toUpperCase().includes(searchVal.toUpperCase()):i.toUpperCase().includes(searchVal.toUpperCase())))?.map((i)=>(<div className="Fi" onClick={()=>handleSelect(filterColumn===1?i?.item:i)}>
               {filterColumn===1?i?.item:i}
             </div>))}
           </div>}

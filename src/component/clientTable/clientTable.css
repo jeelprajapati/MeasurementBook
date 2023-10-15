@@ -76,3 +76,19 @@
 .client-td span::-webkit-scrollbar{
     display: none;
 }
+.client-yes{
+    width: 30px;
+    height: 30px;
+    background-color: #333333;
+    border: none;
+    cursor: pointer;
+    margin: 0 4px;
+}
+.client-no{
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    margin: 0 4px;
+}

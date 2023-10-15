@@ -66,3 +66,19 @@
   .Green{
     color: #077d4a;
   }
+  .bill-yes{
+    background-color: #333333;
+    border: none;
+    width: 30px;
+    height: 30px;
+    margin: 0 4px;
+    cursor: pointer;
+  }
+  .bill-no{
+    background-color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    margin: 0 4px;
+    cursor: pointer;
+  }

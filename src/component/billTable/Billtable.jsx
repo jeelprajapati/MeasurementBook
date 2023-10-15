@@ -7,11 +7,15 @@ import { Link, useLocation } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import makeRequesInstance from "../../makeRequest";
 import { useAlert } from "react-alert";
+import yes from "../../image/yes.svg"
+import no from "../../image/no.svg"
+import { useState } from "react";
 const Billtable = ({ setOpen, change, setInput, setItem, setChange ,open }) => {
   const Id = useLocation().search.split("?")[1].split("=")[1];
   const alert = useAlert();
   const projectname = useLocation().search.split("?")[2].split("=")[1];
   const makeRequest = makeRequesInstance(localStorage.getItem("token"));
+  const [isDelete,setIsDelete]=useState(null);
   const { loding, data } = useFetch({
     url: `/Bill/GetByProjectId?page=${1}&pageSize=${100}&projectId=${Id}`,
     change,
@@ -21,9 +25,9 @@ const Billtable = ({ setOpen, change, setInput, setItem, setChange ,open }) => {
     setInput(true);
     setItem(e);
   };
-  const handleDelete = async (id) => {
+  const handleDelete = async () => {
     try {
-      const res = await makeRequest.delete(`Bill/${id}`);
+      const res = await makeRequest.delete(`Bill/${isDelete}`);
       if (res.status === 200) {
         alert.show("Deleted Sucessfully", { type: "success" });
         if (change === 0) {
@@ -43,6 +47,7 @@ const Billtable = ({ setOpen, change, setInput, setItem, setChange ,open }) => {
         alert.show('Iternal server error',{type:'error'})
       }
     }
+    setIsDelete(null);
   };
   return (
     <div className="bill-table-container">
@@ -81,7 +86,10 @@ const Billtable = ({ setOpen, change, setInput, setItem, setChange ,open }) => {
                   </p>
                 </span>
               </td>
-              <td className="bill-td">
+              {isDelete===item?.id?<td className="bill-td">
+                <button className="bill-yes" onClick={handleDelete}><img src={yes} alt="" /></button>
+                <button className="bill-no" onClick={()=>{setIsDelete(null)}}><img src={no} alt="" /></button>
+              </td>:<td className="bill-td">
                 <button onClick={() => handleUpdate(item)} style={{margin:'0',padding:'0',backgroundColor:'transparent',border:'none'}} disabled={open}>
                  <img
                   src={edit}
@@ -90,7 +98,7 @@ const Billtable = ({ setOpen, change, setInput, setItem, setChange ,open }) => {
                   style={{width:'22px',height:'22px',cursor:'pointer'}}
                  />
                 </button>
-                <button  onClick={() => handleDelete(item?.id)} style={{margin:'0',padding:'0',backgroundColor:'transparent',border:'none'}} disabled={open}>
+                <button  onClick={() => {setIsDelete(item?.id)}} style={{margin:'0',padding:'0',backgroundColor:'transparent',border:'none'}} disabled={open}>
                   <img
                    src={deleteicon}
                    alt=""
@@ -108,7 +116,7 @@ const Billtable = ({ setOpen, change, setInput, setItem, setChange ,open }) => {
                 </Link>:<button className="disabled" disabled style={{margin:'0',padding:'0',border:'none'}} >
                    <img src={filesvg} style={{width:'22px',height:'22px',filter:'invert(1)'}} alt="" className="svg" />
                   </button>}
-              </td>
+              </td>}
             </tr>
           ))}
       </table>

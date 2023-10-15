@@ -43,7 +43,9 @@ const Sidebar = ({id}) => {
           <ul className='sidebar-ul'>
             <li style={{position:'relative'}}>
               <div className="nav-logo">
-                <span style={{color:'#333333'}}>MB</span>
+                <span style={{color:'#333333'}}>
+                  MB
+                </span>
                 </div>
                 {sidebar&&<div className="nav-title" style={{margin:'0 10px'}}>
                   measurement book

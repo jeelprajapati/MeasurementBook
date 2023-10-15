@@ -65,7 +65,7 @@
     margin:10px auto; 
 }
 .dt-input{
-    width: 260px;
+    /* width: 100%; */
     padding: 10px;
     border: 1px solid rgb(223, 221, 221);
     height: 27px;
