@@ -270,7 +270,11 @@ const Measure = () => {
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
-      border:state.isFocused? 'none':'',
+      border: state.isFocused ? 0 : 0,
+      boxShadow: state.isFocused ? 0 : 0,
+      '&:hover': {
+        border: state.isFocused ? 0 : 0
+      },
       height: '100%',
     }),
   };
@@ -474,7 +478,7 @@ const Measure = () => {
                   onBlur={
                     update ? updateFormik.handleBlur : addFormik.handleBlur
                   }
-                  options={contractItem.map((i) => ({
+                  options={contractItem?.map((i) => ({
                     value: i?.id,
                     label: i?.item,
                   }))}
@@ -615,7 +619,7 @@ const Measure = () => {
                 )}
                 {!(array.length === 0) && (
                   <button
-                    className="btn"
+                    className="btn-cancle"
                     onClick={() => {
                       setInput(false);
                       setTags("");

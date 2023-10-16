@@ -45,8 +45,8 @@ const Projects = () => {
 
   useEffect(()=>{
     setLoad(true)
-    setFilterArr(array?.filter((e)=>(e?.projectName.includes(search))))
-    setAllPage(Math.ceil((array?.filter((e)=>(e?.projectName.includes(search))).length+1)/21))
+    setFilterArr(array?.filter((e)=>(e?.projectName.toUpperCase().includes(search.toUpperCase()))))
+    setAllPage(Math.ceil((array?.filter((e)=>(e?.projectName.toUpperCase().includes(search.toUpperCase()))).length+1)/21))
     setLoad(false)
   },[search,array])
   const handlePopUp = (e) => {
@@ -64,6 +64,7 @@ const Projects = () => {
   //      alert('First Delete This project related data',{type:'info'})
   //   }
   // }
+  
   console.log(filterArr,search);
   return (
     <div>
@@ -76,7 +77,7 @@ const Projects = () => {
             <div className={`${popUp ? "path blur" : "path"}`}>Projects/</div>
             <div className="search">
               <img src={Search} style={{padding:'0 6px'}} alt="" />
-              <input type="text" placeholder="search" onChange={(e)=>(setSearch(e.target.value))}/>
+              <input type="text" placeholder="Search" onChange={(e)=>(setSearch(e.target.value))}/>
           </div>
           </div>
           <div className="project-main">

@@ -35,7 +35,7 @@
 }
 .summary-title{
     font-family: 'Roboto';
-    font-size: 16px;
+    font-size: 15px;
     margin: 10px;
 }
 .summary-container{
@@ -54,7 +54,7 @@
 }
 .bill-table-title{
     font-family: 'Roboto';
-    font-size: 18px;
+    font-size: 15px;
 }
 .bill-con{
     display: flex;
@@ -74,6 +74,7 @@
     border-radius: 5px;
     color: white;
     font-family: 'Roboto';
+    margin: 7px 0px;
 }
 .add-bill:hover{
     cursor: pointer;

@@ -66,10 +66,10 @@ const Client = () => {
         <div className="client-left"><Sidebar id={3}/></div>
         <div className="client-right">
           <div className="client-top">
-            <div className={`${input ? 'client-path blur':'client-path'}`}>Client/</div>
+            <div className={`${input ? 'client-path blur':'client-path'}`}>Clients/</div>
           </div>
           <div className={`${input ?'client-main blur':'client-main'}`}>
-            <h2 className={`${input ? 'client-title blur':'client-title'}`}>Client</h2>
+            <h2 className={`${input ? 'client-title blur':'client-title'}`}>Clients</h2>
             <ClientTable setInput={setInput} change={change} setItem={setItem} setUpdate={setUpdate} setChange={setChange} country={country} state={state}/>
           </div>
           {input && (<div className="clientpopup">

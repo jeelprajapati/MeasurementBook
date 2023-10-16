@@ -553,11 +553,11 @@ const Table = ({ Id, change, setChange }) => {
                 </button>
               ) : (
                 <button className="btn" onClick={addFormik.handleSubmit}>
-                  Submit
+                  Add
                 </button>
               )}
               {array.length!==0 && <button
-                className="btn"
+                className="btn-cancle"
                 onClick={() => {
                   setInput(false);
                   setElement({

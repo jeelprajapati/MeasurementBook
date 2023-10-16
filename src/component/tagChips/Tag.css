@@ -3,14 +3,12 @@
     align-items: flex-start;
     flex-wrap: wrap;
     background-color: white;
-    height: 90%;
+    height: 75%;
     width: 95%;
     padding: 6px;
-    border: 1px solid rgb(214, 216, 218);
+    /* border: 1px solid #333333; */
     border-radius: 3px;
-    &:focus-within {
-      border: 1px solid #0052cc;
-    }  
+    
 }
 .tag-input{
     flex: 1;

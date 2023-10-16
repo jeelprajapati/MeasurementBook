@@ -24,7 +24,7 @@
 .contract-title{
     margin: 0px 8px 10px;
     font-family: 'Roboto';
-    font-size: 16px;
+    font-size: 15px;
     width: fit-content;
     padding: 7px;
     border-radius: 5px;
@@ -107,7 +107,7 @@
 }
 .table-title{
     font-family: 'Roboto';
-    font-size: 16px;
+    font-size: 15px;
 }
 .single-page-container{
     display: flex;

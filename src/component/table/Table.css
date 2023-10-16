@@ -7,7 +7,7 @@
 }
 .table::-webkit-scrollbar{
     display: none;
-  }
+}
 .tb{
     color: white;
     border-radius: 10px;
@@ -22,7 +22,7 @@
 }
 .th{
     padding: 10px 35px;
-    font-size: 14px;  
+    font-size: 13px;  
     font-family: 'Roboto'; 
 }
 .th:nth-child(1){
