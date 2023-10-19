@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 import "./Filter.css";
 import search from "../../image/search.svg";
 import { useState } from "react";
-const Filter = ({type,item,filter,setFilter,filterColumn,max,min,average}) => {
+const Filter = ({type,item,filter,setFilter,max,min,average}) => {
   const [allFilters, setAllFilters] = useState(false);
   const [filterCrud, setFilterCrud] = useState(false);
   const [filterItem, setFilterItem] = useState("");
   const [searchVal,setSearchVal]=useState("");
-  useEffect(()=>{
+    useEffect(()=>{
     if(filter.length===0){
       setFilterItem("");
       setSearchVal("")
@@ -30,27 +30,18 @@ const Filter = ({type,item,filter,setFilter,filterColumn,max,min,average}) => {
   const handleClose=()=>{
     setFilterItem("");
     setSearchVal("")
-    setFilter(filter.filter((item)=>(item?.filterColumn!==filterColumn)))
+    setFilter([])
     setFilterCrud(false);
   }
   
   const handleSelect=(value)=>{
     setFilterItem(value);
-      if(filter.length===0){
-        setFilter([{"filterColumn":filterColumn,"filterValue":value}])
-      }
-      else if(filter.length===1){
-        if(filter[0]?.filterColumn===filterColumn){
-          setFilter([{"filterColumn":filterColumn,"filterValue":value}])
-        }
-        else{
-          setFilter([...filter,{"filterColumn":filterColumn,"filterValue":value}])
-        }
-      }
-      if(filter.length===2){
-        const item=filter?.filter((i)=>(i.filterColumn!==filterColumn))
-        setFilter([...item,{"filterColumn":filterColumn,"filterValue":value}])
-      }
+     if(filter?.find((i)=>value===i)){
+      setFilter(filter.filter((i)=>(i!==value)))
+     }
+     else{
+      setFilter([value])
+     }
     setAllFilters(false);
     setFilterCrud(true);
   }
@@ -74,15 +65,11 @@ const Filter = ({type,item,filter,setFilter,filterColumn,max,min,average}) => {
             <img src={search} alt="" className="serch-icon" />
             <input type="text" placeholder={`Search For ${type}`} onChange={handleChange}/>
           </div>
-          {type==="Tags" ? <div className="tags" style={{display:"flex",flexWrap:"wrap",margin:"5px"}}>
-            {item?.filter((i)=>(filterColumn===1?i?.item.toUpperCase().includes(searchVal.toUpperCase()):i.toUpperCase().includes(searchVal.toUpperCase())))?.map((i)=>(<div className="tag" style={{cursor:"pointer"}} onClick={()=>handleSelect(filterColumn===1?i?.item:i)}>
-              {filterColumn===1?i?.item:i}
+          <div className="filter-item">
+            {item?.filter((i)=>(i?.item.toUpperCase().includes(searchVal.toUpperCase())))?.map((i)=>(<div className="Fi" onClick={()=>handleSelect(i?.item)}>
+              {i?.item}
             </div>))}
-            </div>:<div className="filter-item">
-            {item?.filter((i)=>(filterColumn===1?i?.item.toUpperCase().includes(searchVal.toUpperCase()):i.toUpperCase().includes(searchVal.toUpperCase())))?.map((i)=>(<div className="Fi" onClick={()=>handleSelect(filterColumn===1?i?.item:i)}>
-              {filterColumn===1?i?.item:i}
-            </div>))}
-          </div>}
+          </div>
         </div>
       )}
     </div>
