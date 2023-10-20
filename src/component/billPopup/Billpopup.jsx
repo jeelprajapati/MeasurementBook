@@ -106,7 +106,7 @@ const Billpopup = ({
          }
         } 
       }
-      console.log(value)
+    
       handleUpdate();
     }
   })

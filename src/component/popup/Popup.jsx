@@ -54,7 +54,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
             }
           }
         } catch (error) {
-          console.log(error)
+        
           if (error.response) {
             alert.show(error.response.data.title, { type: "info" });
           } else if (error.code === "ERR_NETWORK") {

@@ -50,7 +50,7 @@ const Filter = ({type,item,filter,setFilter,max,min,average}) => {
       {filterCrud ? (
         <div className="filter-box1">
           <span className="w">✓</span>
-          <span className="filter-name" onClick={handleClick}>{filterItem}</span>
+          <span className="filter-name" onClick={handleClick}>{filterItem?.length>=50 ? `${filterItem?.slice(0,50)}...`:filterItem}</span>
           <span className="x" onClick={handleClose}>&times;</span>
         </div>
       ) : (
