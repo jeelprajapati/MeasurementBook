@@ -13,7 +13,7 @@ const Select = ({onChange,options,value,error}) => {
     const term = event.target.value;
     setSearchTerm(term);
     const filteredOptions = options.filter(option =>
-      option?.label.toLowerCase().includes(term.toLowerCase())
+      term && option?.label.toLowerCase().includes(term.toLowerCase())
     );
     setFilteredOptions(filteredOptions);
   };
@@ -27,7 +27,7 @@ const Select = ({onChange,options,value,error}) => {
         setOpen(false)
     }
     else{
-        setOpen(true)
+      setOpen(true)
     }
   }
 

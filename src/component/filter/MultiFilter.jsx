@@ -57,7 +57,7 @@ const MultiFilter = ({item,type,filter,setFilter,max,min,average}) => {
         </div>
       )}
       {allFilters && (
-        <div className="filter-table" style={{minWidth:`${min}px`,maxWidth:`${max}px`,width:`${average}px`}}>
+        <div className="filter-table" style={{minWidth:`${min}px`,maxWidth:`${max}px`,width:`${average}px`,height:'fitContent',maxHeight:'250px'}}>
           <div className="filter-search">
             <img src={search} alt="" className="serch-icon" />
             <input type="text" placeholder={`Search For ${type}`} onChange={(e)=>{setSearchVal(e.target.value)}}/>

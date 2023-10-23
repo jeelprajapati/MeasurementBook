@@ -75,7 +75,7 @@ const Filter = ({type,item,filter,setFilter,max,min,average}) => {
         </div>
       )}
       {allFilters && (
-        <div className="filter-table" style={{minWidth:`${min}px`,maxWidth:`${max}px`,width:`${average}px`,height:'360px'}}>
+        <div className="filter-table" style={{minWidth:`${min}px`,maxWidth:`${max}px`,width:`${average}px`,maxHeight:'360px',height:'fitContent'}}>
           <div className="filter-search">
             <img src={search} alt="" className="serch-icon" />
             <input type="text" placeholder={`Search For ${type}`} onChange={handleChange}/>

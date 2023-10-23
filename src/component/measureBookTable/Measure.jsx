@@ -566,7 +566,7 @@ const Measure = () => {
                     style={{
                       display: "flex",
                       flexWrap: "wrap",
-                      gap: "2px",
+                      gap: "4px",
                       width: "95%",
                       margin: "auto",
                     }}
@@ -1194,7 +1194,7 @@ const Measure = () => {
                     style={{
                       display: "flex",
                       flexWrap: "wrap",
-                      gap: "2px",
+                      gap: "4px",
                       width: "95%",
                       margin: "auto",
                     }}

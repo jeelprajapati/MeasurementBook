@@ -41,7 +41,6 @@
     top: 120%;
     border-radius: 5px;
     z-index: 3;
-    height: 250px;
     overflow-y: auto;
     }
 .filter-search{
@@ -50,6 +49,10 @@
     padding: 10px 7px;
     display: flex;
     gap: 7px;
+    border-bottom:1px solid #333333;
+    position: sticky;
+    top: 0;
+    background-color: white;
     }
 .filter-search input{
     width: 98%;
@@ -64,13 +67,13 @@
     font-weight: 600;
 }
 .Fi{
-    padding: 5px 15px;
+    padding: 10px;
     cursor: pointer;
     font-family: 'Roboto';
     font-size: 13px;
     font-weight: 600;
     color: rgb(128, 128, 128);
-    border-bottom:1px solid rgb(199, 197, 197);
+    border-bottom:1px solid rgb(214 213 213);
 }
 .Fi:hover{
    background-color: rgb(226, 225, 225);
