@@ -41,6 +41,8 @@
     top: 120%;
     border-radius: 5px;
     z-index: 3;
+    height: 250px;
+    overflow-y: auto;
     }
 .filter-search{
     display: flex;
@@ -62,12 +64,13 @@
     font-weight: 600;
 }
 .Fi{
-    padding: 5px 10px;
+    padding: 5px 15px;
     cursor: pointer;
     font-family: 'Roboto';
     font-size: 13px;
     font-weight: 600;
     color: rgb(128, 128, 128);
+    border-bottom:1px solid rgb(199, 197, 197);
 }
 .Fi:hover{
    background-color: rgb(226, 225, 225);
@@ -103,7 +106,6 @@
     gap: 3px;
     border: 1px solid #333333;
     border-radius: 4px;
-    padding: 2px;
     max-width: 400px;
     overflow-x: scroll;
 }
@@ -123,6 +125,7 @@
     min-width: 80px;
     display: flex;
     width: fit-content;
+    height: fit-content;
 }
 .Wrapper span{
     padding: 3px;
@@ -131,6 +134,7 @@
     font-family: 'Roboto';
     font-weight: 600;
     text-align: center;
+    height: fit-content;
 }
 .Wrapper input{
     cursor: pointer;

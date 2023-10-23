@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState,useRef} from "react";
 import "./Filter.css";
 import search from "../../image/search.svg";
-import { useState } from "react";
 const Filter = ({type,item,filter,setFilter,max,min,average}) => {
   const [allFilters, setAllFilters] = useState(false);
   const [filterCrud, setFilterCrud] = useState(false);
   const [filterItem, setFilterItem] = useState("");
   const [searchVal,setSearchVal]=useState("");
+  const ref=useRef()
     useEffect(()=>{
     if(filter.length===0){
       setFilterItem("");
@@ -45,8 +45,23 @@ const Filter = ({type,item,filter,setFilter,max,min,average}) => {
     setAllFilters(false);
     setFilterCrud(true);
   }
+
+  useEffect(() => {
+    const checkIfClickedOutside = e => {
+      if (allFilters && ref.current && !ref.current.contains(e.target)) {
+        setAllFilters(false)
+      }
+    }
+
+    document.addEventListener("mousedown", checkIfClickedOutside)
+
+    return () => {
+      document.removeEventListener("mousedown", checkIfClickedOutside)
+    }
+  }, [allFilters])
+
   return (
-    <div className="filter-container">
+    <div className="filter-container" ref={ref}>
       {filterCrud ? (
         <div className="filter-box1">
           <span className="w">✓</span>
@@ -60,7 +75,7 @@ const Filter = ({type,item,filter,setFilter,max,min,average}) => {
         </div>
       )}
       {allFilters && (
-        <div className="filter-table" style={{minWidth:`${min}px`,maxWidth:`${max}px`,width:`${average}px`}}>
+        <div className="filter-table" style={{minWidth:`${min}px`,maxWidth:`${max}px`,width:`${average}px`,height:'360px'}}>
           <div className="filter-search">
             <img src={search} alt="" className="serch-icon" />
             <input type="text" placeholder={`Search For ${type}`} onChange={handleChange}/>

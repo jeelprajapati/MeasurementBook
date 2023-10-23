@@ -38,8 +38,10 @@ const Measure = () => {
   const [isDelete, setIsDelete] = useState(null);
   const [contractContentId,setContractContentId]=useState(null);
   const [descriptionId,setDescriptionId]=useState(null);
+  const [scrollValue,setScrollValue]=useState(0);
   const alert = useAlert();
-
+  const tableRef=useRef();
+  const ref=useRef();
   useEffect(() => {
     const getData = async () => {
       setLoad(true);
@@ -73,10 +75,18 @@ const Measure = () => {
         });
         setArray(res.data.items);
       }
-      setLoad(false);
-    };
-    getData();
+      setLoad(false); 
+      };
+      getData();
+
   }, [change, billId, filter, filter1]);
+  
+  useEffect(()=>{
+    if(tableRef.current){
+      tableRef.current.scrollTop=scrollValue;
+     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[array])
 
   useEffect(() => {
     const getContractItem = async () => {
@@ -122,17 +132,24 @@ const Measure = () => {
               id: "00000000-0000-0000-0000-000000000000",
               description: value?.description,
               no: parseFloat(value?.no) || 0,
-              l: parseFloat(value?.l) || 0,
+              l: contractItem?.find((item) => item?.id === value?.contractItemId)
+                 ?.stdUnitId === 4 
+                 ? 0 
+                 : parseFloat(value?.l) || 0,
               b:
                 contractItem?.find((item) => item?.id === value?.contractItemId)
-                  ?.stdUnitId === 1
+                  ?.stdUnitId === 1 ||
+                  contractItem?.find((item) => item?.id === value?.contractItemId)
+                  ?.stdUnitId === 4
                   ? 0
                   : parseFloat(value?.b) || 0,
               d_H:
                 contractItem?.find((item) => item?.id === value.contractItemId)
                   ?.stdUnitId === 1 ||
                 contractItem?.find((item) => item?.id === value?.contractItemId)
-                  ?.stdUnitId === 2
+                  ?.stdUnitId === 2 ||
+                contractItem?.find((item) => item?.id === value?.contractItemId)
+                  ?.stdUnitId === 4
                   ? 0
                   : parseFloat(value?.d_H) || 0,
               subtotal: 0,
@@ -173,7 +190,7 @@ const Measure = () => {
       handleAdd();
     },
   });
-
+  
   const updateFormik = useFormik({
     initialValues: {
       description: "",
@@ -193,17 +210,24 @@ const Measure = () => {
             id: value?.id,
             description: value?.description,
             no: parseFloat(value?.no),
-            l: parseFloat(value?.l),
+            l: contractItem?.find((item) => item?.id === value?.contractItemId)
+               ?.stdUnitId === 4 
+               ? 0 
+               : parseFloat(value?.l),
             b:
               contractItem?.find((item) => item?.id === value?.contractItemId)
-                ?.stdUnitId === 1
+                ?.stdUnitId === 1 ||
+              contractItem?.find((item) => item?.id === value?.contractItemId)
+                ?.stdUnitId === 4
                 ? 0
                 : parseFloat(value?.b) || 0,
             d_H:
               contractItem?.find((item) => item?.id === value.contractItemId)
                 ?.stdUnitId === 1 ||
               contractItem?.find((item) => item?.id === value?.contractItemId)
-                ?.stdUnitId === 2
+                ?.stdUnitId === 2 ||
+              contractItem?.find((item) => item?.id === value?.contractItemId)
+                ?.stdUnitId === 4
                 ? 0
                 : parseFloat(value?.d_H) || 0,
             subtotal: parseFloat(value?.subtotal),
@@ -276,7 +300,8 @@ const Measure = () => {
       value: contractItem?.find((e) => e?.id === item?.contractItemId)?.id,
       label: contractItem?.find((e) => e?.id === item?.contractItemId)?.item,
     });
-    array.splice(index, 1);
+    setScrollValue(tableRef.current.scrollTop);
+    setArray(array.filter((i)=>(i?.id!==item.id)));
     setNumber(index - 1);
     setInput("update");
     setLoad(false);
@@ -295,6 +320,7 @@ const Measure = () => {
   const handleAdd = (index) => {
     setNumber(index);
     setInput("add");
+    setScrollValue(tableRef.current.scrollTop);
     if (index === array.length) {
       setHead(array[index - 1]?.id);
       setTail("00000000-0000-0000-0000-000000000000");
@@ -314,8 +340,8 @@ const Measure = () => {
       updateFormik.resetForm();
     } else {
       addFormik.resetForm();
-      setSelectedOption(null);
     }
+    setSelectedOption(null);
     setInput("");
     setTags("");
     setNumber(0);
@@ -327,6 +353,7 @@ const Measure = () => {
   const handleCopy = (item, index) => {
     addFormik.setValues(item);
     setNumber(index);
+    setScrollValue(tableRef.current.scrollTop);
     setSelectedOption({
       value: contractItem?.find((e) => e?.id === item?.contractItemId)?.id,
       label: contractItem?.find((e) => e?.id === item?.contractItemId)?.item,
@@ -344,6 +371,7 @@ const Measure = () => {
 
   const handleDelete = async () => {
     try {
+      setScrollValue(tableRef.current.scrollTop);
       const makeRequest = makeRequesInstance(localStorage.getItem("token"));
       const res = await makeRequest.delete(
         `/MeasurementBook?measurementBookId=${isDelete}`
@@ -376,7 +404,7 @@ const Measure = () => {
       setFilter1([]);
     }
   };
-
+  
   return (
     <>
       <div className="measure-filter">
@@ -385,9 +413,9 @@ const Measure = () => {
           item={contractItem}
           filter={filter1}
           setFilter={setFilter1}
-          max={360}
+          max={450}
           min={192}
-          average={240}
+          average={400}
         />
         <MultiFilter
           type={"Tags"}
@@ -402,7 +430,7 @@ const Measure = () => {
           Clear all
         </span>
       </div>
-      <div className="measure-table">
+      <div className="measure-table" ref={tableRef}>
         <table>
           <tr className="measure-tr">
             <th className="measure-th" style={{ width: "2%" }}></th>
@@ -467,15 +495,15 @@ const Measure = () => {
                 >
                   {contractItem?.find(
                       (value) => value?.id === items.contractItemId
-                    )?.item?.length >= 100 ? 
+                    )?.item?.length >= 70 ? 
                     (contractContentId===items?.id ?
                     <span style={{position:'absolute',backgroundColor:"white",zIndex:'2',top:'10%'}} className="shadow">
                       {contractItem?.find((value) => value?.id === items.contractItemId)?.item} 
-                      <button onBlur={()=>setContractContentId(null)} onClick={()=>setContractContentId(null)} style={{backgroundColor:'transparent',border:'none',color:'red',cursor:'pointer',padding:'3px 5px'}}>read less</button>
+                      <button onBlur={()=>setContractContentId(null)} onClick={()=>setContractContentId(null)} style={{backgroundColor:'transparent',border:'none',color:'rgb(38, 38, 143)',cursor:'pointer',padding:'3px 5px'}}>less</button>
                     </span> : 
                     <span style={{position:'absolute',backgroundColor:"white",top:'10%'}}>
-                      {`${contractItem?.find((value) => value?.id === items.contractItemId)?.item?.slice(0,100)}...`}
-                       <button onClick={()=>setContractContentId(items?.id)} style={{backgroundColor:'transparent',border:'none',color:'red',cursor:'pointer',padding:'3px 0'}}>read more</button>
+                      {`${contractItem?.find((value) => value?.id === items.contractItemId)?.item?.slice(0,70)}...`}
+                       <button onClick={()=>setContractContentId(items?.id)} style={{backgroundColor:'transparent',border:'none',color:'rgb(38, 38, 143)',cursor:'pointer',padding:'3px 0'}}>more</button>
                     </span>) 
                     : contractItem?.find((value) => value?.id === items.contractItemId)?.item} 
                 </td>
@@ -488,12 +516,12 @@ const Measure = () => {
                     position:'relative'
                   }}
                 >
-                  {items?.description?.length>=100 ? descriptionId===items?.id ? <span style={{position:'absolute',backgroundColor:"white",zIndex:'2',top:'10%'}} className="shadow">
+                  {items?.description?.length>=70 ? descriptionId===items?.id ? <span style={{position:'absolute',backgroundColor:"white",zIndex:'2',top:'10%'}} className="shadow">
                       {items?.description} 
-                      <button onBlur={()=>setDescriptionId(null)} onClick={()=>setDescriptionId(null)} style={{backgroundColor:'transparent',border:'none',color:'red',cursor:'pointer',padding:'3px 5px'}}>read less</button>
+                      <button onBlur={()=>setDescriptionId(null)} onClick={()=>setDescriptionId(null)} style={{backgroundColor:'transparent',border:'none',color:'rgb(38, 38, 143)',cursor:'pointer',padding:'3px 5px'}}>less</button>
                     </span> : <span style={{position:'absolute',backgroundColor:"white",top:'10%'}}>
-                      {`${items?.description?.slice(0,100)}...`} 
-                      <button onClick={()=>setDescriptionId(items?.id)} style={{backgroundColor:'transparent',border:'none',color:'red',cursor:'pointer',padding:'3px 5px'}}>read more</button>
+                      {`${items?.description?.slice(0,70)}...`} 
+                      <button onClick={()=>setDescriptionId(items?.id)} style={{backgroundColor:'transparent',border:'none',color:'rgb(38, 38, 143)',cursor:'pointer',padding:'3px 5px'}}>more</button>
                     </span>:items?.description} 
                 </td>
                 <td className="measure-td" align="end">
@@ -612,7 +640,7 @@ const Measure = () => {
               </tr>
             ))}
           {(input === "add" || input === "update") && (
-            <tr className="measure-tr" style={{ backgroundColor: "#d5d5d5",height:'110px'}}>
+            <tr className="measure-tr" style={{ backgroundColor: "#d5d5d5",height:'110px'}} ref={ref}>
               <td className="measure-td" style={{ width: "2%" }}>
                 <input type="checkbox" />
               </td>
@@ -750,12 +778,28 @@ const Measure = () => {
                     type="number"
                     min={0}
                     name="l"
+                    disabled={
+                      contractItem?.find(
+                        (item) =>
+                          item?.id ===
+                          (input === "add"
+                            ? addFormik.values.contractItemId
+                            : updateFormik.values.contractItemId)
+                      )?.stdUnitId === 4
+                    }
                     onChange={
                       input === "update"
                         ? updateFormik.handleChange
                         : addFormik.handleChange
                     }
                     value={
+                      contractItem?.find(
+                        (item) =>
+                          item?.id ===
+                          (input === "add"
+                            ? addFormik.values.contractItemId
+                            : updateFormik.values.contractItemId)
+                      )?.stdUnitId === 4 ? 0 :
                       input === "update"
                         ? updateFormik.values.l
                         : addFormik.values.l
@@ -787,7 +831,14 @@ const Measure = () => {
                           (input === "add"
                             ? addFormik.values.contractItemId
                             : updateFormik.values.contractItemId)
-                      )?.stdUnitId === 1
+                      )?.stdUnitId === 1 ||
+                      contractItem?.find(
+                        (item) =>
+                          item?.id ===
+                          (input === "add"
+                            ? addFormik.values.contractItemId
+                            : updateFormik.values.contractItemId)
+                      )?.stdUnitId === 4
                     }
                     onChange={
                       input === "update"
@@ -801,7 +852,14 @@ const Measure = () => {
                           (input === "add"
                             ? addFormik.values.contractItemId
                             : updateFormik.values.contractItemId)
-                      )?.stdUnitId === 1
+                      )?.stdUnitId === 1 ||
+                      contractItem?.find(
+                        (item) =>
+                          item?.id ===
+                          (input === "add"
+                            ? addFormik.values.contractItemId
+                            : updateFormik.values.contractItemId)
+                      )?.stdUnitId === 4
                         ? 0
                         : input === "update"
                         ? updateFormik.values.b
@@ -841,7 +899,14 @@ const Measure = () => {
                           (input === "add"
                             ? addFormik.values.contractItemId
                             : updateFormik.values.contractItemId)
-                      )?.stdUnitId === 2
+                      )?.stdUnitId === 2 ||
+                      contractItem?.find(
+                        (item) =>
+                          item?.id ===
+                          (input === "add"
+                            ? addFormik.values.contractItemId
+                            : updateFormik.values.contractItemId)
+                      )?.stdUnitId === 4
                     }
                     onChange={
                       input === "update"
@@ -862,7 +927,14 @@ const Measure = () => {
                           (input === "add"
                             ? addFormik.values.contractItemId
                             : updateFormik.values.contractItemId)
-                      )?.stdUnitId === 2
+                      )?.stdUnitId === 2 ||
+                      contractItem?.find(
+                        (item) =>
+                          item?.id ===
+                          (input === "add"
+                            ? addFormik.values.contractItemId
+                            : updateFormik.values.contractItemId)
+                      )?.stdUnitId === 4
                         ? 0
                         : input === "update"
                         ? updateFormik.values.d_H
@@ -1051,15 +1123,15 @@ const Measure = () => {
                 >
                   {contractItem?.find(
                       (value) => value?.id === items.contractItemId
-                    )?.item?.length >= 100 ? 
+                    )?.item?.length >= 70 ? 
                     (contractContentId===items?.id ?
                     <span style={{position:'absolute',backgroundColor:"white",zIndex:'2',top:'10%'}} className="shadow">
                       {contractItem?.find((value) => value?.id === items.contractItemId)?.item} 
-                      <button onBlur={()=>setContractContentId(null)} onClick={()=>setContractContentId(null)} style={{backgroundColor:'transparent',border:'none',color:'red',cursor:'pointer',padding:'3px 5px'}}>read less</button>
+                      <button onBlur={()=>setContractContentId(null)} onClick={()=>setContractContentId(null)} style={{backgroundColor:'transparent',border:'none',color:'rgb(38, 38, 143)',cursor:'pointer',padding:'3px 5px'}}>less</button>
                     </span> : 
                     <span style={{position:'absolute',backgroundColor:"white",top:'10%'}}>
-                      {`${contractItem?.find((value) => value?.id === items.contractItemId)?.item?.slice(0,100)}...`}
-                       <button onClick={()=>setContractContentId(items?.id)} style={{backgroundColor:'transparent',border:'none',color:'red',cursor:'pointer',padding:'3px 0'}}>read more</button>
+                      {`${contractItem?.find((value) => value?.id === items.contractItemId)?.item?.slice(0,70)}...`}
+                       <button onClick={()=>setContractContentId(items?.id)} style={{backgroundColor:'transparent',border:'none',color:'rgb(38, 38, 143)',cursor:'pointer',padding:'3px 0'}}>more</button>
                     </span>) 
                     : contractItem?.find((value) => value?.id === items.contractItemId)?.item} 
                 </td>
@@ -1072,12 +1144,12 @@ const Measure = () => {
                     position:'relative'
                   }}
                 >
-                  {items?.description?.length>=100 ? descriptionId===items?.id ? <span style={{position:'absolute',backgroundColor:"white",zIndex:'2',top:'10%'}} className="shadow">
+                  {items?.description?.length>=70 ? descriptionId===items?.id ? <span style={{position:'absolute',backgroundColor:"white",zIndex:'2',top:'10%'}} className="shadow">
                       {items?.description} 
-                      <button onBlur={()=>setDescriptionId(null)} onClick={()=>setDescriptionId(null)} style={{backgroundColor:'transparent',border:'none',color:'red',cursor:'pointer',padding:'3px 5px'}}>read less</button>
+                      <button onBlur={()=>setDescriptionId(null)} onClick={()=>setDescriptionId(null)} style={{backgroundColor:'transparent',border:'none',color:'rgb(38, 38, 143)',cursor:'pointer',padding:'3px 5px'}}>less</button>
                     </span> : <span style={{position:'absolute',backgroundColor:"white",top:'10%'}}>
-                      {`${items?.description?.slice(0,100)}...`}  
-                      <button onClick={()=>setDescriptionId(items?.id)} style={{backgroundColor:'transparent',border:'none',color:'red',cursor:'pointer',padding:'3px 5px'}}>read more</button>
+                      {`${items?.description?.slice(0,70)}...`}  
+                      <button onClick={()=>setDescriptionId(items?.id)} style={{backgroundColor:'transparent',border:'none',color:'rgb(38, 38, 143)',cursor:'pointer',padding:'3px 5px'}}>more</button>
                     </span>:items?.description} 
                 </td>
                 <td className="measure-td" align="end">
@@ -1095,7 +1167,7 @@ const Measure = () => {
                 <td
                   className="measure-td"
                   align="center"
-                  style={{ fontWeight: "600" }}
+                  style={{ fontWeight: "600"}}
                 >
                   {items?.subtotal.toFixed(3)}
                   <span

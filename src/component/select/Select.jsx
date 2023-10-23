@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useState,useRef,useEffect } from 'react'
 import './Select.css'
 import Search from '../../image/search.svg'
 import Arrow from '../../image/down-arrow.svg'
@@ -8,6 +7,7 @@ const Select = ({onChange,options,value,error}) => {
   const [searchTerm, setSearchTerm] = useState(value?.label);
   const [filteredOptions, setFilteredOptions] = useState(options);
   const [open,setOpen]=useState(false);
+  const ref=useRef();
  
   const handleSearch = (event) => {
     const term = event.target.value;
@@ -30,20 +30,34 @@ const Select = ({onChange,options,value,error}) => {
         setOpen(true)
     }
   }
-  
+
+  useEffect(() => {
+    const checkIfClickedOutside = e => {
+      if (open && ref.current && !ref.current.contains(e.target)) {
+        setOpen(false)
+      }
+    }
+
+    document.addEventListener("mousedown", checkIfClickedOutside)
+
+    return () => {
+      document.removeEventListener("mousedown", checkIfClickedOutside)
+    }
+  }, [open])
+
   return (
-    <div className={`${open ? 'searchable-dropdown maxwidth': error ? 'searchable-dropdown minwidth warning' : 'searchable-dropdown minwidth'}`} onClick={handleOpen}>
+    <div ref={ref} className={`${open ? 'searchable-dropdown maxwidth': error ? 'searchable-dropdown minwidth warning' : 'searchable-dropdown minwidth'}`} onClick={handleOpen}>
       <div className='text-input'>
       <img src={Search} alt="" />  
       <input
         type="text"
         placeholder="SEARCH ITEM"
-        value={searchTerm}
+        value={searchTerm || ''}
         onChange={handleSearch}
       />
       <img src={Arrow} alt="" />
       </div>  
-      {open && <ul onBlur={()=>setOpen(false)}>
+      {open && <ul>
         {filteredOptions.map((option, index) => (
           <li key={index} onClick={() => handleSelectOption(option)}>
             {option?.label}
