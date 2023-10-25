@@ -68,82 +68,22 @@
     gap: 12px;
     flex-wrap: wrap;
     padding: 7px;
-    width: 97%;
-    margin: 0 10px;
 }
 .add-box{
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 7px;
-    width: 190px;
-    height: 160px;
-    background-color: rgb(246, 245, 245);
+    height: 260px;
+    width: 270px;
+    border: 2px dotted #333333;
 }
 .add-box:hover{
     cursor: pointer;
 }
 .plus{
     padding: 5px;
-    font-size: 100px;
-    color: #aaa6a6;
-}
-.box{
-    width: 190px;
-    height: 160px;
-    border-radius: 7px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-.color-box:nth-of-type(4n+1){
-    background-color: #d5d2f6;
-    border-radius: 5px;
-}
-.color-box:nth-of-type(4n+2){
-    background-color: #ffd2d1;
-    border-radius: 5px;
-}
-.color-box:nth-of-type(4n+3){
-    background-color:#dcfaeb;
-    border-radius: 5px;
-}
-.color-box:nth-of-type(4n+4){
-    background-color:#ffecc8;
-    border-radius: 5px;
-}
-.color-box:nth-of-type(4n+1) .c-name{
-    color: #78759e;
-}
-
-.color-box:nth-of-type(4n+2) .c-name{
-    color: #9c7076;
-}
-
-.color-box:nth-of-type(4n+3) .c-name{
-    color: #769b8d;
-}
-.color-box:nth-of-type(4n+4) .c-name{
-    color: #a68e66;
-}
-.box:hover{
-    cursor: pointer;
-}
-.c-name{
-    color: #333333;
-    font-size: 18px;
-    margin:0 30px;
-    font-weight: 600;
-    font-family: 'Roboto';
-}
-.boxs{
-    display: flex;
-    gap: 5px;
-    flex-wrap: wrap;
-}
-.green{
-    background-color: rgb(4, 184, 4);
+    font-size: 75px;
 }
 .popup{
     position: absolute;
@@ -156,15 +96,6 @@
 }
 .blur{
     filter: blur(1.5px);
-}
-.box i{
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    opacity: 0;
-}
-.box i:hover{
-    opacity: 1;
 }
 .pagination{
     position: absolute;

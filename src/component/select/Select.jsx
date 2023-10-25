@@ -8,12 +8,18 @@ const Select = ({onChange,options,value,error}) => {
   const [filteredOptions, setFilteredOptions] = useState(options);
   const [open,setOpen]=useState(false);
   const ref=useRef();
- 
+  const inputRef=useRef();
+  
+  const focusInput=()=>{
+    if(inputRef.current){
+      inputRef.current.focus()
+    }
+  }
   const handleSearch = (event) => {
     const term = event.target.value;
     setSearchTerm(term);
     const filteredOptions = options.filter(option =>
-      term && option?.label.toLowerCase().includes(term.toLowerCase())
+      option?.label.toLowerCase().includes(term.toLowerCase())
     );
     setFilteredOptions(filteredOptions);
   };
@@ -28,6 +34,7 @@ const Select = ({onChange,options,value,error}) => {
     }
     else{
       setOpen(true)
+      focusInput();
     }
   }
 
@@ -54,6 +61,7 @@ const Select = ({onChange,options,value,error}) => {
         placeholder="SEARCH ITEM"
         value={searchTerm || ''}
         onChange={handleSearch}
+        ref={inputRef}
       />
       <img src={Arrow} alt="" />
       </div>  

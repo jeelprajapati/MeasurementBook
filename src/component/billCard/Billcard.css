@@ -2,21 +2,25 @@
 .billcard-container{
     display: flex;
     flex-direction: column;
-    gap: 15px;
     background-color: #eeeeee;
     -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
     border-radius: 7px;
-    width: 290px;
-    height: 330px;
-    padding: 15px 1px 0 5px;
+    width: 275px;
+    height: 305px;
+    align-items: center;
+}
+.wrapper-card{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
     align-items: center;
     justify-content: center;
-    position: relative;
 }
 .card-top{
-    width: 86%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -29,7 +33,7 @@
 }
 .card-title-batch h3{
     margin: 0;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 900;
     font-family: 'Fira Sans';
 }
@@ -40,15 +44,15 @@
     font-weight: 900;
     font-family: 'Roboto';
     padding: 3px 7px;
-    border-radius: 7px;
+    border-radius: 5px;
 }
 .card-top .desc{
     font-family: 'Roboto';
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
 }
 .card-date{
-    width: 86%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -56,16 +60,16 @@
 }
 .card-label{
     font-family: 'Roboto';
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
 }
 .card-value{
     font-family: 'Roboto';
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
 }
 .reports{
-    width: 86%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -79,13 +83,13 @@
     width: 30px;
 }
 .measurement-button{
-    width: 85%;
+    width: 73%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .measurement-button button{
-    width: 90%;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -94,15 +98,26 @@
     color: white;
     font-family:'Roboto';
     font-weight: 600;
-    font-size: 14px;
+    font-size: 12px;
     padding: 8px;
     border: none;
+    cursor: pointer;
+}
+.measurement-button button:disabled{
+    cursor: not-allowed;
+    background-color: #758cc7;
 }
 .measurement-button img{
-    width: 15px;
+    width: 13px;
+}
+.edit-wrapper{
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top:10px;
 }
 .edit-button{
-    position: absolute;
     top: 3%;
     right: 3%;
     background-color: #d7d7d7;
@@ -112,7 +127,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 .edit-button img{
-    width: 15px;
+    width: 14px;
+}
+.submit{
+    background-color: #d1f0d7;
+    color: #6b9976;
+}
+.accept{
+    background-color: #fefbe2;
+    color: #b5b180;
 }

@@ -16,6 +16,8 @@
     display: flex;
     flex-direction: column;
     gap:7px;
+    width: 95%;
+    height: 98%;
 }
 .bill-top{
     width: 100%;
@@ -31,65 +33,35 @@
 }
 .bill-middle{
     width: 100%;
+    height: 94%;
     background-color: white;
-}
-.summary-title{
-    font-family: 'Roboto';
-    font-size: 15px;
-    margin: 10px;
-}
-.summary-container{
-    display: flex;
-    justify-content: space-between;
-    margin:10px 20px;
-}
-.summary-box{
-    width: 200px;
-    height: 130px;
-    border-radius: 5px;
-    background-color: rgb(247 247 247);
-}
-.bill-footer{
-    background-color: white;
-}
-.bill-table-title{
-    font-family: 'Roboto';
-    font-size: 15px;
-}
-.bill-con{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0px 15px;
-}
-.add-bill{
-    background-color: #5b69e9;
-    border: none;
-    font-weight: 600;
-    padding: 10px 20px;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    color: white;
-    font-family: 'Roboto';
-    margin: 7px 0px;
-}
-.add-bill:hover{
-    cursor: pointer;
 }
 .bill-link{
-   text-decoration: none;
-   color: gray;
+    text-decoration: none;
+    color: gray;
+ }
+.bill-wrapper{
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 12px;
 }
-/* .add-card{
+.add-card{
     border: 2px dotted #333333;
     font-size: 75px;
-    width: 250px;
-    height: 345px;
+    width: 273px;
+    height: 305px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 7px;
-} */
+    cursor: pointer;
+}
+.bill-card-title{
+    font-size: 18px;
+    font-weight: 900;
+    font-family: 'Roboto';
+    margin: 12px;   
+}

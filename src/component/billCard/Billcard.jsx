@@ -2,15 +2,28 @@ import React from "react";
 import './Billcard.css'
 import pdf from '../../image/pdf-file.svg'
 import xls from '../../image/xls.svg'
-import book from '../../image/book.svg'
-import edit from '../../image/edit.svg'
-const Billcard = ({item}) => {
+import book from '../../image/Vector.svg'
+import edit from '../../image/edit2.svg'
+import { Link } from "react-router-dom";
+const Billcard = ({item,projectname,Id,setInput,setItem,setOpen}) => {
+  const handleClick=()=>{
+    setItem(item);
+    setInput(true);
+    setOpen(true)
+  }
   return (
+    <>
     <div className="billcard-container">
+      <div className="edit-wrapper">
+      <div className="edit-button" onClick={handleClick}>
+        <img src={edit} alt="" />
+      </div>
+      </div>
+      <div className="wrapper-card">
       <div className="card-top">
         <div className="card-title-batch">
-          <h3>{item?.name}</h3>
-          <span className="batch">{item?.status===1 ? "Draft" : item?.status===2 ? "Submitted" : "Accepted"}</span>
+          <h3>{item?.name?.length>=15 ? `${item?.name?.slice(0,15)}...` : item?.name}</h3>
+          <span className={`${item?.status===1 ? 'batch' : item?.status===2 ? 'batch submit' : 'batch accept'}`}>{item?.status===1 ? "Draft" : item?.status===2 ? "Submitted" : "Accepted"}</span>
         </div>
         <span className="desc">Phase 1 work till plinth level for block A,B & G</span>
       </div>
@@ -30,12 +43,16 @@ const Billcard = ({item}) => {
         </div>
       </div>
       <div className="measurement-button">
+        {item?.status===1 ? 
+        <Link className="link" style={{width:'90%'}} to={`/measurementbook?billId=${item?.id}?projectId=${Id}?projectname=${projectname}?billname=${item?.name}`}>
         <button>Measurement Book <img src={book} alt="" /></button>
+        </Link> : <button disabled title={`This bill have ${item?.status===2 ? 'submitted' : 'accepted'}`}>
+          Measurement Book <img src={book} alt="" />
+        </button>}
       </div>
-      <div className="edit-button">
-        <img src={edit} alt="" />
       </div>
     </div>
+    </>
   );
 };
 

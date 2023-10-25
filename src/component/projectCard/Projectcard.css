@@ -1,0 +1,121 @@
+.projectcard-con{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #eeeeee;
+    -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+    border-radius: 7px;
+    height: 260px;
+    width: 270px;
+}
+.projectcard-sub1{
+    display: flex;
+    justify-content: flex-end;
+    width: 86%;
+    position: relative;
+}
+.dot-list{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    cursor: pointer;
+}
+.dot-list div{
+    width: 5px;
+    height: 5px;
+    background-color: #333333;
+}
+.list-item{
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background-color: white;
+    box-shadow: -2px 5px 23px 0px rgba(157,157,157,0.75);
+    -webkit-box-shadow: -2px 5px 23px 0px rgba(157,157,157,0.75);
+    -moz-box-shadow: -2px 5px 23px 0px rgba(157,157,157,0.75);
+    position: absolute;
+    top: 25px;
+    right: -70px;
+}
+.item-name-img{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 3px;
+    border: 2px dotted #333333;
+    padding: 3px 7px;
+}
+.item-name-img span{
+    font-family: 'Roboto';
+    font-weight: 600;
+    font-size: 13px;
+}
+.item-name-img img{
+    width: 15px;
+}
+.projectcard-sub2{
+    width: 86%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+.projectcard-top{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.projectcard-top h3{
+    margin: 0;
+    font-size: 18px;
+    font-weight: 900;
+    font-family: 'Fira Sans';
+}
+.projectcard-desc{
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Roboto';
+}
+.label-value{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.projectcard-label{
+    font-size: 14px;
+    font-family: 'Roboto';
+}
+.projectcard-value{
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Roboto';
+}
+.projectcard-button{
+    display: flex;
+    gap: 5px;
+    width: 86%;
+}
+.projectcard-button button{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    background-color: #2e4a93;
+    color: white;
+    font-family:'Roboto';
+    font-weight: 600;
+    font-size: 12px;
+    padding: 8px;
+    border: none;
+    cursor: pointer;
+}
+.projectcard-button img{
+    width: 13px;
+}

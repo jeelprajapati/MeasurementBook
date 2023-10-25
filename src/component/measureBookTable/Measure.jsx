@@ -26,7 +26,6 @@ const Measure = () => {
   const [change, setChange] = useState(0);
   const [input, setInput] = useState("");
   const [head, setHead] = useState("00000000-0000-0000-0000-000000000000");
-  const [tail, setTail] = useState("00000000-0000-0000-0000-000000000000");
   const [number, setNumber] = useState(0);
   const [contractItem, setContractItem] = useState([]);
   const inputRef = useRef(null);
@@ -46,35 +45,33 @@ const Measure = () => {
     const getData = async () => {
       setLoad(true);
       const makeRequest = makeRequesInstance(localStorage.getItem("token"));
-      if (filter.length === 0 && filter1.length === 0) {
         const res = await makeRequest.post("/MeasurementBook/GetByBillId", {
           billId: billId,
           page: 1,
           pageSize: 100,
-          filter: [],
-        });
-        setArray(res.data.items);
-        if (res.data.items.length === 0) {
-          setInput("add");
-        }
-      } else {
-        const res = await makeRequest.post("/MeasurementBook/GetByBillId", {
-          billId: billId,
-          page: 1,
-          pageSize: 100,
-          filter: [
-            {
-              filterColumn: 1,
-              filterValue: filter1.length !== 0 ? filter1[0] : "",
-            },
-            {
-              filterColumn: 2,
-              filterValue: filter.join(","),
-            },
+          filter:[
+            ...(filter1.length !== 0
+              ? [
+                  {
+                    filterColumn: 1,
+                    filterValue: filter1[0],
+                  },
+                ]
+              : []),
+            ...(filter.length !== 0
+              ? [
+                  {
+                    filterColumn: 2,
+                    filterValue: filter.join(","),
+                  },
+                ]
+              : [])
           ],
         });
         setArray(res.data.items);
-      }
+        if (res.data.items.length === 0 && filter?.length===0 && filter?.length === 0) {
+          setInput("add");
+        }
       setLoad(false); 
       };
       getData();
@@ -158,8 +155,7 @@ const Measure = () => {
               tags: tags,
               billId: billId,
             },
-            head: head,
-            tail: tail,
+            head: head
           });
           if (res.status === 204) {
             alert.show("Data Added Sucessfully", { type: "success" });
@@ -321,13 +317,7 @@ const Measure = () => {
     setNumber(index);
     setInput("add");
     setScrollValue(tableRef.current.scrollTop);
-    if (index === array.length) {
-      setHead(array[index - 1]?.id);
-      setTail("00000000-0000-0000-0000-000000000000");
-    } else {
-      setHead(array[index - 1]?.id);
-      setTail(array[index]?.id);
-    }
+    setHead(array[index - 1]?.id);
   };
 
   const handleClose = () => {
@@ -347,7 +337,6 @@ const Measure = () => {
     setNumber(0);
     setUsedTag(false);
     setHead("00000000-0000-0000-0000-000000000000");
-    setTail("00000000-0000-0000-0000-000000000000");
   };
 
   const handleCopy = (item, index) => {
@@ -359,13 +348,7 @@ const Measure = () => {
       label: contractItem?.find((e) => e?.id === item?.contractItemId)?.item,
     });
     setTags(item?.tags);
-    if (index === array.length) {
-      setHead(array[index - 1]?.id);
-      setTail("00000000-0000-0000-0000-000000000000");
-    } else {
-      setHead(array[index - 1]?.id);
-      setTail(array[index]?.id);
-    }
+    setHead(array[index - 1]?.id);
     setInput("add");
   };
 
@@ -404,6 +387,12 @@ const Measure = () => {
       setFilter1([]);
     }
   };
+
+  useEffect(()=>{
+    if(ref.current){
+      ref.current.scrollIntoView({ block: 'nearest', inline: 'start', behavior:'smooth'});
+    }
+  },[input])
   
   return (
     <>
