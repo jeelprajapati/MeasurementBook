@@ -486,11 +486,11 @@ const Measure = () => {
                       (value) => value?.id === items.contractItemId
                     )?.item?.length >= 70 ? 
                     (contractContentId===items?.id ?
-                    <span style={{position:'absolute',backgroundColor:"white",zIndex:'2',top:'10%'}} className="shadow">
+                    <span style={{position:'absolute',backgroundColor:"white",zIndex:'2',top:'10%',width:'95%',wordWrap:'break-word'}} className="shadow">
                       {contractItem?.find((value) => value?.id === items.contractItemId)?.item} 
                       <button onBlur={()=>setContractContentId(null)} onClick={()=>setContractContentId(null)} style={{backgroundColor:'transparent',border:'none',color:'rgb(38, 38, 143)',cursor:'pointer',padding:'3px 5px'}}>less</button>
                     </span> : 
-                    <span style={{position:'absolute',backgroundColor:"white",top:'10%'}}>
+                    <span style={{position:'absolute',backgroundColor:"white",top:'10%',width:'95%',wordWrap:'break-word'}}>
                       {`${contractItem?.find((value) => value?.id === items.contractItemId)?.item?.slice(0,70)}...`}
                        <button onClick={()=>setContractContentId(items?.id)} style={{backgroundColor:'transparent',border:'none',color:'rgb(38, 38, 143)',cursor:'pointer',padding:'3px 0'}}>more</button>
                     </span>) 
@@ -505,10 +505,10 @@ const Measure = () => {
                     position:'relative'
                   }}
                 >
-                  {items?.description?.length>=70 ? descriptionId===items?.id ? <span style={{position:'absolute',backgroundColor:"white",zIndex:'2',top:'10%'}} className="shadow">
+                  {items?.description?.length>=70 ? descriptionId===items?.id ? <span style={{position:'absolute',backgroundColor:"white",zIndex:'2',top:'10%',width:'100%',wordWrap:'break-word'}} className="shadow">
                       {items?.description} 
                       <button onBlur={()=>setDescriptionId(null)} onClick={()=>setDescriptionId(null)} style={{backgroundColor:'transparent',border:'none',color:'rgb(38, 38, 143)',cursor:'pointer',padding:'3px 5px'}}>less</button>
-                    </span> : <span style={{position:'absolute',backgroundColor:"white",top:'10%'}}>
+                    </span> : <span style={{position:'absolute',backgroundColor:"white",top:'10%',width:'100%',wordWrap:'break-word'}}>
                       {`${items?.description?.slice(0,70)}...`} 
                       <button onClick={()=>setDescriptionId(items?.id)} style={{backgroundColor:'transparent',border:'none',color:'rgb(38, 38, 143)',cursor:'pointer',padding:'3px 5px'}}>more</button>
                     </span>:items?.description} 
@@ -1114,11 +1114,11 @@ const Measure = () => {
                       (value) => value?.id === items.contractItemId
                     )?.item?.length >= 70 ? 
                     (contractContentId===items?.id ?
-                    <span style={{position:'absolute',backgroundColor:"white",zIndex:'2',top:'10%'}} className="shadow">
+                    <span style={{position:'absolute',backgroundColor:"white",zIndex:'2',top:'10%',width:'95%',wordWrap:'break-word'}} className="shadow">
                       {contractItem?.find((value) => value?.id === items.contractItemId)?.item} 
                       <button onBlur={()=>setContractContentId(null)} onClick={()=>setContractContentId(null)} style={{backgroundColor:'transparent',border:'none',color:'rgb(38, 38, 143)',cursor:'pointer',padding:'3px 5px'}}>less</button>
                     </span> : 
-                    <span style={{position:'absolute',backgroundColor:"white",top:'10%'}}>
+                    <span style={{position:'absolute',backgroundColor:"white",top:'10%',width:'95%',wordWrap:'break-word'}}>
                       {`${contractItem?.find((value) => value?.id === items.contractItemId)?.item?.slice(0,70)}...`}
                        <button onClick={()=>setContractContentId(items?.id)} style={{backgroundColor:'transparent',border:'none',color:'rgb(38, 38, 143)',cursor:'pointer',padding:'3px 0'}}>more</button>
                     </span>) 
@@ -1133,10 +1133,10 @@ const Measure = () => {
                     position:'relative'
                   }}
                 >
-                  {items?.description?.length>=70 ? descriptionId===items?.id ? <span style={{position:'absolute',backgroundColor:"white",zIndex:'2',top:'10%'}} className="shadow">
+                  {items?.description?.length>=70 ? descriptionId===items?.id ? <span style={{position:'absolute',backgroundColor:"white",zIndex:'2',top:'10%',width:'100%',wordWrap:'break-word'}} className="shadow">
                       {items?.description} 
                       <button onBlur={()=>setDescriptionId(null)} onClick={()=>setDescriptionId(null)} style={{backgroundColor:'transparent',border:'none',color:'rgb(38, 38, 143)',cursor:'pointer',padding:'3px 5px'}}>less</button>
-                    </span> : <span style={{position:'absolute',backgroundColor:"white",top:'10%'}}>
+                    </span> : <span style={{position:'absolute',backgroundColor:"white",top:'10%',width:'100%',wordWrap:'break-word'}}>
                       {`${items?.description?.slice(0,70)}...`}  
                       <button onClick={()=>setDescriptionId(items?.id)} style={{backgroundColor:'transparent',border:'none',color:'rgb(38, 38, 143)',cursor:'pointer',padding:'3px 5px'}}>more</button>
                     </span>:items?.description} 
