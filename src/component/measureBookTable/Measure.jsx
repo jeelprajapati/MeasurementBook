@@ -1130,7 +1130,8 @@ const Measure = () => {
                     width: "20%",
                     textAlign: "start",
                     padding: "0 0 0 20px",
-                    position:'relative'
+                    position:'relative',
+                    overflowWrap: 'anywhere'
                   }}
                 >
                   {items?.description?.length>=70 ? descriptionId===items?.id ? <span style={{position:'absolute',backgroundColor:"white",zIndex:'2',top:'10%'}} className="shadow">
