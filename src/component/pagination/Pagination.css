@@ -1,4 +1,4 @@
-.pagination-con{
+.pagination-container{
     display: flex;
     align-items: center;
     gap: 10px;
@@ -6,7 +6,7 @@
 .pagination-btn{
     width: 100px;
     height: 40px;
-    background-color:#5b69e9;
+    background-color:#2e4a93;
     color: white;
     border: none;
     font-size: 15px;
@@ -19,10 +19,16 @@
     font-weight: 600;
     font-family: 'Roboto';
 }
+
+.pagination-container span{
+    font-family: 'Roboto';
+    font-weight: 500;
+}
+
 .prv img{
     transform: rotate(180deg);
 }
 .pagination-btn:disabled{
-    background-color: #8f97e0;
+    background-color: #2e4a93;
     cursor: not-allowed;
 }
