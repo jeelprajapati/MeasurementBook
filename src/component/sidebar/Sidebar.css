@@ -1,139 +1,129 @@
-.sidebar-main-container{
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
+.sidebar-main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #FEFEFF;
+  width: 15.2rem;
+  transition: all 0.5s ease;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-radius: 3px;
+  position: relative;
 }
-.side-container{
-   width: 15.2rem;
-   transition: all 0.5s ease;
-   display: flex;
-   height: 92vh;
-   flex-direction: column;
-   justify-content: space-between;
-   border-radius: 3px;
+
+.side-less-container {
+  width: 4.4rem;
 }
-.side-less-container{
-   width: 4.4rem;
-   height: 92vh;
-   transition: all 0.5s ease;
-   display: flex;
-   flex-direction: column;
-   justify-content: space-between;
+
+.sidebar-ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  letter-spacing: 0.9px;
 }
-.sidebar-ul{
-   display: flex;
-   flex-direction: column;
-   gap: 10px;
-   justify-content: center;
-   margin: 0;
-   padding: 0;
+
+.sidebar-ul li {
+  list-style: none;
+  color: #566A7F;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+  font-family: "Roboto";
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 5px 10px;
 }
-.sidebar-ul li{
-    list-style: none;
-    color: white;
-    padding: 10px;
-    cursor: pointer;
-    text-align: center;
-    font-family: 'Roboto';
-    font-weight: bold;
-    font-size: 14px;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+
+.link:hover li{
+  background-color: #ececec; 
+  color: #2e4a93; 
 }
-.sidebar-svg{
-   flex: 1;
+  
+.sidebar-svg {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.sidebar-svg img{
-    border: 1px solid #fcfcfc;
-    padding: 2px;
-    border-radius: 3px;
+
+.sidebar-svg svg {
+  font-size: 18px;
+  color: #2e4a93;
+  padding: 2px;
+  border-radius: 3px;
 }
-.sidebar-name{
-    flex: 2;
-    display: flex;
-    justify-content: flex-start;
+
+.sidebar-svg.selected svg {
+  color: white;
 }
-.lightGray{
-    background-color: #4e4d4d;
+
+.sidebar-name {
+  flex: 2;
+  display: flex;
+  justify-content: flex-start;
 }
-.link{
-    text-decoration: none;
+
+.sidebar-name.selected {
+  color: #FEFEFF;
 }
-.target{
-    border: 1px solid white;
-    border-radius: 4px;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    font-size: 16px;
-    margin: 0 7px;
+
+.lightGray {
+  background-color: #2e4a93;
+  color: white;
 }
-.target-name{
-    flex: 4;
+
+.link {
+  text-decoration: none;
 }
-.nav-logo{
-   width: 40px;
-   height: 40px;
-   background-color: rgb(246, 245, 245);
-   border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+.logout-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
- .d-none{
-   display: none;
- }
- .icon-name{
-   display: none;
- }
- .side-less-container ul li:hover .icon-name{
-   display: block;
-   position: absolute;
-   left: 5.0rem;
-   background-color: white;
-   color: var(--background-color);
-   color: black;
-   border-radius: 0.4rem;
-   padding: 0.5rem 0.9rem;
-   font-size: 14px;
-   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-   top: 50%;
-   transform: translateY(-50%);
-   transition: all 0.5s ease;
-   opacity: 1;
-   z-index: 1001;
+
+.logout {
+  list-style: none;
+  color: #566A7F;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+  font-family: "Roboto";
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px 10px;
+  align-content: flex-end;
 }
-.logout{
-   display: flex;
-   align-items: center;
-   position: relative;
- }
- .logout-high{
-   display: flex;
-   align-items: center;
- }
- .logout:hover .icon-name{
-   display: block;
-   position: absolute;
-   left: 5.0rem;
-   background-color: white;
-   color: var(--background-color);
-   color: black;
-   border-radius: 0.4rem;
-   padding: 0.5rem 0.9rem;
-   font-size: 15px;
-   font-weight: 500;
-   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-   top: 50%;
-   transform: translateY(-50%);
-   transition: all 0.5s ease;
-   opacity: 1;
-   z-index: 1001;
+
+.logout:hover{
+  background-color: #ececec; 
+  color: #2e4a93; 
 }
- 
+
+.sidebar-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #2e4a93;
+  color: white;
+  height: 40px;
+  cursor: pointer;
+}
+
+.sidebar-toggle-icon {
+  font-size: 20px;
+}

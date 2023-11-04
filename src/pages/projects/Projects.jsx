@@ -7,8 +7,6 @@ import useFetch from "../../hooks/useFetch";
 import Search from "../../image/search.svg";
 import Pagination from "../../component/pagination/Pagination";
 import Projectcard from "../../component/projectCard/Projectcard";
-// import makeRequesInstance from "../../makeRequest";
-// import { useAlert } from "react-alert";
 
 const Projects = () => {
   const [popUp, setPopUp] = useState(false);
@@ -22,8 +20,7 @@ const Projects = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [filterArr, setFilterArr] = useState([]);
-  // const makeRequest=makeRequesInstance(localStorage.getItem('token'));
-  // const alert=useAlert();
+  
   const Id = localStorage.getItem("organizationId");
   useEffect(() => {
     if (!(token && Id)) {
@@ -97,9 +94,6 @@ const Projects = () => {
             </div>
           </div>
           <div className="project-main">
-            <h3 className={`${popUp ? "pro-title blur" : "pro-title"}`}>
-              Projects
-            </h3>
             <div
               className={`${popUp ? "box-container blur" : "box-container"}`}
             >
