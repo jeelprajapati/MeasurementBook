@@ -132,9 +132,9 @@ const Projects = () => {
               />
             </div>
           )}
-          <div className="pagination">
+          {/* <div className="pagination">
             <Pagination page={page} setPage={setPage} allPage={allPage} />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

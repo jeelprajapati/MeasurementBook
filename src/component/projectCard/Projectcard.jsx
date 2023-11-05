@@ -32,17 +32,17 @@ const Projectcard = ({item}) => {
         {open && <div className="list-item">
             <div className="item-name-img">
                 <img src={edit} alt="" />
-                <span>edit</span>
+                <span>Edit</span>
             </div>
             <div className="item-name-img">
                 <img src={report} alt="" />
-                <span>reports</span>
+                <span>Reports</span>
             </div>
         </div>}
       </div>
       <div className="projectcard-sub2">
         <div className="projectcard-top">
-            <h3>{item?.projectName?.length>23 ? `${item?.projectName?.slice(0,24)}...` : item?.projectName}</h3>
+            <h3>{item?.projectName?.length>23 ? `${item?.projectName?.slice(0,24)}..` : item?.projectName}</h3>
             <div className="projectcard-desc">
                 AGC at uelarn to cequcem, aerae, & ceseresn
             </div>
@@ -58,7 +58,8 @@ const Projectcard = ({item}) => {
         <div className="projectcard-button">
             <Link to={`/project/${item?.id}`} className='link' style={{width:'100%'}}>
             <button>
-             Work on project<img src={move} alt=''/> 
+             Work on project
+             {/* <img src={move} alt=''/>  */}
             </button>
             </Link>   
         </div>
