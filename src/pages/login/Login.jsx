@@ -77,7 +77,7 @@ const Login = () => {
         alert.show(error.message,{type:'error'})
       }
       else{
-        alert.show('Iternal server error',{type:'error'})
+        alert.show('Internal server error',{type:'error'})
       }
     }
     setLoading(false);
@@ -93,7 +93,7 @@ const Login = () => {
           name="username"
           className="login-input"
           onChange={handleChange}
-        />
+         />
         <br />
         <input
           type="password"
