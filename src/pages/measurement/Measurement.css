@@ -19,12 +19,12 @@
     flex-direction: column;
 }
 .measurement-top{
-    background-color: white;
+    background-color: #fdfdfd;
     padding: 7px;
 }
 .measurement-path{
-    font-family: 'Roboto';
-    font-size: 14px;
+    font-family: 'Inter';
+    font-size: 15px;
     margin: 0 8px;
 }
 .measurement-path span{
@@ -32,12 +32,12 @@
 }
 .measurement-title{
     margin:0;
-    font-family: 'Roboto';
+    font-family: 'Inter';
     font-size: 15px;
     margin: 5px 8px;
 }
 .measurement-middle{
-    background-color: white;
+    background-color: #fdfdfd;
     padding: 7px;
 }
 .types-con{
@@ -45,29 +45,30 @@
     align-items: center;
     width: 99%;
     margin: 7px;
-    -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
     border-radius: 4px;
 }
 .type{
     text-align: center;
     flex:1;
-    border: 1px solid #333333;
-    font-family: 'Roboto';
-    font-size: 13px;
-    font-weight: 600;
+    border: 1px solid #2e4a93;
+    font-family: 'Inter';
+    font-size: 15px;
+    font-weight: 400;
     padding: 7px;
+    color: #2e4a93;
 }
 .type:nth-child(1){
     border-radius: 4px 0 0 4px;
-    background-color: #333333;
-    color: white;
+    background-color: #2e4a93;
+    color: #fdfdfd;
 }
 .type:nth-child(3){
     border-radius: 0 4px 4px 0;
 }
 .measurement-footer{
-    background-color: white;
+    background-color: #fdfdfd;
     padding: 7px;
+    display:flex;
+    flex-direction:column;
+    height:100%
 }

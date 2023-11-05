@@ -5,7 +5,7 @@
   align-items: center;
 }
 .clear{
-  font-family: 'Roboto';
+  font-family: 'Inter';
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
@@ -16,8 +16,9 @@
 }
 .measure-table{
   width: 100%;
-  height: 530px;
-  overflow-y: scroll;
+  flex-grow:1;
+  height:0;
+  overflow:scroll;
 }
 .measure-table table{
   border-collapse: collapse;
@@ -28,14 +29,14 @@
 }
 .measure-tr:nth-child(1){
   height: 40px;
-  background-color: white;
+  background-color: #fdfdfd;
   position: sticky;
   top: 0;
   z-index: 998;
 }
 .measure-th{
   font-size: 13px;   
-  font-family: 'Roboto';
+  font-family: 'Inter';
   padding: 10px 0;
   position: -webkit-sticky;
   position: sticky;
@@ -44,12 +45,12 @@
 }
 .measure-td{
   font-size: 13px;   
-  font-family: 'Roboto';
+  font-family: 'Inter';
   padding: 15px 0px;
 }
 .measure-btn{
   padding: 7px;
-  background-color: #333333;
+  background-color: #2e4a93;
   border: none;
   margin: 0 2px;
   border-radius: 1px;
@@ -190,7 +191,7 @@
 }
 .tag-chip{
   font-size: 13px;   
-  font-family: 'Roboto';
+  font-family: 'Inter';
   padding: 4px;
   min-width: 35px;
   width: fit-content;
@@ -248,7 +249,7 @@
 }
 .show-chip{
   font-size: 13px;   
-  font-family: 'Roboto';
+  font-family: 'Inter';
   padding: 4px;
   width: fit-content;
   text-align: center;
@@ -259,7 +260,7 @@
 }
 .useable-tag{
   font-size: 13px;   
-  font-family: 'Roboto';
+  font-family: 'Inter';
   padding: 4px;
   min-width: 35px;
   width: 85%;

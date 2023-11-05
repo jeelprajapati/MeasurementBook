@@ -34,7 +34,6 @@ const Measurement = () => {
               </div>
             </div>
             <div className="measurement-middle">
-              <h3 className="measurement-title">Measurement Books</h3>
               <div className="types-con">
                 <div className="type">MeasurementBook</div>
                 <div className="type">R/F Steel MeasurementBook</div>

@@ -631,7 +631,7 @@ const Measure = () => {
               </tr>
             ))}
           {(input === "add" || input === "update") && (
-            <tr className="measure-tr" style={{ backgroundColor: "#d5d5d5",height:'110px'}} ref={ref}>
+            <tr className="measure-tr" style={{ backgroundColor: "#f8f8f8",height:'110px'}} ref={ref}>
               <td className="measure-td" style={{ width: "2%" }}>
                 <input type="checkbox" />
               </td>
