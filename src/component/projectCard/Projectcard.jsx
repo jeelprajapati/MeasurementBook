@@ -14,7 +14,6 @@ const Projectcard = ({item}) => {
             setOpen(false)
           }
         }
-    
         document.addEventListener("mousedown", checkIfClickedOutside)
     
         return () => {

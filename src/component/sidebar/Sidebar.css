@@ -43,11 +43,14 @@
   position: relative;
   margin: 5px 10px;
 }
-
-.link:hover li{
+.link:hover .hover-li{
   background-color: #ececec; 
   color: #2e4a93; 
 }
+/* .link:hover li{
+  background-color: #ececec; 
+  color: #2e4a93; 
+} */
   
 .sidebar-svg {
   flex: 1;
