@@ -5,12 +5,32 @@ import xls from '../../image/xls.svg'
 import book from '../../image/Vector.svg'
 import edit from '../../image/edit2.svg'
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { saveAs } from 'file-saver';
+
 const Billcard = ({item,projectname,Id,setInput,setItem,setOpen}) => {
   const handleClick=()=>{
     setItem(item);
     setInput(true);
     setOpen(true)
-  }
+  };
+
+  const downloadExcelFile = (billId, billName) => {
+    const token = localStorage.getItem('token');
+    axios({
+      method: 'get',
+      url: `https://dev-api.measurekaro.com/api/Project/GenerateStandardExcelReport?billId=${billId}`,
+      responseType: 'blob',
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+    }).then(blob => {
+        saveAs(blob.data, billName);
+     })
+    .catch((error) => {
+    });
+  };
+ 
   return (
     <>
     <div className="billcard-container">
@@ -39,7 +59,7 @@ const Billcard = ({item,projectname,Id,setInput,setItem,setOpen}) => {
         <span className="card-label">Reports</span>
         <div className="pdf-type">
           <img src={pdf} alt="" />
-          <img src={xls} alt="" />
+          <img src={xls} alt="" onClick={() => downloadExcelFile(item?.id, item?.name)}/>
         </div>
       </div>
       <div className="measurement-button">
