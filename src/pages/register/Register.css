@@ -13,7 +13,7 @@
     color: #333333;
     text-align: center;
     margin: 25px 0px 15px 35px; 
-    font-family: 'Roboto';
+    font-family: 'Inter';
     font-weight: bold;
 }
 .register-button{
@@ -40,7 +40,7 @@
 .link-login{
     text-align: center;
     margin:20px 0 25px 0;
-    font-family: 'Roboto';
+    font-family: 'Inter';
     font-size: 14px;
 }
 .register-container{

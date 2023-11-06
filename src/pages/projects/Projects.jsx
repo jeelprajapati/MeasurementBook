@@ -4,9 +4,9 @@ import Sidebar from "../../component/sidebar/Sidebar.jsx";
 import { useNavigate } from "react-router-dom";
 import Popup from "../../component/popup/Popup";
 import useFetch from "../../hooks/useFetch";
-import Search from "../../image/search.svg";
-import Pagination from "../../component/pagination/Pagination";
 import Projectcard from "../../component/projectCard/Projectcard";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 const Projects = () => {
   const [popUp, setPopUp] = useState(false);
@@ -16,10 +16,7 @@ const Projects = () => {
   const [load, setLoad] = useState(false);
   const navigate = useNavigate();
   const [update, setUpdate] = useState(false);
-  const [allPage, setAllPage] = useState(1);
-  const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const [filterArr, setFilterArr] = useState([]);
   
   const Id = localStorage.getItem("organizationId");
   useEffect(() => {
@@ -35,29 +32,9 @@ const Projects = () => {
   useEffect(() => {
     setLoad(true);
     setArray(data?.items.slice(0)?.reverse());
-    setFilterArr(data?.items.slice(0)?.reverse());
-    setAllPage(Math.ceil((data?.items?.length + 1) / 21));
     setLoad(false);
   }, [data, loding]);
 
-  useEffect(() => {
-    setLoad(true);
-    setFilterArr(
-      array?.filter((e) =>
-        e?.projectName.toUpperCase().includes(search.toUpperCase())
-      )
-    );
-    setAllPage(
-      Math.ceil(
-        (array?.filter((e) =>
-          e?.projectName.toUpperCase().includes(search.toUpperCase())
-        ).length +
-          1) /
-          21
-      )
-    );
-    setLoad(false);
-  }, [search, array]);
   const handlePopUp = (e) => {
     e.preventDefault();
     setPopUp(true);
@@ -74,7 +51,6 @@ const Projects = () => {
   //   }
   // }
 
-  console.log(filterArr, search);
   return (
     <div>
       <div className="pro-container">
@@ -85,10 +61,10 @@ const Projects = () => {
           <div className="project-top">
             <div className={`${popUp ? "path blur" : "path"}`}>Projects/</div>
             <div className="search">
-              <img src={Search} style={{ padding: "0 6px" }} alt="" />
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
               <input
                 type="text"
-                placeholder="Search"
+                placeholder="Search By Project Name.."
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
@@ -100,16 +76,8 @@ const Projects = () => {
               <div className="add-box" onClick={handlePopUp}>
                 <div className="plus">+</div>
               </div>
-              {!load &&
-                (page === 1
-                  ? filterArr
-                      ?.slice(0, page * 9)
-                      .map((item) => <Projectcard key={item?.id} item={item} />)
-                  : filterArr
-                      ?.slice((page - 1) * 10, page * 10)
-                      ?.map((item) => (
-                        <Projectcard key={item?.id} item={item} />
-                      )))}
+              {!load && array?.filter((item)=>(item?.projectName?.toUpperCase().includes(search?.toUpperCase())))?.map((item)=>(<Projectcard item={item} key={item?.id}/>))}
+                
             </div>
           </div>
           {popUp && (
@@ -132,9 +100,6 @@ const Projects = () => {
               />
             </div>
           )}
-          {/* <div className="pagination">
-            <Pagination page={page} setPage={setPage} allPage={allPage} />
-          </div> */}
         </div>
       </div>
     </div>

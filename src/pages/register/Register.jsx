@@ -93,7 +93,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto'",
+                        fontFamily:"'Inter'",
                         color: "red",
                         width: "200px",
                       }}
@@ -103,7 +103,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto'",
+                        fontFamily:"'Inter'",
                         color: "red",
                         width: "200px",
                       }}>
@@ -126,7 +126,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto'",
+                        fontFamily:"'Inter'",
                         color: "red",
                         width: "200px",
                       }}>
@@ -135,7 +135,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto'",
+                        fontFamily:"'Inter'",
                         color: "red",
                         width: "200px",
                       }}>
@@ -158,7 +158,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto'",
+                        fontFamily:"'Inter'",
                         color: "red",
                         width: "200px",
                       }}
@@ -168,7 +168,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto'",
+                        fontFamily:"'Inter'",
                         color: "red",
                         width: "200px",
                       }}>
@@ -191,7 +191,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto'",
+                        fontFamily:"'Inter'",
                         color: "red",
                         width: "200px",
                       }}
@@ -201,7 +201,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto'",
+                        fontFamily:"'Inter'",
                         color: "red",
                         width: "200px",
                       }}>
@@ -224,7 +224,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto'",
+                        fontFamily:"'Inter'",
                         color: "red",
                         width: "200px",
                       }}
@@ -234,7 +234,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto'",
+                        fontFamily:"'Inter'",
                         color: "red",
                         width: "200px",
                       }}>
@@ -262,7 +262,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto'",
+                        fontFamily:"'Inter'",
                         color: "red",
                         width: "200px",
                       }}
@@ -272,7 +272,7 @@ const Register = () => {
                       style={{
                         margin: "0 0 0 8px",
                         fontSize: "13px",
-                        fontFamily:"'Roboto'",
+                        fontFamily:"'Inter'",
                         color: "red",
                         width: "200px",
                       }}>

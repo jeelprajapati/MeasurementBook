@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./SingleProject.css";
 import Sidebar from "../../component/sidebar/Sidebar.jsx";
-import pencil from "../../image/edit.svg";
-import arrow from "../../image/arrow.svg";
 import Table from "../../component/table/Table";
 import useFetch from "../../hooks/useFetch";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Excel from "../../component/excel/Excel";
 import Popup from "../../component/popup/Popup";
 import makeRequesInstance from "../../makeRequest";
+import { faArrowRightLong, faPencil } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const SingleProject = () => {
   const [open, setOpen] = useState(false);
   const [Update, setUpdate] = useState(false);
@@ -79,12 +79,7 @@ const SingleProject = () => {
                   </span>
                 </div>
                 <div className="edit-btn">
-                  <img
-                    className="edit-img"
-                    onClick={() => handlePopUP(data)}
-                    src={pencil}
-                    alt=""
-                  />
+                 <FontAwesomeIcon icon={faPencil} onClick={() => handlePopUP(data)}/>
                 </div>
               </div>
             )}
@@ -93,9 +88,9 @@ const SingleProject = () => {
                 to={`/bills?projectid=${data?.id}?projectname=${data?.projectName}`}
                 className="link"
               >
-                <button>
-                  Goto Bills
-                  <img src={arrow} className="arrow" alt="" />
+                <button style={{display:'flex',alignItems:'center',gap:'3px'}}>
+                  <span>Goto Bills</span>
+                  <FontAwesomeIcon icon={faArrowRightLong} className="arrow" />
                 </button>
               </Link>
             </div>

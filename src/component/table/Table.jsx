@@ -9,8 +9,8 @@ import makeRequesInstance from "../../makeRequest";
 import { useAlert } from "react-alert";
 import { useFormik } from "formik";
 import { contractTable } from "../../scemas";
-import yes from "../../image/yes.svg"
-import no from "../../image/no.svg"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 const Table = ({ Id, change, setChange }) => {
   const [element, setElement] = useState({
     sorNo: "",
@@ -178,11 +178,7 @@ const Table = ({ Id, change, setChange }) => {
       );
       if (res.status === 204) {
         alert.show("Deleted Sucessfully", { type: "success" });
-        if (change === 0) {
-          setChange(1);
-        } else {
-          setChange(0);
-        }
+        setChange(!change)
       }
     } catch (error) {
       if (error.response) {
@@ -246,8 +242,8 @@ const Table = ({ Id, change, setChange }) => {
                 <span>{item?.hsn}</span>
               </td>
               {isDelete===item?.id?<td className="td">
-                <button className="contract-yes" onClick={handleDelete}><img src={yes} alt="" /></button>
-                <button className="contract-no" onClick={()=>{setIsDelete(null)}}><img src={no} alt="" /></button>
+                <button className="contract-yes" onClick={handleDelete}><FontAwesomeIcon className="true-btn" icon={faCheck} /></button>
+                <button className="contract-no" onClick={()=>{setIsDelete(null)}}><FontAwesomeIcon icon={faXmark} className="false-btn"/></button>
                 </td>:<td className="td">
                 <button
                   className="btn-disabled"
@@ -325,7 +321,7 @@ const Table = ({ Id, change, setChange }) => {
                     style={{
                       margin: "3px 0 0 0",
                       fontSize: "14px",
-                      fontFamily: "'Roboto'",
+                      fontFamily: "'Inter'",
                       color: "red",
                       width: "164px",
                       height: "17px",
@@ -339,7 +335,7 @@ const Table = ({ Id, change, setChange }) => {
                   style={{
                     margin: "3px 0 0 0",
                     fontSize: "14px",
-                    fontFamily: "'Roboto'",
+                    fontFamily: "'Inter'",
                     color: "red",
                     width: "164px",
                     height: "17px",
@@ -375,7 +371,7 @@ const Table = ({ Id, change, setChange }) => {
                     style={{
                       margin: "3px 0 0 0",
                       fontSize: "14px",
-                      fontFamily: "'Roboto'",
+                      fontFamily: "'Inter'",
                       color: "red",
                       width: "164px",
                       height: "17px",
@@ -389,7 +385,7 @@ const Table = ({ Id, change, setChange }) => {
                   style={{
                     margin: "3px 0 0 0",
                     fontSize: "14px",
-                    fontFamily: "'Roboto'",
+                    fontFamily: "'Inter'",
                     color: "red",
                     width: "164px",
                     height: "17px",
@@ -436,7 +432,7 @@ const Table = ({ Id, change, setChange }) => {
                     style={{
                       margin: "3px 0 0 0",
                       fontSize: "14px",
-                      fontFamily: "'Roboto'",
+                      fontFamily: "'Inter'",
                       color: "red",
                       width: "164px",
                       height: "17px",
@@ -450,7 +446,7 @@ const Table = ({ Id, change, setChange }) => {
                   style={{
                     margin: "3px 0 0 0",
                     fontSize: "14px",
-                    fontFamily: "'Roboto'",
+                    fontFamily: "'Inter'",
                     color: "red",
                     width: "164px",
                     height: "17px",
@@ -484,7 +480,7 @@ const Table = ({ Id, change, setChange }) => {
                     style={{
                       margin: "3px 0 0 0",
                       fontSize: "14px",
-                      fontFamily: "'Roboto'",
+                      fontFamily: "'Inter'",
                       color: "red",
                       width: "164px",
                       height: "17px",
@@ -498,7 +494,7 @@ const Table = ({ Id, change, setChange }) => {
                   style={{
                     margin: "3px 0 0 0",
                     fontSize: "14px",
-                    fontFamily: "'Roboto'",
+                    fontFamily: "'Inter'",
                     color: "red",
                     width: "164px",
                     height: "17px",
@@ -618,8 +614,8 @@ const Table = ({ Id, change, setChange }) => {
                 <span>{item?.hsn}</span>
               </td>
               {isDelete===item?.id?<td className="td">
-                <button className="contract-yes" onClick={handleDelete}><img src={yes} alt="" /></button>
-                <button className="contract-no" onClick={()=>{setIsDelete(null)}}><img src={no} alt="" /></button>
+                <button className="contract-yes" onClick={handleDelete}><FontAwesomeIcon className="true-btn" icon={faCheck} /></button>
+                <button className="contract-no" onClick={()=>{setIsDelete(null)}}><FontAwesomeIcon icon={faXmark} className="false-btn"/></button>
                 </td>:<td className="td">
                 <button
                   className="btn-disabled"

@@ -1,6 +1,7 @@
 import React, { useEffect,useState,useRef} from "react";
 import "./Filter.css";
-import search from "../../image/search.svg";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Filter = ({type,item,filter,setFilter,max,min,average}) => {
   const [allFilters, setAllFilters] = useState(false);
   const [filterCrud, setFilterCrud] = useState(false);
@@ -77,7 +78,7 @@ const Filter = ({type,item,filter,setFilter,max,min,average}) => {
       {allFilters && (
         <div className="filter-table" style={{minWidth:`${min}px`,maxWidth:`${max}px`,width:`${average}px`,maxHeight:'360px',height:'fitContent'}}>
           <div className="filter-search">
-            <img src={search} alt="" className="serch-icon" />
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
             <input type="text" placeholder={`Search For ${type}`} onChange={handleChange}/>
           </div>
           <div className="filter-item">

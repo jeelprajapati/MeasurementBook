@@ -145,7 +145,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "14px",
-                  fontFamily:"'Roboto'",
+                  fontFamily:"'Inter'",
                   color: "red",
                   width: "200px",
                 }}
@@ -156,7 +156,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "14px",
-                fontFamily:"'Roboto'",
+                fontFamily:"'Inter'",
                 color: "red",
                 width: "200px",
               }}
@@ -187,7 +187,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "14px",
-                  fontFamily:"'Roboto'",
+                  fontFamily:"'Inter'",
                   color: "red",
                   width: "200px",
                 }}
@@ -198,7 +198,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "14px",
-                fontFamily:"'Roboto'",
+                fontFamily:"'Inter'",
                 color: "red",
                 width: "200px",
               }}
@@ -234,7 +234,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "14px",
-                  fontFamily:"'Roboto'",
+                  fontFamily:"'Inter'",
                   color: "red",
                   width: "200px",
                 }}
@@ -245,7 +245,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "14px",
-                fontFamily:"'Roboto'",
+                fontFamily:"'Inter'",
                 color: "red",
                 width: "200px",
               }}
@@ -279,7 +279,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "14px",
-                  fontFamily:"'Roboto'",
+                  fontFamily:"'Inter'",
                   color: "red",
                   width: "200px",
                 }}
@@ -290,7 +290,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "14px",
-                fontFamily:"'Roboto'",
+                fontFamily:"'Inter'",
                 color: "red",
                 width: "200px",
               }}
@@ -348,7 +348,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "14px",
-                  fontFamily:"'Roboto'",
+                  fontFamily:"'Inter'",
                   color: "red",
                   width: "200px",
                 }}
@@ -359,7 +359,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "14px",
-                fontFamily:"'Roboto'",
+                fontFamily:"'Inter'",
                 color: "red",
                 width: "200px",
               }}

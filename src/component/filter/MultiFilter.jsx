@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react'
 import './Filter.css'
-import search from "../../image/search.svg";
 import { useState } from 'react';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const MultiFilter = ({item,type,filter,setFilter,max,min,average}) => {
     const [searchVal,setSearchVal]=useState("");
     const [allFilters, setAllFilters] = useState(false);
@@ -59,7 +60,7 @@ const MultiFilter = ({item,type,filter,setFilter,max,min,average}) => {
       {allFilters && (
         <div className="filter-table" style={{minWidth:`${min}px`,maxWidth:`${max}px`,width:`${average}px`,height:'fitContent',maxHeight:'250px'}}>
           <div className="filter-search">
-            <img src={search} alt="" className="serch-icon" />
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
             <input type="text" placeholder={`Search For ${type}`} onChange={(e)=>{setSearchVal(e.target.value)}}/>
           </div>
           <div className="filter-item" style={{maxHeight:'200px',height:'fitContent',display:'flex',flexWrap:'wrap',gap:'5px'}}>

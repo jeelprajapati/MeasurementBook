@@ -2,17 +2,10 @@
     width: 100vw;
     height: 100vh;
     display: flex;
-    border-radius: 8px;
-}
-.client-left{
-    background-color: #333333;
-    height: 100vh;
-    border-radius: 3px;
 }
 .client-right{
     position: relative;
     background-color: rgb(238, 237, 237);
-    padding:7px;
     width: 100%;
     display: flex;
     gap:7px;
@@ -20,24 +13,28 @@
 }
 .client-top{
     width: 100%;
+    height: 52px;
+    display: flex;
+    align-items: center;
     background-color: white;
 }
 .client-path{
-    color:#333333;
+    color:#2e4a93;
     margin: 0 10px;
-    font-family: 'Roboto';
-    font-size: 14px;
+    font-family: 'Inter';
+    font-size: 15px;
+    font-weight: 400;
     padding: 7px;
 }
 .client-main{
     width: 98.5%;
-    height: 92%;
+    height: 80%;
     background-color: white;
     padding: 10px;
 }
 .client-title{
     margin: 5px 4px 15px 4px;
-    font-family: 'Roboto';
+    font-family: 'Inter';
     font-size: 15px;
 }
 .clientpopup{

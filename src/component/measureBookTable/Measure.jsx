@@ -11,9 +11,9 @@ import { useFormik } from "formik";
 import { measureTable } from "../../scemas";
 import Filter from "../filter/Filter.jsx";
 import Select from "../select/Select";
-import yes from "../../image/yes1.svg";
-import no from "../../image/no1.svg";
 import MultiFilter from "../filter/MultiFilter";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 const Measure = () => {
   const location = useLocation().search.split("?");
   const billId = location[1].split("=")[1];
@@ -164,11 +164,7 @@ const Measure = () => {
             setSelectedOption(null);
             setTags("");
             setNumber(0);
-            if (change === 1) {
-              setChange(0);
-            } else {
-              setChange(1);
-            }
+            setChange(!change)
           }
         } catch (error) {
         
@@ -239,11 +235,7 @@ const Measure = () => {
             setSelectedOption(null);
             setTags("");
             setNumber(0);
-            if (change === 1) {
-              setChange(0);
-            } else {
-              setChange(1);
-            }
+            setChange(!change)
           }
         } catch (error) {
           if (error.response) {
@@ -360,11 +352,7 @@ const Measure = () => {
         `/MeasurementBook?measurementBookId=${isDelete}`
       );
       if (res.status === 204) {
-        if (change === 0) {
-          setChange(1);
-        } else {
-          setChange(0);
-        }
+      setChange(!change)
         alert.show("data deleted sucessfully", { type: "success" });
       }
     } catch (error) {
@@ -578,7 +566,7 @@ const Measure = () => {
                     style={{ width: "12%", textAlign: "center" }}
                   >
                     <button className="measure-btn" onClick={handleDelete}>
-                      <img src={yes} alt="" />
+                      <FontAwesomeIcon className="true-btn" icon={faCheck} />
                     </button>
                     <button
                       className="measure-btn"
@@ -586,7 +574,7 @@ const Measure = () => {
                         setIsDelete(null);
                       }}
                     >
-                      <img src={no} alt="" />
+                      <FontAwesomeIcon icon={faXmark} className="false-btn"/>
                     </button>
                   </td>
                 ) : (
@@ -680,7 +668,7 @@ const Measure = () => {
                     style={{
                       borderRadius: "4px",
                       width: "92%",
-                      fontFamily: "Roboto",
+                      fontFamily: "Inter",
                       fontSize: "13px",
                       padding: "7px 5px",
                     }}
@@ -1089,10 +1077,10 @@ const Measure = () => {
                       : addFormik.handleSubmit
                   }
                 >
-                  <img src={yes} alt="" />
+                  <FontAwesomeIcon className="true-btn" icon={faCheck} />
                 </button>
                 <button className="measure-btn" onClick={handleClose}>
-                  <img src={no} alt="" />
+                  <FontAwesomeIcon icon={faXmark} className="false-btn"/>
                 </button>
               </td>
             </tr>
@@ -1208,7 +1196,7 @@ const Measure = () => {
                     style={{ width: "12%", textAlign: "center" }}
                   >
                     <button className="measure-btn" onClick={handleDelete}>
-                      <img src={yes} alt="" />
+                      <FontAwesomeIcon className="true-btn" icon={faCheck} />
                     </button>
                     <button
                       className="measure-btn"
@@ -1216,7 +1204,7 @@ const Measure = () => {
                         setIsDelete(null);
                       }}
                     >
-                      <img src={no} alt="" />
+                       <FontAwesomeIcon icon={faXmark} className="false-btn"/>
                     </button>
                   </td>
                 ) : (

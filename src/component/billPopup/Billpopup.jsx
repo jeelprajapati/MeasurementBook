@@ -44,11 +44,7 @@ const Billpopup = ({
             alert.show("Data Added Sucessfully", { type: "success" });
             action.resetForm();
             setOpen(false);
-            if (change === 1) {
-              setChange(0);
-            } else {
-              setChange(1);
-            }
+           setChange(!change)
           }
         } catch (error) {
   
@@ -88,11 +84,7 @@ const Billpopup = ({
             setInput(false);
             setOpen(false);
             setItem({name:'',invoiceDate:'',typeBill:'',status:''});
-            if (change === 1) {
-              setChange(0);
-            } else {
-              setChange(1);
-            }
+           setChange(!change)
           }
         } catch (error) {
          if(error.response){
@@ -115,7 +107,7 @@ const Billpopup = ({
       <h3 className="add-title">{input ? "Update" : "Add"} Bill</h3>
 
       <div className="name-container">
-        <label style={{fontFamily:"'Roboto'",fontSize:'14px'}} htmlFor="projectName">Bill Name <span style={{color:'red',fontSize:'14px'}}>*</span></label>
+        <label style={{fontFamily:"'Inter'",fontSize:'14px'}} htmlFor="projectName">Bill Name <span style={{color:'red',fontSize:'14px'}}>*</span></label>
         <br />
         <input
           type="text"
@@ -132,7 +124,7 @@ const Billpopup = ({
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "13px",
-                  fontFamily:"'Roboto'",
+                  fontFamily:"'Inter'",
                   color: "red",
                   width: "200px",
                 }}
@@ -143,7 +135,7 @@ const Billpopup = ({
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "13px",
-                fontFamily:"'Roboto'",
+                fontFamily:"'Inter'",
                 color: "red",
                 width: "200px",
               }}
@@ -168,7 +160,7 @@ const Billpopup = ({
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "13px",
-                  fontFamily:"'Roboto'",
+                  fontFamily:"'Inter'",
                   color: "red",
                   width: "200px",
                 }}
@@ -179,7 +171,7 @@ const Billpopup = ({
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "13px",
-                fontFamily:"'Roboto'",
+                fontFamily:"'Inter'",
                 color: "red",
                 width: "200px",
               }}
@@ -187,7 +179,7 @@ const Billpopup = ({
           ) : null}
       </div>
       <div className="no-container">
-        <label style={{fontFamily:"'Roboto'",fontSize:'14px'}} htmlFor="typeBill">Type <span style={{color:'red',fontSize:'14px'}}>*</span></label>
+        <label style={{fontFamily:"'Inter'",fontSize:'14px'}} htmlFor="typeBill">Type <span style={{color:'red',fontSize:'14px'}}>*</span></label>
         <br />
         <select
           name="typeBill"
@@ -207,7 +199,7 @@ const Billpopup = ({
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "13px",
-                  fontFamily:"'Roboto'",
+                  fontFamily:"'Inter'",
                   color: "red",
                   width: "200px",
                 }}
@@ -218,7 +210,7 @@ const Billpopup = ({
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "13px",
-                fontFamily:"'Roboto'",
+                fontFamily:"'Inter'",
                 color: "red",
                 width: "200px",
               }}
@@ -226,7 +218,7 @@ const Billpopup = ({
           ) : null}
       </div>
       <div className="loi-container">
-        <label style={{fontFamily:"'Roboto'",fontSize:'14px'}} htmlFor="status">Status <span style={{color:'red',fontSize:'14px'}}>*</span></label>
+        <label style={{fontFamily:"'Inter'",fontSize:'14px'}} htmlFor="status">Status <span style={{color:'red',fontSize:'14px'}}>*</span></label>
         <br />
         <select
           name="status"
@@ -247,7 +239,7 @@ const Billpopup = ({
                 style={{
                   margin:'3px 0 0 0',
                   fontSize: "13px",
-                  fontFamily:"'Roboto'",
+                  fontFamily:"'Inter'",
                   color: "red",
                   width: "200px",
                 }}
@@ -258,7 +250,7 @@ const Billpopup = ({
               style={{
                 margin:'3px 0 0 0',
                 fontSize: "13px",
-                fontFamily:"'Roboto'",
+                fontFamily:"'Inter'",
                 color: "red",
                 width: "200px",
               }}

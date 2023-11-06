@@ -288,3 +288,8 @@
 .measure-btn:disabled{
   cursor: not-allowed;
 }
+.true-btn,.false-btn {
+  color: #fdfdfd;
+  width: 20px;
+  font-size: 17px;
+}

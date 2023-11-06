@@ -51,6 +51,7 @@ const Sidebar = ({ id }) => {
               <span className={`${open ? "sidebar-name" : "d-none"} ${id === item.id && "selected"}`}>
                 {open && item.text}
               </span>
+              {!open && <span className="hover-show-name ">{item.text}</span>}
             </li>
           </Link>
         ))}
@@ -64,6 +65,7 @@ const Sidebar = ({ id }) => {
             <span className={`${open ? "sidebar-name" : "d-none"}`}>
               {open && 'LogOut'}
             </span>
+            {!open && <span className="hover-show-name ">LogOut</span>}
           </div>
         </div>
       )}

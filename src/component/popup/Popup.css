@@ -16,13 +16,13 @@
 }
 .project-lable{
     font-size: 13px;
-    font-family: 'Roboto';
+    font-family: 'Inter';
 }
 .add-title{
     padding: 15px 15px 5px 18px;
     font-size: 18px;
     font-weight: 800;
-    font-family: 'Roboto';
+    font-family: 'Inter';
 }
 .name-container,.no-container,.loi-container,.validity-container{
     margin: 10px 15px;
@@ -33,7 +33,7 @@
     border-radius: 5px;
     border: 1px solid rgb(223, 221, 221);
     padding: 10px;
-    font-family: 'Roboto';
+    font-family: 'Inter';
 }
 .Add-Project{
     background-color:#333333;
@@ -42,7 +42,7 @@
     font-size: 15px;
     padding: 7px 10px;
     margin: 18px 25px 25px 25px;
-    font-family: 'Roboto';
+    font-family: 'Inter';
 }
 .Add-Project:hover{
     cursor: pointer;

@@ -30,7 +30,6 @@ const Bills = () => {
                 </div>
               </div>
               <div className={`${open?'bill-middle blur':'bill-middle'}`} >
-                <h3 className="bill-card-title">Bills</h3>
                 <div className="bill-wrapper">
                 <div className="add-card" onClick={()=>setOpen(true)}>+</div>
                 {!loding && data?.items?.map((item)=>(<Billcard key={item?.id} setInput={setInput} setOpen={setOpen} setItem={setItem} item={item} projectname={projectname} Id={projectId}/>))}

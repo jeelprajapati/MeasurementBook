@@ -1,42 +1,42 @@
 import React from "react";
 import './Billcard.css'
+import makeRequesInstance from "../../makeRequest";
 import pdf from '../../image/pdf-file.svg'
 import xls from '../../image/xls.svg'
-import book from '../../image/Vector.svg'
-import edit from '../../image/edit2.svg'
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { saveAs } from 'file-saver';
+import { faArrowRightToBracket, faPencil } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAlert } from "react-alert";
 
 const Billcard = ({item,projectname,Id,setInput,setItem,setOpen}) => {
+  const alert=useAlert();
   const handleClick=()=>{
     setItem(item);
     setInput(true);
     setOpen(true)
   };
 
-  const downloadExcelFile = (billId, billName) => {
-    const token = localStorage.getItem('token');
-    axios({
-      method: 'get',
-      url: `https://dev-api.measurekaro.com/api/Project/GenerateStandardExcelReport?billId=${billId}`,
-      responseType: 'blob',
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-    }).then(blob => {
-        saveAs(blob.data, billName);
-     })
-    .catch((error) => {
-    });
-  };
+  const downloadExcelFile = async(billId, billName) => {
+    const makeRequest=makeRequesInstance(localStorage.getItem('token'))
+    try {
+      const res=await makeRequest.get(`Project/GenerateStandardExcelReport?billId=${billId}`,{responseType:'blob'});
+      saveAs(res.data, billName);
+    } catch (error) {
+      if (error.code === "ERR_NETWORK") {
+        alert.show(error.message, { type: "error" });
+      } else {
+        alert.show("Iternal server error", { type: "error" });
+      }
+    } 
+  }
  
   return (
     <>
     <div className="billcard-container">
       <div className="edit-wrapper">
       <div className="edit-button" onClick={handleClick}>
-        <img src={edit} alt="" />
+        <FontAwesomeIcon icon={faPencil} />
       </div>
       </div>
       <div className="wrapper-card">
@@ -64,10 +64,10 @@ const Billcard = ({item,projectname,Id,setInput,setItem,setOpen}) => {
       </div>
       <div className="measurement-button">
         {item?.status===1 ? 
-        <Link className="link" style={{width:'90%'}} to={`/measurementbook?billId=${item?.id}?projectId=${Id}?projectname=${projectname}?billname=${item?.name}`}>
-        <button>Measurement Book <img src={book} alt="" /></button>
+        <Link className="link" style={{width:'100%'}} to={`/measurementbook?billId=${item?.id}?projectId=${Id}?projectname=${projectname}?billname=${item?.name}`}>
+        <button>Measurement <FontAwesomeIcon icon={faArrowRightToBracket} /></button>
         </Link> : <button disabled title={`This bill have ${item?.status===2 ? 'submitted' : 'accepted'}`}>
-          Measurement Book <img src={book} alt="" />
+          Measurement<FontAwesomeIcon icon={faArrowRightToBracket} />
         </button>}
       </div>
       </div>

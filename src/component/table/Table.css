@@ -1,5 +1,5 @@
 .table{
-    height: 405px;
+    height: 390px;
     overflow-y: auto;
     background-color: rgb(241 241 241);
     border-radius: 5px;
@@ -23,7 +23,7 @@
 .th{
     padding: 10px 35px;
     font-size: 13px;  
-    font-family: 'Roboto'; 
+    font-family: 'Inter'; 
 }
 .th:nth-child(1){
     border-radius: 5px 0 0 0px;
@@ -43,7 +43,7 @@
     text-align: center;
     overflow-wrap: break-word;
     font-size: 13px;
-    font-family: 'Roboto';
+    font-family: 'Inter';
     height: 0;
 }
 .td span{
@@ -83,7 +83,7 @@
     border: 1px solid #333333;
 }
 .contract-yes{
-   background-color: #333333;
+   background-color: #2e4a93;
    border: none;
    margin: 0 4px;
    cursor: pointer;
@@ -91,7 +91,7 @@
    height: 30px;
 }
 .contract-no{
-    background-color: white;
+    background-color: #2e4a93;
     border: none;
     margin: 0 4px;
     cursor: pointer;

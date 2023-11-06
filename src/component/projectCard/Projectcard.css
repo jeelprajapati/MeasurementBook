@@ -107,13 +107,14 @@
     background: #2e4a93;
     color: white;
     font-family:'Inter';
-    font-weight: 600;
+    font-weight: 400;
     font-size: 15px;
     padding: 8px;
     border: none;
     cursor: pointer;
-    border-radius: 15px;
+    border-radius: 20px;
 }
-.projectcard-button img{
-    width: 12px;
+.projectcard-button svg{
+    font-size: 15px;
+    font-weight: 400;
 }

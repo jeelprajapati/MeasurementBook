@@ -1,7 +1,8 @@
 import React, { useState,useRef,useEffect } from 'react'
 import './Select.css'
-import Search from '../../image/search.svg'
 import Arrow from '../../image/down-arrow.svg'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Select = ({onChange,options,value,error}) => {
   const [searchTerm, setSearchTerm] = useState(value?.label);
@@ -55,7 +56,7 @@ const Select = ({onChange,options,value,error}) => {
   return (
     <div ref={ref} className={`${open ? 'searchable-dropdown maxwidth': error ? 'searchable-dropdown minwidth warning' : 'searchable-dropdown minwidth'}`} onClick={handleOpen}>
       <div className='text-input'>
-      <img src={Search} alt="" />  
+      <FontAwesomeIcon icon={faMagnifyingGlass} className='search-item' />
       <input
         type="text"
         placeholder="SEARCH ITEM"

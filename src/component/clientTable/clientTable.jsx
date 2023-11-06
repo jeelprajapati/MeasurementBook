@@ -5,8 +5,8 @@ import deleteicon from '../../image/delete.svg'
 import useFetch from '../../hooks/useFetch'
 import makeRequesInstance from '../../makeRequest'
 import { useAlert } from 'react-alert'
-import yes from "../../image/yes.svg"
-import no from "../../image/no.svg"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
 const ClientTable = ({setInput,setItem,setUpdate,change,setChange,country,state}) => {
   const Id=localStorage.getItem('organizationId');
   const[isDelete,setIsDelete]=useState(null);
@@ -79,8 +79,8 @@ const ClientTable = ({setInput,setItem,setUpdate,change,setChange,country,state}
               <td className='client-td' colSpan={3/2}><span>{country?.filter((c)=>(c.id===item.countryId))[0].countryName}</span></td>
               <td className='client-td' colSpan={3/2}><span>{item.postalCode}</span></td>
               {isDelete===item?.id?<td className='client-td'>
-                 <button className='client-yes' onClick={handleDelete}><img src={yes} alt="" /></button>
-                 <button className='client-no' onClick={()=>{setIsDelete(null)}}><img src={no} alt="" /></button>
+                 <button className='client-yes' onClick={handleDelete}><FontAwesomeIcon className="true-btn" icon={faCheck} /></button>
+                 <button className='client-no' onClick={()=>{setIsDelete(null)}}><FontAwesomeIcon icon={faXmark} className="false-btn"/></button>
                 </td>:<td className='client-td'>
                 <img src={edit} onClick={()=>{handleUpdate(item)}} alt="" className='client-svg'  />
                 <img src={deleteicon} onClick={()=>{setIsDelete(item?.id)}} alt="" className='client-svg' />

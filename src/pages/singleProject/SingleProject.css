@@ -2,28 +2,24 @@
     width: 100vw;
     height: 100vh;
     display: flex;
-    border-radius: 6px;
-}
-.single-left{
-    background-color: #333333;
-    height: 100vh;
-    border-radius: 3px;
 }
 .single-right{
     position: relative;
     background-color: rgb(238, 237, 237);
-    padding:7px;
     display: flex;
     flex-direction: column;
     gap: 7px;
 }
 .contract-top{
     width: 100%;
+    height: 52px;
     background-color: white;
+    display: flex;
+    align-items: center;
 }
 .contract-title{
     margin: 0px 8px 10px;
-    font-family: 'Roboto';
+    font-family: 'Inter';
     font-size: 15px;
     width: fit-content;
     padding: 7px;
@@ -54,11 +50,11 @@
     font-weight: 700;
     font-size: 15px;
     color: black;
-    font-family: 'Roboto';
+    font-family: 'Inter';
 }
 .entity span:nth-child(3){
     font-size: 15px;
-    font-family: 'Roboto';
+    font-family: 'Inter';
 }
 .edit-btn{
     position: absolute;
@@ -93,7 +89,7 @@
     display: flex;
     align-items: center;
     color: white;
-    font-family: 'Roboto';
+    font-family: 'Inter';
 }
 .goto button:hover{
     cursor: pointer;
@@ -106,7 +102,7 @@
     margin: 0px 15px;   
 }
 .table-title{
-    font-family: 'Roboto';
+    font-family: 'Inter';
     font-size: 15px;
 }
 .single-page-container{
@@ -122,7 +118,7 @@
    background-color: #5b69e9;
    color: white;
    border-radius: 5px;
-   font-family: 'Roboto';
+   font-family: 'Inter';
    font-weight: 600;
    cursor: pointer;
 }
@@ -144,4 +140,8 @@
 .project-title{
     color: black;
     margin: 17px 10px;
+}
+.arrow{
+    font-weight: 600;
+    font-size: 17px;
 }

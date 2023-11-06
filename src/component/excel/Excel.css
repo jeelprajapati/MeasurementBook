@@ -17,7 +17,7 @@
 .excel-input span{
     font-size: 15px;
     margin: 7px 0;
-    font-family: 'Roboto';
+    font-family: 'Inter';
     font-weight: bold;
 }
 .excel-red{
@@ -29,7 +29,7 @@
     padding: 7px 15px;
     border-radius: 5px;
     margin: 5px 0;
-    font-family: 'Roboto';
+    font-family: 'Inter';
     font-weight: 600;
     cursor: pointer;
 }

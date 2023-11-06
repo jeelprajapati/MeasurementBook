@@ -33,7 +33,7 @@
   padding: 10px;
   cursor: pointer;
   text-align: center;
-  font-family: "Roboto";
+  font-family: "Inter";
   font-weight: bold;
   font-size: 14px;
   border-radius: 5px;
@@ -47,11 +47,6 @@
   background-color: #ececec; 
   color: #2e4a93; 
 }
-/* .link:hover li{
-  background-color: #ececec; 
-  color: #2e4a93; 
-} */
-  
 .sidebar-svg {
   flex: 1;
   display: flex;
@@ -101,7 +96,7 @@
   padding: 10px;
   cursor: pointer;
   text-align: center;
-  font-family: "Roboto";
+  font-family: "Inter";
   font-weight: bold;
   font-size: 14px;
   border-radius: 5px;
@@ -110,6 +105,7 @@
   justify-content: center;
   margin: 5px 10px;
   align-content: flex-end;
+  position: relative;
 }
 
 .logout:hover{
@@ -129,4 +125,24 @@
 
 .sidebar-toggle-icon {
   font-size: 20px;
+}
+.hover-show-name{
+  display: none;
+  width: 100px;
+  color: #2e4a93;
+  font-size: 15px;
+  font-weight: 600;
+  height: 35px;
+  position: absolute;
+  border-radius: 5px;
+  right: -220%;
+  background-color: #fdfdfd;
+  top: 15%;
+  box-shadow: 0px 4px 10px 0px #00000040;
+  z-index: 10001;
+}
+.sidebar-ul li:hover .hover-show-name , .logout:hover .hover-show-name{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
