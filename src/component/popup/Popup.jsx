@@ -5,7 +5,8 @@ import makeRequesInstance from "../../makeRequest";
 import useFetch from "../../hooks/useFetch";
 import { useAlert } from "react-alert";
 import { useFormik } from "formik";
-import {projectScema} from "../../scemas"
+import { projectScema } from "../../scemas";
+import Error from "../error/Error.jsx";
 
 const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
   const makeRequest = makeRequesInstance(localStorage.getItem("token"));
@@ -15,7 +16,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
     url: `Client?organizationId=${organizationId}&page=${1}&pageSize=${100}`,
     change,
   });
- 
+
   const handleClose = (e) => {
     e.preventDefault();
     setPopUp(false);
@@ -24,11 +25,11 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
 
   const addFormik = useFormik({
     initialValues: input,
-    validationSchema:projectScema,
-    onSubmit: (value,action) => {
-      const handleAdd=async()=>{
+    validationSchema: projectScema,
+    onSubmit: (value, action) => {
+      const handleAdd = async () => {
         const cDate = new Date(value?.loiDate);
-        cDate.setDate(cDate.getDate() + parseInt(value?.contractValidity||0));
+        cDate.setDate(cDate.getDate() + parseInt(value?.contractValidity || 0));
         try {
           const res = await makeRequest.post("/Project", {
             id: "00000000-0000-0000-0000-000000000000",
@@ -37,7 +38,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
             loiNo: parseInt(value?.loiNo),
             loiDate: value?.loiDate,
             projectName: value?.projectName,
-            contractValidity: parseInt(value?.contractValidity||0),
+            contractValidity: parseInt(value?.contractValidity || 0),
             workCompletion: cDate?.toISOString().split("T")[0],
             clientId: value?.clientId,
             members: [],
@@ -54,7 +55,6 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
             }
           }
         } catch (error) {
-        
           if (error.response) {
             alert.show(error.response.data.title, { type: "info" });
           } else if (error.code === "ERR_NETWORK") {
@@ -63,18 +63,18 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
             alert.show("Iternal server error", { type: "error" });
           }
         }
-      }
+      };
       handleAdd();
     },
   });
 
   const updateFormik = useFormik({
     initialValues: input,
-    validationSchema:projectScema,
-    onSubmit: (value,action) => {
-      const handleUpdate=async()=>{
+    validationSchema: projectScema,
+    onSubmit: (value, action) => {
+      const handleUpdate = async () => {
         const cDate = new Date(value?.loiDate);
-        cDate.setDate(cDate.getDate() + parseInt(value?.contractValidity||0));
+        cDate.setDate(cDate.getDate() + parseInt(value?.contractValidity || 0));
         try {
           const res = await makeRequest.put("/Project", {
             id: value?.id,
@@ -83,7 +83,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
             loiNo: parseInt(value?.loiNo),
             loiDate: value?.loiDate,
             projectName: value?.projectName,
-            contractValidity: parseInt(value?.contractValidity||0),
+            contractValidity: parseInt(value?.contractValidity || 0),
             workCompletion: cDate?.toISOString().split("T")[0],
             clientId: value?.clientId,
             members: [],
@@ -108,22 +108,22 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
             alert.show("Internal server error", { type: "error" });
           }
         }
-      }
+      };
       handleUpdate();
     },
   });
+
   return (
-    <div className="pop-container">
-      <h3 className="add-title">
+    <div className="popup-container">
+      <h3 className="popup-title">
         {update ? "Update Project" : "Add New Project"}
       </h3>
-      <div className="name-container">
-        <label htmlFor="projectName" className="project-lable">
-          Client Name <span style={{color:'red',fontSize:'14px'}}>*</span>
+      <div className="popup-wrapper">
+        <label htmlFor="projectName" className="popup-label">
+          Client Name <span className="red-star">*</span>
         </label>
-        <br />
         <select
-          className="pro-select"
+          className="popup-select"
           name="clientId"
           value={
             update ? updateFormik.values.clientId : addFormik.values.clientId
@@ -131,7 +131,9 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
           onChange={update ? updateFormik.handleChange : addFormik.handleChange}
           onBlur={update ? updateFormik.handleBlur : addFormik.handleBlur}
         >
-          <option value="" disabled>Select Client</option>
+          <option value="" disabled>
+            Select Client
+          </option>
           {!loding &&
             data?.items.map((item) => (
               <option value={`${item?.id}`} key={item?.id}>
@@ -140,38 +142,25 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
             ))}
         </select>
         {update ? (
-            updateFormik.touched.clientId && updateFormik.errors.clientId ? (
-              <p
-                style={{
-                  margin:'3px 0 0 0',
-                  fontSize: "14px",
-                  fontFamily:"'Inter'",
-                  color: "red",
-                  width: "200px",
-                }}
-              >{updateFormik.errors.clientId}</p>
-            ) : null
-          ) : addFormik.touched.clientId && addFormik.errors.clientId ? (
-            <p
-              style={{
-                margin:'3px 0 0 0',
-                fontSize: "14px",
-                fontFamily:"'Inter'",
-                color: "red",
-                width: "200px",
-              }}
-            >{addFormik.errors.clientId}</p>
-          ) : null}
+          <Error
+            touch={updateFormik.touched.clientId}
+            error={updateFormik.errors.clientId}
+          />
+        ) : (
+          <Error
+            touch={addFormik.touched.clientId}
+            error={addFormik.errors.clientId}
+          />
+        )}
       </div>
-      <div className="name-container">
-        <label htmlFor="projectName" className="project-lable">
-          Project Name <span style={{color:'red',fontSize:'14px'}}>*</span>
+      <div className="popup-wrapper">
+        <label htmlFor="projectName" className="popup-label">
+          Project Name <span className="red-star">*</span>
         </label>
-        <br />
         <input
           type="text"
           id="projectName"
-          className="Add-input"
+          className="popup-input"
           name="projectName"
           value={
             update
@@ -181,42 +170,28 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
           onChange={update ? updateFormik.handleChange : addFormik.handleChange}
           onBlur={update ? updateFormik.handleBlur : addFormik.handleBlur}
         />
-         {update ? (
-            updateFormik.touched.projectName && updateFormik.errors.projectName ? (
-              <p
-                style={{
-                  margin:'3px 0 0 0',
-                  fontSize: "14px",
-                  fontFamily:"'Inter'",
-                  color: "red",
-                  width: "200px",
-                }}
-              >{updateFormik.errors.projectName}</p>
-            ) : null
-          ) : addFormik.touched.projectName && addFormik.errors.projectName ? (
-            <p
-              style={{
-                margin:'3px 0 0 0',
-                fontSize: "14px",
-                fontFamily:"'Inter'",
-                color: "red",
-                width: "200px",
-              }}
-            >{addFormik.errors.projectName}</p>
-          ) : null}
+        {update ? (
+          <Error
+            touch={updateFormik.touched.projectName}
+            error={updateFormik.errors.projectName}
+          />
+        ) : (
+          <Error
+            touch={addFormik.touched.projectName}
+            error={addFormik.errors.projectName}
+          />
+        )}
       </div>
-
-      <div className="date-and-time">
-        <div style={{flex:'1'}}>
-          <label htmlFor="contractNo" className="project-lable">
-            Contract No <span style={{color:'red',fontSize:'14px'}}>*</span>
+      <div className="popup-two-input-wrapper">
+        <div>
+          <label htmlFor="contractNo" className="popup-label">
+            Contract No{" "}
+            <span className="red-star">*</span>
           </label>
-          <br />
           <input
             type="text"
             id="contractNo"
-            className="dt-input"
-            style={{width:'92%'}}
+            className="popup-input"
             name="contractNo"
             value={
               update
@@ -228,40 +203,27 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
             }
             onBlur={update ? updateFormik.handleBlur : addFormik.handleBlur}
           />
-           {update ? (
-            updateFormik.touched.contractNo && updateFormik.errors.contractNo ? (
-              <p
-                style={{
-                  margin:'3px 0 0 0',
-                  fontSize: "14px",
-                  fontFamily:"'Inter'",
-                  color: "red",
-                  width: "200px",
-                }}
-              >{updateFormik.errors.contractNo}</p>
-            ) : null
-          ) : addFormik.touched.contractNo && addFormik.errors.contractNo ? (
-            <p
-              style={{
-                margin:'3px 0 0 0',
-                fontSize: "14px",
-                fontFamily:"'Inter'",
-                color: "red",
-                width: "200px",
-              }}
-            >{addFormik.errors.contractNo}</p>
-          ) : null}
+          {update ? (
+          <Error
+            touch={updateFormik.touched.contractNo}
+            error={updateFormik.errors.contractNo}
+          />
+        ) : (
+          <Error
+            touch={addFormik.touched.contractNo}
+            error={addFormik.errors.contractNo}
+          />
+        )}
         </div>
-        <div style={{flex:'1'}}>
-          <label htmlFor="contractDate" className="project-lable">
-            Date of Contract <span style={{color:'red',fontSize:'14px'}}>*</span>
+        <div>
+          <label htmlFor="contractDate" className="popup-label">
+            Date of Contract{" "}
+            <span className="red-star">*</span>
           </label>
-          <br />
           <input
             type="date"
             id="contractDate"
-            className="dt-input"
-            style={{width:'92%'}}
+            className="popup-input"
             name="contractDate"
             value={
               update
@@ -273,42 +235,28 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
             }
             onBlur={update ? updateFormik.handleBlur : addFormik.handleBlur}
           />
-           {update ? (
-            updateFormik.touched.contractDate && updateFormik.errors.contractDate ? (
-              <p
-                style={{
-                  margin:'3px 0 0 0',
-                  fontSize: "14px",
-                  fontFamily:"'Inter'",
-                  color: "red",
-                  width: "200px",
-                }}
-              >{updateFormik.errors.contractDate}</p>
-            ) : null
-          ) : addFormik.touched.contractDate && addFormik.errors.contractDate ? (
-            <p
-              style={{
-                margin:'3px 0 0 0',
-                fontSize: "14px",
-                fontFamily:"'Inter'",
-                color: "red",
-                width: "200px",
-              }}
-            >{addFormik.errors.contractDate}</p>
-          ) : null}
+          {update ? (
+          <Error
+            touch={updateFormik.touched.contractDate}
+            error={updateFormik.errors.contractDate}
+          />
+        ) : (
+          <Error
+            touch={addFormik.touched.contractDate}
+            error={addFormik.errors.contractDate}
+          />
+        )}
         </div>
       </div>
-      <div className="date-and-time">
-        <div style={{flex:'1'}}>
-          <label htmlFor="contractValidity" className="project-lable">
+      <div className="popup-two-input-wrapper">
+        <div>
+          <label htmlFor="contractValidity" className="popup-label">
             Duration (in days)
           </label>
-          <br />
           <input
             type="text"
             id="contractValidity"
-            className="dt-input"
-            style={{width:'92%'}}
+            className="popup-input"
             name="contractValidity"
             value={
               update
@@ -321,19 +269,18 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
             onBlur={update ? updateFormik.handleBlur : addFormik.handleBlur}
           />
         </div>
-        <div style={{flex:'1'}}>
-          <label htmlFor="loiDate" className="project-lable">
-            Project Start Date <span style={{color:'red',fontSize:'14px'}}>*</span>
+        <div>
+          <label htmlFor="loiDate" className="popup-label">
+            Project Start Date{" "}
+            <span className="red-star">*</span>
           </label>
-          <br />
           <input
             type="date"
             id="loiDate"
-            className="dt-input"
-            style={{width:'92%'}}
+            className="popup-input"
             name="loiDate"
             value={
-              update  
+              update
                 ? updateFormik.values.loiDate?.split("T")[0]
                 : addFormik.values.loiDate?.split("T")[0]
             }
@@ -342,62 +289,42 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
             }
             onBlur={update ? updateFormik.handleBlur : addFormik.handleBlur}
           />
-           {update ? (
-            updateFormik.touched.loiDate && updateFormik.errors.loiDate ? (
-              <p
-                style={{
-                  margin:'3px 0 0 0',
-                  fontSize: "14px",
-                  fontFamily:"'Inter'",
-                  color: "red",
-                  width: "200px",
-                }}
-              >{updateFormik.errors.loiDate}</p>
-            ) : null
-          ) : addFormik.touched.loiDate && addFormik.errors.loiDate ? (
-            <p
-              style={{
-                margin:'3px 0 0 0',
-                fontSize: "14px",
-                fontFamily:"'Inter'",
-                color: "red",
-                width: "200px",
-              }}
-            >{addFormik.errors.loiDate}</p>
-          ) : null}
+          {update ? (
+          <Error
+            touch={updateFormik.touched.loiDate}
+            error={updateFormik.errors.loiDate}
+          />
+        ) : (
+          <Error
+            touch={addFormik.touched.loiDate}
+            error={addFormik.errors.loiDate}
+          />
+        )}
         </div>
       </div>
-      <div className="loi-container">
-        <label htmlFor="loiNo" className="project-lable">
+      <div className="popup-wrapper">
+        <label htmlFor="loiNo" className="popup-label">
           LOI Details
         </label>
-        <br />
         <input
           type="text"
           id="loiNo"
-          className="Add-input"
+          className="popup-input"
           name="loiNo"
           value={update ? updateFormik.values.loiNo : addFormik.values.loiNo}
           onChange={update ? updateFormik.handleChange : addFormik.handleChange}
           onBlur={update ? updateFormik.handleBlur : addFormik.handleBlur}
         />
       </div>
-      {update ? (
+      <div className="popup-buttons">
         <input
           type="button"
-          value="Update Project"
-          className="Add-Project"
-          onClick={updateFormik.handleSubmit}
+          value={`${update ? "Update Project" : "+ Add New Project"}`}
+          className="popup-btn"
+          onClick={update ? updateFormik.handleSubmit : addFormik.handleSubmit}
         />
-      ) : (
-        <input
-          type="button"
-          value="+ Add New Project"
-          className="Add-Project"
-          onClick={addFormik.handleSubmit}
-        />
-      )}
-      <img src={close} onClick={handleClose} alt="" className="close" />
+      </div>
+      <img src={close} onClick={handleClose} alt="" className="popup-close" />
     </div>
   );
 };

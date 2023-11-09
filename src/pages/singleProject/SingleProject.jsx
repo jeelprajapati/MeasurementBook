@@ -28,7 +28,7 @@ const SingleProject = () => {
   const { loding, data } = useFetch({ url: `/Project/${id}`, change });
   useEffect(() => {
     const getClient = async () => {
-      const orgId=localStorage.getItem("organizationId");
+      const orgId = localStorage.getItem("organizationId");
       const makeRequest = makeRequesInstance(localStorage.getItem("token"));
       const res = await makeRequest.get(
         `Client?page=${1}&pageSize=${100}&organizationId=${orgId}`
@@ -48,61 +48,80 @@ const SingleProject = () => {
         <div className="single-left">
           <Sidebar id={2} />
         </div>
-        <div className='single-right'>
-          <div className={`${popUp?'contract-top blur':'contract-top'}`}>
-            <div className={`${open ? "path blur" : "path"}`}>
+        <div className="single-right">
+          <div className={`contract-top ${popUp && "blur"}`}>
+            <div className={`path ${open && "blur"}`}>
               <Link to={`/project`} className="bill-link">
                 Projects/
               </Link>
-              {data?.projectName[0]?.toUpperCase()+(data?.projectName)?.slice(1)}
+              {data?.projectName[0]?.toUpperCase() +
+                data?.projectName?.slice(1)}
             </div>
           </div>
-          <div className={`${popUp?'contract-middle blur':'contract-middle'}`}>
-            <h3 className={`${open ? "contract-title blur" : "contract-title"}`}>
-              Project Detail
-            </h3>
+          <div className={`contract-middle ${popUp && "blur"}`}>
+            <div className="title-icon-wrapper">
+              <h3 className={`contract-title ${open && "blur"}`}>
+                Project Detail
+              </h3>
+            </div>
             {!loding && (
-              <div className={`${open ? "detail-box blur" : "detail-box"}`}>
+              <div className={`detail-box ${open && "blur"}`}>
                 <div className="entity">
-                  <span>Project</span>
-                  <span>:</span>
-                  <span>{data?.projectName}</span>
+                  <span style={{flex:'1.1'}}>Project :</span>
+                  <span style={{flex:'8'}}>{data?.projectName}</span>
                 </div>
                 <div className="entity">
-                  <span>Client</span>
-                  <span>:</span>
-                  <span>
+                  <span style={{flex:'1.1'}}>Client :</span>
+                  <span style={{flex:'9'}}>
                     {
                       client?.filter((item) => item?.id === data?.clientId)[0]
                         ?.name
                     }
                   </span>
                 </div>
-                <div className="edit-btn">
-                 <FontAwesomeIcon icon={faPencil} onClick={() => handlePopUP(data)}/>
-                </div>
               </div>
             )}
-            <div className={`${open ? "goto blur" : "goto"}`}>
-              <Link
+            <div className={`goto ${open && "blur"}`}>
+              {!popUp ? <Link
                 to={`/bills?projectid=${data?.id}?projectname=${data?.projectName}`}
                 className="link"
               >
-                <button style={{display:'flex',alignItems:'center',gap:'3px'}}>
+                <button
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "3px",
+                  }}
+                >
                   <span>Goto Bills</span>
                   <FontAwesomeIcon icon={faArrowRightLong} className="arrow" />
                 </button>
-              </Link>
+              </Link> : <button
+                  disabled
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "3px",
+                  }}
+                >
+                  <span>Goto Bills</span>
+                  <FontAwesomeIcon icon={faArrowRightLong} className="arrow" />
+                </button>}
             </div>
+            <div className="edit-btn">
+                <FontAwesomeIcon
+                  icon={faPencil}
+                  onClick={() => handlePopUP(data)}
+                />
+              </div>
           </div>
-          <div className={`${popUp?'contract-footer blur':'contract-footer'}`}>
-            <div
-              className={`${open ? "table-container blur" : "table-container"}`}
-            >
+          <div className={`contract-footer ${popUp && "blur"}`}>
+            <div className={`table-container ${popUp && "blur"}`}>
               <div className="single-page-container">
                 <h3 className="table-title">Contract Item</h3>
                 <button
                   className="excel-btn"
+                  disabled={popUp}
                   onClick={() => {
                     setOpen(true);
                   }}
@@ -116,17 +135,14 @@ const SingleProject = () => {
             </div>
           </div>
           {open && (
-            <div className="excel-popup">
               <Excel
                 setOpen={setOpen}
                 projectId={id}
                 setChange={setChange}
                 change={change}
               />
-            </div>
           )}
           {popUp && (
-            <div className="popup">
               <Popup
                 setPopUp={setPopUp}
                 setChange={setChange}
@@ -135,7 +151,6 @@ const SingleProject = () => {
                 update={Update}
                 setUpdate={setUpdate}
               />
-            </div>
           )}
         </div>
       </div>

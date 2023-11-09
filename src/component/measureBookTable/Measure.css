@@ -6,8 +6,9 @@
 }
 .clear{
   font-family: 'Inter';
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 400;
+  /* color: #2e4a93; */
   cursor: pointer;
 }
 .measure-container{
@@ -18,14 +19,14 @@
   width: 100%;
   flex-grow:1;
   height:0;
-  overflow:scroll;
+  overflow-y:scroll;
 }
 .measure-table table{
   border-collapse: collapse;
   width: 100%;
 }
 .measure-tr{
-  border-bottom:1px solid rgb(175, 173, 173);
+  border-bottom:1px solid #2e4a93;
 }
 .measure-tr:nth-child(1){
   height: 40px;
@@ -35,13 +36,15 @@
   z-index: 998;
 }
 .measure-th{
-  font-size: 13px;   
+  font-size: 15px;   
   font-family: 'Inter';
   padding: 10px 0;
   position: -webkit-sticky;
   position: sticky;
+  color: #2e4a93;
+  font-weight: 400;
   top: 0;
-  box-shadow: inset 0 -1px 0 black;
+  box-shadow: inset 0 -1px 0 #2e4a93;
 }
 .measure-td{
   font-size: 13px;   

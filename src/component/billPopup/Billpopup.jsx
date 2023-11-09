@@ -6,31 +6,30 @@ import { useLocation } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { useFormik } from "formik";
 import { billScema } from "../../scemas";
+import Error from "../error/Error.jsx";
 const Billpopup = ({
   setOpen,
-  input,
   item,
-  setInput,
   setItem,
   setChange,
   change,
+  open
 }) => {
   const Id = useLocation().search.split("?")[1].split("=")[1];
   const makeRequest = makeRequesInstance(localStorage.getItem("token"));
   const alert = useAlert();
 
   const handleClose = () => {
-    setInput(false);
-    setOpen(false);
-    setItem({name:'',invoiceDate:'',typeBill:'',status:''});
+    setOpen('');
+    setItem({ name: "", invoiceDate: "", typeBill: "", status: "" });
   };
 
-  const addFormik=useFormik({
-    initialValues:item,
-    validationSchema:billScema,
-    onSubmit:(value,action)=>{
-      const handleAdd=async()=>{
-        try { 
+  const addFormik = useFormik({
+    initialValues: item,
+    validationSchema: billScema,
+    onSubmit: (value, action) => {
+      const handleAdd = async () => {
+        try {
           const res = await makeRequest.post("/Bill", {
             id: "00000000-0000-0000-0000-000000000000",
             invoiceNo: "INV-2023080428",
@@ -43,31 +42,28 @@ const Billpopup = ({
           if (res.status === 204) {
             alert.show("Data Added Sucessfully", { type: "success" });
             action.resetForm();
-            setOpen(false);
-           setChange(!change)
+            setOpen('');
+            setChange(!change);
           }
         } catch (error) {
-  
-          if(error.response){
-            alert.show(error.response.data.title,{type:'info'})
-          }
-          else if(error.code==='ERR_NETWORK'){
-            alert.show(error.message,{type:'error'})
-          }
-          else{
-            alert.show('Iternal server error',{type:'error'})
+          if (error.response) {
+            alert.show(error.response.data.title, { type: "info" });
+          } else if (error.code === "ERR_NETWORK") {
+            alert.show(error.message, { type: "error" });
+          } else {
+            alert.show("Iternal server error", { type: "error" });
           }
         }
-      }
+      };
       handleAdd();
-    }
-  })
+    },
+  });
 
-  const updateFormik=useFormik({
-    initialValues:item,
-    validationSchema:billScema,
-    onSubmit:(value,action)=>{
-      const handleUpdate=async()=>{
+  const updateFormik = useFormik({
+    initialValues: item,
+    validationSchema: billScema,
+    onSubmit: (value, action) => {
+      const handleUpdate = async () => {
         try {
           const res = await makeRequest.put("/Bill", {
             id: value?.id,
@@ -81,188 +77,149 @@ const Billpopup = ({
           if (res.status === 204) {
             alert.show("Data Updated Sucessfully", { type: "success" });
             action.resetForm();
-            setInput(false);
-            setOpen(false);
-            setItem({name:'',invoiceDate:'',typeBill:'',status:''});
-           setChange(!change)
+            setOpen('');
+            setItem({ name: "", invoiceDate: "", typeBill: "", status: "" });
+            setChange(!change);
           }
         } catch (error) {
-         if(error.response){
-           alert.show(error.response.data.title,{type:'info'})
-         }
-         else if(error.code==='ERR_NETWORK'){
-           alert.show(error.message,{type:'error'})
-         }
-         else{
-           alert.show('Iternal server error',{type:'error'})
-         }
-        } 
-      }
-    
-      handleUpdate();
-    }
-  })
-  return (
-    <div className="bill-pop-container">
-      <h3 className="add-title">{input ? "Update" : "Add"} Bill</h3>
+          if (error.response) {
+            alert.show(error.response.data.title, { type: "info" });
+          } else if (error.code === "ERR_NETWORK") {
+            alert.show(error.message, { type: "error" });
+          } else {
+            alert.show("Iternal server error", { type: "error" });
+          }
+        }
+      };
 
-      <div className="name-container">
-        <label style={{fontFamily:"'Inter'",fontSize:'14px'}} htmlFor="projectName">Bill Name <span style={{color:'red',fontSize:'14px'}}>*</span></label>
-        <br />
+      handleUpdate();
+    },
+  });
+  return (
+    <div className="bill-popup-container">
+      <h3 className="bill-popup-title">{open==='update' ? "Update" : "Add"} Bill</h3>
+      <div className="bill-popup-wrapper">
+        <label htmlFor="projectName" className="bill-popup-label">
+          Bill Name <span>*</span>
+        </label>
         <input
           type="text"
           id="name"
-          className="Add-input"
+          className="bill-popup-input"
           name="name"
-          value={input?updateFormik.values.name:addFormik.values.name}
-          onChange={input?updateFormik.handleChange:addFormik.handleChange}
-          onBlur={input?updateFormik.handleBlur:addFormik.handleBlur}
+          value={open==='update' ? updateFormik.values.name : addFormik.values.name}
+          onChange={open==='update' ? updateFormik.handleChange : addFormik.handleChange}
+          onBlur={open==='update' ? updateFormik.handleBlur : addFormik.handleBlur}
         />
-        {input ? (
-            updateFormik.touched.name && updateFormik.errors.name ? (
-              <p
-                style={{
-                  margin:'3px 0 0 0',
-                  fontSize: "13px",
-                  fontFamily:"'Inter'",
-                  color: "red",
-                  width: "200px",
-                }}
-              >{updateFormik.errors.name}</p>
-            ) : null
-          ) : addFormik.touched.name && addFormik.errors.name ? (
-            <p
-              style={{
-                margin:'3px 0 0 0',
-                fontSize: "13px",
-                fontFamily:"'Inter'",
-                color: "red",
-                width: "200px",
-              }}
-            >{addFormik.errors.name}</p>
-          ) : null}
+        {open==='update' ? (
+          <Error
+            touch={updateFormik.touched.name}
+            error={updateFormik.errors.name}
+          />
+        ) : (
+          <Error
+            touch={addFormik.touched.name}
+            error={addFormik.errors.name}
+          />
+        )}
       </div>
-      <div className="bill-dt">
-        <label htmlFor="invoiceDate">Invoice Date <span style={{color:'red',fontSize:'14px'}}>*</span></label>
-        <br />
+      <div className="bill-popup-wrapper">
+        <label htmlFor="invoiceDate" className="bill-popup-label">
+          Invoice Date <span>*</span>
+        </label>
         <input
           type="date"
           name="invoiceDate"
           id="invoiceDate"
-          className="invoice-input"
-          value={input?updateFormik.values.invoiceDate?.split('T')[0]:addFormik.values.invoiceDate?.split('T')[0]}
-          onChange={input?updateFormik.handleChange:addFormik.handleChange}
-          onBlur={input?updateFormik.handleBlur:addFormik.handleBlur}
+          className="bill-popup-input"
+          value={
+            open==='update'
+              ? updateFormik.values.invoiceDate?.split("T")[0]
+              : addFormik.values.invoiceDate?.split("T")[0]
+          }
+          onChange={open==='update' ? updateFormik.handleChange : addFormik.handleChange}
+          onBlur={open==='update' ? updateFormik.handleBlur : addFormik.handleBlur}
         />
-        {input ? (
-            updateFormik.touched.invoiceDate && updateFormik.errors.invoiceDate ? (
-              <p
-                style={{
-                  margin:'3px 0 0 0',
-                  fontSize: "13px",
-                  fontFamily:"'Inter'",
-                  color: "red",
-                  width: "200px",
-                }}
-              >{updateFormik.errors.invoiceDate}</p>
-            ) : null
-          ) : addFormik.touched.invoiceDate && addFormik.errors.invoiceDate ? (
-            <p
-              style={{
-                margin:'3px 0 0 0',
-                fontSize: "13px",
-                fontFamily:"'Inter'",
-                color: "red",
-                width: "200px",
-              }}
-            >{addFormik.errors.invoiceDate}</p>
-          ) : null}
+        {open==='update' ? (
+          <Error
+            touch={updateFormik.touched.invoiceDate}
+            error={updateFormik.errors.invoiceDate}
+          />
+        ) : (
+          <Error
+            touch={addFormik.touched.invoiceDate}
+            error={addFormik.errors.invoiceDate}
+          />
+        )}
       </div>
-      <div className="no-container">
-        <label style={{fontFamily:"'Inter'",fontSize:'14px'}} htmlFor="typeBill">Type <span style={{color:'red',fontSize:'14px'}}>*</span></label>
-        <br />
+      <div className="bill-popup-wrapper">
+        <label htmlFor="typeBill" className="bill-popup-label">
+          Type <span>*</span>
+        </label>
         <select
           name="typeBill"
-          className="pro-select"
+          className="bill-popup-select"
           id=""
-          value={input?updateFormik.values.typeBill:addFormik.values.typeBill}
-          onChange={input?updateFormik.handleChange:addFormik.handleChange}
-          onBlur={input?updateFormik.handleBlur:addFormik.handleBlur}
+          value={
+            open==='update' ? updateFormik.values.typeBill : addFormik.values.typeBill
+          }
+          onChange={open==='update' ? updateFormik.handleChange : addFormik.handleChange}
+          onBlur={open==='update' ? updateFormik.handleBlur : addFormik.handleBlur}
         >
-          <option value="">select Type</option>
+          <option value="" disabled>select Type</option>
           <option value="1">RA</option>
           <option value="2">Final</option>
         </select>
-        {input ? (
-            updateFormik.touched.typeBill && updateFormik.errors.typeBill ? (
-              <p
-                style={{
-                  margin:'3px 0 0 0',
-                  fontSize: "13px",
-                  fontFamily:"'Inter'",
-                  color: "red",
-                  width: "200px",
-                }}
-              >{updateFormik.errors.typeBill}</p>
-            ) : null
-          ) : addFormik.touched.typeBill && addFormik.errors.typeBill ? (
-            <p
-              style={{
-                margin:'3px 0 0 0',
-                fontSize: "13px",
-                fontFamily:"'Inter'",
-                color: "red",
-                width: "200px",
-              }}
-            >{addFormik.errors.typeBill}</p>
-          ) : null}
+        {open==='update' ? (
+          <Error
+            touch={updateFormik.touched.typeBill}
+            error={updateFormik.errors.typeBill}
+          />
+        ) : (
+          <Error
+            touch={addFormik.touched.typeBill}
+            error={addFormik.errors.typeBill}
+          />
+        )}
       </div>
-      <div className="loi-container">
-        <label style={{fontFamily:"'Inter'",fontSize:'14px'}} htmlFor="status">Status <span style={{color:'red',fontSize:'14px'}}>*</span></label>
-        <br />
+      <div className="bill-popup-wrapper">
+        <label htmlFor="status" className="bill-popup-label">
+          Status <span>*</span>
+        </label>
         <select
           name="status"
-          className="pro-select"
+          className="bill-popup-select"
           id=""
-          value={input?updateFormik.values.status:addFormik.values.status}
-          onChange={input?updateFormik.handleChange:addFormik.handleChange}
-          onBlur={input?updateFormik.handleBlur:addFormik.handleBlur}
+          value={open==='update' ? updateFormik.values.status : addFormik.values.status}
+          onChange={open==='update' ? updateFormik.handleChange : addFormik.handleChange}
+          onBlur={open==='update' ? updateFormik.handleBlur : addFormik.handleBlur}
         >
-          <option value="">select status</option>
+          <option value="" disabled>select status</option>
           <option value="1">Draft</option>
           <option value="2">Submitted</option>
           <option value="3">Accepted</option>
         </select>
-        {input ? (
-            updateFormik.touched.status && updateFormik.errors.status ? (
-              <p
-                style={{
-                  margin:'3px 0 0 0',
-                  fontSize: "13px",
-                  fontFamily:"'Inter'",
-                  color: "red",
-                  width: "200px",
-                }}
-              >{updateFormik.errors.status}</p>
-            ) : null
-          ) : addFormik.touched.status && addFormik.errors.status ? (
-            <p
-              style={{
-                margin:'3px 0 0 0',
-                fontSize: "13px",
-                fontFamily:"'Inter'",
-                color: "red",
-                width: "200px",
-              }}
-            >{addFormik.errors.status}</p>
-          ) : null}
+        {open==='update' ? (
+          <Error
+            touch={updateFormik.touched.status}
+            error={updateFormik.errors.status}
+          />
+        ) : (
+          <Error
+            touch={addFormik.touched.status}
+            error={addFormik.errors.status}
+          />
+        )}
       </div>
-      {input ? (
-        <input type="button" value='Update Bill' className="Add-Project" onClick={updateFormik.handleSubmit}/>
-      ) : (
-        <input type="button" value='+ Add Bill' className="Add-Project" onClick={addFormik.handleSubmit}/>
-      )}
-      <img src={close} onClick={handleClose} alt="" className="close" />
+      <div className="bill-popup-button">
+        <input
+          type="button"
+          value={`${open==='update' ? "Update Bill" : "+ Add Bill"}`}
+          className="bill-popup-btn"
+          onClick={open==='update' ? updateFormik.handleSubmit : addFormik.handleSubmit}
+        />
+      </div>
+      <img src={close} onClick={handleClose} alt="" className="bill-popup-close" />
     </div>
   );
 };

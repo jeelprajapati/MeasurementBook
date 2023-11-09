@@ -12,6 +12,7 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Bills from "./pages/bills/Bills.jsx"
 import Measurement from "./pages/measurement/Measurement";
+import Forgetpassword from "./pages/forgetPassword/Forgetpassword.jsx";
 
 const Layout=()=>{
   
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path:"/register",
         element:<Register/>
+      },
+      {
+        path:"/reset",
+        element:<Forgetpassword/>
       }
     ]
   }

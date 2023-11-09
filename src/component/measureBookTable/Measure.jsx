@@ -32,7 +32,7 @@ const Measure = () => {
   const [usedTag, setUsedTag] = useState(false);
   const [chip, setChip] = useState("");
   const [loading, setLoading] = useState(false);
-  const [tags, setTags] = useState("");
+  const [tags, setTags] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isDelete, setIsDelete] = useState(null);
   const [contractContentId,setContractContentId]=useState(null);
@@ -41,6 +41,15 @@ const Measure = () => {
   const alert = useAlert();
   const tableRef=useRef();
   const ref=useRef();
+  const initialValues= {
+    description: "",
+    no: "",
+    l: "",
+    b: "",
+    d_H: "",
+    contractItemId: "",
+    tags: "",
+  }
   useEffect(() => {
     const getData = async () => {
       setLoad(true);
@@ -110,15 +119,7 @@ const Measure = () => {
   }, [change, projectId]);
 
   const addFormik = useFormik({
-    initialValues: {
-      description: "",
-      no: "",
-      l: "",
-      b: "",
-      d_H: "",
-      contractItemId: "",
-      tags: "",
-    },
+    initialValues,
     validationSchema: measureTable,
     onSubmit: (value) => {
       const handleAdd = async () => {
@@ -152,7 +153,7 @@ const Measure = () => {
               subtotal: 0,
               remark: "string",
               contractItemId: value.contractItemId,
-              tags: tags,
+              tags: tags?.join(','),
               billId: billId,
             },
             head: head
@@ -162,7 +163,7 @@ const Measure = () => {
             addFormik.resetForm();
             setInput("");
             setSelectedOption(null);
-            setTags("");
+            setTags([]);
             setNumber(0);
             setChange(!change)
           }
@@ -184,15 +185,7 @@ const Measure = () => {
   });
   
   const updateFormik = useFormik({
-    initialValues: {
-      description: "",
-      no: "",
-      l: "",
-      b: "",
-      d_H: "",
-      contractItemId: "",
-      tags: "",
-    },
+    initialValues,
     validationSchema: measureTable,
     onSubmit: (value) => {
       const handleUpdate = async () => {
@@ -225,7 +218,7 @@ const Measure = () => {
             subtotal: parseFloat(value?.subtotal),
             remark: "string",
             contractItemId: value.contractItemId,
-            tags: tags,
+            tags: tags?.join(','),
             billId: billId,
           });
           if (res.status === 204) {
@@ -233,7 +226,7 @@ const Measure = () => {
             updateFormik.resetForm();
             setInput("");
             setSelectedOption(null);
-            setTags("");
+            setTags([]);
             setNumber(0);
             setChange(!change)
           }
@@ -260,10 +253,8 @@ const Measure = () => {
   const handleCreateChip = (event) => {
     if (event.key === "Enter") {
       setLoading(true);
-      if (tags === "") {
-        setTags(chip);
-      } else {
-        setTags(tags.concat(",", chip));
+      if(!tags?.find((e)=>(e===chip))){
+        setTags([...tags,chip])
       }
       setChip("");
       setLoading(false);
@@ -272,10 +263,8 @@ const Measure = () => {
 
   const handleClickAdd = (value) => {
     setLoading(true);
-    if (tags === "") {
-      setTags(value);
-    } else {
-      setTags(tags.concat(",", value));
+    if(!tags?.find((e)=>(e===value))){
+      setTags([...tags,value])
     }
     setLoading(false);
   };
@@ -283,7 +272,7 @@ const Measure = () => {
   const handleUpdate = (item, index) => {
     setLoad(true);
     updateFormik.setValues(item);
-    setTags(item?.tags);
+    setTags(item?.tags?.split(','));
     setSelectedOption({
       value: contractItem?.find((e) => e?.id === item?.contractItemId)?.id,
       label: contractItem?.find((e) => e?.id === item?.contractItemId)?.item,
@@ -295,13 +284,9 @@ const Measure = () => {
     setLoad(false);
   };
 
-  const handleRemove = (string, index) => {
+  const handleRemove = (string) => {
     setLoading(true);
-    if (index === 0) {
-      setTags(tags.replace(`${string}`, ""));
-    } else {
-      setTags(tags.replace(`${string}`, ""));
-    }
+    setTags(tags?.filter((tagname)=>(tagname!==string)))
     setLoading(false);
   };
 
@@ -325,7 +310,7 @@ const Measure = () => {
     }
     setSelectedOption(null);
     setInput("");
-    setTags("");
+    setTags([]);
     setNumber(0);
     setUsedTag(false);
     setHead("00000000-0000-0000-0000-000000000000");
@@ -339,7 +324,7 @@ const Measure = () => {
       value: contractItem?.find((e) => e?.id === item?.contractItemId)?.id,
       label: contractItem?.find((e) => e?.id === item?.contractItemId)?.item,
     });
-    setTags(item?.tags);
+    setTags(item?.tags?.split(','));
     setHead(array[index - 1]?.id);
     setInput("add");
   };
@@ -1004,14 +989,12 @@ const Measure = () => {
                     >
                       <ul className="tag-ul">
                         {!loading &&
-                          tags
-                            ?.split(",")
-                            ?.filter((item) => item !== "")
+                          tags?.filter((item) => item !== "")
                             ?.map((tag, index) => (
                               <li className="tag-li" key={index}>
                                 <div>{tag}</div>
                                 <div
-                                  onClick={() => handleRemove(tag, index)}
+                                  onClick={() => handleRemove(tag)}
                                   style={{
                                     fontSize: "12px",
                                     cursor: "pointer",
@@ -1079,7 +1062,7 @@ const Measure = () => {
                 >
                   <FontAwesomeIcon className="true-btn" icon={faCheck} />
                 </button>
-                <button className="measure-btn" onClick={handleClose}>
+                <button className="measure-btn" disabled={array?.length===0} onClick={handleClose}>
                   <FontAwesomeIcon icon={faXmark} className="false-btn"/>
                 </button>
               </td>

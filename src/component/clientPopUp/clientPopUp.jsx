@@ -51,6 +51,7 @@ const ClientPopUp = ({
             }
           }
         } catch (error) {
+          console.log(error);
           if (error.response) {
             alert.show(error.response.data.title, { type: "info" });
           } else if (error.code === "ERR_NETWORK") {
@@ -108,6 +109,7 @@ const ClientPopUp = ({
       handleUpdate();
     },
   });
+  console.log(addRequest.errors.pan)
   return (
     <div className="client-pop-container">
       <h3 className="client-pop-title">
@@ -461,7 +463,7 @@ const ClientPopUp = ({
                     e?.countryCode?.toString() ===
                     (update
                       ? upadteRequest.values.countryId
-                      : addRequest.values.countryId)
+                      : addRequest.values.countryId)?.toString()
                 )
                 .map((item) => (
                   <option value={item?.id} key={item?.id}>

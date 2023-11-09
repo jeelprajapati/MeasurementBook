@@ -70,18 +70,17 @@ const Projects = () => {
             </div>
           </div>
           <div className="project-main">
-            <div
-              className={`${popUp ? "box-container blur" : "box-container"}`}
+            {!load && <div
+              className={`box-container ${array?.length>=3 ? 'grid' : 'flexbox' } ${popUp && "blur"}`}
             >
               <div className="add-box" onClick={handlePopUp}>
                 <div className="plus">+</div>
               </div>
-              {!load && array?.filter((item)=>(item?.projectName?.toUpperCase().includes(search?.toUpperCase())))?.map((item)=>(<Projectcard item={item} key={item?.id}/>))}
+              {array?.filter((item)=>(item?.projectName?.toUpperCase().includes(search?.toUpperCase())))?.map((item)=>(<Projectcard item={item} key={item?.id}/>))}
                 
-            </div>
+            </div>}
           </div>
           {popUp && (
-            <div className="popup">
               <Popup
                 setPopUp={setPopUp}
                 input={{
@@ -98,7 +97,6 @@ const Projects = () => {
                 update={update}
                 setUpdate={setUpdate}
               />
-            </div>
           )}
         </div>
       </div>

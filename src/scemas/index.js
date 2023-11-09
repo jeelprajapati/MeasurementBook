@@ -8,13 +8,22 @@ export const signUpScema = Yup.object({
     .required("Email is Required!"),
   password: Yup.string()
     .matches(
-      /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/,
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{6,}$/,
       "Password must contain at least 8 characters, one uppercase, one number and one special case character"
     )
     .required("Password is Required!"),
   organizationname: Yup.string().required("Organizationname is Required!"),
   plan: Yup.string().required("Plan is Required!"),
 });
+
+export const loginScema=Yup.object({
+  username: Yup.string().min(2).required("Username is Required!"),
+  password: Yup.string()
+  .matches(
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{6,}$/,
+    "Password must contain at least 8 characters, one uppercase, one number and one special case character"
+  ).required("Password is Required!")
+})
 
 export const clientScema = Yup.object({
   name: Yup.string().min(2).required("Client Name is required!"),
@@ -29,6 +38,7 @@ export const clientScema = Yup.object({
   city: Yup.string().required("City is Required!"),
   countryId: Yup.string().required("Country is Required!"),
   stateId: Yup.string().required("state is Required!"),
+  pan:Yup.string().max(30),
   postalCode: Yup.string().required("Postal Code is Required!"),
 });
 
@@ -59,4 +69,10 @@ export const measureTable=Yup.object({
   description:Yup.string().required("Description is Required!"),
   no:Yup.string().required("No is Required!"),
   contractItemId:Yup.string().required("Contract Item is Required!")
+})
+
+export const forgetPassword=Yup.object({
+  email: Yup.string()
+    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, "Enter A valid Email")
+    .required("Email is Required!")
 })

@@ -63,7 +63,7 @@ const MultiFilter = ({item,type,filter,setFilter,max,min,average}) => {
             <FontAwesomeIcon icon={faMagnifyingGlass} />
             <input type="text" placeholder={`Search For ${type}`} onChange={(e)=>{setSearchVal(e.target.value)}}/>
           </div>
-          <div className="filter-item" style={{maxHeight:'200px',height:'fitContent',display:'flex',flexWrap:'wrap',gap:'5px'}}>
+          <div className="filter-item" style={{maxHeight:'200px',height:'fitContent',display:'flex',flexWrap:'wrap',gap:'5px',margin:'5px'}}>
             {item?.filter((i)=>(i.toUpperCase().includes(searchVal.toUpperCase())))?.map((i,index)=>(
             <div className="Wrapper" key={index}>
               <input type="checkbox" value={i} onClick={(e)=>handleArray(e)} checked={filter.find((e)=>(e===i))}/>

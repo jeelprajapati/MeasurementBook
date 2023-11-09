@@ -5,7 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAlert } from "react-alert";
 import { useFormik } from "formik";
-import { signUpScema } from "../../scemas";
+import { signUpScema } from "../../scemas/index.js";
+import Error from "../../component/error/Error.jsx";
 const Register = () => {
   const [loading, setLoading] = useState(false);
   const [planId, setPlanID] = useState(null);
@@ -74,11 +75,10 @@ const Register = () => {
   })
 
   return (
-          <div className="main-register-container">
-            <div className="sub-container">
+          <div className="register-container">
               <div className="register-title">Register</div>
-              <div className="register-container">
-                <div>
+              <div className="register-wrapper">
+                <div className="error-input-wrapper">
                   <input
                     type="text"
                     placeholder="Username*"
@@ -88,30 +88,9 @@ const Register = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
-                  {
-                    errors.username && touched.username?<p
-                      style={{
-                        margin: "0 0 0 8px",
-                        fontSize: "13px",
-                        fontFamily:"'Inter'",
-                        color: "red",
-                        width: "200px",
-                      }}
-                    >
-                      {errors.username}
-                    </p>:<p
-                      style={{
-                        margin: "0 0 0 8px",
-                        fontSize: "13px",
-                        fontFamily:"'Inter'",
-                        color: "red",
-                        width: "200px",
-                      }}>
-                    </p>
-                  }
-                  <br />
+                  {<Error touch={touched.username} error={errors.username}/>}
                 </div>
-                <div>
+                <div className="error-input-wrapper">
                   <input
                     type="text"
                     placeholder="Name*"
@@ -121,29 +100,9 @@ const Register = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
-                  {
-                     errors.name && touched.name?<p
-                      style={{
-                        margin: "0 0 0 8px",
-                        fontSize: "13px",
-                        fontFamily:"'Inter'",
-                        color: "red",
-                        width: "200px",
-                      }}>
-                      {errors.name}
-                    </p>:<p
-                      style={{
-                        margin: "0 0 0 8px",
-                        fontSize: "13px",
-                        fontFamily:"'Inter'",
-                        color: "red",
-                        width: "200px",
-                      }}>
-                    </p>
-                  }
-                  <br />
+                   {<Error touch={touched.name} error={errors.name}/>}
                 </div>
-                <div>
+                <div className="error-input-wrapper">
                   <input
                     type="email"
                     placeholder="Email*"
@@ -153,30 +112,9 @@ const Register = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
-                  {
-                     errors.email && touched.email?<p
-                      style={{
-                        margin: "0 0 0 8px",
-                        fontSize: "13px",
-                        fontFamily:"'Inter'",
-                        color: "red",
-                        width: "200px",
-                      }}
-                    >
-                      {errors.email}
-                    </p>:<p
-                      style={{
-                        margin: "0 0 0 8px",
-                        fontSize: "13px",
-                        fontFamily:"'Inter'",
-                        color: "red",
-                        width: "200px",
-                      }}>
-                    </p>
-                  }
-                  <br />
+                   {<Error touch={touched.email} error={errors.email}/>}
                 </div>
-                <div>
+                <div className="error-input-wrapper">
                   <input
                     type="password"
                     placeholder="Password*"
@@ -186,30 +124,9 @@ const Register = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
-                  {
-                     errors.password && touched.password?<p
-                      style={{
-                        margin: "0 0 0 8px",
-                        fontSize: "13px",
-                        fontFamily:"'Inter'",
-                        color: "red",
-                        width: "200px",
-                      }}
-                    >
-                      {errors.password}
-                    </p>:<p
-                      style={{
-                        margin: "0 0 0 8px",
-                        fontSize: "13px",
-                        fontFamily:"'Inter'",
-                        color: "red",
-                        width: "200px",
-                      }}>
-                    </p>
-                  }
-                  <br />
+                   {<Error touch={touched.password} error={errors.password}/>}
                 </div>
-                <div>
+                <div className="error-input-wrapper">
                   <input
                     type="text"
                     placeholder="Organization Name*"
@@ -219,30 +136,9 @@ const Register = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
-                  {
-                     errors.organizationname && touched.organizationname?<p
-                      style={{
-                        margin: "0 0 0 8px",
-                        fontSize: "13px",
-                        fontFamily:"'Inter'",
-                        color: "red",
-                        width: "200px",
-                      }}
-                    >
-                      {errors.organizationname}
-                    </p>:<p
-                      style={{
-                        margin: "0 0 0 8px",
-                        fontSize: "13px",
-                        fontFamily:"'Inter'",
-                        color: "red",
-                        width: "200px",
-                      }}>
-                    </p>
-                  }
-                  <br />
+                   {<Error touch={touched.organizationname} error={errors.organizationname}/>}
                 </div>
-                <div>
+                <div className="error-input-wrapper">
                   <select
                     name="plan"
                     className="register-select"
@@ -257,34 +153,13 @@ const Register = () => {
                         <option value={item?.planID}>{item?.planName}</option>
                       ))}
                   </select>
-                  {
-                     errors.plan && touched.plan?<p
-                      style={{
-                        margin: "0 0 0 8px",
-                        fontSize: "13px",
-                        fontFamily:"'Inter'",
-                        color: "red",
-                        width: "200px",
-                      }}
-                    >
-                      {errors.plan}
-                    </p>:<p
-                      style={{
-                        margin: "0 0 0 8px",
-                        fontSize: "13px",
-                        fontFamily:"'Inter'",
-                        color: "red",
-                        width: "200px",
-                      }}>
-                    </p>
-                  }
+                  {<Error touch={touched.plan} error={errors.plan}/>}
                 </div>
               </div>
               <input type='button' value='Register' className="register-button" onClick={handleSubmit} />
-              <div className="link-login">
+              <div className="go-to-login">
                 Do have an account ? <Link to="/login">sign in</Link>
               </div>
-            </div>
           </div>
   );
 };

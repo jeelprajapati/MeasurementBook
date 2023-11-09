@@ -7,7 +7,7 @@
     box-shadow: 0px 4px 10px 0px #00000040;
     border-radius: 15px;
     height: 305px;
-    width: 310px;
+    min-width: 310px;
 }
 .projectcard-sub1{
     display: flex;

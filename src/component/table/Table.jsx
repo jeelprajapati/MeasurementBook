@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Table.css";
-import add from "../../image/add.svg";
-import edit from "../../image/edit.svg";
-import deleteicon from "../../image/delete.svg";
-import copy from "../../image/copy-icon.svg";
+import edit from "../../image/edit1.svg";
+import deleteicon from "../../image/delete1.svg";
+import add from "../../image/plus.svg";
+import copy from "../../image/copy-icon1.svg";
 import useFetch from "../../hooks/useFetch";
 import makeRequesInstance from "../../makeRequest";
 import { useAlert } from "react-alert";
@@ -30,7 +30,10 @@ const Table = ({ Id, change, setChange }) => {
   const [head, setHead] = useState("00000000-0000-0000-0000-000000000000");
   const [tail, setTail] = useState("00000000-0000-0000-0000-000000000000");
   const [isDelete,setIsDelete]=useState(null);
+  const [scrollValue,setScrollValue]=useState(0);
   const alert = useAlert();
+  const tableRef=useRef();
+  const ref=useRef();
   const { loding, data } = useFetch({
     url: `/ContractItem/GetByProjectId?projectId=${Id}&page=${1}&pageSize=${100}`,
     change,
@@ -41,6 +44,9 @@ const Table = ({ Id, change, setChange }) => {
       setInput(true);
       setHead("00000000-0000-0000-0000-000000000000");
       setTail("00000000-0000-0000-0000-000000000000");
+    }
+    else{
+      setInput(false);
     }
     setArray(data?.items);
   }, [loding, data]);
@@ -55,6 +61,13 @@ const Table = ({ Id, change, setChange }) => {
     };
     getUnit();
   }, []);
+
+  useEffect(()=>{
+    if(tableRef.current){
+      tableRef.current.scrollTop=scrollValue;
+     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[array])
 
   const addFormik = useFormik({
     initialValues: element,
@@ -151,7 +164,7 @@ const Table = ({ Id, change, setChange }) => {
     setInput(true);
     setNumber(i);
     setHead(id);
-
+    setScrollValue(tableRef.current.scrollTop);
     if (array.length > i + 1) {
       setTail(array[i + 1]?.id);
     } else if (array.length === i + 1) {
@@ -163,6 +176,7 @@ const Table = ({ Id, change, setChange }) => {
   const handleUpdate = (i, item) => {
     setLoad(true);
     setUpdate(true);
+    setScrollValue(tableRef.current.scrollTop);
     array.splice(i, 1);
     setNumber(i - 1);
     setElement(item);
@@ -195,6 +209,7 @@ const Table = ({ Id, change, setChange }) => {
   const handleCopy = (index, item) => {
     setLoad(true);
     setHead(item?.id);
+    setScrollValue(tableRef.current.scrollTop);
     setTail(array[index + 1]?.id);
     setNumber(index);
     addFormik.setValues(item);
@@ -202,18 +217,24 @@ const Table = ({ Id, change, setChange }) => {
     setLoad(false);
   };
 
+  useEffect(()=>{
+    if(ref.current){
+      ref.current.scrollIntoView({ block: 'nearest', inline: 'start', behavior:'smooth'});
+    }
+  },[input,update])
+
   return (
-    <div className="table">
+    <div className="table" ref={tableRef}>
       <table className="tb">
         <tr className="tr">
           <th className="th">Item Code</th>
-          <th className="th" colSpan={2}>Description *</th>
-          <th className="th">Work Order Quantity *</th>
-          <th className="th" >Measure Type *</th>
-          <th className="th">UOM *</th>
-          <th className="th">Rate</th>
+          <th className="th" colSpan={3}>Description *</th>
+          <th className="th" colSpan={2}>Work Order Quantity *</th>
+          <th className="th" colSpan={2}>Measure Type *</th>
+          <th className="th" colSpan={2}>UOM *</th>
+          <th className="th" colSpan={2}>Rate</th>
           <th className="th">HSN</th>
-          <th className="th">Actions</th>
+          <th className="th" colSpan={3} style={{textAlign:'center'}}>Actions</th>
         </tr>
         {!load &&
           array?.slice(0, number + 1)?.map((item, index) => (
@@ -221,30 +242,30 @@ const Table = ({ Id, change, setChange }) => {
               <td className="td">
                 <span>{item?.sorNo}</span>
               </td>
-              <td className="td" colSpan={2}>
+              <td className="td" colSpan={3}>
                 <span>{item?.item}</span>
               </td>
-              <td className="td">
+              <td className="td" colSpan={2}>
                 <span>{item?.poQty.toFixed(2)}</span>
               </td>
-              <td className="td">
+              <td className="td" colSpan={2}>
                 <span>
                   {unit?.filter((i) => i?.id === item?.stdUnitId)[0]?.name}
                 </span>
               </td>
-              <td className="td">
+              <td className="td" colSpan={2}>
                 <span>{item?.unit}</span>
               </td>
-              <td className="td">
+              <td className="td" colSpan={2} >
                 <span>{item?.rate.toFixed(2)}</span>
               </td>
               <td className="td">
                 <span>{item?.hsn}</span>
               </td>
-              {isDelete===item?.id?<td className="td">
+              {isDelete===item?.id?<td className="td" colSpan={3} style={{textAlign:'center'}}>
                 <button className="contract-yes" onClick={handleDelete}><FontAwesomeIcon className="true-btn" icon={faCheck} /></button>
                 <button className="contract-no" onClick={()=>{setIsDelete(null)}}><FontAwesomeIcon icon={faXmark} className="false-btn"/></button>
-                </td>:<td className="td">
+                </td>:<td className="td" colSpan={3} style={{textAlign:'center'}}>
                 <button
                   className="btn-disabled"
                   onClick={() => handleInput(index, item?.id)}
@@ -282,7 +303,7 @@ const Table = ({ Id, change, setChange }) => {
 
         {/* input form row */}
         {(input || update) && (
-          <tr className="tr">
+          <tr className="tr" ref={ref}>
             <td className="td">
               <input
                 type="number"
@@ -297,7 +318,7 @@ const Table = ({ Id, change, setChange }) => {
                 onBlur={update ? updateFormik.handleBlur : addFormik.handleBlur}
               />
             </td>
-            <td className="td" colSpan={2}>
+            <td className="td" colSpan={3}>
               <input
                 type="text"
                 name="item"
@@ -315,37 +336,8 @@ const Table = ({ Id, change, setChange }) => {
                 }
                 onBlur={update ? updateFormik.handleBlur : addFormik.handleBlur}
               />
-              {update ? (
-                updateFormik.touched.item && updateFormik.errors.item ? (
-                  <p
-                    style={{
-                      margin: "3px 0 0 0",
-                      fontSize: "14px",
-                      fontFamily: "'Inter'",
-                      color: "red",
-                      width: "164px",
-                      height: "17px",
-                    }}
-                  >
-                    {updateFormik.errors.item}
-                  </p>
-                ) : null
-              ) : addFormik.touched.item && addFormik.errors.item ? (
-                <p
-                  style={{
-                    margin: "3px 0 0 0",
-                    fontSize: "14px",
-                    fontFamily: "'Inter'",
-                    color: "red",
-                    width: "164px",
-                    height: "17px",
-                  }}
-                >
-                  {addFormik.errors.item}
-                </p>
-              ) : null}
             </td>
-            <td className="td">
+            <td className="td" colSpan={2}>
               <input
                 type="number"
                 step="any"
@@ -365,37 +357,8 @@ const Table = ({ Id, change, setChange }) => {
                 }
                 onBlur={update ? updateFormik.handleBlur : addFormik.handleBlur}
               />
-              {update ? (
-                updateFormik.touched.poQty && updateFormik.errors.poQty ? (
-                  <p
-                    style={{
-                      margin: "3px 0 0 0",
-                      fontSize: "14px",
-                      fontFamily: "'Inter'",
-                      color: "red",
-                      width: "164px",
-                      height: "17px",
-                    }}
-                  >
-                    {updateFormik.errors.poQty}
-                  </p>
-                ) : null
-              ) : addFormik.touched.poQty && addFormik.errors.poQty ? (
-                <p
-                  style={{
-                    margin: "3px 0 0 0",
-                    fontSize: "14px",
-                    fontFamily: "'Inter'",
-                    color: "red",
-                    width: "164px",
-                    height: "17px",
-                  }}
-                >
-                  {addFormik.errors.poQty}
-                </p>
-              ) : null}
             </td>
-            <td className="td">
+            <td className="td" colSpan={2}>
               <select
                 name="stdUnitId"
                 className={`${
@@ -425,38 +388,8 @@ const Table = ({ Id, change, setChange }) => {
                     </option>
                   ))}
               </select>
-              {update ? (
-                updateFormik.touched.stdUnitId &&
-                updateFormik.errors.stdUnitId ? (
-                  <p
-                    style={{
-                      margin: "3px 0 0 0",
-                      fontSize: "14px",
-                      fontFamily: "'Inter'",
-                      color: "red",
-                      width: "164px",
-                      height: "17px",
-                    }}
-                  >
-                    {updateFormik.errors.stdUnitId}
-                  </p>
-                ) : null
-              ) : addFormik.touched.stdUnitId && addFormik.errors.stdUnitId ? (
-                <p
-                  style={{
-                    margin: "3px 0 0 0",
-                    fontSize: "14px",
-                    fontFamily: "'Inter'",
-                    color: "red",
-                    width: "164px",
-                    height: "17px",
-                  }}
-                >
-                  {addFormik.errors.stdUnitId}
-                </p>
-              ) : null}
             </td>
-            <td className="td">
+            <td className="td" colSpan={2}>
               <input
                 type="text"
                 name="unit"
@@ -474,37 +407,8 @@ const Table = ({ Id, change, setChange }) => {
                 }
                 onBlur={update ? updateFormik.handleBlur : addFormik.handleBlur}
               />
-              {update ? (
-                updateFormik.touched.unit && updateFormik.errors.unit ? (
-                  <p
-                    style={{
-                      margin: "3px 0 0 0",
-                      fontSize: "14px",
-                      fontFamily: "'Inter'",
-                      color: "red",
-                      width: "164px",
-                      height: "17px",
-                    }}
-                  >
-                    {updateFormik.errors.unit}
-                  </p>
-                ) : null
-              ) : addFormik.touched.unit && addFormik.errors.unit ? (
-                <p
-                  style={{
-                    margin: "3px 0 0 0",
-                    fontSize: "14px",
-                    fontFamily: "'Inter'",
-                    color: "red",
-                    width: "164px",
-                    height: "17px",
-                  }}
-                >
-                  {addFormik.errors.unit}
-                </p>
-              ) : null}
             </td>
-            <td className="td">
+            <td className="td" colSpan={2}>
               <input
                 type="number"
                 step="any"
@@ -542,18 +446,12 @@ const Table = ({ Id, change, setChange }) => {
                 onBlur={update ? updateFormik.handleBlur : addFormik.handleBlur}
               />
             </td>
-            <td className="td">
-              {update ? (
-                <button className="btn" onClick={updateFormik.handleSubmit}>
-                  Update
+            <td className="td" colSpan={3} style={{textAlign:'center'}}>
+                <button className="contract-yes" onClick={update ? updateFormik.handleSubmit : addFormik.handleSubmit}>
+                  <FontAwesomeIcon className="true-btn" icon={faCheck} />
                 </button>
-              ) : (
-                <button className="btn" onClick={addFormik.handleSubmit}>
-                  Add
-                </button>
-              )}
-              {array.length!==0 && <button
-                className="btn-cancle"
+                <button
+                className="contract-no"
                 onClick={() => {
                   setInput(false);
                   setElement({
@@ -580,8 +478,8 @@ const Table = ({ Id, change, setChange }) => {
                   }
                 }}
               >
-                close
-              </button>}
+                <FontAwesomeIcon icon={faXmark} className="false-btn"/>
+              </button>
             </td>
           </tr>
         )}
@@ -593,30 +491,30 @@ const Table = ({ Id, change, setChange }) => {
               <td className="td">
                 <span>{item?.sorNo}</span>
               </td>
-              <td className="td" colSpan={2}>
+              <td className="td" colSpan={3}>
                 <span>{item?.item}</span>
               </td>
-              <td className="td">
+              <td className="td" colSpan={2}>
                 <span>{item?.poQty.toFixed(2)}</span>
               </td>
-              <td className="td">
+              <td className="td" colSpan={2}>
                 <span>
                   {unit?.filter((i) => i?.id === item?.stdUnitId)[0]?.name}
                 </span>
               </td>
-              <td className="td">
+              <td className="td" colSpan={2}>
                 <span>{item?.unit}</span>
               </td>
-              <td className="td">
+              <td className="td" colSpan={2}>
                 <span>{item?.rate.toFixed(2)}</span>
               </td>
               <td className="td">
                 <span>{item?.hsn}</span>
               </td>
-              {isDelete===item?.id?<td className="td">
+              {isDelete===item?.id?<td className="td" colSpan={3} style={{textAlign:'center'}}>
                 <button className="contract-yes" onClick={handleDelete}><FontAwesomeIcon className="true-btn" icon={faCheck} /></button>
                 <button className="contract-no" onClick={()=>{setIsDelete(null)}}><FontAwesomeIcon icon={faXmark} className="false-btn"/></button>
-                </td>:<td className="td">
+                </td>:<td className="td" colSpan={3} style={{textAlign:'center'}}>
                 <button
                   className="btn-disabled"
                   onClick={() =>

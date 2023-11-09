@@ -1,18 +1,19 @@
 .client-pop-container{
     background-color: white; 
     width: 40vw;
-    border-radius: 7px;
+    border-radius: 10px;
     position: relative;
     border: 1px solid rgb(223, 221, 221);
+    box-shadow: 0px 4px 10px #00000040;
 }
 .client-pop-title{
     width: 100%;
-    color: #333333;
-    margin-left: 30px;
+    color: #2e4a93;
     padding-top: 15px;
-    font-weight: 800;
+    font-weight: 600;
     font-family: 'Inter';
     font-size: 18px;
+    text-align: center;
 }
 .client-container{
     width: 45%;
@@ -28,7 +29,7 @@
     width: 90%;
     height: 30px;
     padding: 10px;
-    border: 1px solid rgb(223, 221, 221);
+    border: 1px solid #2e4a93;
     border-radius: 5px;
     font-family: 'Inter';
     outline-color: #333333;
@@ -37,7 +38,7 @@
     width: 97%;
     height: 52px;
     padding: 10px;
-    border: 1px solid rgb(223, 221, 221);
+    border: 1px solid #2e4a93;
     background-color: white;
     border-radius: 5px;
     font-family: 'Inter';
@@ -46,7 +47,7 @@
 
 .client-btn{
     width: 90%;
-    background-color:#333333;
+    background-color:#2e4a93;
     color: white;
     border: none;
     padding: 10px 0;
@@ -54,8 +55,10 @@
     margin: 15px auto 25px auto; 
     text-align: center; 
     font-family: 'Inter';
-    font-size: 16px;
-    border-radius: 2px;
+    font-family: 'Inter';
+    font-weight: 600;
+    font-size: 15px;
+    border-radius: 5px;
 }
 .client-close{
     position: absolute;

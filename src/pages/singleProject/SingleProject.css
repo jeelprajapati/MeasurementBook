@@ -8,7 +8,7 @@
     background-color: rgb(238, 237, 237);
     display: flex;
     flex-direction: column;
-    gap: 7px;
+    gap: 10px;
 }
 .contract-top{
     width: 100%;
@@ -17,93 +17,93 @@
     display: flex;
     align-items: center;
 }
-.contract-title{
-    margin: 0px 8px 10px;
-    font-family: 'Inter';
-    font-size: 15px;
-    width: fit-content;
-    padding: 7px;
-    border-radius: 5px;
-}
 .contract-middle{
-    background-color: white;
-    padding: 0 0 10px 0;
-}
-.detail-box{
-    position: relative;
-    background-color: rgb(247 247 247);
-    margin: 10px 15px;
+    background-color: #fdfdfd;
     width:40%;
-    height: 90px;
-    border-radius: 5px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 17px;
+    border-radius: 15px;
+    margin: 0 10px;
+    position: relative;
+}
+.detail-box{
+   padding: 0 10px;
+   display: flex;
+   gap: 5px;
+   flex-direction: column;
+}
+.contract-title{
+    margin: 0;
+    font-family: 'Inter';
+    font-size: 15px;
+    font-weight: 600;
+}
+.title-icon-wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
 }
 .entity{
-    margin: 5px 40px;
-}
-.entity span{
-    margin: 3px;
+    display: flex;
 }
 .entity span:nth-child(1){
-    font-weight: 700;
-    font-size: 15px;
-    color: black;
     font-family: 'Inter';
-}
-.entity span:nth-child(3){
     font-size: 15px;
-    font-family: 'Inter';
+    color: gray;
+    font-weight: 600;
 }
-.edit-btn{
-    position: absolute;
-    background-color: white;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
+.entity span:nth-child(2){
+    font-family: 'Inter';
+    font-size: 15px;
+    font-weight: 400;
+    color: gray;
+}
+.goto button{
+    background-color: #2e4a93;
+    border: none;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    top: 7px;
-    right: 10px;
-}
-.edit-btn:hover{
+    width: 140px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 15px;
     cursor: pointer;
-    background-color: rgb(241, 239, 239);
 }
-.edit-img{
-  width: 20px;
-  height: 20px;
-}
-.goto{
-    margin: 10px 15px;
-    width: fit-content;
-}
-.goto button{
-    padding: 10px 25px;
-    background-color: #5b69e9;
-    border: none;
-    font-weight: 600;
-    border-radius: 5px;
+.edit-btn{
+    position: absolute;
+    background-color: rgb(229, 228, 228);
+    width: 30px;
+    height: 30px;
     display: flex;
     align-items: center;
-    color: white;
-    font-family: 'Inter';
-}
-.goto button:hover{
+    justify-content: center;
+    border-radius: 50%;
+    top: 10px;
+    right: 10px;
     cursor: pointer;
 }
 .contract-footer{
     background-color: white;
     height:65.5%;
+    margin: 0 10px;
+    border-radius: 15px;
 }
 .table-container{
-    margin: 0px 15px;   
+    display: flex;
+    align-items: space-between;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin: 10px 20px;
 }
 .table-title{
     font-family: 'Inter';
     font-size: 15px;
+    font-weight: 600;
 }
 .single-page-container{
     display: flex;
@@ -111,31 +111,16 @@
     align-items: center;
 }
 .excel-btn{
-   margin: 10px 15px;
-   padding: 10px 15px;
-   font-size: 14px;
+   width: 100px;
+   height: 40px;
+   font-size: 15px;
    border: none;
-   background-color: #5b69e9;
+   background-color: #2e4a93;
    color: white;
-   border-radius: 5px;
+   border-radius: 10px;
    font-family: 'Inter';
-   font-weight: 600;
+   font-weight: 400;
    cursor: pointer;
-}
-.excel-popup{
-    background-color: white;
-    border: 1px solid rgb(223, 221, 221);
-    border-radius: 5px;
-    position:fixed;
-    left: 50%;
-    top: 50%;
-    -ms-transform: translate(-50%,-50%);
-    -moz-transform:translate(-50%,-50%);
-    -webkit-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
-    -webkit-box-shadow: 0px 0px 5px 0px rgba(51,51,51,1);
-    -moz-box-shadow: 0px 0px 5px 0px rgba(51,51,51,1);
-    box-shadow: 0px 0px 5px 0px rgba(51,51,51,1);
 }
 .project-title{
     color: black;

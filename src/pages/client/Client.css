@@ -8,7 +8,7 @@
     background-color: rgb(238, 237, 237);
     width: 100%;
     display: flex;
-    gap:7px;
+    gap:10px;
     flex-direction: column;
 }
 .client-top{
@@ -27,14 +27,15 @@
     padding: 7px;
 }
 .client-main{
-    width: 98.5%;
-    height: 80%;
     background-color: white;
-    padding: 10px;
+    padding: 15px;
+    margin: 0 10px;
+    border-radius: 5px;
 }
 .client-title{
-    margin: 5px 4px 15px 4px;
+    margin: 0;
     font-family: 'Inter';
+    font-weight: 600;
     font-size: 15px;
 }
 .clientpopup{

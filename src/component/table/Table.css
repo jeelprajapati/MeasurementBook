@@ -1,9 +1,7 @@
 .table{
-    height: 390px;
+    height: 400px;
     overflow-y: auto;
-    background-color: rgb(241 241 241);
-    border-radius: 5px;
-    margin-bottom: 7px;
+    border-radius: 15px;
 }
 .table::-webkit-scrollbar{
     display: none;
@@ -13,23 +11,25 @@
     border-radius: 10px;
     table-layout: fixed;
     width: 100%;
+    border-collapse: collapse;
 }
 .tr:nth-child(1){
     position: sticky;
     top:0;
-    background-color: #333333;
-    color: white;
+    background-color: white;
+    color: #2e4a93;
+}
+.tr{
+    border-bottom:1px solid #2e4a93;
 }
 .th{
-    padding: 10px 35px;
-    font-size: 13px;  
+    padding: 15px 7px;
+    font-size: 15px;  
+    font-weight: 400;
     font-family: 'Inter'; 
-}
-.th:nth-child(1){
-    border-radius: 5px 0 0 0px;
-}
-.th:nth-child(8){
-    border-radius: 0 5px 0 0;
+    text-align: start;
+    border: none;
+    box-shadow: inset 0 -1px 0 #2e4a93;
 }
 .svg{
     width: 17px;
@@ -38,40 +38,47 @@
 }
 .td{
     color: black;
-    padding: 4px 1px;
+    padding: 7px;
     overflow-wrap: break-word;
-    text-align: center;
+    text-align: start;
     overflow-wrap: break-word;
     font-size: 13px;
     font-family: 'Inter';
-    height: 0;
-}
-.td span{
-    background-color: white;
-    width: 99%;
-    min-height: 35px;
-    height: 94%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 3px 0px;
-    border-radius: 2px;
-    margin: 0 auto;
+    font-weight: 400;
+    height: 50px;
+
 }
 .td input,.td select{
     width: 96%;
-    outline: none;
-    border-radius: 2px;
-    margin: 0 auto;
-    min-height: 35px;
-    height: fit-content;
+    border: none;
+    height: 40px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0px 1px 3px 0px rgba(51,51,51,1);
+    -moz-box-shadow: 0px 1px 3px 0px rgba(51,51,51,1);
+    box-shadow: 0px 1px 3px 0px rgba(51,51,51,1);
+}
+.td input[type=number]::-webkit-inner-spin-button, 
+.td input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0; 
 }
 .btn-disabled{
-    background-color: transparent;
-    padding: 0;
-    margin: 0;
+    padding: 7px;
+    background-color: #2e4a93;
     border: none;
+    margin: 0 2px;
+    border-radius: 1px;
     cursor: pointer;
+}
+.btn-disabled img{
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
 }
 .btn-disabled:disabled{
     cursor: not-allowed;
@@ -87,14 +94,13 @@
    border: none;
    margin: 0 4px;
    cursor: pointer;
-   width: 30px;
-   height: 30px;
+   width: 38px;
+   height: 32px;
 }
 .contract-no{
     background-color: #2e4a93;
     border: none;
-    margin: 0 4px;
     cursor: pointer;
-    width: 30px;
-    height: 30px;
+    width: 38px;
+    height: 32px;
  }

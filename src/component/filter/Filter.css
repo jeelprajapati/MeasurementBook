@@ -8,7 +8,7 @@
     height: 0;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-top: 5px solid #333333;
+    border-top: 5px solid #2e4a93;
     font-size: 0;
     line-height: 0;
     float: left;
@@ -16,15 +16,16 @@
 }
 .filter-type{
     font-family: 'Inter';
-    font-weight: 600;
-    font-size: 13px;
+    font-weight: 400;
+    font-size: 15px;
+    color: #2e4a93;
 }
 .filter-box{
     display: flex;
     width: fit-content;
     align-items: center;
     gap:10px;
-    border: 0.1px solid #656464;
+    border: 0.1px solid #2e4a93;
     padding: 7px 10px;
     border-radius: 4px;
     cursor: pointer;
@@ -62,16 +63,16 @@
 }
 .filter-search input::placeholder{
     color: #333333;
-    font-size: 13px;
+    font-size: 15px;
     font-family: 'Inter';
-    font-weight: 600;
+    font-weight: 400;
 }
 .Fi{
     padding: 10px;
     cursor: pointer;
     font-family: 'Inter';
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 400;
     color: rgb(128, 128, 128);
     border-bottom:1px solid rgb(214 213 213);
 }
@@ -99,9 +100,9 @@
     font-weight: 600;
 }
 .filter-name{
-    font-size: 14px;
+    font-size: 15px;
     font-family: 'Inter';
-    font-weight: 600;
+    font-weight: 400;
 }
 .wrapper-box{
     display: flex;

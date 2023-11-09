@@ -4,15 +4,9 @@
     display: flex;
     border-radius: 5px;
 }
-.measurement-left{
-    background-color: #333333;
-    height: 100vh;
-    border-radius: 3px;
-}
 .measurement-right{
     position: relative;
     background-color: rgb(238, 237, 237);
-    padding:7px;
     width: 100%;
     display: flex;
     gap:7px;
@@ -21,6 +15,9 @@
 .measurement-top{
     background-color: #fdfdfd;
     padding: 7px;
+    height: 52px;
+    display: flex;
+    align-items: center;
 }
 .measurement-path{
     font-family: 'Inter';
@@ -28,7 +25,7 @@
     margin: 0 8px;
 }
 .measurement-path span{
-    color: #333333;
+    color: #2e4a93;
 }
 .measurement-title{
     margin:0;
@@ -39,6 +36,7 @@
 .measurement-middle{
     background-color: #fdfdfd;
     padding: 7px;
+    margin:0 7px;
 }
 .types-con{
     display: flex;
@@ -46,6 +44,7 @@
     width: 99%;
     margin: 7px;
     border-radius: 4px;
+    background-color: #fdfdfd;
 }
 .type{
     text-align: center;
@@ -68,6 +67,7 @@
 .measurement-footer{
     background-color: #fdfdfd;
     padding: 7px;
+    margin: 0 7px;
     display:flex;
     flex-direction:column;
     height:100%

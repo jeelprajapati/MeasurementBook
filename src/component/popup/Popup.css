@@ -1,73 +1,83 @@
-.pop-container{
-    background-color: white; 
-    width: 40vw;
-    border-radius: 7px;
-    position: relative;
-    border: 1px solid rgb(200, 199, 199);
+.popup-container{
+    position:fixed;
+    left: 50%;
+    top: 50%;
+    -ms-transform: translate(-50%,-50%);
+    -moz-transform:translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    background-color: #fdfdfd;
+    box-shadow: 0px 4px 10px #00000040;
+    width: 35%;
+    padding: 30px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-radius: 15px;
 }
-.pro-select{
-    border: none;
-    width: 100%;
-    height: 52px;
-    padding: 10px;
-    border: 1px solid rgb(223, 221, 221);
-    border-radius: 7px;
-    outline-color: #333333;
-}
-.project-lable{
-    font-size: 13px;
+.popup-title{
+    margin: 0;
     font-family: 'Inter';
+    font-weight: 18px;
+    font-weight: 600;
+    text-align: center;
+    color: #2e4a93;
 }
-.add-title{
-    padding: 15px 15px 5px 18px;
-    font-size: 18px;
-    font-weight: 800;
+.popup-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+.red-star{
+    color: red;
+}
+.popup-label{
     font-family: 'Inter';
-}
-.name-container,.no-container,.loi-container,.validity-container{
-    margin: 10px 15px;
-}
-.Add-input{
-    width: 96%;
-    height: 27px;
-    border-radius: 5px;
-    border: 1px solid rgb(223, 221, 221);
-    padding: 10px;
-    font-family: 'Inter';
-}
-.Add-Project{
-    background-color:#333333;
-    color: white;
-    border: none;
     font-size: 15px;
-    padding: 7px 10px;
-    margin: 18px 25px 25px 25px;
+    font-weight: 400;
+}
+.popup-input{
+    height: 30px;
+    border-radius: 5px;
     font-family: 'Inter';
+    font-weight: 400;
+    padding: 5px;
+    border: 1px solid #2e4a93;
 }
-.Add-Project:hover{
-    cursor: pointer;
+.popup-select{
+    height: 40px;
+    font-family: 'Inter';
+    font-weight: 400;
+    border-radius: 5px;
+    border: 1px solid #2e4a93;
 }
-.close{
+.popup-two-input-wrapper{
+    display: flex;
+    gap: 7px;
+}
+.popup-two-input-wrapper div{
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    flex: 1;
+}
+.popup-close{
     position: absolute;
     width: 20px;
     height: 20px;
     top: 7px;
     right: 7px;
-}
-.close:hover{
     cursor: pointer;
 }
-.date-and-time{
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    width: 94%;
-    margin:10px auto; 
-}
-.dt-input{
-    /* width: 100%; */
-    padding: 10px;
-    border: 1px solid rgb(223, 221, 221);
-    height: 27px;
+.popup-btn{
+    width: 30%;
+    padding: 10px 0;
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 15px;
+    background-color: #2e4a93;
+    color: white;
     border-radius: 5px;
+    border: none;
+    cursor: pointer;
 }

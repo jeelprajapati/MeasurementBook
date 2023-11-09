@@ -74,7 +74,6 @@
     border-radius: 5px;
 }
 .box-container{
-    display: flex;
     width: 90%;
     gap: 20px;
     flex-wrap: wrap;
@@ -86,9 +85,9 @@
     align-items: center;
     border-radius: 15px;
     height: 305px;
-    width: 310px;
     box-shadow: 0px 4px 10px 0px #00000040;
     background-color: #fdfdfd;
+    min-width: 310px;
 }
 .add-box:hover{
     cursor: pointer;
@@ -96,15 +95,6 @@
 .plus{
     padding: 5px;
     font-size: 75px;
-}
-.popup{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    -ms-transform: translate(-50%,-50%);
-    -moz-transform:translate(-50%,-50%);
-    -webkit-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
 }
 .blur{
     filter: blur(1.5px);

@@ -9,12 +9,11 @@ import { faArrowRightToBracket, faPencil } from "@fortawesome/free-solid-svg-ico
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAlert } from "react-alert";
 
-const Billcard = ({item,projectname,Id,setInput,setItem,setOpen}) => {
+const Billcard = ({item,projectname,Id,setItem,setOpen}) => {
   const alert=useAlert();
   const handleClick=()=>{
     setItem(item);
-    setInput(true);
-    setOpen(true)
+    setOpen('update');
   };
 
   const downloadExcelFile = async(billId, billName) => {
