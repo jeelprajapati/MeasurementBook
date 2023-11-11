@@ -42,11 +42,11 @@ const Excel = ({ setOpen, projectId, setChange, change, unit }) => {
         return {
           sorNo: other['Item Code'],
           item: other['Description*'],
-          hsn: other?.Hsn || 0,
+          hsn: other['HSN'] || 0,
           poQty: other['Work Order Quantity*'],
           stdUnitId: unit.find((i)=>(i?.name===other['Measure Type*']))?.id,
           unit: other['UOM*'],
-          rate: other.rate || 0,
+          rate: other['Rate'] || 0,
           projectId:`${projectId}`
         };
       });
