@@ -14,10 +14,10 @@ const options = {
   transition: transitions.SCALE
 }
 if (validTypes.includes(options.type)) {
-  console.log('Valid type:', options.type);
+  
 } else {
   options.type = 'info';
-  console.log('Invalid type, set to default:', options.type);
+  
 }
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

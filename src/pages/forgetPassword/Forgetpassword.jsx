@@ -14,7 +14,7 @@ const Forgetpassword = () => {
       initialValues,
       validationSchema: forgetPassword,
       onSubmit:(values,action)=>{
-        console.log(values)
+        
       }
     });
 

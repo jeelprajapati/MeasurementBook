@@ -48,6 +48,7 @@
 }
 .forget-button{
     border-radius: 5px;
+    flex: 1;
     background-color: #fdfdfd;
     color: #2e4a93;
     border: 1px solid #2e4a93;

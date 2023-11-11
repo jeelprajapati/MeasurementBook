@@ -52,7 +52,6 @@ const ClientPopUp = ({
             }
           }
         } catch (error) {
-          console.log(error);
           if (error.response) {
             alert.show(error.response.data.title, { type: "info" });
           } else if (error.code === "ERR_NETWORK") {
@@ -119,7 +118,6 @@ const ClientPopUp = ({
       handleUpdate();
     },
   });
-  console.log(addRequest.errors.pan);
   return (
     <div className="client-popup-container">
       <h3 className="client-popup-title">
@@ -435,9 +433,9 @@ const ClientPopUp = ({
       <input
         type="button"
         value={`${update ? "Update" : "Submit"}`}
-        onClick={`${
+        onClick={
           update ? upadteRequest.handleSubmit : addRequest.handleSubmit
-        }`}
+        }
         className="client-btn"
       />
       <img

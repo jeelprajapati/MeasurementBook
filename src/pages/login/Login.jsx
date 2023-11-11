@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Login.css";
 import makeRequesInstance from "../../makeRequest";
 import { Link, useNavigate } from "react-router-dom";
@@ -70,7 +70,7 @@ const Login = () => {
               values
             );
             if (res.status === 200) {
-              console.log('jele')
+          
               localStorage.setItem("token", res.data.token);
               handleLoginAndSetId(res.data.token);
               action.resetForm();
@@ -93,6 +93,19 @@ const Login = () => {
         handleLogin();
       },
     });
+
+    useEffect(() => {
+      const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+          handleSubmit();
+        }
+      };
+      document.addEventListener('keydown', handleKeyPress);
+      return () => {
+        document.removeEventListener('keydown', handleKeyPress);
+      };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
   return (
       <div className="login-container">
@@ -129,7 +142,7 @@ const Login = () => {
           >
             Login
           </button>
-          <Link to="/reset" className="link" style={{flex:'1'}}>
+          {/* <Link className="link" style={{flex:'1'}}> */}
             <button
               className={`${
                 loading ? "forget-button reload" : "forget-button pointer"
@@ -137,7 +150,7 @@ const Login = () => {
             >
               Forget Password
             </button>
-          </Link>
+          {/* </Link> */}
         </div>
         <div className="link-register">
           Don't have an account ? <Link to="/register">sign up</Link>
