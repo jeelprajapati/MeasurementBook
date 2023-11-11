@@ -59,11 +59,9 @@ const Register = () => {
           }
         } catch (error) {
           if (error.response) {
-            alert.show(error.response.data.title, { type: "info" });
-          } else if (error.code === "ERR_NETWORK") {
-            alert.show(error.message, { type: "error" });
+            alert.show(error.response.data.title, { type: "error" });
           } else {
-            alert.show("Iternal server error", { type: "error" });
+            alert.show("something went wrong", { type: "info" });
           }
         }
       }
