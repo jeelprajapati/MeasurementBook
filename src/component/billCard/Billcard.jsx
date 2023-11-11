@@ -22,10 +22,10 @@ const Billcard = ({item,projectname,Id,setItem,setOpen}) => {
       const res=await makeRequest.get(`Project/GenerateStandardExcelReport?billId=${billId}`,{responseType:'blob'});
       saveAs(res.data, billName);
     } catch (error) {
-      if (error.code === "ERR_NETWORK") {
-        alert.show(error.message, { type: "error" });
+      if (error.response) {
+        alert.show(error.response.data.title, { type: "error" });
       } else {
-        alert.show("Iternal server error", { type: "error" });
+        alert.show("something went wrong", { type: "info" });
       }
     } 
   }

@@ -168,15 +168,10 @@ const Measure = () => {
             setChange(!change)
           }
         } catch (error) {
-        
-          if (error.response?.data.title) {
-            alert.show(error.response.data.title, { type: "info" });
-          } else if (error.code === "ERR_NETWORK") {
-            alert.show(error.message, { type: "error" });
-          } else if (error.code === "ERR_BAD_REQUEST") {
-            alert.show(error.message, { type: "error" });
+          if (error.response) {
+            alert.show(error.response.data.title, { type: "error" });
           } else {
-            alert.show("Iternal server error", { type: "error" });
+            alert.show("something went wrong", { type: "info" });
           }
         }
       };
@@ -232,11 +227,9 @@ const Measure = () => {
           }
         } catch (error) {
           if (error.response) {
-            alert.show(error.response.data.title, { type: "info" });
-          } else if (error.code === "ERR_NETWORK") {
-            alert.show(error.message, { type: "error" });
+            alert.show(error.response.data.title, { type: "error" });
           } else {
-            alert.show("Iternal server error", { type: "error" });
+            alert.show("something went wrong", { type: "info" });
           }
         }
       };
@@ -386,7 +379,7 @@ const Measure = () => {
           setFilter={setFilter}
           max={360}
           min={150}
-          average={190}
+          average={200}
         />
         <span className="clear" onClick={handleClear}>
           Clear all
@@ -400,7 +393,7 @@ const Measure = () => {
               className="measure-th"
               style={{ width: "20%", textAlign: "start" }}
             >
-              ContractItem
+              ContractItem*
             </th>
             <th
               className="measure-th"
@@ -410,10 +403,10 @@ const Measure = () => {
                 padding: "0 0 0 20px",
               }}
             >
-              Description
+              Description*
             </th>
             <th className="measure-th" align="end">
-              No.
+              No.*
             </th>
             <th className="measure-th" align="end">
               L

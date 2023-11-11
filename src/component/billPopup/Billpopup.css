@@ -38,15 +38,34 @@
 .bill-popup-label span{
     color: red;
 }
-.bill-popup-input , .bill-popup-select{
-    width: 100%;
+.bill-popup-input:-webkit-autofill,
+.bill-popup-input:-webkit-autofill:hover, 
+.bill-popup-input:-webkit-autofill:focus, 
+.bill-popup-input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+.bill-popup-input {
     height: 40px;
     border-radius: 5px;
     border: 1px solid #2e4a93;
     font-family: 'Inter';
     font-weight: 400;
     margin: 0;
-    padding: 0;
+    padding: 5px;
+    background-color: white;
+}
+.bill-popup-select{
+    height: 50px;
+    border-radius: 5px;
+    border: 1px solid #2e4a93;
+    font-family: 'Inter';
+    font-weight: 400;
+    margin: 0;
+    background-color: white;
+}
+.bill-popup-select option{
+    font-family: 'Inter';
+    font-weight: 400;
 }
 .bill-popup-button{
     width: 100%;

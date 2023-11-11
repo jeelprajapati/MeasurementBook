@@ -7,9 +7,9 @@
 }
 .pro-left{
     position: sticky;
-    top: 0;
+    top: 0px;
     z-index: 2;
-    display: unset;
+
 }
 .pro-right{
     width: 100%;
@@ -31,27 +31,26 @@
     margin-right: 30px;
     display: flex;
     align-items: center;
-    border-radius: 10px;
-    border: 1px solid #2e4a93;
+    border-radius: 5px;
+    background-color: #F5F5F5;
 }
 .search input{
-    width: 300px;
-    height: 45px;
+    width: 230px;
+    height: 35px;
     font-size: 15px;
     padding: 0 5px;
-    border-radius: 50px;
     border: none;
     outline: none;
+    background-color: #F5F5F5;
 }
 .search input::placeholder{
     font-size: 15px;
     font-family: 'Inter';
     font-weight: 400;
-    color: #2e4a93;
+    color: rgb(171, 170, 170);
 }
 .search svg{
     padding: 10px;
-    color: #2e4a93;
 }
 .path{
     color:#2e4a93;

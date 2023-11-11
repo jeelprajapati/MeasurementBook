@@ -58,13 +58,14 @@ const Projects = () => {
           <Sidebar id={2} />
         </div>
         <div className="pro-right">
+          <div className="rigth-content-wrapper">
           <div className="project-top">
             <div className={`${popUp ? "path blur" : "path"}`}>Projects/</div>
             <div className="search">
               <FontAwesomeIcon icon={faMagnifyingGlass} />
               <input
                 type="text"
-                placeholder="Search By Project Name.."
+                placeholder="Search By Project Name .."
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
@@ -79,6 +80,7 @@ const Projects = () => {
               {array?.filter((item)=>(item?.projectName?.toUpperCase().includes(search?.toUpperCase())))?.map((item)=>(<Projectcard item={item} key={item?.id}/>))}
                 
             </div>}
+          </div>
           </div>
           {popUp && (
               <Popup

@@ -5,7 +5,7 @@ import "./Excel.css";
 import makeRequesInstance from "../../makeRequest";
 import { useAlert } from "react-alert";
 import { Link } from "react-router-dom";
-const Excel = ({ setOpen, projectId, setChange, change }) => {
+const Excel = ({ setOpen, projectId, setChange, change, unit }) => {
   const [data, setData] = useState(null);
   const alert = useAlert();
   const makeRequest = makeRequesInstance(localStorage.getItem("token"));
@@ -39,7 +39,16 @@ const Excel = ({ setOpen, projectId, setChange, change }) => {
       });
       const newarray = items.map((obj) => {
         const { __rowNum__, ...other } = obj;
-        return other;
+        return {
+          sorNo: other['Item Code'],
+          item: other['Description*'],
+          hsn: other?.Hsn || 0,
+          poQty: other['Work Order Quantity*'],
+          stdUnitId: unit.find((i)=>(i?.name===other['Measure Type*']))?.id,
+          unit: other['UOM*'],
+          rate: other.rate || 0,
+          projectId:`${projectId}`
+        };
       });
       try {
         const response = await makeRequest.post(
@@ -60,11 +69,9 @@ const Excel = ({ setOpen, projectId, setChange, change }) => {
         }
       } catch (error) {
         if (error.response) {
-          alert.show(error.response.data.title, { type: "info" });
-        } else if (error.code === "ERR_NETWORK") {
-          alert.show(error.message, { type: "error" });
+          alert.show(error.response.data.title, { type: "error" });
         } else {
-          alert.show("Iternal server error", { type: "error" });
+          alert.show("something went wrong", { type: "info" });
         }
       }
     }

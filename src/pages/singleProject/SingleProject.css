@@ -48,6 +48,7 @@
 }
 .entity{
     display: flex;
+    gap: 2px;
 }
 .entity span:nth-child(1){
     font-family: 'Inter';
@@ -55,7 +56,7 @@
     color: gray;
     font-weight: 600;
 }
-.entity span:nth-child(2){
+.entity span:nth-child(3){
     font-family: 'Inter';
     font-size: 15px;
     font-weight: 400;
@@ -70,7 +71,7 @@
     justify-content: center;
     width: 140px;
     height: 40px;
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: 15px;
     cursor: pointer;
 }
@@ -117,7 +118,7 @@
    border: none;
    background-color: #2e4a93;
    color: white;
-   border-radius: 10px;
+   border-radius: 5px;
    font-family: 'Inter';
    font-weight: 400;
    cursor: pointer;

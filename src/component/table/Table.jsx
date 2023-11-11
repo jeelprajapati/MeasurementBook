@@ -11,7 +11,7 @@ import { useFormik } from "formik";
 import { contractTable } from "../../scemas";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
-const Table = ({ Id, change, setChange }) => {
+const Table = ({ Id, change, setChange, unit }) => {
   const [element, setElement] = useState({
     sorNo: "",
     item: "",
@@ -26,7 +26,6 @@ const Table = ({ Id, change, setChange }) => {
   const [load, setLoad] = useState(false);
   const [input, setInput] = useState(false);
   const [update, setUpdate] = useState(false);
-  const [unit, setUnit] = useState(null);
   const [head, setHead] = useState("00000000-0000-0000-0000-000000000000");
   const [tail, setTail] = useState("00000000-0000-0000-0000-000000000000");
   const [isDelete,setIsDelete]=useState(null);
@@ -50,17 +49,6 @@ const Table = ({ Id, change, setChange }) => {
     }
     setArray(data?.items);
   }, [loding, data]);
-
-  useEffect(() => {
-    const getUnit = async () => {
-      setLoad(true);
-      const makeRequest = makeRequesInstance(localStorage.getItem("token"));
-      const res = await makeRequest.get("/Standard/GetStandardUnit");
-      setUnit(res.data);
-      setLoad(false);
-    };
-    getUnit();
-  }, []);
 
   useEffect(()=>{
     if(tableRef.current){
@@ -92,7 +80,7 @@ const Table = ({ Id, change, setChange }) => {
             tail: tail,
           });
           if (responce.status === 204) {
-            alert.show("Added Sucessful", { type: "success" });
+            alert.show("Data Added Sucessfully", { type: "success" });
             action.resetForm();
             setElement(null);
             setInput(false);
@@ -104,11 +92,9 @@ const Table = ({ Id, change, setChange }) => {
           }
         } catch (error) {
           if (error.response) {
-            alert.show(error.response.data.title, { type: "info" });
-          } else if (error.code === "ERR_NETWORK") {
-            alert.show(error.message, { type: "error" });
+            alert.show(error.response.data.title, { type: "error" });
           } else {
-            alert.show("Iternal server error", { type: "error" });
+            alert.show("something went wrong", { type: "info" });
           }
         }
       };
@@ -135,7 +121,7 @@ const Table = ({ Id, change, setChange }) => {
             projectId: value?.projectId,
           });
           if (responce.status === 204) {
-            alert.show("Update Sucessful", { type: "success" });
+            alert.show("Data Update Sucessfully", { type: "success" });
             action.resetForm();
             setElement(null);
             setUpdate(false);
@@ -147,11 +133,9 @@ const Table = ({ Id, change, setChange }) => {
           }
         } catch (error) {
           if (error.response) {
-            alert.show(error.response.data.title, { type: "info" });
-          } else if (error.code === "ERR_NETWORK") {
-            alert.show(error.message, { type: "error" });
+            alert.show(error.response.data.title, { type: "error" });
           } else {
-            alert.show("Iternal server error", { type: "error" });
+            alert.show("something went wrong", { type: "info" });
           }
         }
       };
@@ -191,16 +175,14 @@ const Table = ({ Id, change, setChange }) => {
         `/ContractItem?contractItemId=${isDelete}`
       );
       if (res.status === 204) {
-        alert.show("Deleted Sucessfully", { type: "success" });
+        alert.show("Data Deleted Sucessfully", { type: "success" });
         setChange(!change)
       }
     } catch (error) {
       if (error.response) {
-        alert.show(error.response.data.title, { type: "info" });
-      } else if (error.code === "ERR_NETWORK") {
-        alert.show(error.message, { type: "error" });
+        alert.show(error.response.data.title, { type: "error" });
       } else {
-        alert.show("Iternal server error", { type: "error" });
+        alert.show("something went wrong", { type: "info" });
       }
     }
     setIsDelete(null);
@@ -228,10 +210,10 @@ const Table = ({ Id, change, setChange }) => {
       <table className="tb">
         <tr className="tr">
           <th className="th">Item Code</th>
-          <th className="th" colSpan={3}>Description *</th>
-          <th className="th" colSpan={2}>Work Order Quantity *</th>
-          <th className="th" colSpan={2}>Measure Type *</th>
-          <th className="th" colSpan={2}>UOM *</th>
+          <th className="th" colSpan={3}>Description*</th>
+          <th className="th" colSpan={2}>Work Order Quantity*</th>
+          <th className="th" colSpan={2}>Measure Type*</th>
+          <th className="th" colSpan={2}>UOM*</th>
           <th className="th" colSpan={2}>Rate</th>
           <th className="th">HSN</th>
           <th className="th" colSpan={3} style={{textAlign:'center'}}>Actions</th>
@@ -452,6 +434,7 @@ const Table = ({ Id, change, setChange }) => {
                 </button>
                 <button
                 className="contract-no"
+                disabled={array?.length===0}
                 onClick={() => {
                   setInput(false);
                   setElement({

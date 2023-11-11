@@ -62,13 +62,13 @@
     background-color: #2e4a93;
     border: none;
     height: 40px;
-    width: 110px;
+    width: 130px;
     padding: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 10px 0px;
-    border-radius: 10px;
+    border-radius: 5px;
     color: white;
     font-size: 15px;
     font-weight: 400;

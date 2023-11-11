@@ -83,7 +83,7 @@ const Login = () => {
                 alert.show(error.response.data.title, { type: "error" });
               }
             } else if (error.request) {
-              alert.show("something want wrong", { type: "info" });
+              alert.show("something went wrong", { type: "info" });
             } else {
               alert.show(error.message, { type: "error" });
             }

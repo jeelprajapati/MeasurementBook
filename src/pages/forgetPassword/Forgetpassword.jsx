@@ -3,6 +3,7 @@ import "./Forgetpassword.css";
 import { useFormik } from "formik";
 import { forgetPassword } from "../../scemas/index.js";
 import { Link } from "react-router-dom";
+import Error from "../../component/error/Error.jsx";
 const Forgetpassword = () => {
   const initialValues = {
     email: "",
@@ -30,29 +31,7 @@ const Forgetpassword = () => {
           onBlur={handleBlur}
           onChange={handleChange}
         />
-        {errors.email && touched.email ? (
-          <p
-            style={{
-              margin: "4px 0",
-              fontSize: "13px",
-              fontFamily: "'Inter'",
-              color: "red",
-              width: "200px",
-            }}
-          >
-            {errors.email}
-          </p>
-        ) : (
-          <p
-            style={{
-              margin: "0 0 0 8px",
-              fontSize: "13px",
-              fontFamily: "'Inter'",
-              color: "red",
-              width: "200px",
-            }}
-          ></p>
-        )}
+        {<Error touch={touched.email} error={errors.email}/>}
       </div>
       <div className="forget-buttons">
         <input
@@ -65,7 +44,7 @@ const Forgetpassword = () => {
           <input
             type="button"
             className="forget-btn"
-            value="cancle"
+            value="Cancel"
             style={{ backgroundColor: "white", color: "#2e4a93" }}
           />
         </Link>

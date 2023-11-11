@@ -13,14 +13,10 @@ const useFetch = ({ url, change }) => {
         const res = await makeRequest.get(url);
         setdata(res.data);
       } catch (error) {
-        if(error.response){
-          alert.show(error.response.data.title,{type:'info'})
-        }
-        else if(error.code==='ERR_NETWORK'){
-          alert.show(error.message,{type:'error'})
-        }
-        else{
-          alert.show('Iternal server error',{type:'error'})
+        if (error.response) {
+            alert.show(error.response.data.title, { type: "error" });
+        } else {
+          alert.show("something went wrong", { type: "info" });
         }
       }
       setLoding(false);

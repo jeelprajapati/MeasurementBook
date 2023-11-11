@@ -36,20 +36,39 @@
     font-size: 15px;
     font-weight: 400;
 }
+.popup-input[type=number]::-webkit-inner-spin-button, 
+.popup-input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0; 
+}
+.popup-input:-webkit-autofill,
+.popup-input:-webkit-autofill:hover, 
+.popup-input:-webkit-autofill:focus, 
+.popup-input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
 .popup-input{
-    height: 30px;
+    height: 40px;
     border-radius: 5px;
     font-family: 'Inter';
     font-weight: 400;
     padding: 5px;
     border: 1px solid #2e4a93;
+    background-color: white;
 }
 .popup-select{
-    height: 40px;
+    height: 50px;
     font-family: 'Inter';
     font-weight: 400;
     border-radius: 5px;
     border: 1px solid #2e4a93;
+    background-color: white;
+}
+.popup-select option{
+    font-family: 'Inter';
+    font-weight: 400;
 }
 .popup-two-input-wrapper{
     display: flex;

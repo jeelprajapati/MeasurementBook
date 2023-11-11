@@ -16,6 +16,7 @@ const SingleProject = () => {
   const [popUp, setPopUp] = useState(false);
   const [input, setInput] = useState(null);
   const [client, setClient] = useState(null);
+  const [unit,setUnit]=useState([]);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const Id = localStorage.getItem("organizationId");
@@ -37,6 +38,16 @@ const SingleProject = () => {
     };
     getClient();
   }, []);
+
+  useEffect(() => {
+    const getUnit = async () => {
+      const makeRequest = makeRequesInstance(localStorage.getItem("token"));
+      const res = await makeRequest.get("/Standard/GetStandardUnit");
+      setUnit(res.data);
+    };
+    getUnit();
+  }, []);
+
   const handlePopUP = (e) => {
     setInput(e);
     setUpdate(true);
@@ -67,11 +78,13 @@ const SingleProject = () => {
             {!loding && (
               <div className={`detail-box ${open && "blur"}`}>
                 <div className="entity">
-                  <span style={{flex:'1.1'}}>Project :</span>
+                  <span style={{flex:'0.8'}}>Project</span>
+                  <span style={{flex:'0.1'}}>:</span>
                   <span style={{flex:'8'}}>{data?.projectName}</span>
                 </div>
                 <div className="entity">
-                  <span style={{flex:'1.1'}}>Client :</span>
+                  <span style={{flex:'0.8'}}>Client</span>
+                  <span style={{flex:'0.1'}}>:</span>
                   <span style={{flex:'9'}}>
                     {
                       client?.filter((item) => item?.id === data?.clientId)[0]
@@ -130,7 +143,7 @@ const SingleProject = () => {
                 </button>
               </div>
               <div className="table">
-                <Table Id={id} change={change} setChange={setChange} />
+                <Table Id={id} change={change} setChange={setChange} unit={unit} />
               </div>
             </div>
           </div>
@@ -140,6 +153,7 @@ const SingleProject = () => {
                 projectId={id}
                 setChange={setChange}
                 change={change}
+                unit={unit}
               />
           )}
           {popUp && (

@@ -30,14 +30,10 @@ const ClientTable = ({setInput,setItem,setUpdate,change,setChange,country,state}
         alert.show('Data Deleted sucessfully',{type:'success'})
       }
     } catch (error) {
-      if(error.response){
-        alert.show(error.response.data.title,{type:'info'})
-      }
-      else if(error.code==='ERR_NETWORK'){
-        alert.show(error.message,{type:'error'})
-      }
-      else{
-        alert.show('Iternal server error',{type:'error'})
+      if (error.response) {
+        alert.show(error.response.data.title, { type: "error" });
+      } else {
+        alert.show("something went wrong", { type: "info" });
       }
     }
     setIsDelete(null);
@@ -49,16 +45,16 @@ const ClientTable = ({setInput,setItem,setUpdate,change,setChange,country,state}
       <table className="client-table">
         {/* ROW-1 */}
             <tr className="client-tr">
-              <th className="client-th" style={{paddingLeft:'5px'}} colSpan={2} >Name *</th>
-              <th className="client-th" colSpan={2}>Email *</th>
-              <th className="client-th" colSpan={3/2}>Phone No *</th>
+              <th className="client-th" style={{paddingLeft:'5px'}} colSpan={2} >Name*</th>
+              <th className="client-th" colSpan={2}>Email*</th>
+              <th className="client-th" colSpan={3/2}>Phone No*</th>
               <th className="client-th" style={{textAlign:'center'}}>GSTIN</th>
               <th className="client-th">PAN</th>
-              <th className="client-th" colSpan={2}>Address *</th>
-              <th className="client-th"colSpan={3/2}>City *</th>
-              <th className="client-th"colSpan={3/2}>State *</th>
-              <th className="client-th"colSpan={3/2}>Country *</th>
-              <th className="client-th"colSpan={3/2}>Postal Code *</th>
+              <th className="client-th" colSpan={2}>Address*</th>
+              <th className="client-th"colSpan={3/2}>City*</th>
+              <th className="client-th"colSpan={3/2}>State*</th>
+              <th className="client-th"colSpan={3/2}>Country*</th>
+              <th className="client-th"colSpan={3/2}>Postal Code*</th>
               <th className="client-th" style={{textAlign:'center'}}>Actions</th>
             </tr>
           {/* ROW-2 */}
