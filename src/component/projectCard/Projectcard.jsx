@@ -82,11 +82,11 @@ const Projectcard = ({ item }) => {
         </div>
         <div className="label-value">
           <div className="projectcard-label">Project Value</div>
-          <div className="projectcard-value">₹ 1,01,51,621</div>
+          <div className="projectcard-value">₹ {item?.projectValue.toFixed(2)}</div>
         </div>
         <div className="label-value">
           <div className="projectcard-label">Executed Value</div>
-          <div className="projectcard-value">₹ 90,12,451</div>
+          <div className="projectcard-value">₹ {item?.executedValue.toFixed(2)}</div>
         </div>
         <div className="projectcard-button">
           <Link
@@ -96,7 +96,6 @@ const Projectcard = ({ item }) => {
           >
             <button>
               Work on project
-              {/* <img src={move} alt=''/>  */}
             </button>
           </Link>
         </div>

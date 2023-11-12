@@ -52,7 +52,7 @@ const Billcard = ({item,projectname,Id,setItem,setOpen}) => {
       </div>
       <div className="card-date">
         <span className="card-label">Invoice Value</span>
-        <span className="card-value">{item?.invoiceNo}</span>
+        <span className="card-value">₹ {item?.invoiceValue.toFixed(2)}</span>
       </div>
       <div className="reports">
         <span className="card-label">Reports</span>
