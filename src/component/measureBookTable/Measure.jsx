@@ -270,7 +270,9 @@ const Measure = () => {
       value: contractItem?.find((e) => e?.id === item?.contractItemId)?.id,
       label: contractItem?.find((e) => e?.id === item?.contractItemId)?.item,
     });
-    setScrollValue(tableRef.current.scrollTop);
+    if(tableRef.current){
+      setScrollValue(tableRef.current.scrollTop);
+    }
     setArray(array.filter((i)=>(i?.id!==item.id)));
     setNumber(index - 1);
     setInput("update");
@@ -286,7 +288,9 @@ const Measure = () => {
   const handleAdd = (index) => {
     setNumber(index);
     setInput("add");
-    setScrollValue(tableRef.current.scrollTop);
+    if(tableRef.current){
+      setScrollValue(tableRef.current.scrollTop);
+    }
     setHead(array[index - 1]?.id);
   };
 
@@ -312,7 +316,9 @@ const Measure = () => {
   const handleCopy = (item, index) => {
     addFormik.setValues(item);
     setNumber(index);
-    setScrollValue(tableRef.current.scrollTop);
+    if(tableRef.current){
+      setScrollValue(tableRef.current.scrollTop);
+    }
     setSelectedOption({
       value: contractItem?.find((e) => e?.id === item?.contractItemId)?.id,
       label: contractItem?.find((e) => e?.id === item?.contractItemId)?.item,
