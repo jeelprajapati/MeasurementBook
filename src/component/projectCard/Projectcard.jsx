@@ -76,8 +76,10 @@ const Projectcard = ({ item }) => {
               ? `${item?.projectName?.slice(0, 24)}..`
               : item?.projectName}
           </h3>
-          <div className="projectcard-desc">
-            AGC at uelarn to cequcem, aerae, & ceseresn
+          <div className="projectcard-desc">  
+            {item?.clientName?.length > 30
+              ? `${item?.clientName?.slice(0, 31)}..`
+              : item?.clientName}
           </div>
         </div>
         <div className="label-value">

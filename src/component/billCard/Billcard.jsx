@@ -41,10 +41,10 @@ const Billcard = ({item,projectname,Id,setItem,setOpen}) => {
       <div className="wrapper-card">
       <div className="card-top">
         <div className="card-title-batch">
-          <h3>{item?.name?.length>=15 ? `${item?.name?.slice(0,15)}...` : item?.name}</h3>
+          <h3>{item.typeBill == 1 ? 'RA' : 'Final'}</h3>
           <span className={`${item?.status===1 ? 'batch' : item?.status===2 ? 'batch submit' : 'batch accept'}`}>{item?.status===1 ? "Draft" : item?.status===2 ? "Submitted" : "Accepted"}</span>
         </div>
-        <span className="desc">Phase 1 work till plinth level for block A,B & G</span>
+        <span className="desc">{item?.name?.length>=15 ? `${item?.name?.slice(0,15)}...` : item?.name}</span>
       </div>
       <div className="card-date">
         <span className="card-label">Invoice Date</span>
