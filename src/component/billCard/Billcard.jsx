@@ -48,7 +48,7 @@ const Billcard = ({item,projectname,Id,setItem,setOpen}) => {
       </div>
       <div className="card-date">
         <span className="card-label">Invoice Date</span>
-        <span className="card-value">{item?.invoiceDate?.split('T')[0].split('-')?.slice(0).reverse()?.join('.')}</span>
+        <span className="card-value">{item?.invoiceDate?.split('T')[0]?.split('-')?.slice(0)?.reverse()?.join('.')}</span>
       </div>
       <div className="card-date">
         <span className="card-label">Invoice Value</span>
