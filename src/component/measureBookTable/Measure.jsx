@@ -41,6 +41,7 @@ const Measure = () => {
   const alert = useAlert();
   const tableRef=useRef();
   const ref=useRef();
+  const tagRef=useRef();
   const initialValues= {
     description: "",
     no: "",
@@ -117,6 +118,26 @@ const Measure = () => {
     };
     getTag();
   }, [change, projectId]);
+
+  useEffect(() => {
+    const checkIfClickedOutside = e => {
+      if (usedTag && tagRef.current && !tagRef.current.contains(e.target)) {
+        setUsedTag(false)
+      }
+    }
+
+    document.addEventListener("mousedown", checkIfClickedOutside)
+
+    return () => {
+      document.removeEventListener("mousedown", checkIfClickedOutside)
+    }
+  }, [usedTag])
+
+  useEffect(()=>{
+    if(ref.current){
+      ref.current.scrollIntoView({ block: 'nearest', inline: 'start', behavior:'smooth'});
+    }
+  },[input])
 
   const addFormik = useFormik({
     initialValues,
@@ -357,12 +378,6 @@ const Measure = () => {
       setFilter1([]);
     }
   };
-
-  useEffect(()=>{
-    if(ref.current){
-      ref.current.scrollIntoView({ block: 'nearest', inline: 'start', behavior:'smooth'});
-    }
-  },[input])
   
   return (
     <>
@@ -977,6 +992,7 @@ const Measure = () => {
                     onFocus={() => {
                       !usedTag && setUsedTag(true);
                     }}
+                    ref={tagRef}
                   >
                     <div
                       className={

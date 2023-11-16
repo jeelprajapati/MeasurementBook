@@ -84,11 +84,11 @@ const Projectcard = ({ item }) => {
         </div>
         <div className="label-value">
           <div className="projectcard-label">Project Value</div>
-          <div className="projectcard-value">₹ {item?.projectValue.toFixed(2)}</div>
+          <div className="projectcard-value">₹ {item?.projectValue?.toLocaleString(undefined,{maximumFractionDigits:2})}</div>
         </div>
         <div className="label-value">
           <div className="projectcard-label">Executed Value</div>
-          <div className="projectcard-value">₹ {item?.executedValue.toFixed(2)}</div>
+          <div className="projectcard-value">₹ {item?.executedValue?.toLocaleString(undefined,{maximumFractionDigits:2})}</div>
         </div>
         <div className="projectcard-button">
           <Link
