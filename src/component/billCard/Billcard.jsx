@@ -1,7 +1,7 @@
 import React from "react";
 import './Billcard.css'
 import makeRequesInstance from "../../makeRequest";
-import pdf from '../../image/pdf-file.svg'
+// import pdf from '../../image/pdf-file.svg'
 import xls from '../../image/xls.svg'
 import { Link } from "react-router-dom";
 import { saveAs } from 'file-saver';
@@ -57,7 +57,7 @@ const Billcard = ({item,projectname,Id,setItem,setOpen}) => {
       <div className="reports">
         <span className="card-label">Reports</span>
         <div className="pdf-type">
-          <img src={pdf} alt="" />
+          {/* <img src={pdf} alt="" /> */}
           <img src={xls} alt="" onClick={() => downloadExcelFile(item?.id, item?.name)}/>
         </div>
       </div>
