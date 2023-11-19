@@ -142,9 +142,7 @@ const SingleProject = () => {
                   Add Excel
                 </button>
               </div>
-              <div className="table">
                 <Table Id={id} change={change} setChange={setChange} unit={unit} />
-              </div>
             </div>
           </div>
           {open && (

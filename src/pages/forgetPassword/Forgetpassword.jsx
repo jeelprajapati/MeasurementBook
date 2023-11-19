@@ -1,10 +1,17 @@
-import React from "react";
+import { useState } from "react";
 import "./Forgetpassword.css";
 import { useFormik } from "formik";
 import { forgetPassword } from "../../scemas/index.js";
 import { Link } from "react-router-dom";
 import Error from "../../component/error/Error.jsx";
+import axios from "axios";
+import { useAlert } from "react-alert";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Forgetpassword = () => {
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const alert = useAlert();
   const initialValues = {
     email: "",
   };
@@ -13,43 +20,86 @@ const Forgetpassword = () => {
     useFormik({
       initialValues,
       validationSchema: forgetPassword,
-      onSubmit:(values,action)=>{
-        
-      }
+      onSubmit: (values) => {
+        const makeRequest = async () => {
+          setLoading(true);
+          try {
+            const res = await axios.post(
+              "https://dev-api.measurekaro.com/api/Authentication/forgot-password",
+              values
+            );
+            if (res.status === 200) {
+              setSuccess(true);
+            }
+          } catch (error) {
+            if (error.response) {
+              if (error.response.data.status === 404) {
+                alert.show("invalid email address", { type: "error" });
+              } else {
+                alert.show(error.response.data.title, { type: "error" });
+              }
+            } else {
+              alert.show("something went wrong", { type: "info" });
+            }
+          }
+          setLoading(false);
+        };
+        makeRequest();
+      },
     });
-
+  
   return (
-    <div className="forget-container">
-      <h3 className="forget-title">Forgot Your Password ?</h3>
-      <div className="forget-input">
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter Your Email*"
-          className="forget-email"
-          value={values.email}
-          onBlur={handleBlur}
-          onChange={handleChange}
-        />
-        {<Error touch={touched.email} error={errors.email}/>}
-      </div>
-      <div className="forget-buttons">
-        <input
-          type="button"
-          value="Submit"
-          onClick={handleSubmit}
-          className="forget-btn"
-        />
-        <Link to="/login" className="link" style={{ width: "100%" }}>
-          <input
-            type="button"
-            className="forget-btn"
-            value="Cancel"
-            style={{ backgroundColor: "white", color: "#2e4a93" }}
-          />
-        </Link>
-      </div>
-    </div>
+    <>
+      {!success ? (
+        <div className="forget-container">
+          <h3 className="forget-title">Forgot Your Password ?</h3>
+          <div className="forget-input">
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter Your Email*"
+              className="forget-email"
+              value={values.email}
+              onBlur={handleBlur}
+              onChange={handleChange}
+            />
+            {<Error touch={touched.email} error={errors.email} />}
+          </div>
+          <div className="forget-buttons">
+            <input
+              type="button"
+              value="Submit"
+              onClick={handleSubmit}
+              className="forget-btn"
+            />
+            <Link to="/login" className="link" style={{ width: "100%" }}>
+              <input
+                type="button"
+                className="forget-btn"
+                value="Cancel"
+                style={{ backgroundColor: "white", color: "#2e4a93" }}
+              />
+            </Link>
+          </div>
+        </div>
+      ) : (
+        <div className="text-container">
+          <h3>Reset Password</h3>
+          <span>
+            An email has been sent to{" "}
+            <b>
+              <a href="https://mail.google.com/mail/u/0/#inbox">
+                {values.email}
+              </a>
+            </b>{" "}
+            with link for resetting your password.
+          </span>
+        </div>
+      )}
+      {loading && <div className="box">
+        <FontAwesomeIcon icon={faSpinner} spin className="loading" /> 
+      </div>}
+    </>
   );
 };
 

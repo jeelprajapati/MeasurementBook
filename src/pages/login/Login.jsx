@@ -138,7 +138,7 @@ const Login = () => {
           >
             Login
           </button>
-          {/* <Link className="link" style={{flex:'1'}}> */}
+          <Link className="link" to='/forget-password' style={{flex:'1'}}>
             <button
               className={`${
                 loading ? "forget-button reload" : "forget-button pointer"
@@ -146,7 +146,7 @@ const Login = () => {
             >
               Forget Password
             </button>
-          {/* </Link> */}
+          </Link>
         </div>
         <div className="link-register">
           Don't have an account ? <Link to="/register">sign up</Link>

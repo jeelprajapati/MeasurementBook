@@ -17,7 +17,7 @@ const Client = () => {
   const token=localStorage.getItem('token')
   useEffect(()=>{
     if(!(token && Id)){
-         navigate('/login')
+        navigate('/login')
     }
   },[navigate,token,Id])
 

@@ -1,11 +1,8 @@
 .client-table-con{
     width: 100%;
-    height: 560px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
-.client-table-con::-webkit-scrollbar{
-    display: none;
-}
+
 .client-table{
     table-layout: fixed;
     width: 100%;
