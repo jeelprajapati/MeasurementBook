@@ -13,7 +13,7 @@ const Reset = () => {
   const query=new URLSearchParams(useLocation()?.search);
   const token=query?.get('token');
   const email = query?.get('email');
-  console.log(token, email);
+  
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
     useFormik({
       initialValues: {
@@ -37,7 +37,6 @@ const Reset = () => {
               }
             );
             if (res.status === 200) {
-              console.log(res.data);
               action.resetForm();
               alert.show("password reset sucessfully", { type: "success" });
               navigate("/login");
