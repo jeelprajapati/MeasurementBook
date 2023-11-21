@@ -108,15 +108,15 @@ const Login = () => {
         <div className="login-title">Login</div>
         <div className="login-wrapper">
           <input
-            type="text"
-            placeholder="Username"
-            name="username"
+            type="email"
+            placeholder="Email"
+            name="email"
             className="login-input"
-            value={values.username}
+            value={values.email}
             onChange={handleChange}
             onBlur={handleBlur}
           />
-          {<Error touch={touched.username} error={errors.username} />}
+          {<Error touch={touched.email} error={errors.email} />}
         </div>
         <div className="login-wrapper">
           <input

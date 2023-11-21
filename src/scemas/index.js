@@ -17,7 +17,9 @@ export const signUpScema = Yup.object({
 });
 
 export const loginScema = Yup.object({
-  username: Yup.string().min(2).required("Username is Required!"),
+  email: Yup.string()
+    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, "Enter A valid Email")
+    .required("Email is Required!"),
   password: Yup.string()
     .matches(
       /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{6,}$/,

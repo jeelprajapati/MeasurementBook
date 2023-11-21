@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Reset.css";
 import { useFormik } from "formik";
 import { resetSchema } from "../../scemas/index.js";
-import Error from "../error/Error.jsx";
+import Error from "../../component/error/Error.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAlert } from "react-alert";

@@ -13,7 +13,7 @@ import Register from "./pages/register/Register";
 import Bills from "./pages/bills/Bills.jsx"
 import Measurement from "./pages/measurement/Measurement";
 import Forgetpassword from "./pages/forgetPassword/Forgetpassword.jsx";
-import Reset from "./component/resetPassword/Reset.jsx";
+import Reset from "./pages/resetPassword/Reset.jsx";
 
 const Layout=()=>{
   
