@@ -12,7 +12,7 @@ const Login = () => {
   const navigate = useNavigate();
   const alert = useAlert();
   const initialValues = {
-    username: "",
+    email: "",
     password: "",
   };
   const handleLoginAndSetId = async (token) => {
@@ -74,7 +74,7 @@ const Login = () => {
           } catch (error) {
             if (error.response) {
               if (error.response.status === 401) {
-                alert.show("Invalid Username Or Password", { type: "error" });
+                alert.show("Invalid Email Or Password", { type: "error" });
               } else {
                 alert.show(error.response.data.title, { type: "error" });
               }

@@ -4,45 +4,45 @@ export const signUpScema = Yup.object({
   username: Yup.string().min(2).required("Username is Required!"),
   name: Yup.string().min(2).required("Name is required!"),
   email: Yup.string()
-    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, "Enter A valid Email")
-    .required("Email is Required!"),
+    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, "Enter a valid email")
+    .required("Email is required!"),
   password: Yup.string()
     .matches(
       /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{6,}$/,
       "Password must contain at least 8 characters, one uppercase, one number and one special case character"
     )
     .required("Password is Required!"),
-  organizationname: Yup.string().required("Organizationname is Required!"),
-  plan: Yup.string().required("Plan is Required!"),
+  organizationname: Yup.string().required("Organization Name is Required!"),
+  plan: Yup.string().required("Plan is required!"),
 });
 
 export const loginScema = Yup.object({
   email: Yup.string()
-    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, "Enter A valid Email")
-    .required("Email is Required!"),
+    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, "Enter a valid email")
+    .required("Email is required!"),
   password: Yup.string()
     .matches(
       /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{6,}$/,
       "Password must contain at least 8 characters, one uppercase, one number and one special case character"
     )
-    .required("Password is Required!"),
+    .required("Password is required!"),
 });
 
 export const clientScema = Yup.object({
   name: Yup.string().min(2).required("Client Name is required!"),
   email: Yup.string()
-    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, "Enter A valid Email")
-    .required("Email is Required!"),
+    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, "Enter a valid email")
+    .required("Email is required!"),
   phoneNumber: Yup.string()
     .min(10)
     .max(10)
-    .required("PhoneNumber Is required!"),
-  address: Yup.string().required("Address is Required!"),
-  city: Yup.string().required("City is Required!"),
-  countryId: Yup.string().required("Country is Required!"),
-  stateId: Yup.string().required("state is Required!"),
+    .required("PhoneNumber is required!"),
+  address: Yup.string().required("Address is required!"),
+  city: Yup.string().required("City is required!"),
+  countryId: Yup.string().required("Country is required!"),
+  stateId: Yup.string().required("state is required!"),
   pan: Yup.string().max(30),
-  postalCode: Yup.string().required("Postal Code is Required!"),
+  postalCode: Yup.string().required("Postal code is required!"),
 });
 
 export const projectScema = Yup.object({
