@@ -25,7 +25,7 @@ const Forgetpassword = () => {
           setLoading(true);
           try {
             const res = await axios.post(
-              "https://dev-api.measurekaro.com/api/Authentication/forgot-password",
+              "http://dev-api.measurekaro.com/api/Authentication/forgot-password",
               values
             );
             if (res.status === 200) {

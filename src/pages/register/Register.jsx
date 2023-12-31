@@ -27,7 +27,7 @@ const Register = () => {
       setLoading(true);
       try {
         const res = await axios.get(
-          "https://dev-api.measurekaro.com/api/Standard/GetPlans"
+          "http://dev-api.measurekaro.com/api/Standard/GetPlans"
         );
         setPlanID(res.data);
       } catch (error) {
