@@ -26,7 +26,7 @@ const Reset = () => {
           setLoading(true);
           try {
             const res = await axios.post(
-              "https://dev-api.measurekaro.com/api/Authentication/reset-password",
+              "http://dev-api.measurekaro.com/api/Authentication/reset-password",
               {},
               {
                 params: {

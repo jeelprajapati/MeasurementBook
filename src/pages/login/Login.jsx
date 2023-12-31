@@ -62,7 +62,7 @@ const Login = () => {
           setLoading(true);
           try {
             const res = await axios.post(
-              "https://dev-api.measurekaro.com/api/Authentication/login",
+              "http://dev-api.measurekaro.com/api/Authentication/login",
               values
             );
             if (res.status === 200) {
