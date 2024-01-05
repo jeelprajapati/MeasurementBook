@@ -16,24 +16,20 @@
     border-radius: 15px;
 }
 .excel-label{
-    font-family: 'Inter';
     font-size: 18px;
     font-weight: 600;
 }
 .excel-input{
-    font-family: 'Inter';
     font-size: 15px;
     font-weight: 400;
 }
 .excel-red{
-    font-family: 'Inter';
     font-size: 15px;
     font-weight: 400;
 }
 .excel-button{
     width: 20%;
     padding: 7px 0;
-    font-family: 'Inter';
     font-weight: 400;
     font-size: 15px;
     background-color: #2e4a93;

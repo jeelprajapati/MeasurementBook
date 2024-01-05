@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "./Register.css";
-import makeRequesInstance from "../../makeRequest";
+import "./register.css";
+import makeRequesInstance from "../../utils/makeRequest.js";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAlert } from "react-alert";
@@ -27,7 +27,7 @@ const Register = () => {
       setLoading(true);
       try {
         const res = await axios.get(
-          "https://dev-api.measurekaro.com/api/Standard/GetPlans"
+          `${process.env.REACT_APP_BASE_URL}/Standard/GetPlans`
         );
         setPlanID(res.data);
       } catch (error) {

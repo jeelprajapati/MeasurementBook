@@ -1,10 +1,10 @@
 import React from "react";
-import "./clientPopUp.css";
+import "./clientPopup.css";
 import close from "../../image/close.svg";
-import makeRequesInstance from "../../makeRequest";
+import makeRequesInstance from "../../utils/makeRequest.js";
 import { useAlert } from "react-alert";
 import { useFormik } from "formik";
-import { clientScema } from "../../scemas";
+import { clientScema } from "../../scemas/index.js";
 import Error from "../error/Error.jsx";
 
 const ClientPopUp = ({

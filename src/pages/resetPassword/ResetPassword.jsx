@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Reset.css";
+import "./resetPassword.css";
 import { useFormik } from "formik";
 import { resetSchema } from "../../scemas/index.js";
 import Error from "../../component/error/Error.jsx";
@@ -26,7 +26,7 @@ const Reset = () => {
           setLoading(true);
           try {
             const res = await axios.post(
-              "https://dev-api.measurekaro.com/api/Authentication/reset-password",
+              `${process.env.REACT_APP_BASE_URL}/Authentication/reset-password`,
               {},
               {
                 params: {

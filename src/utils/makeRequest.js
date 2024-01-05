@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const makeRequesInstance = (token) => {
   return axios.create({
-    baseURL: 'https://dev-api.measurekaro.com/api',
+    baseURL: process.env.REACT_APP_BASE_URL,
     headers: {
       'Authorization': `Bearer ${token}`
     }

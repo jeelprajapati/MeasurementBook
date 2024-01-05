@@ -1,5 +1,5 @@
 import React, { useState,useRef,useEffect } from 'react'
-import './Select.css'
+import './select.css'
 import Arrow from '../../image/down-arrow.svg'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -62,6 +62,7 @@ const Select = ({onChange,options,value,error}) => {
         placeholder="SEARCH ITEM"
         value={searchTerm || ''}
         onChange={handleSearch}
+        required
         ref={inputRef}
       />
       <img src={Arrow} alt="" />

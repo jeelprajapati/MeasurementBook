@@ -21,7 +21,6 @@
 .register-title{
     display: flex;
     flex-direction: column;
-    font-family: 'Inter';
     font-weight: 600;
     font-size: 18px;
     text-align: center;
@@ -37,7 +36,6 @@
     width: 95%;
     padding: 5px;
     border-radius: 5px;
-    font-family: 'Inter';
     font-weight: 400;
     border: 1px solid #2e4a93;
 }
@@ -45,7 +43,6 @@
     border-radius: 5px;
     height: 45px;
     width: 99%;
-    font-family: 'Inter';
     font-weight: 400;
     border: 1px solid #2e4a93;
 }
@@ -57,11 +54,10 @@
     color: #fdfdfd;
     font-size: 15px;
     font-weight: 400;
-    font-family: 'Inter';
 }
 .go-to-login{
     text-align: center;
     font-size: 15px;
     font-weight: 400;
-    font-family: 'Inter';
+    
 }

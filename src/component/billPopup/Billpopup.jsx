@@ -1,11 +1,11 @@
 import React from "react";
 import close from "../../image/close.svg";
-import "./Billpopup.css";
-import makeRequesInstance from "../../makeRequest";
+import "./billPopup.css";
+import makeRequesInstance from "../../utils/makeRequest.js";
 import { useLocation } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { useFormik } from "formik";
-import { billScema } from "../../scemas";
+import { billScema } from "../../scemas/index.js";
 import Error from "../error/Error.jsx";
 const Billpopup = ({
   setOpen,

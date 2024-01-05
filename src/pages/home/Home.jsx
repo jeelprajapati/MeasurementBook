@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Sidebar from "../../component/sidebar/Sidebar.jsx";
-import "./Home.css";
+import "./home.css";
 import { useNavigate } from "react-router-dom";
 const Home = () => {
   const navigate = useNavigate();

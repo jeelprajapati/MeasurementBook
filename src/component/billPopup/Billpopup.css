@@ -17,7 +17,6 @@
 }
 .bill-popup-title{
     margin: 0;
-    font-family: 'Inter';
     font-weight: 18px;
     font-weight: 600;
     color: #2e4a93;
@@ -31,7 +30,6 @@
     gap: 7px;
 }
 .bill-popup-label{
-    font-family: 'Inter';
     font-weight: 400;
     font-size: 15px;
 }
@@ -48,7 +46,6 @@
     height: 40px;
     border-radius: 5px;
     border: 1px solid #2e4a93;
-    font-family: 'Inter';
     font-weight: 400;
     margin: 0;
     padding: 5px;
@@ -58,13 +55,11 @@
     height: 50px;
     border-radius: 5px;
     border: 1px solid #2e4a93;
-    font-family: 'Inter';
     font-weight: 400;
     margin: 0;
     background-color: white;
 }
 .bill-popup-select option{
-    font-family: 'Inter';
     font-weight: 400;
 }
 .bill-popup-button{
@@ -73,7 +68,6 @@
 .bill-popup-btn{
     width: 25%;
     padding: 10px 0;
-    font-family: 'Inter';
     font-weight: 400;
     font-size: 15px;
     background-color: #2e4a93;

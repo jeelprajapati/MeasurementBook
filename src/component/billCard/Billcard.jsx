@@ -1,6 +1,6 @@
 import React from "react";
-import './Billcard.css'
-import makeRequesInstance from "../../makeRequest";
+import './billCard.css'
+import makeRequesInstance from "../../utils/makeRequest";
 // import pdf from '../../image/pdf-file.svg'
 import xls from '../../image/xls.svg'
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ import { faArrowRightToBracket, faPencil } from "@fortawesome/free-solid-svg-ico
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAlert } from "react-alert";
 
-const Billcard = ({item,projectname,Id,setItem,setOpen}) => {
+const Billcard = ({item,projectName,Id,setItem,setOpen}) => {
   const alert=useAlert();
   const handleClick=()=>{
     setItem(item);
@@ -63,7 +63,7 @@ const Billcard = ({item,projectname,Id,setItem,setOpen}) => {
       </div>
       <div className="measurement-button">
         {item?.status===1 ? 
-        <Link className="link" style={{width:'100%'}} to={`/measurementbook?billId=${item?.id}?projectId=${Id}?projectname=${projectname}?billname=${item?.name}`}>
+        <Link className="link" style={{width:'100%'}} to={`/measurementbook?billId=${item?.id}&projectId=${Id}&projectname=${projectName}&billName=${item?.name}`}>
         <button>Measurement <FontAwesomeIcon icon={faArrowRightToBracket} /></button>
         </Link> : <button disabled title={`This bill have ${item?.status===2 ? 'submitted' : 'accepted'}`}>
           Measurement<FontAwesomeIcon icon={faArrowRightToBracket} />

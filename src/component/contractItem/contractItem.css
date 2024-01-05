@@ -23,7 +23,6 @@
     padding: 15px 7px;
     font-size: 15px;  
     font-weight: 400;
-    font-family: 'Inter'; 
     text-align: start;
     border: none;
     box-shadow: inset 0 -1px 0 #2e4a93;
@@ -39,8 +38,7 @@
     overflow-wrap: break-word;
     text-align: start;
     overflow-wrap: break-word;
-    font-size: 13px;
-    font-family: 'Inter';
+    font-size: 13px; 
     font-weight: 400;
     height: 50px;
 
@@ -48,7 +46,6 @@
 .td input,.td select{
     width: 96%;
     border: none;
-    font-family: 'Inter';
     font-weight: 400;
     height: 40px;
     border-radius: 4px;
@@ -88,21 +85,15 @@
 .purple-border{
     border: 1px solid #333333;
 }
-.contract-yes{
-   background-color: #2e4a93;
-   border: none;
-   margin: 0 4px;
-   cursor: pointer;
-   width: 38px;
-   height: 32px;
-}
-.contract-no{
+.contractButton{
     background-color: #2e4a93;
     border: none;
+    margin: 0 2px;
     cursor: pointer;
-    width: 38px;
-    height: 32px;
- }
- .contract-no:disabled{
-    cursor: not-allowed;
- }
+    width: 35px;
+    height: 35px;
+}
+.contractButton svg{
+    color: #fdfdfd;
+    font-size: 18px;
+}

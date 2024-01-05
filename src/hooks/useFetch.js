@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import makeRequesInstance from "../makeRequest";
+import makeRequesInstance from "../utils/makeRequest";
 import { useAlert } from "react-alert";
 
 const useFetch = ({ url, change }) => {

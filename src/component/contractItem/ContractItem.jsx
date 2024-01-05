@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./Table.css";
+import "./contractItem.css";
 import edit from "../../image/edit1.svg";
 import deleteicon from "../../image/delete1.svg";
 import add from "../../image/plus.svg";
 import copy from "../../image/copy-icon1.svg";
 import useFetch from "../../hooks/useFetch";
-import makeRequesInstance from "../../makeRequest";
+import makeRequesInstance from "../../utils/makeRequest.js";
 import { useAlert } from "react-alert";
 import { useFormik } from "formik";
 import { contractTable } from "../../scemas";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faCopy, faPencil, faPlus, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons";
 const Table = ({ Id, change, setChange, unit }) => {
   const [element, setElement] = useState({
     sorNo: "",
@@ -245,39 +245,39 @@ const Table = ({ Id, change, setChange, unit }) => {
                 <span>{item?.hsn}</span>
               </td>
               {isDelete===item?.id?<td className="td" colSpan={3} style={{textAlign:'center'}}>
-                <button className="contract-yes" onClick={handleDelete}><FontAwesomeIcon className="true-btn" icon={faCheck} /></button>
-                <button className="contract-no" onClick={()=>{setIsDelete(null)}}><FontAwesomeIcon icon={faXmark} className="false-btn"/></button>
+                <button className="contractButton" onClick={handleDelete}><FontAwesomeIcon icon={faCheck} /></button>
+                <button className="contractButton" onClick={()=>{setIsDelete(null)}}><FontAwesomeIcon icon={faXmark}/></button>
                 </td>:<td className="td" colSpan={3} style={{textAlign:'center'}}>
                 <button
-                  className="btn-disabled"
+                  className="contractButton"
                   onClick={() => handleInput(index, item?.id)}
                   disabled={input || update}
                 >
-                  <img src={add} className="svg" alt="" />
+                  <FontAwesomeIcon icon={faPlus} />
                 </button>
                 <button
-                  className="btn-disabled"
+                  className="contractButton"
                   onClick={() => {
                     handleUpdate(index, item);
                     updateFormik.setValues(item);
                   }}
                   disabled={input || update}
                 >
-                  <img src={edit} alt="" className="svg" />
+                  <FontAwesomeIcon icon={faPencil} />
                 </button>
                 <button
-                  className="btn-disabled"
+                  className="contractButton"
                   onClick={() => handleCopy(index, item)}
                   disabled={input || update}
                 >
-                  <img src={copy} alt="" className="svg" />
+                 <FontAwesomeIcon icon={faCopy} />
                 </button>
                 <button
-                  className="btn-disabled"
+                  className="contractButton"
                   onClick={() => {setIsDelete(item?.id)}}
                   disabled={input || update}
                 >
-                  <img src={deleteicon} alt="" className="svg" />
+                  <FontAwesomeIcon icon={faTrash} />
                 </button>
               </td>}
             </tr>
@@ -429,11 +429,11 @@ const Table = ({ Id, change, setChange, unit }) => {
               />
             </td>
             <td className="td" colSpan={3} style={{textAlign:'center'}}>
-                <button className="contract-yes" onClick={update ? updateFormik.handleSubmit : addFormik.handleSubmit}>
-                  <FontAwesomeIcon className="true-btn" icon={faCheck} />
+                <button className="contractButton" onClick={update ? updateFormik.handleSubmit : addFormik.handleSubmit}>
+                  <FontAwesomeIcon icon={faCheck} />
                 </button>
                 <button
-                className="contract-no"
+                className="contractButton"
                 disabled={array?.length===0}
                 onClick={() => {
                   setInput(false);
@@ -461,7 +461,7 @@ const Table = ({ Id, change, setChange, unit }) => {
                   }
                 }}
               >
-                <FontAwesomeIcon icon={faXmark} className="false-btn"/>
+                <FontAwesomeIcon icon={faXmark} />
               </button>
             </td>
           </tr>
@@ -495,11 +495,11 @@ const Table = ({ Id, change, setChange, unit }) => {
                 <span>{item?.hsn}</span>
               </td>
               {isDelete===item?.id?<td className="td" colSpan={3} style={{textAlign:'center'}}>
-                <button className="contract-yes" onClick={handleDelete}><FontAwesomeIcon className="true-btn" icon={faCheck} /></button>
-                <button className="contract-no" onClick={()=>{setIsDelete(null)}}><FontAwesomeIcon icon={faXmark} className="false-btn"/></button>
+                <button className="contractButton" onClick={handleDelete}><FontAwesomeIcon icon={faCheck} /></button>
+                <button className="contractButton" onClick={()=>{setIsDelete(null)}}><FontAwesomeIcon icon={faXmark}/></button>
                 </td>:<td className="td" colSpan={3} style={{textAlign:'center'}}>
                 <button
-                  className="btn-disabled"
+                  className="contractButton"
                   onClick={() =>
                     handleInput(
                       array?.slice(0, number + 1).length + index,
@@ -508,10 +508,10 @@ const Table = ({ Id, change, setChange, unit }) => {
                   }
                   disabled={input || update}
                 >
-                  <img src={add} className="svg" alt="" />
+                 <FontAwesomeIcon icon={faPlus} />
                 </button>
                 <button
-                  className="btn-disabled"
+                  className="contractButton"
                   onClick={() => {
                     handleUpdate(
                       array?.slice(0, number + 1).length + index,
@@ -521,23 +521,23 @@ const Table = ({ Id, change, setChange, unit }) => {
                   }}
                   disabled={input || update}
                 >
-                  <img src={edit} alt="" className="svg" />
+                  <FontAwesomeIcon icon={faPencil} />
                 </button>
                 <button
-                  className="btn-disabled"
+                  className="contractButton"
                   onClick={() =>
                     handleCopy(array?.slice(0, number + 1).length + index, item)
                   }
                   disabled={input || update}
                 >
-                  <img src={copy} alt="" className="svg" />
+                  <FontAwesomeIcon icon={faCopy} />
                 </button>
                 <button
-                  className="btn-disabled"
+                  className="contractButton"
                   onClick={() => {setIsDelete(item?.id)}}
                   disabled={input || update}
                 >
-                  <img src={deleteicon} alt="" className="svg" />
+                  <FontAwesomeIcon icon={faTrash} />
                 </button>
               </td>}
             </tr>

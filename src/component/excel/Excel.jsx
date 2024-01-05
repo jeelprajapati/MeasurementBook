@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import close from "../../image/close.svg";
 import * as XLSX from "xlsx";
-import "./Excel.css";
-import makeRequesInstance from "../../makeRequest";
+import "./excel.css";
+import makeRequesInstance from "../../utils/makeRequest.js";
 import { useAlert } from "react-alert";
 import { Link } from "react-router-dom";
 const Excel = ({ setOpen, projectId, setChange, change, unit }) => {

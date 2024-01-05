@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import "./Projects.css";
+import "./projects.css";
 import Sidebar from "../../component/sidebar/Sidebar.jsx";
 import { useNavigate } from "react-router-dom";
 import Popup from "../../component/popup/Popup";
 import useFetch from "../../hooks/useFetch";
-import Projectcard from "../../component/projectCard/Projectcard";
+import Projectcard from "../../component/projectCard/ProjectCard.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 

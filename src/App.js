@@ -12,8 +12,8 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Bills from "./pages/bills/Bills.jsx"
 import Measurement from "./pages/measurement/Measurement";
-import Forgetpassword from "./pages/forgetPassword/Forgetpassword.jsx";
-import Reset from "./pages/resetPassword/Reset.jsx";
+import Forgetpassword from "./pages/forgetPassword/ForgetPassword.jsx";
+import Reset from "./pages/resetPassword/ResetPassword.jsx";
 
 const Layout=()=>{
   

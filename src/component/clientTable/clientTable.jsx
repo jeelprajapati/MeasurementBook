@@ -3,7 +3,7 @@ import './clientTable.css'
 import edit from "../../image/edit1.svg";
 import deleteicon from "../../image/delete1.svg";
 import useFetch from '../../hooks/useFetch'
-import makeRequesInstance from '../../makeRequest'
+import makeRequesInstance from '../../utils/makeRequest.js'
 import { useAlert } from 'react-alert'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'

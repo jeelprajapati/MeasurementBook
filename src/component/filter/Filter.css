@@ -14,8 +14,7 @@
     float: left;
     margin-top:2px;
 }
-.filter-type{
-    font-family: 'Inter';
+.filter-type{   
     font-weight: 400;
     font-size: 15px;
     color: #2e4a93;
@@ -64,13 +63,11 @@
 .filter-search input::placeholder{
     color: #333333;
     font-size: 15px;
-    font-family: 'Inter';
     font-weight: 400;
 }
 .Fi{
     padding: 10px;
     cursor: pointer;
-    font-family: 'Inter';
     font-size: 13px;
     font-weight: 400;
     color: rgb(128, 128, 128);
@@ -101,7 +98,6 @@
 }
 .filter-name{
     font-size: 15px;
-    font-family: 'Inter';
     font-weight: 400;
 }
 .wrapper-box{
@@ -135,7 +131,6 @@
     padding: 3px;
     flex: 4;
     font-size: 13px;
-    font-family: 'Inter';
     font-weight: 600;
     text-align: center;
     height: fit-content;

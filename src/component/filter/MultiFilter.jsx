@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import './Filter.css'
+import './filter.css'
 import { useState } from 'react';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

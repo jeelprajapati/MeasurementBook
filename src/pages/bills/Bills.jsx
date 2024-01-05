@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import "./Bills.css";
-import Sidebar from "../../component/sidebar/Sidebar";
-import Billpopup from "../../component/billPopup/Billpopup";
+import "./bills.css";
+import Sidebar from "../../component/sidebar/Sidebar.jsx";
+import Billpopup from "../../component/billPopup/BillPopup.jsx";
 import { Link, useLocation } from "react-router-dom";
-import Billcard from "../../component/billCard/Billcard";
+import Billcard from "../../component/billCard/BillCard.jsx";
 import useFetch from "../../hooks/useFetch";
 
 const Bills = () => {
-  const loaction = useLocation().search.split("?");
-  const projectId = loaction[1].split("=")[1];
-  const projectname = loaction[2].split("=")[1].replaceAll("%20", " ");
+  const  search=new URLSearchParams(useLocation().search);
+  const projectId = search.get("projectid");
+  const projectName = search.get("projectname");
   const [open, setOpen] = useState("");
   const [change, setChange] = useState(0);
   const [item, setItem] = useState({
@@ -37,7 +37,7 @@ const Bills = () => {
                 </Link>
                 /
                 <Link to={`/project/${projectId}`} className="bill-link">
-                  {projectname[0].toUpperCase() + projectname.slice(1)} /{" "}
+                  {projectName[0].toUpperCase()+projectName.slice(1)} /{" "}
                 </Link>{" "}
                 <span>Bills</span>
               </div>
@@ -58,7 +58,7 @@ const Bills = () => {
                       setOpen={setOpen}
                       setItem={setItem}
                       item={item}
-                      projectname={projectname}
+                      projectName={projectName}
                       Id={projectId}
                     />
                   ))}

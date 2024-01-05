@@ -27,7 +27,6 @@
 }
 .bill-path{
     font-size: 15px;
-    font-family: 'Inter';
     font-weight: 400;
     margin: 10px;
 }
@@ -64,6 +63,5 @@
 .bill-card-title{
     font-size: 18px;
     font-weight: 900;
-    font-family: 'Inter';
     margin: 12px;   
 }

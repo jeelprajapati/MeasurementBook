@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "./Login.css";
-import makeRequesInstance from "../../makeRequest";
+import "./login.css";
+import makeRequesInstance from "../../utils/makeRequest.js";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAlert } from "react-alert";
@@ -62,7 +62,7 @@ const Login = () => {
           setLoading(true);
           try {
             const res = await axios.post(
-              "https://dev-api.measurekaro.com/api/Authentication/login",
+              `${process.env.REACT_APP_BASE_URL}/Authentication/login`,
               values
             );
             if (res.status === 200) {

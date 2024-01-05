@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import './Client.css'
+import './client.css'
 import Sidebar from '../../component/sidebar/Sidebar.jsx'
-import ClientTable from '../../component/clientTable/clientTable.jsx'
-import ClientPopUp from '../../component/clientPopUp/clientPopUp'
+import ClientTable from '../../component/clientTable/ClientTable.jsx'
+import ClientPopUp from '../../component/clientPopup/ClientPopup.jsx'
 import { useNavigate } from 'react-router-dom'
-import makeRequesInstance from '../../makeRequest'
+import makeRequesInstance from '../../utils/makeRequest.js'
 const Client = () => {
   const [input,setInput]=useState(false);
   const [item,setItem]=useState({name:'',email:'',phoneNumber:'',gstin:'',pan:'',address:'',city:'',countryId:'',stateId:'',postalCode:''});

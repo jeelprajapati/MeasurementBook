@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./Forgetpassword.css";
+import "./forgetPassword.css";
 import { useFormik } from "formik";
 import { forgetPassword } from "../../scemas/index.js";
 import { Link } from "react-router-dom";
@@ -25,7 +25,7 @@ const Forgetpassword = () => {
           setLoading(true);
           try {
             const res = await axios.post(
-              "https://dev-api.measurekaro.com/api/Authentication/forgot-password",
+              `${process.env.REACT_APP_BASE_URL}/Authentication/forgot-password`,
               values
             );
             if (res.status === 200) {

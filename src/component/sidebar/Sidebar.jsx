@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import "./Sidebar.css";
+import React, { useContext, useState } from "react";
+import "./sidebar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,12 +11,10 @@ import {
   faBars,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch, useSelector } from "react-redux";
-import { setOpen } from "../../redux/slice/sidebarSlice";
+import { Context } from "../../context/Context";
 
 const Sidebar = ({ id }) => {
-  const open = useSelector((state) => state.sidebar.open);
-  const dispatch=useDispatch();
+  const {state,toggle}=useContext(Context);
   const [token] = useState(localStorage.getItem("token"));
   const navigate = useNavigate();
 
@@ -35,23 +33,23 @@ const Sidebar = ({ id }) => {
   ];
 
   return (
-    <div className={`sidebar-main-container ${open ? "side-container" : "side-less-container"}`}>
-      <div className="sidebar-toggle" onClick={()=>dispatch(setOpen())}>
+    <div className={`sidebar-main-container ${state ? "side-container" : "side-less-container"}`}>
+      <div className="sidebar-toggle" onClick={toggle}>
         <span className="sidebar-toggle-icon">
-          <FontAwesomeIcon icon={open ? faTimes : faBars} />
+          <FontAwesomeIcon icon={state ? faTimes : faBars} />
         </span>
       </div>
-      <ul className={`sidebar-ul ${open ? "centered" : ""}`}>
+      <ul className={`sidebar-ul ${state ? "centered" : ""}`}>
         {menuItems.map((item) => (
           <Link key={item.id} to={item.path} className="link">
             <li className={`${id === item.id ? "lightGray" : "hover-li"}`}>
               <span className={`sidebar-svg ${id === item.id && "selected"}`}>
                 <FontAwesomeIcon icon={item.icon} />
               </span>
-              <span className={`${open ? "sidebar-name" : "d-none"} ${id === item.id && "selected"}`}>
-                {open && item.text}
+              <span className={`${state ? "sidebar-name" : "d-none"} ${id === item.id && "selected"}`}>
+                {state && item.text}
               </span>
-              {!open && <span className="hover-show-name ">{item.text}</span>}
+              {!state && <span className="hover-show-name ">{item.text}</span>}
             </li>
           </Link>
         ))}
@@ -62,10 +60,10 @@ const Sidebar = ({ id }) => {
             <span className="sidebar-svg">
               <FontAwesomeIcon icon={faSignOutAlt} />
             </span>
-            <span className={`${open ? "sidebar-name" : "d-none"}`}>
-              {open && 'LogOut'}
+            <span className={`${state ? "sidebar-name" : "d-none"}`}>
+              {state && 'LogOut'}
             </span>
-            {!open && <span className="hover-show-name ">LogOut</span>}
+            {!state && <span className="hover-show-name ">LogOut</span>}
           </div>
         </div>
       )}

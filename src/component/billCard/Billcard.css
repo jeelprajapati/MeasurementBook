@@ -33,19 +33,16 @@
     margin: 0;
     font-size: 18px;
     font-weight: 600;
-    font-family: 'Inter';
 }
 .batch{
     background-color: #ffe0df;
     color: #9f5f60;
     font-size: 12px;
     font-weight: 600;
-    font-family: 'Inter';
     padding: 3px 7px;
     border-radius: 5px;
 }
 .card-top .desc{
-    font-family: 'Inter';
     font-size: 15px;
     font-weight: 400;
 }
@@ -57,12 +54,10 @@
     gap: 2px;
 }
 .card-label{
-    font-family: 'Inter';
     font-size: 12px;
     font-weight: 400;
 }
 .card-value{
-    font-family: 'Inter';
     font-size: 15px;
     font-weight: 600;
 }
@@ -96,7 +91,6 @@
     gap: 7px;
     background-color: #2e4a93;
     color: white;
-    font-family:'Inter';
     font-weight: 400;
     font-size: 15px;
     border: none;

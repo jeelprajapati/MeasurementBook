@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import "./SingleProject.css";
+import "./singleProject.css";
 import Sidebar from "../../component/sidebar/Sidebar.jsx";
-import Table from "../../component/table/Table";
+import Table from "../../component/contractItem/ContractItem.jsx";
 import useFetch from "../../hooks/useFetch";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Excel from "../../component/excel/Excel";
 import Popup from "../../component/popup/Popup";
-import makeRequesInstance from "../../makeRequest";
+import makeRequesInstance from "../../utils/makeRequest.js";
 import { faArrowRightLong, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const SingleProject = () => {
@@ -96,7 +96,7 @@ const SingleProject = () => {
             )}
             <div className={`goto ${open && "blur"}`}>
               {!popUp ? <Link
-                to={`/bills?projectid=${data?.id}?projectname=${data?.projectName}`}
+                to={`/bills?projectid=${data?.id}&projectname=${data?.projectName}`}
                 className="link"
               >
                 <button

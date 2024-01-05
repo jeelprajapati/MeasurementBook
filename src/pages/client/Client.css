@@ -21,8 +21,7 @@
 }
 .client-path{
     color:#2e4a93;
-    margin: 0 10px;
-    font-family: 'Inter';
+    margin: 0 10px; 
     font-size: 15px;
     font-weight: 400;
     padding: 7px;
@@ -38,7 +37,6 @@
 }
 .client-title{
     margin: 0;
-    font-family: 'Inter';
     font-weight: 600;
     font-size: 15px;
 }

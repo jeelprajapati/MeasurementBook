@@ -1,0 +1,124 @@
+.measurementContainer{
+  width: 100%;
+  height: 580px;
+  overflow-y:scroll;
+}
+.measurementContainer table{
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.measurementTableRow{
+  border-bottom: 1px solid #2e4a93;
+}
+.measurementTableRow:nth-child(1){
+  border-bottom:none;
+}
+.measurementTableTh{
+  font-size: 15px;
+  color: #2e4a93;
+  background-color: #fdfdfd;
+  position: sticky;
+  top:0;
+  padding: 7px;
+  box-shadow: inset 0 -1px 0 #2e4a93;
+  z-index: 5;
+}
+.measurementTableTh:nth-child(1),
+.measurementTableTh:nth-child(2){
+  width: 18%;
+}
+.measurementTableTh:nth-child(8),
+.measurementTableTh:nth-child(9){
+  width: 13%;
+}
+.measurementTableTh:nth-child(7){
+  width: 7%;
+}
+.measurementTableTd{
+  padding: 7px;
+  font-weight: 400;
+  font-size: 13px;
+  height: 50px;
+  width: 100%;
+}
+.actionType{
+  width: 35px;
+  height: 35px;
+  background-color: #2e4a93;
+  border: none;
+  margin: 0 2px;
+  cursor: pointer;
+}
+.actionType svg{
+  font-size: 18px;
+  color: white;
+}
+.measurementtotal{
+  background-color: black;
+  color: #fdfdfd;
+  font-size: 9px;
+  padding: 2px 3px;
+  margin: 0 2px;
+  font-weight: 600;
+}
+.measurementTag{
+  padding: 5px;
+}
+.measurementTag:nth-child(4n + 1) {
+  background-color: #d5d2f6;
+  color: #78759e;
+}
+.measurementTag:nth-child(4n + 2) {
+  background-color: #ffd2d1;
+  color: #9c7076;
+}
+.measurementTag:nth-child(4n + 3) {
+  background-color: #dcfaeb;
+  color: #769b8d;
+}
+.measurementTag:nth-child(4n + 4) {
+  background-color: #ffecc8;
+  color: #a68e66;
+}
+.measurementWrapper{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+}
+.measurementTableInput,.totalContainer{
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  margin: 0;
+  border: none;
+  -webkit-box-shadow: 0px 1px 3px 0px rgba(51, 51, 51, 1);
+  -moz-box-shadow: 0px 1px 3px 0px rgba(51, 51, 51, 1);
+  box-shadow: 0px 1px 3px 0px rgba(51, 51, 51, 1);
+}
+.alignItemEnd{
+  text-align: end;
+}
+.measurementTableInput[type="number"]::-webkit-inner-spin-button,
+.measurementTableInput[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+.totalContainer{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 5px;
+  height: 40px;
+  gap: 5px;
+  background-color: #f9f9f9;
+}
+.unitName{
+  background-color: rgb(208, 208, 208);
+  padding: 2px 3px;
+  font-size: 10px;
+  font-weight: 600;
+}

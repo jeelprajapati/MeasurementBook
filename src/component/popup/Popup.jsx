@@ -1,7 +1,7 @@
 import React from "react";
-import "./Popup.css";
+import "./popup.css";
 import close from "../../image/close.svg";
-import makeRequesInstance from "../../makeRequest";
+import makeRequesInstance from "../../utils/makeRequest.js";
 import useFetch from "../../hooks/useFetch";
 import { useAlert } from "react-alert";
 import { useFormik } from "formik";

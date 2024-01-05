@@ -17,7 +17,6 @@
 }
 .popup-title{
     margin: 0;
-    font-family: 'Inter';
     font-weight: 18px;
     font-weight: 600;
     text-align: center;
@@ -32,7 +31,6 @@
     color: red;
 }
 .popup-label{
-    font-family: 'Inter';
     font-size: 15px;
     font-weight: 400;
 }
@@ -52,7 +50,6 @@
 .popup-input{
     height: 40px;
     border-radius: 5px;
-    font-family: 'Inter';
     font-weight: 400;
     padding: 5px;
     border: 1px solid #2e4a93;
@@ -60,14 +57,12 @@
 }
 .popup-select{
     height: 50px;
-    font-family: 'Inter';
     font-weight: 400;
     border-radius: 5px;
     border: 1px solid #2e4a93;
     background-color: white;
 }
 .popup-select option{
-    font-family: 'Inter';
     font-weight: 400;
 }
 .popup-two-input-wrapper{
@@ -91,7 +86,6 @@
 .popup-btn{
     width: 30%;
     padding: 10px 0;
-    font-family: 'Inter';
     font-weight: 400;
     font-size: 15px;
     background-color: #2e4a93;
