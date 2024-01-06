@@ -76,7 +76,7 @@ const Projectcard = ({ item }) => {
               ? `${item?.projectName?.slice(0, 24)}..`
               : item?.projectName}
           </h3>
-          <div className="projectcard-desc">  
+          <div className="projectcard-desc">
             {item?.clientName?.length > 30
               ? `${item?.clientName?.slice(0, 31)}..`
               : item?.clientName}
@@ -84,11 +84,21 @@ const Projectcard = ({ item }) => {
         </div>
         <div className="label-value">
           <div className="projectcard-label">Project Value</div>
-          <div className="projectcard-value">₹ {item?.projectValue?.toLocaleString(undefined,{maximumFractionDigits:2})}</div>
+          <div className="projectcard-value">
+            ₹{" "}
+            {item?.projectValue?.toLocaleString(undefined, {
+              maximumFractionDigits: 2,
+            })}
+          </div>
         </div>
         <div className="label-value">
           <div className="projectcard-label">Executed Value</div>
-          <div className="projectcard-value">₹ {item?.executedValue?.toLocaleString(undefined,{maximumFractionDigits:2})}</div>
+          <div className="projectcard-value">
+            ₹{" "}
+            {item?.executedValue?.toLocaleString(undefined, {
+              maximumFractionDigits: 2,
+            })}
+          </div>
         </div>
         <div className="projectcard-button">
           <Link
@@ -96,9 +106,7 @@ const Projectcard = ({ item }) => {
             className="link"
             style={{ width: "100%" }}
           >
-            <button>
-              Work on project
-            </button>
+            <button>Work on project</button>
           </Link>
         </div>
       </div>

@@ -1,7 +1,6 @@
 import React, { useState,useRef,useEffect } from 'react'
 import './select.css'
-import Arrow from '../../image/down-arrow.svg'
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Select = ({onChange,options,value,error}) => {
@@ -65,7 +64,7 @@ const Select = ({onChange,options,value,error}) => {
         required
         ref={inputRef}
       />
-      <img src={Arrow} alt="" />
+      <FontAwesomeIcon icon={faAngleDown} style={{fontSize:"18px"}}/>
       </div>  
       {open && <ul>
         {filteredOptions.map((option, index) => (

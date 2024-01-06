@@ -25,7 +25,7 @@ const Projects = () => {
     }
   });
   const { loding, data } = useFetch({
-    url: `/Project?page=1&pageSize=100&organizationId=${Id}`,
+    url: `/Project?page=1&pageSize=50000&organizationId=${Id}`,
     change,
   });
 

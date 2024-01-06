@@ -40,10 +40,10 @@
 }
 .excel-img{
     position: absolute;
-    width: 20px;
-    height: 20px;
+    font-size: 18px;
     top: 7px;
     right: 7px;
+    color: gray;
 }
 .excel-img:hover{
     cursor: pointer;

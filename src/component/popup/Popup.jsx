@@ -1,19 +1,20 @@
 import React from "react";
 import "./popup.css";
-import close from "../../image/close.svg";
 import makeRequesInstance from "../../utils/makeRequest.js";
 import useFetch from "../../hooks/useFetch";
 import { useAlert } from "react-alert";
 import { useFormik } from "formik";
 import { projectScema } from "../../scemas";
 import Error from "../error/Error.jsx";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
   const makeRequest = makeRequesInstance(localStorage.getItem("token"));
   const organizationId = localStorage.getItem("organizationId");
   const alert = useAlert();
   const { loding, data } = useFetch({
-    url: `Client?organizationId=${organizationId}&page=${1}&pageSize=${100}`,
+    url: `Client?organizationId=${organizationId}&page=${1}&pageSize=${50000}`,
     change,
   });
 
@@ -181,8 +182,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
       <div className="popup-two-input-wrapper">
         <div>
           <label htmlFor="contractNo" className="popup-label">
-            Contract No{" "}
-            <span className="red-star">*</span>
+            Contract No <span className="red-star">*</span>
           </label>
           <input
             type="text"
@@ -200,21 +200,20 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
             onBlur={update ? updateFormik.handleBlur : addFormik.handleBlur}
           />
           {update ? (
-          <Error
-            touch={updateFormik.touched.contractNo}
-            error={updateFormik.errors.contractNo}
-          />
-        ) : (
-          <Error
-            touch={addFormik.touched.contractNo}
-            error={addFormik.errors.contractNo}
-          />
-        )}
+            <Error
+              touch={updateFormik.touched.contractNo}
+              error={updateFormik.errors.contractNo}
+            />
+          ) : (
+            <Error
+              touch={addFormik.touched.contractNo}
+              error={addFormik.errors.contractNo}
+            />
+          )}
         </div>
         <div>
           <label htmlFor="contractDate" className="popup-label">
-            Date of Contract{" "}
-            <span className="red-star">*</span>
+            Date of Contract <span className="red-star">*</span>
           </label>
           <input
             type="date"
@@ -232,16 +231,16 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
             onBlur={update ? updateFormik.handleBlur : addFormik.handleBlur}
           />
           {update ? (
-          <Error
-            touch={updateFormik.touched.contractDate}
-            error={updateFormik.errors.contractDate}
-          />
-        ) : (
-          <Error
-            touch={addFormik.touched.contractDate}
-            error={addFormik.errors.contractDate}
-          />
-        )}
+            <Error
+              touch={updateFormik.touched.contractDate}
+              error={updateFormik.errors.contractDate}
+            />
+          ) : (
+            <Error
+              touch={addFormik.touched.contractDate}
+              error={addFormik.errors.contractDate}
+            />
+          )}
         </div>
       </div>
       <div className="popup-two-input-wrapper">
@@ -267,8 +266,7 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
         </div>
         <div>
           <label htmlFor="loiDate" className="popup-label">
-            Project Start Date{" "}
-            <span className="red-star">*</span>
+            Project Start Date <span className="red-star">*</span>
           </label>
           <input
             type="date"
@@ -286,16 +284,16 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
             onBlur={update ? updateFormik.handleBlur : addFormik.handleBlur}
           />
           {update ? (
-          <Error
-            touch={updateFormik.touched.loiDate}
-            error={updateFormik.errors.loiDate}
-          />
-        ) : (
-          <Error
-            touch={addFormik.touched.loiDate}
-            error={addFormik.errors.loiDate}
-          />
-        )}
+            <Error
+              touch={updateFormik.touched.loiDate}
+              error={updateFormik.errors.loiDate}
+            />
+          ) : (
+            <Error
+              touch={addFormik.touched.loiDate}
+              error={addFormik.errors.loiDate}
+            />
+          )}
         </div>
       </div>
       <div className="popup-wrapper">
@@ -321,7 +319,11 @@ const Popup = ({ setPopUp, setChange, change, input, update, setUpdate }) => {
           onClick={update ? updateFormik.handleSubmit : addFormik.handleSubmit}
         />
       </div>
-      <img src={close} onClick={handleClose} alt="" className="popup-close" />
+      <FontAwesomeIcon
+        icon={faXmark}
+        className="popup-close"
+        onClick={handleClose}
+      />
     </div>
   );
 };

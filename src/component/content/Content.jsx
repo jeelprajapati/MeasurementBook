@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import "./Content.css";
 import useClickOutside from "../../hooks/useclickOutside.js";
 
-const Content = ({ text, index,min }) => {
+const Content = ({ text, index, min }) => {
   const [show, setShow] = useState({ ClickIndex: index, credential: false });
   const ref = useRef();
   const handleMore = (e) => {
@@ -22,7 +22,11 @@ const Content = ({ text, index,min }) => {
   return (
     <>
       {text?.length > 100 ? (
-        <div className="textMaxContainer" ref={ref} style={{minHeight:`${min}px`}}> 
+        <div
+          className="textMaxContainer"
+          ref={ref}
+          style={{ minHeight: `${min}px` }}
+        >
           {show?.credential && show?.ClickIndex === index ? (
             <span className="more">
               {text}.
@@ -32,7 +36,7 @@ const Content = ({ text, index,min }) => {
             </span>
           ) : (
             <span className="less">
-              {text?.slice(0,100)}..
+              {text?.slice(0, 100)}..
               <button onClick={handleMore} className="contentButton">
                 more
               </button>

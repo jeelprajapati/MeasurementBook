@@ -53,6 +53,7 @@
     border: 1px solid #2e4a93;
     background-color: white;
     font-weight: 400;
+    color: gray;
 }
 .client-popup-select option{
     font-weight: 400;
@@ -69,10 +70,10 @@
 }
 .client-popup-close{
     position: absolute;
-    width: 20px;
-    height: 20px;
+    font-size: 18px;
     top: 7px;
     right: 7px;
     cursor: pointer;
+    color: gray;
 }
 

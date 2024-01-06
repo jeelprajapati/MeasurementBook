@@ -7,9 +7,9 @@ import Billcard from "../../component/billCard/BillCard.jsx";
 import useFetch from "../../hooks/useFetch";
 
 const Bills = () => {
-  const  search=new URLSearchParams(useLocation().search);
-  const projectId = search.get("projectid");
-  const projectName = search.get("projectname");
+  const search = new URLSearchParams(useLocation()?.search);
+  const projectId = search?.get("projectid");
+  const projectName = search?.get("projectname");
   const [open, setOpen] = useState("");
   const [change, setChange] = useState(0);
   const [item, setItem] = useState({
@@ -19,7 +19,7 @@ const Bills = () => {
     status: "",
   });
   const { loding, data } = useFetch({
-    url: `/Bill/GetByProjectId?page=${1}&pageSize=${100}&projectId=${projectId}`,
+    url: `/Bill/GetByProjectId?page=${1}&pageSize=${50000}&projectId=${projectId}`,
     change,
   });
   return (
@@ -37,7 +37,7 @@ const Bills = () => {
                 </Link>
                 /
                 <Link to={`/project/${projectId}`} className="bill-link">
-                  {projectName[0].toUpperCase()+projectName.slice(1)} /{" "}
+                  {projectName[0]?.toUpperCase() + projectName?.slice(1)} /{" "}
                 </Link>{" "}
                 <span>Bills</span>
               </div>

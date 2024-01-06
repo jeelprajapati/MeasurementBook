@@ -1,11 +1,13 @@
 import React from "react";
 import "./clientPopup.css";
-import close from "../../image/close.svg";
+// import close from "../../image/close.svg";
 import makeRequesInstance from "../../utils/makeRequest.js";
 import { useAlert } from "react-alert";
 import { useFormik } from "formik";
 import { clientScema } from "../../scemas/index.js";
 import Error from "../error/Error.jsx";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ClientPopUp = ({
   setInput,
@@ -17,6 +19,7 @@ const ClientPopUp = ({
   update,
   country,
   state,
+  initialState,
 }) => {
   const Id = localStorage.getItem("organizationId");
   const alert = useAlert();
@@ -44,6 +47,7 @@ const ClientPopUp = ({
           if (responce.status === 204) {
             alert.show("Data Added Suceefully", { type: "success" });
             action.resetForm();
+            setItem(initialState);
             setInput(false);
             if (change === 0) {
               setChange(1);
@@ -85,18 +89,7 @@ const ClientPopUp = ({
           if (responce.status === 204) {
             alert.show("Data Updated Suceefully", { type: "success" });
             action.resetForm();
-            setItem({
-              name: "",
-              email: "",
-              phoneNumber: "",
-              gstin: "",
-              pan: "",
-              address: "",
-              city: "",
-              countryId: "",
-              stateId: "",
-              postalCode: "",
-            });
+            setItem(initialState);
             setUpdate(false);
             setInput(false);
             if (change === 0) {
@@ -116,6 +109,12 @@ const ClientPopUp = ({
       handleUpdate();
     },
   });
+
+  const handleClose = () => {
+    setInput(false);
+    setItem(initialState);
+    setUpdate(false);
+  };
   return (
     <div className="client-popup-container">
       <h3 className="client-popup-title">
@@ -357,15 +356,6 @@ const ClientPopUp = ({
               }
               onBlur={update ? upadteRequest.handleBlur : addRequest.handleBlur}
               className="client-popup-select"
-              id=""
-              disabled={
-                update
-                  ? upadteRequest.values.countryId === ""
-                  : addRequest.values.countryId === ""
-              }
-              title={(update
-                ? upadteRequest.values.countryId === ""
-                : addRequest.values.countryId === "") && "select country first"}
             >
               <option value="" disabled>
                 Select State *
@@ -431,31 +421,13 @@ const ClientPopUp = ({
       <input
         type="button"
         value={`${update ? "Update" : "Submit"}`}
-        onClick={
-          update ? upadteRequest.handleSubmit : addRequest.handleSubmit
-        }
+        onClick={update ? upadteRequest.handleSubmit : addRequest.handleSubmit}
         className="client-btn"
       />
-      <img
-        src={close}
-        onClick={() => {
-          setInput(false);
-          setItem({
-            name: "",
-            email: "",
-            phoneNumber: "",
-            gstin: "",
-            pan: "",
-            address: "",
-            city: "",
-            countryId: "",
-            stateId: "",
-            postalCode: "",
-          });
-          setUpdate(false);
-        }}
-        alt=""
+      <FontAwesomeIcon
+        icon={faXmark}
         className="client-popup-close"
+        onClick={handleClose}
       />
     </div>
   );

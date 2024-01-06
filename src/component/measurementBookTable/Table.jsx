@@ -37,7 +37,7 @@ const Table = ({
       const res = await makeRequest.post("MeasurementBook/GetByBillId", {
         billId,
         page: 1,
-        pageSize: 100,
+        pageSize: 50000,
         filter: [],
       });
       if (res.status === 200) {

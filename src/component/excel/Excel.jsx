@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import close from "../../image/close.svg";
 import * as XLSX from "xlsx";
 import "./excel.css";
 import makeRequesInstance from "../../utils/makeRequest.js";
 import { useAlert } from "react-alert";
 import { Link } from "react-router-dom";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Excel = ({ setOpen, projectId, setChange, change, unit }) => {
   const [data, setData] = useState(null);
   const alert = useAlert();
@@ -40,14 +41,14 @@ const Excel = ({ setOpen, projectId, setChange, change, unit }) => {
       const newarray = items.map((obj) => {
         const { __rowNum__, ...other } = obj;
         return {
-          sorNo: other['Item Code'],
-          item: other['Description*'],
-          hsn: other['HSN'] || 0,
-          poQty: other['Work Order Quantity*'],
-          stdUnitId: unit.find((i)=>(i?.name===other['Measure Type*']))?.id,
-          unit: other['UOM*'],
-          rate: other['Rate'] || 0,
-          projectId:`${projectId}`
+          sorNo: other["Item Code"],
+          item: other["Description*"],
+          hsn: other["HSN"] || 0,
+          poQty: other["Work Order Quantity*"],
+          stdUnitId: unit.find((i) => i?.name === other["Measure Type*"])?.id,
+          unit: other["UOM*"],
+          rate: other["Rate"] || 0,
+          projectId: `${projectId}`,
         };
       });
       try {
@@ -78,8 +79,8 @@ const Excel = ({ setOpen, projectId, setChange, change, unit }) => {
   };
   return (
     <div className="excel-container">
-      <label className="excel-label" >Select Excel File </label>
-      <input type="file" onChange={handleFile} className="excel-input"/>
+      <label className="excel-label">Select Excel File </label>
+      <input type="file" onChange={handleFile} className="excel-input" />
       <div className="excel-button-container">
         <button className="excel-button" onClick={handleSubmit}>
           Submit
@@ -91,11 +92,10 @@ const Excel = ({ setOpen, projectId, setChange, change, unit }) => {
           https://docs.google.com/spreadsheets/d/e/2PACX-1vQtekg2bf5eHdBdmpD2pWtDykbjJ7-3aX9aheH2jRR89zflLKIVvnfCKTedsqu9IwaJ0LzW5JNrCeof/pub?output=xlsx
         </Link>
       </span>
-      <img
-        src={close}
-        onClick={() => setOpen(false)}
+      <FontAwesomeIcon
+        icon={faXmark}
         className="excel-img"
-        alt=""
+        onClick={() => setOpen(false)}
       />
     </div>
   );

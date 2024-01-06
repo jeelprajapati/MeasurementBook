@@ -1,16 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./contractItem.css";
-import edit from "../../image/edit1.svg";
-import deleteicon from "../../image/delete1.svg";
-import add from "../../image/plus.svg";
-import copy from "../../image/copy-icon1.svg";
 import useFetch from "../../hooks/useFetch";
 import makeRequesInstance from "../../utils/makeRequest.js";
 import { useAlert } from "react-alert";
 import { useFormik } from "formik";
 import { contractTable } from "../../scemas";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faCopy, faPencil, faPlus, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faCopy,
+  faPencil,
+  faPlus,
+  faTrash,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 const Table = ({ Id, change, setChange, unit }) => {
   const [element, setElement] = useState({
     sorNo: "",
@@ -28,34 +31,33 @@ const Table = ({ Id, change, setChange, unit }) => {
   const [update, setUpdate] = useState(false);
   const [head, setHead] = useState("00000000-0000-0000-0000-000000000000");
   const [tail, setTail] = useState("00000000-0000-0000-0000-000000000000");
-  const [isDelete,setIsDelete]=useState(null);
-  const [scrollValue,setScrollValue]=useState(0);
+  const [isDelete, setIsDelete] = useState(null);
+  const [scrollValue, setScrollValue] = useState(0);
   const alert = useAlert();
-  const tableRef=useRef();
-  const ref=useRef();
+  const tableRef = useRef();
+  const ref = useRef();
   const { loding, data } = useFetch({
-    url: `/ContractItem/GetByProjectId?projectId=${Id}&page=${1}&pageSize=${100}`,
+    url: `/ContractItem/GetByProjectId?projectId=${Id}&page=${1}&pageSize=${50000}`,
     change,
   });
   useEffect(() => {
     setLoad(loding);
-    if(data?.items?.length===0){
+    if (data?.items?.length === 0) {
       setInput(true);
       setHead("00000000-0000-0000-0000-000000000000");
       setTail("00000000-0000-0000-0000-000000000000");
-    }
-    else{
+    } else {
       setInput(false);
     }
     setArray(data?.items);
   }, [loding, data]);
 
-  useEffect(()=>{
-    if(tableRef.current){
-      tableRef.current.scrollTop=scrollValue;
-     }
+  useEffect(() => {
+    if (tableRef.current) {
+      tableRef.current.scrollTop = scrollValue;
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[array])
+  }, [array]);
 
   const addFormik = useFormik({
     initialValues: element,
@@ -176,7 +178,7 @@ const Table = ({ Id, change, setChange, unit }) => {
       );
       if (res.status === 204) {
         alert.show("Data Deleted Sucessfully", { type: "success" });
-        setChange(!change)
+        setChange(!change);
       }
     } catch (error) {
       if (error.response) {
@@ -199,24 +201,40 @@ const Table = ({ Id, change, setChange, unit }) => {
     setLoad(false);
   };
 
-  useEffect(()=>{
-    if(ref.current){
-      ref.current.scrollIntoView({ block: 'nearest', inline: 'start', behavior:'smooth'});
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollIntoView({
+        block: "nearest",
+        inline: "start",
+        behavior: "smooth",
+      });
     }
-  },[input,update])
+  }, [input, update]);
 
   return (
     <div className="table" ref={tableRef}>
       <table className="tb">
         <tr className="tr">
           <th className="th">Item Code</th>
-          <th className="th" colSpan={3}>Description*</th>
-          <th className="th" colSpan={2}>Work Order Quantity*</th>
-          <th className="th" colSpan={2}>Measure Type*</th>
-          <th className="th" colSpan={2}>UOM*</th>
-          <th className="th" colSpan={2}>Rate</th>
+          <th className="th" colSpan={3}>
+            Description*
+          </th>
+          <th className="th" colSpan={2}>
+            Work Order Quantity*
+          </th>
+          <th className="th" colSpan={2}>
+            Measure Type*
+          </th>
+          <th className="th" colSpan={2}>
+            UOM*
+          </th>
+          <th className="th" colSpan={2}>
+            Rate
+          </th>
           <th className="th">HSN</th>
-          <th className="th" colSpan={3} style={{textAlign:'center'}}>Actions</th>
+          <th className="th" colSpan={3} style={{ textAlign: "center" }}>
+            Actions
+          </th>
         </tr>
         {!load &&
           array?.slice(0, number + 1)?.map((item, index) => (
@@ -238,48 +256,63 @@ const Table = ({ Id, change, setChange, unit }) => {
               <td className="td" colSpan={2}>
                 <span>{item?.unit}</span>
               </td>
-              <td className="td" colSpan={2} >
+              <td className="td" colSpan={2}>
                 <span>{item?.rate.toFixed(2)}</span>
               </td>
               <td className="td">
                 <span>{item?.hsn}</span>
               </td>
-              {isDelete===item?.id?<td className="td" colSpan={3} style={{textAlign:'center'}}>
-                <button className="contractButton" onClick={handleDelete}><FontAwesomeIcon icon={faCheck} /></button>
-                <button className="contractButton" onClick={()=>{setIsDelete(null)}}><FontAwesomeIcon icon={faXmark}/></button>
-                </td>:<td className="td" colSpan={3} style={{textAlign:'center'}}>
-                <button
-                  className="contractButton"
-                  onClick={() => handleInput(index, item?.id)}
-                  disabled={input || update}
-                >
-                  <FontAwesomeIcon icon={faPlus} />
-                </button>
-                <button
-                  className="contractButton"
-                  onClick={() => {
-                    handleUpdate(index, item);
-                    updateFormik.setValues(item);
-                  }}
-                  disabled={input || update}
-                >
-                  <FontAwesomeIcon icon={faPencil} />
-                </button>
-                <button
-                  className="contractButton"
-                  onClick={() => handleCopy(index, item)}
-                  disabled={input || update}
-                >
-                 <FontAwesomeIcon icon={faCopy} />
-                </button>
-                <button
-                  className="contractButton"
-                  onClick={() => {setIsDelete(item?.id)}}
-                  disabled={input || update}
-                >
-                  <FontAwesomeIcon icon={faTrash} />
-                </button>
-              </td>}
+              {isDelete === item?.id ? (
+                <td className="td" colSpan={3} style={{ textAlign: "center" }}>
+                  <button className="contractButton" onClick={handleDelete}>
+                    <FontAwesomeIcon icon={faCheck} />
+                  </button>
+                  <button
+                    className="contractButton"
+                    onClick={() => {
+                      setIsDelete(null);
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faXmark} />
+                  </button>
+                </td>
+              ) : (
+                <td className="td" colSpan={3} style={{ textAlign: "center" }}>
+                  <button
+                    className="contractButton"
+                    onClick={() => handleInput(index, item?.id)}
+                    disabled={input || update}
+                  >
+                    <FontAwesomeIcon icon={faPlus} />
+                  </button>
+                  <button
+                    className="contractButton"
+                    onClick={() => {
+                      handleUpdate(index, item);
+                      updateFormik.setValues(item);
+                    }}
+                    disabled={input || update}
+                  >
+                    <FontAwesomeIcon icon={faPencil} />
+                  </button>
+                  <button
+                    className="contractButton"
+                    onClick={() => handleCopy(index, item)}
+                    disabled={input || update}
+                  >
+                    <FontAwesomeIcon icon={faCopy} />
+                  </button>
+                  <button
+                    className="contractButton"
+                    onClick={() => {
+                      setIsDelete(item?.id);
+                    }}
+                    disabled={input || update}
+                  >
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
+                </td>
+              )}
             </tr>
           ))}
 
@@ -428,13 +461,18 @@ const Table = ({ Id, change, setChange, unit }) => {
                 onBlur={update ? updateFormik.handleBlur : addFormik.handleBlur}
               />
             </td>
-            <td className="td" colSpan={3} style={{textAlign:'center'}}>
-                <button className="contractButton" onClick={update ? updateFormik.handleSubmit : addFormik.handleSubmit}>
-                  <FontAwesomeIcon icon={faCheck} />
-                </button>
-                <button
+            <td className="td" colSpan={3} style={{ textAlign: "center" }}>
+              <button
                 className="contractButton"
-                disabled={array?.length===0}
+                onClick={
+                  update ? updateFormik.handleSubmit : addFormik.handleSubmit
+                }
+              >
+                <FontAwesomeIcon icon={faCheck} />
+              </button>
+              <button
+                className="contractButton"
+                disabled={array?.length === 0}
                 onClick={() => {
                   setInput(false);
                   setElement({
@@ -494,52 +532,70 @@ const Table = ({ Id, change, setChange, unit }) => {
               <td className="td">
                 <span>{item?.hsn}</span>
               </td>
-              {isDelete===item?.id?<td className="td" colSpan={3} style={{textAlign:'center'}}>
-                <button className="contractButton" onClick={handleDelete}><FontAwesomeIcon icon={faCheck} /></button>
-                <button className="contractButton" onClick={()=>{setIsDelete(null)}}><FontAwesomeIcon icon={faXmark}/></button>
-                </td>:<td className="td" colSpan={3} style={{textAlign:'center'}}>
-                <button
-                  className="contractButton"
-                  onClick={() =>
-                    handleInput(
-                      array?.slice(0, number + 1).length + index,
-                      item?.id
-                    )
-                  }
-                  disabled={input || update}
-                >
-                 <FontAwesomeIcon icon={faPlus} />
-                </button>
-                <button
-                  className="contractButton"
-                  onClick={() => {
-                    handleUpdate(
-                      array?.slice(0, number + 1).length + index,
-                      item
-                    );
-                    updateFormik.setValues(item);
-                  }}
-                  disabled={input || update}
-                >
-                  <FontAwesomeIcon icon={faPencil} />
-                </button>
-                <button
-                  className="contractButton"
-                  onClick={() =>
-                    handleCopy(array?.slice(0, number + 1).length + index, item)
-                  }
-                  disabled={input || update}
-                >
-                  <FontAwesomeIcon icon={faCopy} />
-                </button>
-                <button
-                  className="contractButton"
-                  onClick={() => {setIsDelete(item?.id)}}
-                  disabled={input || update}
-                >
-                  <FontAwesomeIcon icon={faTrash} />
-                </button>
-              </td>}
+              {isDelete === item?.id ? (
+                <td className="td" colSpan={3} style={{ textAlign: "center" }}>
+                  <button className="contractButton" onClick={handleDelete}>
+                    <FontAwesomeIcon icon={faCheck} />
+                  </button>
+                  <button
+                    className="contractButton"
+                    onClick={() => {
+                      setIsDelete(null);
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faXmark} />
+                  </button>
+                </td>
+              ) : (
+                <td className="td" colSpan={3} style={{ textAlign: "center" }}>
+                  <button
+                    className="contractButton"
+                    onClick={() =>
+                      handleInput(
+                        array?.slice(0, number + 1).length + index,
+                        item?.id
+                      )
+                    }
+                    disabled={input || update}
+                  >
+                    <FontAwesomeIcon icon={faPlus} />
+                  </button>
+                  <button
+                    className="contractButton"
+                    onClick={() => {
+                      handleUpdate(
+                        array?.slice(0, number + 1).length + index,
+                        item
+                      );
+                      updateFormik.setValues(item);
+                    }}
+                    disabled={input || update}
+                  >
+                    <FontAwesomeIcon icon={faPencil} />
+                  </button>
+                  <button
+                    className="contractButton"
+                    onClick={() =>
+                      handleCopy(
+                        array?.slice(0, number + 1).length + index,
+                        item
+                      )
+                    }
+                    disabled={input || update}
+                  >
+                    <FontAwesomeIcon icon={faCopy} />
+                  </button>
+                  <button
+                    className="contractButton"
+                    onClick={() => {
+                      setIsDelete(item?.id);
+                    }}
+                    disabled={input || update}
+                  >
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
+                </td>
+              )}
             </tr>
           ))}
       </table>

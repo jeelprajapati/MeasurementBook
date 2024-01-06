@@ -14,7 +14,7 @@ import {
 import { Context } from "../../context/Context";
 
 const Sidebar = ({ id }) => {
-  const {state,toggle}=useContext(Context);
+  const { state, toggle } = useContext(Context);
   const [token] = useState(localStorage.getItem("token"));
   const navigate = useNavigate();
 
@@ -33,7 +33,11 @@ const Sidebar = ({ id }) => {
   ];
 
   return (
-    <div className={`sidebar-main-container ${state ? "side-container" : "side-less-container"}`}>
+    <div
+      className={`sidebar-main-container ${
+        state ? "side-container" : "side-less-container"
+      }`}
+    >
       <div className="sidebar-toggle" onClick={toggle}>
         <span className="sidebar-toggle-icon">
           <FontAwesomeIcon icon={state ? faTimes : faBars} />
@@ -46,7 +50,11 @@ const Sidebar = ({ id }) => {
               <span className={`sidebar-svg ${id === item.id && "selected"}`}>
                 <FontAwesomeIcon icon={item.icon} />
               </span>
-              <span className={`${state ? "sidebar-name" : "d-none"} ${id === item.id && "selected"}`}>
+              <span
+                className={`${state ? "sidebar-name" : "d-none"} ${
+                  id === item.id && "selected"
+                }`}
+              >
                 {state && item.text}
               </span>
               {!state && <span className="hover-show-name ">{item.text}</span>}
@@ -61,7 +69,7 @@ const Sidebar = ({ id }) => {
               <FontAwesomeIcon icon={faSignOutAlt} />
             </span>
             <span className={`${state ? "sidebar-name" : "d-none"}`}>
-              {state && 'LogOut'}
+              {state && "LogOut"}
             </span>
             {!state && <span className="hover-show-name ">LogOut</span>}
           </div>

@@ -31,16 +31,16 @@
     border-radius: 0 5px 0 0;
 }
 .client-button{
-    width: 38px;
-    height: 32px;
+    width: 35px;
+    height: 35px;
     background-color: #2e4a93;
     border: none;
     margin: 0 2px;
     cursor: pointer;
 }
-.client-svg{
-    width: 20px;
-    height: 20px;
+.client-button svg{
+    color: #fdfdfd;
+    font-size: 18px;
 }
 .client-td{
     color: black;
@@ -49,9 +49,6 @@
     height: 50px;
     font-size: 13px;
     font-weight: 400;
-}
-.client-svg:hover{
-    cursor: pointer;
 }
 .client-add-button{
     background-color: #2e4a93;

@@ -13,7 +13,7 @@ const Table = ({
   contractItems,
   contractItemValues,
   setContractItemValues,
-  initialState
+  initialState,
 }) => {
   const [state, dispatch] = useReducer(inputReducer, INITIAL_STATE);
   const alert = useAlert();
@@ -34,12 +34,12 @@ const Table = ({
     const getData = async () => {
       try {
         const res = await makeRequest.get(
-          `StructMeasurementBook/GetByBillId?billId=${billId}&page=${1}&pageSize=${100}`
+          `StructMeasurementBook/GetByBillId?billId=${billId}&page=${1}&pageSize=${50000}`
         );
         if (res.status === 200) {
           setArray(res.data.items);
-          if(res.data.items?.length===0){
-            setInput({type:"ADD",credential:true});
+          if (res.data.items?.length === 0) {
+            setInput({ type: "ADD", credential: true });
             setDivideBy(0);
           }
         }

@@ -50,7 +50,8 @@ const Measurement = () => {
     } else if (
       (contractItemValues?.stdUnit === 1 ||
         contractItemValues?.stdUnit === 2 ||
-        contractItemValues?.stdUnit === 3) &&
+        contractItemValues?.stdUnit === 3 ||
+        contractItemValues?.stdUnit === 4) &&
       type !== 1
     ) {
       setType(1);
@@ -75,7 +76,7 @@ const Measurement = () => {
               </Link>
               /
               <Link
-                to={`/bills?projectid=${projectId}?projectname=${projectName}`}
+                to={`/bills?projectid=${projectId}&projectname=${projectName}`}
                 className="bill-link"
               >
                 Bills/

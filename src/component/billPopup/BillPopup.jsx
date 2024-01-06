@@ -1,5 +1,4 @@
 import React from "react";
-import close from "../../image/close.svg";
 import "./billPopup.css";
 import makeRequesInstance from "../../utils/makeRequest.js";
 import { useLocation } from "react-router-dom";
@@ -7,20 +6,15 @@ import { useAlert } from "react-alert";
 import { useFormik } from "formik";
 import { billScema } from "../../scemas/index.js";
 import Error from "../error/Error.jsx";
-const Billpopup = ({
-  setOpen,
-  item,
-  setItem,
-  setChange,
-  change,
-  open
-}) => {
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+const Billpopup = ({ setOpen, item, setItem, setChange, change, open }) => {
   const Id = useLocation().search.split("?")[1].split("=")[1];
   const makeRequest = makeRequesInstance(localStorage.getItem("token"));
   const alert = useAlert();
 
   const handleClose = () => {
-    setOpen('');
+    setOpen("");
     setItem({ name: "", invoiceDate: "", typeBill: "", status: "" });
   };
 
@@ -42,7 +36,7 @@ const Billpopup = ({
           if (res.status === 204) {
             alert.show("Data Added Sucessfully", { type: "success" });
             action.resetForm();
-            setOpen('');
+            setOpen("");
             setChange(!change);
           }
         } catch (error) {
@@ -75,7 +69,7 @@ const Billpopup = ({
           if (res.status === 204) {
             alert.show("Data Updated Sucessfully", { type: "success" });
             action.resetForm();
-            setOpen('');
+            setOpen("");
             setItem({ name: "", invoiceDate: "", typeBill: "", status: "" });
             setChange(!change);
           }
@@ -93,7 +87,9 @@ const Billpopup = ({
   });
   return (
     <div className="bill-popup-container">
-      <h3 className="bill-popup-title">{open==='update' ? "Update" : "Add"} Bill</h3>
+      <h3 className="bill-popup-title">
+        {open === "update" ? "Update" : "Add"} Bill
+      </h3>
       <div className="bill-popup-wrapper">
         <label htmlFor="projectName" className="bill-popup-label">
           Bill Name <span>*</span>
@@ -103,20 +99,25 @@ const Billpopup = ({
           id="name"
           className="bill-popup-input"
           name="name"
-          value={open==='update' ? updateFormik.values.name : addFormik.values.name}
-          onChange={open==='update' ? updateFormik.handleChange : addFormik.handleChange}
-          onBlur={open==='update' ? updateFormik.handleBlur : addFormik.handleBlur}
+          value={
+            open === "update" ? updateFormik.values.name : addFormik.values.name
+          }
+          onChange={
+            open === "update"
+              ? updateFormik.handleChange
+              : addFormik.handleChange
+          }
+          onBlur={
+            open === "update" ? updateFormik.handleBlur : addFormik.handleBlur
+          }
         />
-        {open==='update' ? (
+        {open === "update" ? (
           <Error
             touch={updateFormik.touched.name}
             error={updateFormik.errors.name}
           />
         ) : (
-          <Error
-            touch={addFormik.touched.name}
-            error={addFormik.errors.name}
-          />
+          <Error touch={addFormik.touched.name} error={addFormik.errors.name} />
         )}
       </div>
       <div className="bill-popup-wrapper">
@@ -129,14 +130,20 @@ const Billpopup = ({
           id="invoiceDate"
           className="bill-popup-input"
           value={
-            open==='update'
+            open === "update"
               ? updateFormik.values.invoiceDate?.split("T")[0]
               : addFormik.values.invoiceDate?.split("T")[0]
           }
-          onChange={open==='update' ? updateFormik.handleChange : addFormik.handleChange}
-          onBlur={open==='update' ? updateFormik.handleBlur : addFormik.handleBlur}
+          onChange={
+            open === "update"
+              ? updateFormik.handleChange
+              : addFormik.handleChange
+          }
+          onBlur={
+            open === "update" ? updateFormik.handleBlur : addFormik.handleBlur
+          }
         />
-        {open==='update' ? (
+        {open === "update" ? (
           <Error
             touch={updateFormik.touched.invoiceDate}
             error={updateFormik.errors.invoiceDate}
@@ -157,16 +164,26 @@ const Billpopup = ({
           className="bill-popup-select"
           id=""
           value={
-            open==='update' ? updateFormik.values.typeBill : addFormik.values.typeBill
+            open === "update"
+              ? updateFormik.values.typeBill
+              : addFormik.values.typeBill
           }
-          onChange={open==='update' ? updateFormik.handleChange : addFormik.handleChange}
-          onBlur={open==='update' ? updateFormik.handleBlur : addFormik.handleBlur}
+          onChange={
+            open === "update"
+              ? updateFormik.handleChange
+              : addFormik.handleChange
+          }
+          onBlur={
+            open === "update" ? updateFormik.handleBlur : addFormik.handleBlur
+          }
         >
-          <option value="" disabled>select Type</option>
+          <option value="" disabled>
+            select Type
+          </option>
           <option value="1">RA</option>
           <option value="2">Final</option>
         </select>
-        {open==='update' ? (
+        {open === "update" ? (
           <Error
             touch={updateFormik.touched.typeBill}
             error={updateFormik.errors.typeBill}
@@ -186,16 +203,28 @@ const Billpopup = ({
           name="status"
           className="bill-popup-select"
           id=""
-          value={open==='update' ? updateFormik.values.status : addFormik.values.status}
-          onChange={open==='update' ? updateFormik.handleChange : addFormik.handleChange}
-          onBlur={open==='update' ? updateFormik.handleBlur : addFormik.handleBlur}
+          value={
+            open === "update"
+              ? updateFormik.values.status
+              : addFormik.values.status
+          }
+          onChange={
+            open === "update"
+              ? updateFormik.handleChange
+              : addFormik.handleChange
+          }
+          onBlur={
+            open === "update" ? updateFormik.handleBlur : addFormik.handleBlur
+          }
         >
-          <option value="" disabled>select status</option>
+          <option value="" disabled>
+            select status
+          </option>
           <option value="1">Draft</option>
           <option value="2">Submitted</option>
           <option value="3">Accepted</option>
         </select>
-        {open==='update' ? (
+        {open === "update" ? (
           <Error
             touch={updateFormik.touched.status}
             error={updateFormik.errors.status}
@@ -210,12 +239,20 @@ const Billpopup = ({
       <div className="bill-popup-button">
         <input
           type="button"
-          value={`${open==='update' ? "Update Bill" : "+ Add Bill"}`}
+          value={`${open === "update" ? "Update Bill" : "+ Add Bill"}`}
           className="bill-popup-btn"
-          onClick={open==='update' ? updateFormik.handleSubmit : addFormik.handleSubmit}
+          onClick={
+            open === "update"
+              ? updateFormik.handleSubmit
+              : addFormik.handleSubmit
+          }
         />
       </div>
-      <img src={close} onClick={handleClose} alt="" className="bill-popup-close" />
+      <FontAwesomeIcon
+        icon={faXmark}
+        className="bill-popup-close"
+        onClick={handleClose}
+      />
     </div>
   );
 };
