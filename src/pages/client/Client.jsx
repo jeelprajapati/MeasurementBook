@@ -6,6 +6,7 @@ import ClientPopUp from "../../component/clientPopup/ClientPopup.jsx";
 import { useNavigate } from "react-router-dom";
 import makeRequesInstance from "../../utils/makeRequest.js";
 const initialState = {
+  id:"00000000-0000-0000-0000-000000000000",
   name: "",
   email: "",
   phoneNumber: "",
@@ -13,16 +14,15 @@ const initialState = {
   pan: "",
   address: "",
   city: "",
-  countryId: "",
-  stateId: "",
+  countryId:"",
+  stateId:"",
   postalCode: "",
 };
 const Client = () => {
-  const [input, setInput] = useState(false);
+  const [input, setInput] = useState({type:"",credential:false});
   const [item, setItem] = useState(initialState);
   const [country, setCountry] = useState(null);
   const [state, setState] = useState(null);
-  const [update, setUpdate] = useState(false);
   const [change, setChange] = useState(0);
   const navigate = useNavigate();
   const Id = localStorage.getItem("organizationId");
@@ -35,30 +35,18 @@ const Client = () => {
 
   useEffect(() => {
     const getCountry = async () => {
-      try {
         const makeRequest = makeRequesInstance(localStorage.getItem("token"));
         const res = await makeRequest.get("/Standard/GetCountries");
-        setCountry(res.data);
-      } catch (error) {
-        if (error.response) {
-          alert.show(error.response.data.title, { type: "error" });
-        } else {
-          alert.show("something went wrong", { type: "info" });
+        if(res.status===200){
+          setCountry(res.data);
         }
-      }
     };
     const getStates = async () => {
-      try {
         const makeRequest = makeRequesInstance(localStorage.getItem("token"));
         const res = await makeRequest.get("/Standard/GetStates");
-        setState(res.data);
-      } catch (error) {
-        if (error.response) {
-          alert.show(error.response.data.title, { type: "error" });
-        } else {
-          alert.show("something went wrong", { type: "info" });
+        if(res.status===200){
+          setState(res.data);
         }
-      }
     };
     getCountry();
     getStates();
@@ -72,25 +60,24 @@ const Client = () => {
         </div>
         <div className="client-right">
           <div className="client-top">
-            <div className={`${input ? "client-path blur" : "client-path"}`}>
+            <div className={`${input?.credential ? "client-path blur" : "client-path"}`}>
               Clients/
             </div>
           </div>
-          <div className={`${input ? "client-main blur" : "client-main"}`}>
-            <h2 className={`${input ? "client-title blur" : "client-title"}`}>
+          <div className={`${input?.credential ? "client-main blur" : "client-main"}`}>
+            <h2 className={`${input?.credential ? "client-title blur" : "client-title"}`}>
               Clients
             </h2>
             <ClientTable
               setInput={setInput}
               change={change}
               setItem={setItem}
-              setUpdate={setUpdate}
               setChange={setChange}
               country={country}
               state={state}
             />
           </div>
-          {input && (
+          {input?.credential && (
             <div className="clientpopup">
               <ClientPopUp
                 initialState={initialState}
@@ -99,10 +86,9 @@ const Client = () => {
                 setChange={setChange}
                 setItem={setItem}
                 item={item}
-                setUpdate={setUpdate}
-                update={update}
                 country={country}
                 state={state}
+                input={input}
               />
             </div>
           )}

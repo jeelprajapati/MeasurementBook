@@ -1,436 +1,246 @@
 import React from "react";
 import "./clientPopup.css";
-// import close from "../../image/close.svg";
-import makeRequesInstance from "../../utils/makeRequest.js";
-import { useAlert } from "react-alert";
 import { useFormik } from "formik";
-import { clientScema } from "../../scemas/index.js";
-import Error from "../error/Error.jsx";
+import { clientScema } from "../../scemas";
+import Error from "../error/Error";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import makeRequesInstance from "../../utils/makeRequest";
+import { useAlert } from "react-alert";
 
-const ClientPopUp = ({
-  setInput,
-  change,
-  setChange,
+const ClientPopup = ({
   item,
-  setItem,
-  setUpdate,
-  update,
   country,
   state,
+  setItem,
   initialState,
+  setInput,
+  input,
+  setChange,
+  change,
 }) => {
-  const Id = localStorage.getItem("organizationId");
-  const alert = useAlert();
+  const organizationID = localStorage.getItem("organizationId");
   const makeRequest = makeRequesInstance(localStorage.getItem("token"));
-  const addRequest = useFormik({
+  const alert = useAlert();
+  const arrangeValues = (values) => {
+    return {
+      ...values,
+      stateId: parseInt(values.stateId),
+      countryId: parseInt(values.countryId),
+      organizationID,
+    };
+  };
+  const {
+    values,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    errors,
+    touched,
+    setValues,
+  } = useFormik({
     initialValues: item,
     validationSchema: clientScema,
     onSubmit: (value, action) => {
-      const handleAdd = async () => {
-        try {
-          const responce = await makeRequest.post("/Client", {
-            id: "00000000-0000-0000-0000-000000000000",
-            name: value?.name,
-            email: value?.email,
-            phoneNumber: value?.phoneNumber,
-            gstin: value?.gstin,
-            pan: value?.pan,
-            address: value?.address,
-            city: value?.city,
-            stateId: parseInt(value?.stateId),
-            countryId: parseInt(value?.countryId),
-            postalCode: value?.postalCode,
-            organizationID: Id,
-          });
-          if (responce.status === 204) {
-            alert.show("Data Added Suceefully", { type: "success" });
-            action.resetForm();
-            setItem(initialState);
-            setInput(false);
-            if (change === 0) {
-              setChange(1);
-            } else {
-              setChange(0);
-            }
-          }
-        } catch (error) {
-          if (error.response) {
-            alert.show(error.response.data.title, { type: "error" });
-          } else {
-            alert.show("something went wrong", { type: "info" });
-          }
+      const values = arrangeValues(value);
+      const getResponse = async () => {
+        if (input?.type === "ADD") {
+          return await makeRequest.post("Client", values);
+        } else if (input?.type === "UPDATE") {
+          return await makeRequest.put("Client", values);
         }
       };
-      handleAdd();
-    },
-  });
-  const upadteRequest = useFormik({
-    initialValues: item,
-    validationSchema: clientScema,
-    onSubmit: (value, action) => {
-      const handleUpdate = async () => {
-        try {
-          const responce = await makeRequest.put("/Client", {
-            id: value?.id,
-            name: value?.name,
-            email: value?.email,
-            phoneNumber: value?.phoneNumber,
-            gstin: value?.gstin,
-            pan: value?.pan,
-            address: value?.address,
-            city: value?.city,
-            stateId: parseInt(value?.stateId),
-            countryId: parseInt(value?.countryId),
-            postalCode: value?.postalCode,
-            organizationID: Id,
-          });
-          if (responce.status === 204) {
-            alert.show("Data Updated Suceefully", { type: "success" });
-            action.resetForm();
+      getResponse()
+        .then((res) => {
+          if (res.status === 204) {
+            alert.show(
+              `Data ${input === "ADD" ? "Added" : "Updated"} Sucessfully`,
+              { type: "success" }
+            );
+            setChange(!change);
             setItem(initialState);
-            setUpdate(false);
-            setInput(false);
-            if (change === 0) {
-              setChange(1);
-            } else {
-              setChange(0);
-            }
+            setInput({ type: "", credential: false });
+            action.resetForm();
           }
-        } catch (error) {
-          if (error.response) {
-            alert.show(error.response.data.title, { type: "error" });
-          } else {
-            alert.show("something went wrong", { type: "info" });
-          }
-        }
-      };
-      handleUpdate();
+        })
+        .catch(() => {
+          alert.show("Something Went Wrong!", { type: "info" });
+        });
     },
   });
-
   const handleClose = () => {
-    setInput(false);
     setItem(initialState);
-    setUpdate(false);
+    setValues(initialState);
+    setInput({ type: "", credential: false });
   };
   return (
-    <div className="client-popup-container">
-      <h3 className="client-popup-title">
-        {update ? "Update Client" : "Add New Client"}
+    <div className="clientPopupContainer">
+      <h3>
+        {input?.type === "ADD" && "Add New Client"}
+        {input?.type === "UPDATE" && "Update Client"}
       </h3>
-      <div className="client-popup-wrapper">
-        <div className="client-input-error-wrapper">
+      <div className="formContainer">
+        <div className="clientInputWrapper">
+          <label htmlFor="name">
+            Client Name <span style={{ color: "red" }}>*</span>
+          </label>
           <input
             type="text"
-            id="clientName"
-            placeholder="Client Name *"
-            className="client-popup-input"
             name="name"
-            value={update ? upadteRequest.values.name : addRequest.values.name}
-            onChange={
-              update ? upadteRequest.handleChange : addRequest.handleChange
-            }
-            onBlur={update ? upadteRequest.handleBlur : addRequest.handleBlur}
+            value={values.name}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
-          {update ? (
-            <Error
-              touch={upadteRequest.touched.name}
-              error={upadteRequest.errors.name}
-            />
-          ) : (
-            <Error
-              touch={addRequest.touched.name}
-              error={addRequest.errors.name}
-            />
-          )}
+          <Error error={errors.name} touch={touched.name} />
         </div>
-        <div className="client-input-error-wrapper">
+        <div className="clientInputWrapper">
+          <label htmlFor="email">
+            Email <span style={{ color: "red" }}>*</span>
+          </label>
           <input
             type="email"
-            id="email"
-            placeholder="Email *"
-            className="client-popup-input"
             name="email"
-            value={
-              update ? upadteRequest.values.email : addRequest.values.email
-            }
-            onChange={
-              update ? upadteRequest.handleChange : addRequest.handleChange
-            }
-            onBlur={update ? upadteRequest.handleBlur : addRequest.handleBlur}
+            value={values.email}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
-          {update ? (
-            <Error
-              touch={upadteRequest.touched.email}
-              error={upadteRequest.errors.email}
-            />
-          ) : (
-            <Error
-              touch={addRequest.touched.email}
-              error={addRequest.errors.email}
-            />
-          )}
+          <Error error={errors.email} touch={touched.email} />
         </div>
-        <div className="client-input-error-wrapper">
+        <div className="clientInputWrapper">
+          <label htmlFor="phoneNumber">
+            Phone Number <span style={{ color: "red" }}>*</span>
+          </label>
           <input
-            type="text"
-            id="phoneNumber"
-            placeholder="Phone Number *"
-            className="client-popup-input"
+            type="number"
             name="phoneNumber"
-            value={
-              update
-                ? upadteRequest.values.phoneNumber
-                : addRequest.values.phoneNumber
-            }
-            onChange={
-              update ? upadteRequest.handleChange : addRequest.handleChange
-            }
-            onBlur={update ? upadteRequest.handleBlur : addRequest.handleBlur}
+            value={values.phoneNumber}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
-          {update ? (
-            <Error
-              touch={upadteRequest.touched.phoneNumber}
-              error={upadteRequest.errors.phoneNumber}
-            />
-          ) : (
-            <Error
-              touch={addRequest.touched.phoneNumber}
-              error={addRequest.errors.phoneNumber}
-            />
-          )}
+          <Error error={errors.phoneNumber} touch={touched.phoneNumber} />
         </div>
-        <div className="client-input-error-wrapper">
+        <div className="clientInputWrapper">
+          <label htmlFor="gstin">GSTIN</label>
           <input
             type="text"
-            id="gstin"
-            placeholder="GSTIN"
-            className="client-popup-input"
             name="gstin"
-            value={
-              update ? upadteRequest.values.gstin : addRequest.values.gstin
-            }
-            onChange={
-              update ? upadteRequest.handleChange : addRequest.handleChange
-            }
-            onBlur={update ? upadteRequest.handleBlur : addRequest.handleBlur}
+            value={values.gstin}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
-          {update ? (
-            <Error
-              touch={upadteRequest.touched.gstin}
-              error={upadteRequest.errors.gstin}
-            />
-          ) : (
-            <Error
-              touch={addRequest.touched.gstin}
-              error={addRequest.errors.gstin}
-            />
-          )}
         </div>
-        <div className="client-input-error-wrapper">
+        <div className="clientInputWrapper">
+          <label htmlFor="pan">PAN No.</label>
           <input
             type="text"
-            id="pan"
-            placeholder="PAN No."
-            className="client-popup-input"
             name="pan"
-            value={update ? upadteRequest.values.pan : addRequest.values.pan}
-            onChange={
-              update ? upadteRequest.handleChange : addRequest.handleChange
-            }
-            onBlur={update ? upadteRequest.handleBlur : addRequest.handleBlur}
+            value={values.pan}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
-          {update ? (
-            <Error
-              touch={upadteRequest.touched.pan}
-              error={upadteRequest.errors.pan}
-            />
-          ) : (
-            <Error
-              touch={addRequest.touched.pan}
-              error={addRequest.errors.pan}
-            />
-          )}
         </div>
-        <div className="client-input-error-wrapper">
+        <div className="clientInputWrapper">
+          <label htmlFor="address">
+            Address <span style={{ color: "red" }}>*</span>
+          </label>
           <input
             type="text"
-            id="address"
-            placeholder="Address *"
-            className="client-popup-input"
             name="address"
-            value={
-              update ? upadteRequest.values.address : addRequest.values.address
-            }
-            onChange={
-              update ? upadteRequest.handleChange : addRequest.handleChange
-            }
-            onBlur={update ? upadteRequest.handleBlur : addRequest.handleBlur}
+            value={values.address}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
-          {update ? (
-            <Error
-              touch={upadteRequest.touched.address}
-              error={upadteRequest.errors.address}
-            />
-          ) : (
-            <Error
-              touch={addRequest.touched.address}
-              error={addRequest.errors.address}
-            />
-          )}
+          <Error error={errors.address} touch={touched.address} />
         </div>
-        <div className="client-input-error-wrapper">
+        <div className="clientInputWrapper">
+          <label htmlFor="city">
+            City <span style={{ color: "red" }}>*</span>
+          </label>
           <input
             type="text"
-            id="city"
-            placeholder="City *"
-            className="client-popup-input"
             name="city"
-            value={update ? upadteRequest.values.city : addRequest.values.city}
-            onChange={
-              update ? upadteRequest.handleChange : addRequest.handleChange
-            }
-            onBlur={update ? upadteRequest.handleBlur : addRequest.handleBlur}
+            value={values.city}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
-          {update ? (
-            <Error
-              touch={upadteRequest.touched.city}
-              error={upadteRequest.errors.city}
-            />
-          ) : (
-            <Error
-              touch={addRequest.touched.city}
-              error={addRequest.errors.city}
-            />
-          )}
+          <Error error={errors.city} touch={touched.city} />
         </div>
-        <div className="client-input-error-wrapper">
+        <div className="clientInputWrapper">
+          <label htmlFor="conutryId">
+            Country <span style={{ color: "red" }}>*</span>
+          </label>
           <select
             name="countryId"
-            value={
-              update
-                ? upadteRequest.values.countryId
-                : addRequest.values.countryId
-            }
-            onChange={
-              update ? upadteRequest.handleChange : addRequest.handleChange
-            }
-            onBlur={update ? upadteRequest.handleBlur : addRequest.handleBlur}
-            className="client-popup-select"
-            id=""
+            value={values.countryId}
+            onChange={handleChange}
+            onBlur={handleBlur}
           >
             <option value="" disabled>
-              Select Country *
+              Select Country
             </option>
             {country?.map((item) => (
-              <option value={item?.id} key={item?.id}>
+              <option key={item?.id} value={item?.id}>
                 {item?.countryName}
               </option>
             ))}
           </select>
-          {update ? (
-            <Error
-              touch={upadteRequest.touched.countryId}
-              error={upadteRequest.errors.countryId}
-            />
-          ) : (
-            <Error
-              touch={addRequest.touched.countryId}
-              error={addRequest.errors.countryId}
-            />
-          )}
+          <Error error={errors.countryId} touch={touched.countryId} />
         </div>
-        <div className="client-input-error-wrapper">
-          {
-            <select
-              name="stateId"
-              value={
-                update
-                  ? upadteRequest.values.stateId
-                  : addRequest.values.stateId
-              }
-              onChange={
-                update ? upadteRequest.handleChange : addRequest.handleChange
-              }
-              onBlur={update ? upadteRequest.handleBlur : addRequest.handleBlur}
-              className="client-popup-select"
-            >
-              <option value="" disabled>
-                Select State *
-              </option>
-              {state
-                ?.filter(
-                  (e) =>
-                    e?.countryCode?.toString() ===
-                    (update
-                      ? upadteRequest.values.countryId
-                      : addRequest.values.countryId
-                    )?.toString()
-                )
-                .map((item) => (
-                  <option value={item?.id} key={item?.id}>
-                    {item?.stateName}
-                  </option>
-                ))}
-            </select>
-          }
-          {update ? (
-            <Error
-              touch={upadteRequest.touched.stateId}
-              error={upadteRequest.errors.stateId}
-            />
-          ) : (
-            <Error
-              touch={addRequest.touched.stateId}
-              error={addRequest.errors.stateId}
-            />
-          )}
+        <div className="clientInputWrapper">
+          <label htmlFor="stateId">
+            State <span style={{ color: "red" }}>*</span>
+          </label>
+          <select
+            name="stateId"
+            value={values.stateId}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          >
+            <option value="" disabled>
+              Select State
+            </option>
+            {state
+              ?.filter(
+                (item) =>
+                  item?.countryCode.toString() === values?.countryId.toString()
+              )
+              ?.map((item) => (
+                <option key={item?.id} value={item?.id}>
+                  {item?.stateName}
+                </option>
+              ))}
+          </select>
+          <Error error={errors.stateId} touch={touched.stateId} />
         </div>
-        <div className="client-input-error-wrapper">
+        <div className="clientInputWrapper">
+          <label htmlFor="postalCode">
+            Postal Code <span style={{ color: "red" }}>*</span>
+          </label>
           <input
             type="text"
-            id="postalCode"
-            placeholder="Postal Code *"
-            className="client-popup-input"
             name="postalCode"
-            value={
-              update
-                ? upadteRequest.values.postalCode
-                : addRequest.values.postalCode
-            }
-            onChange={
-              update ? upadteRequest.handleChange : addRequest.handleChange
-            }
-            onBlur={update ? upadteRequest.handleBlur : addRequest.handleBlur}
+            value={values.postalCode}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
-          {update ? (
-            <Error
-              touch={upadteRequest.touched.postalCode}
-              error={upadteRequest.errors.postalCode}
-            />
-          ) : (
-            <Error
-              touch={addRequest.touched.postalCode}
-              error={addRequest.errors.postalCode}
-            />
-          )}
+          <Error error={errors.postalCode} touch={touched.postalCode} />
         </div>
       </div>
-      <input
-        type="button"
-        value={`${update ? "Update" : "Submit"}`}
-        onClick={update ? upadteRequest.handleSubmit : addRequest.handleSubmit}
-        className="client-btn"
-      />
+      <button
+        type="submit"
+        className="clientPopupButton"
+        onClick={handleSubmit}
+      >
+        {input?.type === "ADD" && "Submit"}
+        {input?.type === "UPDATE" && "Update"}
+      </button>
       <FontAwesomeIcon
         icon={faXmark}
-        className="client-popup-close"
+        className="clientPopupClose"
         onClick={handleClose}
       />
     </div>
   );
 };
 
-export default ClientPopUp;
+export default ClientPopup;

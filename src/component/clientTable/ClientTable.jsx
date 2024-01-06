@@ -13,33 +13,30 @@ import {
 const ClientTable = ({
   setInput,
   setItem,
-  setUpdate,
   change,
   setChange,
   country,
   state,
 }) => {
   const Id = localStorage.getItem("organizationId");
-  const [isDelete, setIsDelete] = useState(null);
+  const [isDelete, setIsDelete] = useState({ id: "", credential: false });
   const alert = useAlert();
   const { loding, data } = useFetch({
     url: `Client?page=${1}&pageSize=${50000}&organizationId=${Id}`,
     change,
   });
   const handleUpdate = (e) => {
-    setInput(true);
+    setInput({ type: "UPDATE", credential: true });
     setItem(e);
-    setUpdate(true);
   };
-  const handleAdd = (e) => {
-    e.preventDefault();
-    setInput(true);
+  const handleAdd = () => {
+    setInput({ type: "ADD", credential: true });
   };
   const handleDelete = async (e) => {
     try {
       const makeRequest = makeRequesInstance(localStorage.getItem("token"));
       const res = await makeRequest.delete(
-        `/Client/${isDelete}?organizationId=${Id}`
+        `/Client/${isDelete?.id}?organizationId=${Id}`
       );
       if (res.status === 200) {
         setChange(!change);
@@ -52,7 +49,7 @@ const ClientTable = ({
         alert.show("something went wrong", { type: "info" });
       }
     }
-    setIsDelete(null);
+    setIsDelete({ id: "", credential: false });
   };
   return (
     <div>
@@ -144,7 +141,7 @@ const ClientTable = ({
                 <td className="client-td" colSpan={3 / 2}>
                   <span>{item.postalCode}</span>
                 </td>
-                {isDelete === item?.id ? (
+                {isDelete?.id === item?.id && isDelete?.credential ? (
                   <td className="client-td" style={{ textAlign: "center" }}>
                     <button className="client-button" onClick={handleDelete}>
                       <FontAwesomeIcon icon={faCheck} />
@@ -152,7 +149,7 @@ const ClientTable = ({
                     <button
                       className="client-button"
                       onClick={() => {
-                        setIsDelete(null);
+                        setIsDelete({ id: "", credential: false });
                       }}
                     >
                       <FontAwesomeIcon icon={faXmark} />
@@ -171,7 +168,7 @@ const ClientTable = ({
                     <button
                       className="client-button"
                       onClick={() => {
-                        setIsDelete(item?.id);
+                        setIsDelete({ id: item?.id, credential: true });
                       }}
                     >
                       <FontAwesomeIcon icon={faTrash} />

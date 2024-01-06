@@ -1,79 +1,64 @@
-.client-popup-container{
-    position:fixed;
-    left: 50%;
-    top: 50%;
-    -ms-transform: translate(-50%,-50%);
-    -moz-transform:translate(-50%,-50%);
-    -webkit-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
-    background-color: #fdfdfd; 
-    width: 35vw;
-    border-radius: 15px;
+.clientPopupContainer{
+    background-color: #fdfdfd;
     box-shadow: 0px 4px 10px #00000040;
-    padding: 40px;
+    padding: 30px;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 25px;
+    border-radius: 15px;
 }
-.client-popup-title{
-    width: 100%;
-    color: #2e4a93;
+.clientPopupContainer h3{
     margin: 0;
-    font-weight: 600;
+    padding: 0;
     font-size: 18px;
+    font-weight: 600;
+    color: #2e4a93;
     text-align: center;
 }
-.client-popup-wrapper{
+.formContainer{
     display: grid;
-    grid-template-columns: auto auto;
-    gap: 25px;
+    grid-template-columns: 48% 48%;
+    gap: 15px;
 }
-.client-input-error-wrapper{
-    display: grid;
+.clientInputWrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    position: relative;
 }
-.client-popup-input:-webkit-autofill,
-.client-popup-input:-webkit-autofill:hover, 
-.client-popup-input:-webkit-autofill:focus, 
-.client-popup-input:-webkit-autofill:active{
+.clientInputWrapper label{
+    font-size: 15px;
+    font-weight: 400;
+}
+.clientInputWrapper input{
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #2e4a93;
+}
+.clientInputWrapper input:-webkit-autofill,
+.clientInputWrapper input:-webkit-autofill:hover, 
+.clientInputWrapper input:-webkit-autofill:focus, 
+.clientInputWrapper input:-webkit-autofill:active{
     -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
-.client-popup-input{
-    height: 40px;
-    padding: 5px;
+.clientInputWrapper select{
+    height: 43px;
     border-radius: 5px;
     border: 1px solid #2e4a93;
-    background-color: white;   
-    font-weight: 400;
-    color: black;
 }
-.client-popup-select{
-    height: 50px;
-    width: 100%;
-    border-radius: 5px;
-    border: 1px solid #2e4a93;
-    background-color: white;
-    font-weight: 400;
-    color: gray;
-}
-.client-popup-select option{
-    font-weight: 400;
-}
-.client-btn{
-    background-color:#2e4a93;
-    color: white;
-    border: none;
-    padding: 10px 0;
-    font-weight: 400;
+.clientPopupButton{
     font-size: 15px;
+    background-color: #2e4a93;
+    color: #fdfdfd;
+    border: none;
+    padding: 10px;
     border-radius: 5px;
     cursor: pointer;
 }
-.client-popup-close{
-    position: absolute;
+.clientPopupClose{
     font-size: 18px;
+    position: absolute;
     top: 7px;
     right: 7px;
-    cursor: pointer;
     color: gray;
 }
-
