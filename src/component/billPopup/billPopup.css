@@ -1,4 +1,4 @@
-.bill-popup-container{
+.billPopupContainer{
     position:fixed;
     left: 50%;
     top: 50%;
@@ -15,34 +15,34 @@
     gap: 20px;
     border-radius: 15px;
 }
-.bill-popup-title{
+.billPopupTitle{
     margin: 0;
     font-weight: 18px;
     font-weight: 600;
     color: #2e4a93;
     text-align: center;
 }
-.bill-popup-wrapper{
+.billPopupWrapper{
     width: 100%;
     height: fit-content;
     display: flex;
     flex-direction: column;
     gap: 7px;
 }
-.bill-popup-label{
+.billPopupLabel{
     font-weight: 400;
     font-size: 15px;
 }
-.bill-popup-label span{
+.billPopupLabel span{
     color: red;
 }
-.bill-popup-input:-webkit-autofill,
-.bill-popup-input:-webkit-autofill:hover, 
-.bill-popup-input:-webkit-autofill:focus, 
-.bill-popup-input:-webkit-autofill:active{
+.billPopupInput:-webkit-autofill,
+.billPopupInput:-webkit-autofill:hover, 
+.billPopupInput:-webkit-autofill:focus, 
+.billPopupInput:-webkit-autofill:active{
     -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
-.bill-popup-input {
+.billPopupInput {
     height: 40px;
     border-radius: 5px;
     border: 1px solid #2e4a93;
@@ -51,7 +51,7 @@
     padding: 5px;
     background-color: white;
 }
-.bill-popup-select{
+.billPopupSelect{
     height: 50px;
     border-radius: 5px;
     border: 1px solid #2e4a93;
@@ -59,13 +59,13 @@
     margin: 0;
     background-color: white;
 }
-.bill-popup-select option{
+.billPopupSelect option{
     font-weight: 400;
 }
-.bill-popup-button{
+.billPopupButton{
     width: 100%;
 }
-.bill-popup-btn{
+.billPopupButton input{
     width: 25%;
     padding: 10px 0;
     font-weight: 400;
@@ -76,7 +76,7 @@
     border: none;
     cursor: pointer;
 }
-.bill-popup-close{
+.billPopupClose{
     position: absolute;
     font-size: 18px;
     top: 7px;

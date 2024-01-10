@@ -53,46 +53,46 @@ const ClientTable = ({
   };
   return (
     <div>
-      <button className="client-add-button" onClick={handleAdd}>
+      <button className="clientAddButton" onClick={handleAdd}>
         + Add Client
       </button>
-      <div className="client-table-con">
-        <table className="client-table">
+      <div className="clientTableContainer">
+        <table className="clientTable">
           {/* ROW-1 */}
-          <tr className="client-tr">
+          <tr className="clientTr">
             <th
-              className="client-th"
+              className="clientTh"
               style={{ paddingLeft: "5px" }}
               colSpan={2}
             >
               Name*
             </th>
-            <th className="client-th" colSpan={2}>
+            <th className="clientTh" colSpan={2}>
               Email*
             </th>
-            <th className="client-th" colSpan={3 / 2}>
+            <th className="clientTh" colSpan={3 / 2}>
               Phone No*
             </th>
-            <th className="client-th" style={{ textAlign: "center" }}>
+            <th className="clientTh" style={{ textAlign: "center" }}>
               GSTIN
             </th>
-            <th className="client-th">PAN</th>
-            <th className="client-th" colSpan={2}>
+            <th className="clientTh">PAN</th>
+            <th className="clientTh" colSpan={2}>
               Address*
             </th>
-            <th className="client-th" colSpan={3 / 2}>
+            <th className="clientTh" colSpan={3 / 2}>
               City*
             </th>
-            <th className="client-th" colSpan={3 / 2}>
+            <th className="clientTh" colSpan={3 / 2}>
               State*
             </th>
-            <th className="client-th" colSpan={3 / 2}>
+            <th className="clientTh" colSpan={3 / 2}>
               Country*
             </th>
-            <th className="client-th" colSpan={3 / 2}>
+            <th className="clientTh" colSpan={3 / 2}>
               Postal Code*
             </th>
-            <th className="client-th" style={{ textAlign: "center" }}>
+            <th className="clientTh" style={{ textAlign: "center" }}>
               Actions
             </th>
           </tr>
@@ -101,36 +101,36 @@ const ClientTable = ({
             data?.items.map((item) => (
               <tr className="tr" key={item?.id}>
                 <td
-                  className="client-td"
+                  className="clientTd"
                   colSpan={2}
                   style={{ paddingLeft: "5px" }}
                 >
                   <span>{item.name}</span>
                 </td>
-                <td className="client-td" colSpan={2}>
+                <td className="clientTd" colSpan={2}>
                   <span>{item.email}</span>
                 </td>
-                <td className="client-td" colSpan={3 / 2}>
+                <td className="clientTd" colSpan={3 / 2}>
                   <span>{item.phoneNumber}</span>
                 </td>
-                <td className="client-td" style={{ textAlign: "center" }}>
+                <td className="clientTd" style={{ textAlign: "center" }}>
                   <span>{item?.gstin === "" ? "N/A" : item.gstin}</span>
                 </td>
-                <td className="client-td">
+                <td className="clientTd">
                   <span>{item?.pan === "" ? "N/A" : item.pan}</span>
                 </td>
-                <td className="client-td" colSpan={2}>
+                <td className="clientTd" colSpan={2}>
                   <span>{item.address}</span>
                 </td>
-                <td className="client-td" colSpan={3 / 2}>
+                <td className="clientTd" colSpan={3 / 2}>
                   <span>{item.city}</span>
                 </td>
-                <td className="client-td" colSpan={3 / 2}>
+                <td className="clientTd" colSpan={3 / 2}>
                   <span>
                     {state?.filter((s) => s.id === item.stateId)[0].stateName}
                   </span>
                 </td>
-                <td className="client-td" colSpan={3 / 2}>
+                <td className="clientTd" colSpan={3 / 2}>
                   <span>
                     {
                       country?.filter((c) => c.id === item.countryId)[0]
@@ -138,16 +138,16 @@ const ClientTable = ({
                     }
                   </span>
                 </td>
-                <td className="client-td" colSpan={3 / 2}>
+                <td className="clientTd" colSpan={3 / 2}>
                   <span>{item.postalCode}</span>
                 </td>
                 {isDelete?.id === item?.id && isDelete?.credential ? (
-                  <td className="client-td" style={{ textAlign: "center" }}>
-                    <button className="client-button" onClick={handleDelete}>
+                  <td className="clientTd" style={{ textAlign: "center" }}>
+                    <button className="clientButton" onClick={handleDelete}>
                       <FontAwesomeIcon icon={faCheck} />
                     </button>
                     <button
-                      className="client-button"
+                      className="clientButton"
                       onClick={() => {
                         setIsDelete({ id: "", credential: false });
                       }}
@@ -156,9 +156,9 @@ const ClientTable = ({
                     </button>
                   </td>
                 ) : (
-                  <td className="client-td" style={{ textAlign: "center" }}>
+                  <td className="clientTd" style={{ textAlign: "center" }}>
                     <button
-                      className="client-button"
+                      className="clientButton"
                       onClick={() => {
                         handleUpdate(item);
                       }}
@@ -166,7 +166,7 @@ const ClientTable = ({
                       <FontAwesomeIcon icon={faPencil} />
                     </button>
                     <button
-                      className="client-button"
+                      className="clientButton"
                       onClick={() => {
                         setIsDelete({ id: item?.id, credential: true });
                       }}

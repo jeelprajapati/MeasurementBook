@@ -36,8 +36,7 @@ const ClientPopup = ({
     handleChange,
     handleSubmit,
     errors,
-    touched,
-    setValues,
+    touched
   } = useFormik({
     initialValues: item,
     validationSchema: clientScema,
@@ -70,7 +69,6 @@ const ClientPopup = ({
   });
   const handleClose = () => {
     setItem(initialState);
-    setValues(initialState);
     setInput({ type: "", credential: false });
   };
   return (
@@ -226,14 +224,12 @@ const ClientPopup = ({
           <Error error={errors.postalCode} touch={touched.postalCode} />
         </div>
       </div>
-      <button
-        type="submit"
+      <input
+        type="button"
         className="clientPopupButton"
+        value={input?.type === "ADD" ? "Submit" : "Update"}
         onClick={handleSubmit}
-      >
-        {input?.type === "ADD" && "Submit"}
-        {input?.type === "UPDATE" && "Update"}
-      </button>
+      />
       <FontAwesomeIcon
         icon={faXmark}
         className="clientPopupClose"

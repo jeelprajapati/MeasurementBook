@@ -32,6 +32,7 @@
 }
 .clientInputWrapper input{
     height: 40px;
+    padding: 5px;
     border-radius: 5px;
     border: 1px solid #2e4a93;
 }
@@ -42,7 +43,7 @@
     -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 .clientInputWrapper select{
-    height: 43px;
+    height: 50px;
     border-radius: 5px;
     border: 1px solid #2e4a93;
 }
@@ -61,4 +62,5 @@
     top: 7px;
     right: 7px;
     color: gray;
+    cursor:pointer;
 }

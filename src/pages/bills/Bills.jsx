@@ -5,19 +5,23 @@ import Billpopup from "../../component/billPopup/BillPopup.jsx";
 import { Link, useLocation } from "react-router-dom";
 import Billcard from "../../component/billCard/BillCard.jsx";
 import useFetch from "../../hooks/useFetch";
+const initialState={
+  id:"00000000-0000-0000-0000-000000000000",
+  invoiceNo: "INV-2023080428",
+  name: "",
+  invoiceDate: "",
+  typeBill: "",
+  status: "",
+  invoiceValue: 0
+}
 
 const Bills = () => {
   const search = new URLSearchParams(useLocation()?.search);
   const projectId = search?.get("projectid");
   const projectName = search?.get("projectname");
-  const [open, setOpen] = useState("");
+  const [inputType, setInputType] = useState({type:"",credential:false});
+  const [initialValues,setInitialValues]=useState(initialState);
   const [change, setChange] = useState(0);
-  const [item, setItem] = useState({
-    name: "",
-    invoiceDate: "",
-    typeBill: "",
-    status: "",
-  });
   const { loding, data } = useFetch({
     url: `/Bill/GetByProjectId?page=${1}&pageSize=${50000}&projectId=${projectId}`,
     change,
@@ -30,7 +34,7 @@ const Bills = () => {
         </div>
         <div className="bill-right">
           <div className="right-content-wrapper">
-            <div className={`bill-top ${open !== "" && "blur"}`}>
+            <div className={`bill-top ${inputType?.credential && "blur"}`}>
               <div className="bill-path">
                 <Link to={`/project`} className="bill-link">
                   Projects
@@ -43,23 +47,23 @@ const Bills = () => {
               </div>
             </div>
             {!loding && (
-              <div className={`bill-middle ${open !== "" && "blur"}`}>
+              <div className={`bill-middle ${inputType?.credential && "blur"}`}>
                 <div
                   className={`bill-wrapper  ${
                     data?.items?.length >= 3 ? "grid" : "flexbox"
                   }`}
                 >
-                  <div className="add-card" onClick={() => setOpen("add")}>
+                  <div className="add-card" onClick={() => setInputType({type:"ADD",credential:true})}>
                     +
                   </div>
                   {data?.items?.map((item) => (
                     <Billcard
                       key={item?.id}
-                      setOpen={setOpen}
-                      setItem={setItem}
+                      setInputType={setInputType}
+                      setInitialValues={setInitialValues}
                       item={item}
                       projectName={projectName}
-                      Id={projectId}
+                      projectId={projectId}
                     />
                   ))}
                 </div>
@@ -67,14 +71,16 @@ const Bills = () => {
             )}
           </div>
 
-          {(open === "update" || open === "add") && (
+          {inputType?.credential && (
             <Billpopup
-              setOpen={setOpen}
-              item={item}
-              setItem={setItem}
+              setInputType={setInputType}
+              setInitialValues={setInitialValues}
+              initialValues={initialValues}
+              initialState={initialState}
               setChange={setChange}
               change={change}
-              open={open}
+              inputType={inputType}
+              projectId={projectId}
             />
           )}
         </div>

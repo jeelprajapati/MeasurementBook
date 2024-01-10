@@ -1,4 +1,4 @@
-.projectcard-con {
+.projectCardContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,24 +9,24 @@
   height: 305px;
   min-width: 310px;
 }
-.projectcard-sub1 {
+.projectCardSetting {
   display: flex;
   justify-content: flex-end;
   width: 86%;
   position: relative;
 }
-.dot-list {
+.settingIcon {
   display: flex;
   flex-direction: column;
   gap: 1.5px;
   cursor: pointer;
 }
-.dot-list div {
+.settingIcon div {
   width: 4px;
   height: 4px;
   background-color: #333333;
 }
-.list-item {
+.listItems {
   padding: 5px;
   display: flex;
   flex-direction: column;
@@ -37,61 +37,65 @@
   top: 25px;
   right: -70px;
 }
-.item-name-img {
+.itemName {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 7px;
   padding: 3px 7px;
 }
-.item-name-img span {
+.itemName:hover{
+  cursor:pointer;
+  background-color: rgb(217, 217, 217);
+}
+.itemName span {
   font-weight: 400;
   font-size: 12px;
 }
-.item-name-img img {
+.itemName img {
   width: 15px;
 }
-.projectcard-sub2 {
+.projectCardBody {
   width: 76%;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
-.projectcard-top {
+.projectCardTop {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
-.projectcard-top h3 {
+.projectCardTop h3 {
   margin: 0;
   font-size: 18px;
   font-weight: 600;
 }
-.projectcard-desc {
+.projectCardDesc {
   font-size: 15px;
   font-weight: 400;
 }
-.label-value {
+.projectCardWrapper {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
-.projectcard-label {
+.projectCardLabel {
   font-size: 12px;
 
   font-weight: 400;
 }
-.projectcard-value {
+.projectCardValue {
   font-size: 15px;
   font-weight: 600;
 }
-.projectcard-button {
+.projectCardButton {
   display: flex;
   gap: 5px;
   width: 100%;
 }
-.projectcard-button button {
+.projectCardButton button {
   display: flex;
   width: 100%;
   height: 40px;
@@ -107,7 +111,7 @@
   cursor: pointer;
   border-radius: 20px;
 }
-.projectcard-button svg {
+.projectCardButton svg {
   font-size: 15px;
   font-weight: 400;
 }

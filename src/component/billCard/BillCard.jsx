@@ -11,11 +11,11 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAlert } from "react-alert";
 
-const Billcard = ({ item, projectName, Id, setItem, setOpen }) => {
+const Billcard = ({ item, projectName, projectId, setInputType,setInitialValues }) => {
   const alert = useAlert();
   const handleClick = () => {
-    setItem(item);
-    setOpen("update");
+    setInitialValues(item);
+    setInputType({type:"UPDATE",credential:true});
   };
 
   const downloadExcelFile = async (billId, billName) => {
@@ -37,15 +37,15 @@ const Billcard = ({ item, projectName, Id, setItem, setOpen }) => {
 
   return (
     <>
-      <div className="billcard-container">
-        <div className="edit-wrapper">
-          <div className="edit-button" onClick={handleClick}>
+      <div className="billCardContainer">
+        <div className="editWrapper">
+          <div className="editButton" onClick={handleClick}>
             <FontAwesomeIcon icon={faPencil} />
           </div>
         </div>
-        <div className="wrapper-card">
-          <div className="card-top">
-            <div className="card-title-batch">
+        <div className="billCardWrapper">
+          <div className="billCardTop">
+            <div className="billCardBatch">
               <h3>{item.typeBill === 1 ? "RA" : "Final"}</h3>
               <span
                 className={`${
@@ -63,15 +63,15 @@ const Billcard = ({ item, projectName, Id, setItem, setOpen }) => {
                   : "Accepted"}
               </span>
             </div>
-            <span className="desc">
+            <span className="billCardDesc">
               {item?.name?.length >= 15
                 ? `${item?.name?.slice(0, 15)}...`
                 : item?.name}
             </span>
           </div>
-          <div className="card-date">
-            <span className="card-label">Invoice Date</span>
-            <span className="card-value">
+          <div className="billCardDate">
+            <span className="billCardLabel">Invoice Date</span>
+            <span className="billCardValue">
               {item?.invoiceDate
                 ?.split("T")[0]
                 ?.split("-")
@@ -80,9 +80,9 @@ const Billcard = ({ item, projectName, Id, setItem, setOpen }) => {
                 ?.join(".")}
             </span>
           </div>
-          <div className="card-date">
-            <span className="card-label">Invoice Value</span>
-            <span className="card-value">
+          <div className="billCardDate">
+            <span className="billCardLabel">Invoice Value</span>
+            <span className="billCardValue">
               ₹{" "}
               {item?.invoiceValue?.toLocaleString(undefined, {
                 maximumFractionDigits: 2,
@@ -90,9 +90,8 @@ const Billcard = ({ item, projectName, Id, setItem, setOpen }) => {
             </span>
           </div>
           <div className="reports">
-            <span className="card-label">Reports</span>
-            <div className="pdf-type">
-              {/* <img src={pdf} alt="" /> */}
+            <span className="billCardLabel">Reports</span>
+            <div className="reportType">
               <img
                 src={xls}
                 alt=""
@@ -100,12 +99,12 @@ const Billcard = ({ item, projectName, Id, setItem, setOpen }) => {
               />
             </div>
           </div>
-          <div className="measurement-button">
+          <div className="billCardButton">
             {item?.status === 1 ? (
               <Link
                 className="link"
                 style={{ width: "100%" }}
-                to={`/measurementbook?billId=${item?.id}&projectId=${Id}&projectname=${projectName}&billName=${item?.name}`}
+                to={`/measurementbook?billId=${item?.id}&projectId=${projectId}&projectname=${projectName}&billName=${item?.name}`}
               >
                 <button>
                   Measurement <FontAwesomeIcon icon={faArrowRightToBracket} />

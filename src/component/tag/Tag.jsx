@@ -4,13 +4,12 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useClickOutside from "../../hooks/useclickOutside.js";
 import useFetch from "../../hooks/useFetch.js";
-const Tag = ({ tags, dispatch, projectId }) => {
+const Tag = ({ tags, dispatch, projectId,allTag }) => {
   const ref = useRef();
   const tagRef = useRef();
   const [chip, setChip] = useState("");
   const [open, setOpen] = useState(false);
   const colors = ["blue", "pink", "green", "orange"];
-  const { loding, data } = useFetch({url:`MeasurementBook/GetTagsByProjectId?projectId=${projectId}`,change:0})
   // close used tag box when outside click of box
   useClickOutside(tagRef, () => {
     if (open) {
@@ -83,7 +82,7 @@ const Tag = ({ tags, dispatch, projectId }) => {
             <div className="usedTag">
               <span>Select an option or create one</span>
               <div className="allUsedTagChip">
-                {!loding && data?.map((tag,index)=>(<div key={index} onClick={()=>addTag(tag)} className={`${colors[index % 4]}`}>{tag}</div>))}
+                {allTag?.map((tag,index)=>(<div key={index} onClick={()=>addTag(tag)} className={`${colors[index % 4]}`}>{tag}</div>))}
               </div>
             </div>
             <div className="create">

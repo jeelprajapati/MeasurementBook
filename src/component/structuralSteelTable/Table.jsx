@@ -14,6 +14,7 @@ const Table = ({
   contractItemValues,
   setContractItemValues,
   initialState,
+  allTag
 }) => {
   const [state, dispatch] = useReducer(inputReducer, INITIAL_STATE);
   const alert = useAlert();
@@ -215,6 +216,7 @@ const Table = ({
               input={input}
               contractItemValues={contractItemValues}
               setContractItemValues={setContractItemValues}
+              allTag={allTag}
             />
           )}
           <TableRow

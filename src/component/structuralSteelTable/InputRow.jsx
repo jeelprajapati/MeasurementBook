@@ -35,7 +35,7 @@ const InputRow = ({
     <>
       <tr
         className="ssTableTr"
-        style={{ height: "90px", backgroundColor: "#f8f8f8" }}
+        style={{ height: "90px"}}
         ref={ref}
       >
         <td className="ssTableTd select-Wrapper">

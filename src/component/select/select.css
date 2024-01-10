@@ -1,4 +1,4 @@
-.searchable-dropdown {
+.searchableDropdown {
   height: fit-content;
   background-color: white;
   padding: 7px;
@@ -17,7 +17,7 @@
 .minwidth {
   width: 90%;
 }
-.text-input {
+.textInput {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -25,30 +25,30 @@
   width: 100%;
 }
 
-.text-input input {
+.textInput input {
   cursor: pointer;
   border: none;
   outline: none;
   width: 100%;
 }
-.text-input input::placeholder {
+.textInput input::placeholder {
   font-size: 14px;
   font-weight: 600;
 }
-.search-item {
+.searchItem {
   font-size: 15px;
   color: gray;
 }
-.searchable-dropdown ul {
+.searchableDropdown ul {
   margin: 0;
   padding: 0;
   max-height: 300px;
   overflow-y: scroll;
 }
-.searchable-dropdown ul li:nth-child(1) {
+.searchableDropdown ul li:nth-child(1) {
   border-top: 2px solid gray;
 }
-.searchable-dropdown ul li {
+.searchableDropdown ul li {
   list-style: none;
   padding: 10px 7px;
   font-size: 13px;
@@ -57,6 +57,6 @@
   text-align: start;
   cursor: pointer;
 }
-.searchable-dropdown ul li:hover {
+.searchableDropdown ul li:hover {
   background-color: rgb(206, 204, 204);
 }

@@ -6,6 +6,7 @@ import StructuralSteelTable from "../../component/structuralSteelTable/Table.jsx
 import { Link, useLocation } from "react-router-dom";
 import makeRequesInstance from "../../utils/makeRequest.js";
 import { Context } from "../../context/Context.js";
+import useFetch from "../../hooks/useFetch.js";
 const Measurement = () => {
   const search = new URLSearchParams(useLocation().search);
   const [contractItems, setContractItems] = useState([]);
@@ -20,6 +21,7 @@ const Measurement = () => {
     stdUnit: 0,
     exist: false,
   };
+  const { loding, data } = useFetch({url:`MeasurementBook/GetTagsByProjectId?projectId=${projectId}`,change:0})
   const { type, setType, contractItemValues, setContractItemValues } =
     useContext(Context);
 
@@ -118,6 +120,8 @@ const Measurement = () => {
                 contractItemValues={contractItemValues}
                 setContractItemValues={setContractItemValues}
                 initialState={initialState}
+                allTag={data}
+                loding={loding}
               />
             )}
             {/* {type === 2 && (
@@ -131,6 +135,8 @@ const Measurement = () => {
                 contractItemValues={contractItemValues}
                 setContractItemValues={setContractItemValues}
                 initialState={initialState}
+                allTag={data}
+                loding={loding}
               />
             )}
           </div>

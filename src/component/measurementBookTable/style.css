@@ -1,6 +1,15 @@
+.measurementFilter{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px;
+}
+.clear{
+  cursor: pointer;
+}
 .measurementContainer{
   width: 100%;
-  height: 580px;
+  height: 540px;
   overflow-y:scroll;
 }
 .measurementContainer table{

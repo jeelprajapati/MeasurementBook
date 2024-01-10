@@ -8,6 +8,8 @@ import {
   INITIAL_STATE,
 } from "../../reducers/measurementbookReducer.js";
 import { useAlert } from "react-alert";
+import ContractItemFilter from "../filter/ContractItemFilter.jsx";
+import TagFilter from "../filter/TagFilter.jsx";
 
 const Table = ({
   projectId,
@@ -15,9 +17,9 @@ const Table = ({
   contractItems,
   contractItemValues,
   setContractItemValues,
-  initialState
+  initialState,
+  allTag,
 }) => {
-  // const [input, setInput] = useState({ type: "", credential: false });
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [head, setHead] = useState("00000000-0000-0000-0000-000000000000");
@@ -27,6 +29,8 @@ const Table = ({
   const makeRequest = makeRequesInstance(localStorage.getItem("token"));
   const [input, setInput] = useState({ type: "", credential: false });
   const [divideBy, setDivideBy] = useState(0);
+  const [contractItemFilter, setContractItemFilter] = useState([]);
+  const [tagFilter, setTagFilter] = useState([]);
   const alert = useAlert();
   const ref = useRef();
 
@@ -38,19 +42,36 @@ const Table = ({
         billId,
         page: 1,
         pageSize: 50000,
-        filter: [],
+        filter: [
+          ...(contractItemFilter.length !== 0
+            ? [
+                {
+                  filterColumn: 1,
+                  filterValue: contractItemFilter[0],
+                },
+              ]
+            : []),
+          ...(tagFilter.length !== 0
+            ? [
+                {
+                  filterColumn: 2,
+                  filterValue: tagFilter.join(","),
+                },
+              ]
+            : []),
+        ],
       });
       if (res.status === 200) {
         setData(res.data?.items);
-        if(res.data.items?.length===0){
-          setInput({type:"ADD",credential:true});
+        if (res.data.items?.length === 0) {
+          setInput({ type: "ADD", credential: true });
           setDivideBy(0);
         }
       }
       setLoading(false);
     };
     getData();
-  }, [billId, change]);
+  }, [billId, change, contractItemFilter,tagFilter]);
 
   useEffect(() => {
     if (ref.current) {
@@ -136,91 +157,112 @@ const Table = ({
     }
   };
 
+  const handleClear = () => {
+    if (tagFilter.length !== 0 || contractItemFilter.length !== 0) {
+      setTagFilter([]);
+      setContractItemFilter([]);
+    }
+  };
+
   return (
-    <div className="measurementContainer" ref={ref}>
-      <form onSubmit={handleSubmit}>
-        <table>
-          <tr className="measurementTableRow">
-            <th className="measurementTableTh" align="start">
-              ContractItem*
-            </th>
-            <th className="measurementTableTh" align="start">
-              Description*
-            </th>
-            <th className="measurementTableTh" align="end">
-              No.*
-            </th>
-            <th className="measurementTableTh" align="end">
-              L
-            </th>
-            <th className="measurementTableTh" align="end">
-              B
-            </th>
-            <th className="measurementTableTh" align="end">
-              H
-            </th>
-            <th className="measurementTableTh" align="end">
-              Total
-            </th>
-            <th className="measurementTableTh" align="start">
-              Tags
-            </th>
-            <th className="measurementTableTh" align="start">
-              Actions
-            </th>
-          </tr>
-          {!loading && (
-            <TableRow
-              contractItems={contractItems}
-              data={data?.slice(0, divideBy)}
-              setDivideBy={setDivideBy}
-              setInput={setInput}
-              input={input}
-              dispatch={dispatch}
-              setHead={setHead}
-              handleScrollValue={handleScrollValue}
-              setChange={setChange}
-              change={change}
-              setContractItemValues={setContractItemValues}
-            />
-          )}
+    <>
+      <div className="measurementFilter">
+        <ContractItemFilter
+          item={contractItems}
+          filter={contractItemFilter}
+          setFilter={setContractItemFilter}
+        />
+        <TagFilter item={allTag} filter={tagFilter} setFilter={setTagFilter} />
+        <span className="clear" onClick={handleClear}>
+          Clear All
+        </span>
+      </div>
+      <div className="measurementContainer" ref={ref}>
+        <form onSubmit={handleSubmit}>
+          <table>
+            <tr className="measurementTableRow">
+              <th className="measurementTableTh" align="start">
+                ContractItem*
+              </th>
+              <th className="measurementTableTh" align="start">
+                Description*
+              </th>
+              <th className="measurementTableTh" align="end">
+                No.*
+              </th>
+              <th className="measurementTableTh" align="end">
+                L
+              </th>
+              <th className="measurementTableTh" align="end">
+                B
+              </th>
+              <th className="measurementTableTh" align="end">
+                H
+              </th>
+              <th className="measurementTableTh" align="end">
+                Total
+              </th>
+              <th className="measurementTableTh" align="start">
+                Tags
+              </th>
+              <th className="measurementTableTh" align="start">
+                Actions
+              </th>
+            </tr>
+            {!loading && (
+              <TableRow
+                contractItems={contractItems}
+                data={data?.slice(0, divideBy)}
+                setDivideBy={setDivideBy}
+                setInput={setInput}
+                input={input}
+                dispatch={dispatch}
+                setHead={setHead}
+                handleScrollValue={handleScrollValue}
+                setChange={setChange}
+                change={change}
+                setContractItemValues={setContractItemValues}
+              />
+            )}
 
-          {/* input row */}
-          {input?.credential && (
-            <InputRow
-              contractItems={contractItems}
-              projectId={projectId}
-              dispatch={dispatch}
-              state={state}
-              handleClose={handleClose}
-              input={input}
-              contractItemValues={contractItemValues}
-              setContractItemValues={setContractItemValues}
-            />
-          )}
+            {/* input row */}
+            {input?.credential && (
+              <InputRow
+                contractItems={contractItems}
+                projectId={projectId}
+                dispatch={dispatch}
+                state={state}
+                handleClose={handleClose}
+                input={input}
+                contractItemValues={contractItemValues}
+                setContractItemValues={setContractItemValues}
+                allTag={allTag}
+              />
+            )}
 
-          {!loading && (
-            <TableRow
-              contractItems={contractItems}
-              data={
-                input?.type === "UPDATE"
-                  ? data?.slice(divideBy + 1)
-                  : data?.slice(divideBy)
-              }
-              setDivideBy={setDivideBy}
-              setInput={setInput}
-              input={input}
-              dispatch={dispatch}
-              setHead={setHead}
-              handleScrollValue={handleScrollValue}
-              setChange={setChange}
-              change={change}
-              setContractItemValues={setContractItemValues}
-            />
-          )}
-        </table>
-      </form>
-    </div>
+            {!loading && (
+              <TableRow
+                contractItems={contractItems}
+                data={
+                  input?.type === "UPDATE"
+                    ? data?.slice(divideBy + 1)
+                    : data?.slice(divideBy)
+                }
+                setDivideBy={setDivideBy}
+                setInput={setInput}
+                input={input}
+                dispatch={dispatch}
+                setHead={setHead}
+                handleScrollValue={handleScrollValue}
+                setChange={setChange}
+                change={change}
+                setContractItemValues={setContractItemValues}
+              />
+            )}
+          </table>
+        </form>
+      </div>
+    </>
   );
 };
 

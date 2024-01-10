@@ -13,7 +13,8 @@ const InputRow = ({
   handleClose,
   input,
   contractItemValues,
-  setContractItemValues
+  setContractItemValues,
+  allTag
 }) => {
   const ref=useRef();
   const options = contractItems?.map((i) => ({
@@ -160,6 +161,7 @@ const InputRow = ({
                 projectId={projectId}
                 dispatch={dispatch}
                 tags={state?.tags}
+                allTag={allTag}
               />
             )}
           </td>

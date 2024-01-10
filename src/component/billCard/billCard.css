@@ -1,4 +1,4 @@
-.billcard-container{
+.billCardContainer{
     display: flex;
     flex-direction: column;
     background-color: #fdfdfd;
@@ -9,7 +9,7 @@
     justify-content: center;
     min-width: 310px;
 }
-.wrapper-card{
+.billCardWrapper{
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -17,19 +17,19 @@
     align-items: center;
     justify-content: center;
 }
-.card-top{
+.billCardTop{
     width: 70%;
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
-.card-title-batch{
+.billCardBatch{
     width: 100%;
     display: flex;
     gap: 8px;
     align-items: center;
 }
-.card-title-batch h3{
+.billCardBatch h3{
     margin: 0;
     font-size: 18px;
     font-weight: 600;
@@ -42,22 +42,22 @@
     padding: 3px 7px;
     border-radius: 5px;
 }
-.card-top .desc{
+.billCardDesc{
     font-size: 15px;
     font-weight: 400;
 }
-.card-date{
+.billCardDate{
     width: 70%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 2px;
 }
-.card-label{
+.billCardLabel{
     font-size: 12px;
     font-weight: 400;
 }
-.card-value{
+.billCardValue{
     font-size: 15px;
     font-weight: 600;
 }
@@ -68,21 +68,21 @@
     align-items: flex-start;
     gap: 5px;
 }
-.pdf-type{
+.reportType{
     display: flex;
     gap: 7px;
 }
-.pdf-type img{
+.reportType img{
     width: 30px;
     cursor: pointer;
 }
-.measurement-button{
+.billCardButton{
     width: 70%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.measurement-button button{
+.billCardButton button{
     width: 100%;
     height: 40px;
     display: flex;
@@ -97,20 +97,20 @@
     cursor: pointer;
     border-radius: 20px;
 }
-.measurement-button button:disabled{
+.billCardButton button:disabled{
     cursor: not-allowed;
     background-color: #758cc7;
 }
-.measurement-button img{
+.billCardButton img{
     width: 13px;
 }
-.edit-wrapper{
+.editWrapper{
     width: 90%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
 }
-.edit-button{
+.editButton{
     top: 3%;
     right: 3%;
     background-color: #e1e1e1;
@@ -122,7 +122,7 @@
     justify-content: center;
     cursor: pointer;
 }
-.edit-button:hover{
+.editButton:hover{
    background-color: #cfcdcd;
 }
 .submit{

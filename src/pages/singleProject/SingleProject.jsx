@@ -5,16 +5,13 @@ import Table from "../../component/contractItem/ContractItem.jsx";
 import useFetch from "../../hooks/useFetch";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Excel from "../../component/excel/Excel";
-import Popup from "../../component/popup/Popup";
 import makeRequesInstance from "../../utils/makeRequest.js";
-import { faArrowRightLong, faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const SingleProject = () => {
   const [open, setOpen] = useState(false);
-  const [Update, setUpdate] = useState(false);
+  // const [Update, setUpdate] = useState(false);
   const [change, setChange] = useState(0);
-  const [popUp, setPopUp] = useState(false);
-  const [input, setInput] = useState(null);
   const [client, setClient] = useState(null);
   const [unit,setUnit]=useState([]);
   const token = localStorage.getItem("token");
@@ -48,11 +45,6 @@ const SingleProject = () => {
     getUnit();
   }, []);
 
-  const handlePopUP = (e) => {
-    setInput(e);
-    setUpdate(true);
-    setPopUp(true);
-  };
   return (
     <div>
       <div className="single-container">
@@ -60,8 +52,8 @@ const SingleProject = () => {
           <Sidebar id={2} />
         </div>
         <div className="single-right">
-          <div className={`contract-top ${popUp && "blur"}`}>
-            <div className={`path ${open && "blur"}`}>
+          <div className="contract-top">
+            <div className="path">
               <Link to={`/project`} className="bill-link">
                 Projects/
               </Link>
@@ -69,7 +61,7 @@ const SingleProject = () => {
                 data?.projectName?.slice(1)}
             </div>
           </div>
-          <div className={`contract-middle ${popUp && "blur"}`}>
+          <div className="contract-middle">
             <div className="title-icon-wrapper">
               <h3 className={`contract-title ${open && "blur"}`}>
                 Project Detail
@@ -94,8 +86,8 @@ const SingleProject = () => {
                 </div>
               </div>
             )}
-            <div className={`goto ${open && "blur"}`}>
-              {!popUp ? <Link
+            <div className="goto">
+              <Link
                 to={`/bills?projectid=${data?.id}&projectname=${data?.projectName}`}
                 className="link"
               >
@@ -109,32 +101,15 @@ const SingleProject = () => {
                   <span>Goto Bills</span>
                   <FontAwesomeIcon icon={faArrowRightLong} className="arrow" />
                 </button>
-              </Link> : <button
-                  disabled
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "3px",
-                  }}
-                >
-                  <span>Goto Bills</span>
-                  <FontAwesomeIcon icon={faArrowRightLong} className="arrow" />
-                </button>}
+              </Link> 
             </div>
-            <div className="edit-btn">
-                <FontAwesomeIcon
-                  icon={faPencil}
-                  onClick={() => handlePopUP(data)}
-                />
-              </div>
           </div>
-          <div className={`contract-footer ${popUp && "blur"}`}>
-            <div className={`table-container ${popUp && "blur"}`}>
+          <div className="contract-footer">
+            <div className="table-container">
               <div className="single-page-container">
                 <h3 className="table-title">Contract Item</h3>
                 <button
                   className="excel-btn"
-                  disabled={popUp}
                   onClick={() => {
                     setOpen(true);
                   }}
@@ -152,16 +127,6 @@ const SingleProject = () => {
                 setChange={setChange}
                 change={change}
                 unit={unit}
-              />
-          )}
-          {popUp && (
-              <Popup
-                setPopUp={setPopUp}
-                setChange={setChange}
-                change={change}
-                input={input}
-                update={Update}
-                setUpdate={setUpdate}
               />
           )}
         </div>

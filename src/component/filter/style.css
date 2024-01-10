@@ -1,9 +1,9 @@
-.filter-container{
+.filterContainer{
     position: relative;
     display: inline;
     z-index: 1000;
 }
-.triangle_down {
+.triangleDown {
     width: 0;
     height: 0;
     border-left: 5px solid transparent;
@@ -14,12 +14,12 @@
     float: left;
     margin-top:2px;
 }
-.filter-type{   
+.filterType{   
     font-weight: 400;
     font-size: 15px;
     color: #2e4a93;
 }
-.filter-box{
+.filterBox{
     display: flex;
     width: fit-content;
     align-items: center;
@@ -29,21 +29,19 @@
     border-radius: 4px;
     cursor: pointer;
 }
-.filter-box:hover{
+.filterBox:hover{
    background-color: #ebe9e9;
 }
-.filter-table{
+.filterTable{
     background-color: white;
-    -webkit-box-shadow: 0px 0px 5px 0px rgba(207,203,207,1);
-    -moz-box-shadow: 0px 0px 5px 0px rgba(207,203,207,1);
-    box-shadow: 0px 0px 5px 0px rgba(207,203,207,1);
+    box-shadow: 0px 4px 10px 0px #00000040;
     position: absolute;
     top: 120%;
     border-radius: 5px;
     z-index: 3;
     overflow-y: auto;
     }
-.filter-search{
+.filterSearch{
     display: flex;
     align-items: center;
     padding: 10px 7px;
@@ -54,14 +52,14 @@
     top: 0;
     background-color: white;
     }
-.filter-search input{
+.filterSearch input{
     width: 98%;
     border: none;
     height: 25px;
     outline: none;
 }
-.filter-search input::placeholder{
-    color: #333333;
+.filterSearch input::placeholder{
+    color: gray;
     font-size: 15px;
     font-weight: 400;
 }
@@ -69,18 +67,17 @@
     padding: 10px;
     cursor: pointer;
     font-size: 13px;
-    font-weight: 400;
-    color: rgb(128, 128, 128);
+    font-weight: 600;
     border-bottom:1px solid rgb(214 213 213);
 }
 .Fi:hover{
    background-color: rgb(226, 225, 225);
 }
-.filter-box1{
+.filterBox1{
     display: flex;
     width: fit-content;
     gap:15px;
-    padding: 3px 7px;
+    padding: 7px 10px;
     border-radius: 4px;
     align-items: center;
     justify-content: center;
@@ -88,38 +85,16 @@
     border: none;
 }
 .x{
-    font-size: 23px;
-    font-weight: 600;
-    cursor: pointer;
+    font-size: 15px;
+    font-weight: 400;
 }
 .w{
     font-size: 15px;
     font-weight: 600;
 }
-.filter-name{
+.filterName{
     font-size: 15px;
     font-weight: 400;
-}
-.wrapper-box{
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    border: 1px solid #333333;
-    border-radius: 4px;
-    max-width: 400px;
-    overflow-x: scroll;
-}
-.wrapper-box::-webkit-scrollbar{
-    display: none;
-}
-.tag-filter-box{
-    display: flex;
-    align-items: center;
-    width: fit-content;
-    justify-content: center;
-    gap:5px;
-    padding: 0 5px;
-    background-color: #c2e7ff;
 }
 .Wrapper{
     min-width: 80px;

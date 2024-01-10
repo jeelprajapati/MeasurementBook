@@ -8,16 +8,29 @@ import Projectcard from "../../component/projectCard/ProjectCard.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
+const initialState = {
+  id: "00000000-0000-0000-0000-000000000000",
+  contractNo: "",
+  contractDate: "",
+  loiNo: "",
+  loiDate: "",
+  projectName: "",
+  contractValidity: "",
+  clientId: "",
+  projectValue: 0,
+  executedValue: 0,
+};
+
 const Projects = () => {
-  const [popUp, setPopUp] = useState(false);
+  const [inputType, setInputType] = useState({ type: "", credential: false });
+  const [initialValues, setInitialValues] = useState(initialState);
   const [change, setChange] = useState(0);
-  const token = localStorage.getItem("token");
   const [array, setArray] = useState([]);
   const [load, setLoad] = useState(false);
-  const navigate = useNavigate();
-  const [update, setUpdate] = useState(false);
   const [search, setSearch] = useState("");
-  
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+
   const Id = localStorage.getItem("organizationId");
   useEffect(() => {
     if (!(token && Id)) {
@@ -34,11 +47,6 @@ const Projects = () => {
     setArray(data?.items.slice(0)?.reverse());
     setLoad(false);
   }, [data, loding]);
-
-  const handlePopUp = (e) => {
-    e.preventDefault();
-    setPopUp(true);
-  };
 
   // const handleDelete=async(id)=>{
   //   try {
@@ -59,46 +67,62 @@ const Projects = () => {
         </div>
         <div className="pro-right">
           <div className="rigth-content-wrapper">
-          <div className="project-top">
-            <div className={`${popUp ? "path blur" : "path"}`}>Projects/</div>
-            <div className="search">
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
-              <input
-                type="text"
-                placeholder="Search By Project Name .."
-                onChange={(e) => setSearch(e.target.value)}
-              />
+            <div className="project-top">
+              <div className={`${inputType.credential ? "path blur" : "path"}`}>
+                Projects/
+              </div>
+              <div className="search">
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+                <input
+                  type="text"
+                  placeholder="Search By Project Name .."
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="project-main">
+              {!load && (
+                <div
+                  className={`box-container ${
+                    array?.length >= 3 ? "grid" : "flexbox"
+                  } ${inputType.credential && "blur"}`}
+                >
+                  <div
+                    className="add-box"
+                    onClick={() =>
+                      setInputType({ type: "ADD", credential: true })
+                    }
+                  >
+                    <div className="plus">+</div>
+                  </div>
+                  {array
+                    ?.filter((item) =>
+                      item?.projectName
+                        ?.toUpperCase()
+                        .includes(search?.toUpperCase())
+                    )
+                    ?.map((item) => (
+                      <Projectcard
+                        item={item}
+                        key={item?.id}
+                        setInitialValues={setInitialValues}
+                        setInputType={setInputType}
+                      />
+                    ))}
+                </div>
+              )}
             </div>
           </div>
-          <div className="project-main">
-            {!load && <div
-              className={`box-container ${array?.length>=3 ? 'grid' : 'flexbox' } ${popUp && "blur"}`}
-            >
-              <div className="add-box" onClick={handlePopUp}>
-                <div className="plus">+</div>
-              </div>
-              {array?.filter((item)=>(item?.projectName?.toUpperCase().includes(search?.toUpperCase())))?.map((item)=>(<Projectcard item={item} key={item?.id}/>))}
-                
-            </div>}
-          </div>
-          </div>
-          {popUp && (
-              <Popup
-                setPopUp={setPopUp}
-                input={{
-                  contractNo: "",
-                  contractDate: "",
-                  loiNo: "",
-                  loiDate: "",
-                  projectName: "",
-                  contractValidity: "",
-                  clientId: "",
-                }}
-                setChange={setChange}
-                change={change}
-                update={update}
-                setUpdate={setUpdate}
-              />
+          {inputType.credential && (
+            <Popup
+              setInputType={setInputType}
+              initialState={initialState}
+              setChange={setChange}
+              change={change}
+              initialValues={initialValues}
+              setInitialValues={setInitialValues}
+              inputType={inputType}
+            />
           )}
         </div>
       </div>
