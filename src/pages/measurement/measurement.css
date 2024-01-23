@@ -1,10 +1,10 @@
-.measurement-main-container{
+.measurementMainContainer{
     width: 100vw;
     height: 100vh;
     display: flex;
     border-radius: 5px;
 }
-.measurement-right{
+.measurementRight{
     position: relative;
     background-color: rgb(238, 237, 237);
     width: 100%;
@@ -12,31 +12,31 @@
     gap:7px;
     flex-direction: column;
 }
-.measurement-top{
+.measurementTop{
     background-color: #fdfdfd;
     padding: 7px;
     height: 52px;
     display: flex;
     align-items: center;
 }
-.measurement-path{
+.measurementPath{
     font-size: 15px;
     margin: 0 8px;
 }
-.measurement-path span{
+.measurementPath span{
     color: #2e4a93;
 }
-.measurement-title{
+.measurementTitle{
     margin:0;
     font-size: 15px;
     margin: 5px 8px;
 }
-.measurement-middle{
+.measurementMiddle{
     background-color: #fdfdfd;
     padding: 7px;
     margin:0 7px;
 }
-.types-con{
+.typesCon{
     display: flex;
     align-items: center;
     width: 99%;
@@ -64,7 +64,7 @@
     background-color: #2e4a93;
     color: #fdfdfd;
 }
-.measurement-footer{
+.measurementFooter{
     background-color: #fdfdfd;
     padding: 7px;
     margin: 0 7px;
@@ -72,3 +72,12 @@
     flex-direction:column;
     height:100%
 }
+.measurementFilter{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 5px;
+  }
+  .clear{
+    cursor: pointer;
+  }

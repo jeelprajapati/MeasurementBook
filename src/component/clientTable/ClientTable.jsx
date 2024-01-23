@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./clientTable.css";
-import useFetch from "../../hooks/useFetch";
 import makeRequesInstance from "../../utils/makeRequest.js";
 import { useAlert } from "react-alert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,11 +19,34 @@ const ClientTable = ({
 }) => {
   const Id = localStorage.getItem("organizationId");
   const [isDelete, setIsDelete] = useState({ id: "", credential: false });
+  const [data,setData]=useState([]);
+  const [page,setPage]=useState(1);
   const alert = useAlert();
-  const { loding, data } = useFetch({
-    url: `Client?page=${1}&pageSize=${50000}&organizationId=${Id}`,
-    change,
-  });
+
+  useEffect(() => {
+    const getData = async () => {
+      const makeRequest = makeRequesInstance(localStorage.getItem("token"));
+      try {
+        const res = await makeRequest.get(
+          `Client?page=${1}&pageSize=${11*page}&organizationId=${Id}`
+        );
+        if (res.status === 200) {
+          setData(res.data.items);
+        }
+      } catch (error) {
+        alert.show("something went wrong!", { type: "info" });
+      }
+    };
+    getData();
+  }, [alert, page, Id,change]);
+
+  const handleInfinityScroll = (e) => {
+    const { scrollTop, clientHeight, scrollHeight } = e.target;
+    if (scrollHeight <= clientHeight + scrollTop + 1) {
+      setPage((prev) => prev + 1);
+    }
+  };
+
   const handleUpdate = (e) => {
     setInput({ type: "UPDATE", credential: true });
     setItem(e);
@@ -32,7 +54,7 @@ const ClientTable = ({
   const handleAdd = () => {
     setInput({ type: "ADD", credential: true });
   };
-  const handleDelete = async (e) => {
+  const handleDelete = async () => {
     try {
       const makeRequest = makeRequesInstance(localStorage.getItem("token"));
       const res = await makeRequest.delete(
@@ -56,7 +78,7 @@ const ClientTable = ({
       <button className="clientAddButton" onClick={handleAdd}>
         + Add Client
       </button>
-      <div className="clientTableContainer">
+      <div className="clientTableContainer" onScroll={handleInfinityScroll}>
         <table className="clientTable">
           {/* ROW-1 */}
           <tr className="clientTr">
@@ -97,8 +119,8 @@ const ClientTable = ({
             </th>
           </tr>
           {/* ROW-2 */}
-          {!loding &&
-            data?.items.map((item) => (
+          {
+            data?.map((item) => (
               <tr className="tr" key={item?.id}>
                 <td
                   className="clientTd"

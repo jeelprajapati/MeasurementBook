@@ -1,6 +1,6 @@
 .ssTableContainer{
   width: 100%;
-  height: 580px;
+  height: 540px;
   overflow-y:scroll;
 }
 .ssTableContainer table {
@@ -30,7 +30,7 @@
 }
 .ssTableTh:nth-child(1),
 .ssTableTh:nth-child(2){
-  width: 14%;
+  width: 15%;
 }
 .ssTableTh:nth-child(3),
 .ssTableTh:nth-child(4){
@@ -39,15 +39,17 @@
 .ssTableTh:nth-child(5),
 .ssTableTh:nth-child(6),
 .ssTableTh:nth-child(7),
-.ssTableTh:nth-child(8),
-.ssTableTh:nth-child(9){
+.ssTableTh:nth-child(8){
   width: 7%;
 }
+.ssTableTh:nth-child(9){
+  width: 10%;
+}
 .ssTableTh:nth-child(10){
-  width: 15%;
+  width: 14%;
 }
 .ssTableTh:nth-child(11){
-  width: 15.9%;
+  width: 16.2%;
 }
 .ssTableTd {
   padding: 7px;

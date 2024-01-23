@@ -14,7 +14,9 @@ const Table = ({
   contractItemValues,
   setContractItemValues,
   initialState,
-  allTag
+  allTag,
+  tagFilter,
+  contractItemFilter
 }) => {
   const [state, dispatch] = useReducer(inputReducer, INITIAL_STATE);
   const alert = useAlert();
@@ -23,9 +25,9 @@ const Table = ({
   const [getShapeName, setGetShapeName] = useState([]);
   const [load, setLoad] = useState(false);
   const [scrollValue, setScrollValue] = useState(0);
-  const [head, setHead] = useState("00000000-0000-0000-0000-000000000000");
   const makeRequest = makeRequesInstance(localStorage.getItem("token"));
   const [change, setChange] = useState(0);
+  const [page, setPage] = useState(1);
   const [input, setInput] = useState({ type: "", credential: false });
   const [divideBy, setDivideBy] = useState(0);
   const ref = useRef();
@@ -33,23 +35,42 @@ const Table = ({
   useEffect(() => {
     const makeRequest = makeRequesInstance(localStorage.getItem("token"));
     const getData = async () => {
-      try {
-        const res = await makeRequest.get(
-          `StructMeasurementBook/GetByBillId?billId=${billId}&page=${1}&pageSize=${50000}`
-        );
-        if (res.status === 200) {
-          setArray(res.data.items);
-          if (res.data.items?.length === 0) {
-            setInput({ type: "ADD", credential: true });
-            setDivideBy(0);
-          }
+      const res = await makeRequest.post(`StructMeasurementBook/GetByBillId`, {
+        billId,
+        page: 1,
+        pageSize: page*10,
+        filter: [
+          ...(contractItemFilter.length !== 0
+            ? [
+                {
+                  filterColumn: 1,
+                  filterValue: contractItemFilter[0],
+                },
+              ]
+            : []),
+          ...(tagFilter.length !== 0
+            ? [
+                {
+                  filterColumn: 2,
+                  filterValue: tagFilter.join(","),
+                },
+              ]
+            : []),
+        ],
+      });
+      if (res.status === 200) {
+        setArray(res.data.items);
+        if (res.data.items?.length === 0) {
+          setInput({ type: "ADD", credential: true });
+          setDivideBy(0);
+        } else{
+          setInput({ type: "", credential:false });
+          setDivideBy(0);
         }
-      } catch (error) {
-        alert.show("somthing went wrong!", { type: "info" });
       }
     };
     getData();
-  }, [alert, billId, change]);
+  }, [billId, change, contractItemFilter,tagFilter,page]);
 
   useEffect(() => {
     const makeRequest = makeRequesInstance(localStorage.getItem("token"));
@@ -79,14 +100,14 @@ const Table = ({
       ref.current.scrollTop = scrollValue;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [array]);
+  }, [array,scrollValue]);
 
-  const handleClose = (e) => {
-    e.preventDefault();
-    setInput({ type: "", credential: false });
-    dispatch({ type: "INITIAL_STATE" });
-    setContractItemValues(initialState);
-    setDivideBy(0);
+  const handleInfinityScroll = (e) => {
+    const { scrollTop, clientHeight, scrollHeight } = e.target;
+    if (scrollHeight <= clientHeight + scrollTop + 1) {
+      setPage((prev) => prev + 1);
+      setScrollValue(scrollTop);
+    }
   };
 
   const arrangeValues = () => {
@@ -104,6 +125,7 @@ const Table = ({
     };
   };
 
+  //set scrollvalue for when data ADD || UPDATED we can scroll Table
   const handleScrollValue = () => {
     if (ref.current) {
       setScrollValue(ref.current.scrollTop);
@@ -117,7 +139,7 @@ const Table = ({
         structMeasurementBookDto: {
           ...values,
         },
-        head,
+        index:divideBy,
       });
       if (res.status === 204) {
         alert.show("Data Added Sucessfully", { type: "success" });
@@ -152,8 +174,17 @@ const Table = ({
       handleUpdate(e);
     }
   };
+
+  const handleClose = (e) => {
+    e.preventDefault();
+    handleScrollValue();
+    setInput({ type: "", credential: false });
+    dispatch({ type: "INITIAL_STATE" });
+    setContractItemValues(initialState);
+    setDivideBy(0);
+  };
   return (
-    <div className="ssTableContainer">
+    <div className="ssTableContainer" ref={ref} onScroll={handleInfinityScroll}>
       <form onSubmit={handleSubmit}>
         <table>
           <tr className="ssTableTr">
@@ -198,7 +229,6 @@ const Table = ({
             setInput={setInput}
             setDivideBy={setDivideBy}
             dispatch={dispatch}
-            setHead={setHead}
             setChange={setChange}
             change={change}
             setContractItemValues={setContractItemValues}
@@ -230,7 +260,6 @@ const Table = ({
             setInput={setInput}
             setDivideBy={setDivideBy}
             dispatch={dispatch}
-            setHead={setHead}
             setChange={setChange}
             change={change}
             setContractItemValues={setContractItemValues}

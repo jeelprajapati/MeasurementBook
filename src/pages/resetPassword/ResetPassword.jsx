@@ -51,29 +51,29 @@ const Reset = () => {
       },
     });
   return (
-    <div className="reset-container">
-      <div className="reset-title">
+    <div className="resetContainer">
+      <div className="resetTitle">
         <h3>Reset Password</h3>
       </div>
-      <div className="reset-form">
-        <div className="reset-input-error">
+      <div className="resetForm">
+        <div className="resetWrapper">
           <input
             type="password"
             name="newPassword"
             placeholder="New Password"
-            className="reset-input"
+            className="resetInput"
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.newPassword}
           />
           <Error error={errors.newPassword} touch={touched.newPassword} />
         </div>
-        <div className="reset-input-error">
+        <div className="resetWrapper">
           <input
             type="password"
             name="confirmPassword"
             placeholder="Confirm Password"
-            className="reset-input"
+            className="resetInput"
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.confirmPassword}
@@ -84,7 +84,7 @@ const Reset = () => {
           />
         </div>
       </div>
-      <div className="reset-page-button">
+      <div className="resetButton">
         <input
           type="button"
           value="Submit"

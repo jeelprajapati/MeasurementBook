@@ -54,18 +54,18 @@ const Client = () => {
 
   return (
     <div>
-      <div className="client-main-container">
-        <div className="client-left">
+      <div className="clientMainContainer">
+        <div className="clientLeft">
           <Sidebar id={3} />
         </div>
-        <div className="client-right">
-          <div className="client-top">
-            <div className={`${input?.credential ? "client-path blur" : "client-path"}`}>
+        <div className="clientRight">
+          <div className="clientTop">
+            <div className={`${input?.credential ? "clientPath blur" : "clientPath"}`}>
               Clients/
             </div>
           </div>
-          <div className={`${input?.credential ? "client-main blur" : "client-main"}`}>
-            <h2 className={`${input?.credential ? "client-title blur" : "client-title"}`}>
+          <div className={`${input?.credential ? "clientMain blur" : "clientMain"}`}>
+            <h2 className={`${input?.credential ? "clientTitle blur" : "clientTitle"}`}>
               Clients
             </h2>
             <ClientTable

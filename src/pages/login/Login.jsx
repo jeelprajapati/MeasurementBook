@@ -104,35 +104,35 @@ const Login = () => {
     }, [])
 
   return (
-      <div className="login-container">
-        <div className="login-title">Login</div>
-        <div className="login-wrapper">
+      <div className="loginContainer">
+        <div className="loginTitle">Login</div>
+        <div className="loginWrapper">
           <input
             type="email"
             placeholder="Email"
             name="email"
-            className="login-input"
+            className="loginInput"
             value={values.email}
             onChange={handleChange}
             onBlur={handleBlur}
           />
           {<Error touch={touched.email} error={errors.email} />}
         </div>
-        <div className="login-wrapper">
+        <div className="loginWrapper">
           <input
             type="password"
             placeholder="Password"
             name="password"
             value={values.password}
-            className="login-input"
+            className="loginInput"
             onChange={handleChange}
           />
           {<Error touch={touched.password} error={errors.password} />}
         </div>
-        <div className="button-container">
+        <div className="buttonContainer">
           <button
             className={`${
-              loading ? "login-button reload" : "login-button pointer"
+              loading ? "loginButton reload" : "loginButton pointer"
             }`}
             onClick={handleSubmit}
           >
@@ -141,14 +141,14 @@ const Login = () => {
           <Link className="link" to='/forget-password' style={{flex:'1'}}>
             <button
               className={`${
-                loading ? "forget-button reload" : "forget-button pointer"
+                loading ? "forgetButton reload" : "forgetButton pointer"
               }`}
             >
               Forget Password
             </button>
           </Link>
         </div>
-        <div className="link-register">
+        <div className="linkRegister">
           Don't have an account ? <Link to="/register">sign up</Link>
         </div>
       </div>

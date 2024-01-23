@@ -70,14 +70,14 @@ const Register = () => {
   })
 
   return (
-          <div className="register-container">
-              <div className="register-title">Register</div>
-              <div className="register-wrapper">
-                <div className="error-input-wrapper">
+          <div className="registerContainer">
+              <div className="registerTitle">Register</div>
+              <div className="registerWrapper">
+                <div className="errorInputWrapper">
                   <input
                     type="text"
                     placeholder="Username*"
-                    className="register-input"
+                    className="registerInput"
                     name="username"
                     value={values.username}
                     onChange={handleChange}
@@ -85,58 +85,58 @@ const Register = () => {
                   />
                   {<Error touch={touched.username} error={errors.username}/>}
                 </div>
-                <div className="error-input-wrapper">
+                <div className="errorInputWrapper">
                   <input
                     type="text"
                     placeholder="Name*"
                     name="name"
-                    className="register-input"
+                    className="registerInput"
                     value={values.name}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
                    {<Error touch={touched.name} error={errors.name}/>}
                 </div>
-                <div className="error-input-wrapper">
+                <div className="errorInputWrapper">
                   <input
                     type="email"
                     placeholder="Email*"
                     name="email"
-                    className="register-input"
+                    className="registerInput"
                     value={values.email}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
                    {<Error touch={touched.email} error={errors.email}/>}
                 </div>
-                <div className="error-input-wrapper">
+                <div className="errorInputWrapper">
                   <input
                     type="password"
                     placeholder="Password*"
                     name="password"
-                    className="register-input"
+                    className="registerInput"
                     value={values.password}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
                    {<Error touch={touched.password} error={errors.password}/>}
                 </div>
-                <div className="error-input-wrapper">
+                <div className="errorInputWrapper">
                   <input
                     type="text"
                     placeholder="Organization Name*"
                     name="organizationname"
-                    className="register-input"
+                    className="registerInput"
                     value={values.organizationname}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
                    {<Error touch={touched.organizationname} error={errors.organizationname}/>}
                 </div>
-                <div className="error-input-wrapper">
+                <div className="errorInputWrapper">
                   <select
                     name="plan"
-                    className="register-select"
+                    className="registerSelect"
                     id=""
                     value={values.plan}
                     onChange={handleChange}
@@ -151,8 +151,8 @@ const Register = () => {
                   {<Error touch={touched.plan} error={errors.plan}/>}
                 </div>
               </div>
-              <input type='button' value='Register' className="register-button" onClick={handleSubmit} />
-              <div className="go-to-login">
+              <input type='button' value='Register' className="registerButton" onClick={handleSubmit} />
+              <div className="goToLogin">
                 Do have an account ? <Link to="/login">sign in</Link>
               </div>
           </div>

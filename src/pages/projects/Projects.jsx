@@ -3,10 +3,11 @@ import "./projects.css";
 import Sidebar from "../../component/sidebar/Sidebar.jsx";
 import { useNavigate } from "react-router-dom";
 import Popup from "../../component/popup/Popup";
-import useFetch from "../../hooks/useFetch";
 import Projectcard from "../../component/projectCard/ProjectCard.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import makeRequesInstance from "../../utils/makeRequest.js";
+import { useAlert } from "react-alert";
 
 const initialState = {
   id: "00000000-0000-0000-0000-000000000000",
@@ -25,11 +26,12 @@ const Projects = () => {
   const [inputType, setInputType] = useState({ type: "", credential: false });
   const [initialValues, setInitialValues] = useState(initialState);
   const [change, setChange] = useState(0);
-  const [array, setArray] = useState([]);
-  const [load, setLoad] = useState(false);
+  const [data,setData]=useState([]);
+  const [page,setPage]=useState(1);
   const [search, setSearch] = useState("");
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  const alert=useAlert();
 
   const Id = localStorage.getItem("organizationId");
   useEffect(() => {
@@ -37,16 +39,31 @@ const Projects = () => {
       navigate("/login");
     }
   });
-  const { loding, data } = useFetch({
-    url: `/Project?page=1&pageSize=50000&organizationId=${Id}`,
-    change,
-  });
 
   useEffect(() => {
-    setLoad(true);
-    setArray(data?.items.slice(0)?.reverse());
-    setLoad(false);
-  }, [data, loding]);
+    const getData = async () => {
+      const makeRequest = makeRequesInstance(localStorage.getItem("token"));
+      try {
+        const res = await makeRequest.get(
+          `/Project?page=1&pageSize=${page*7}&organizationId=${Id}`
+        );
+        if (res.status === 200) {
+          setData(res.data.items);
+        }
+      } catch (error) {
+        alert.show("something went wrong!", { type: "info" });
+      }
+    };
+    getData();
+  }, [alert, page, Id,change]);
+
+  const handleInfinityScroll = (e) => {
+    const { scrollTop, clientHeight, scrollHeight } = e.target;
+    if (scrollHeight <= clientHeight + scrollTop + 1) {
+      setPage((prev) => prev + 1);
+    }
+  };
+
 
   // const handleDelete=async(id)=>{
   //   try {
@@ -61,13 +78,13 @@ const Projects = () => {
 
   return (
     <div>
-      <div className="pro-container">
-        <div className="pro-left">
+      <div className="projectContainer">
+        <div className="projectLeft">
           <Sidebar id={2} />
         </div>
-        <div className="pro-right">
-          <div className="rigth-content-wrapper">
-            <div className="project-top">
+        <div className="projectRight" onScroll={handleInfinityScroll}>
+          <div className="projectContentWrapper">
+            <div className="projectTop">
               <div className={`${inputType.credential ? "path blur" : "path"}`}>
                 Projects/
               </div>
@@ -80,22 +97,22 @@ const Projects = () => {
                 />
               </div>
             </div>
-            <div className="project-main">
-              {!load && (
+            <div className="projectMain">
+              {
                 <div
-                  className={`box-container ${
-                    array?.length >= 3 ? "grid" : "flexbox"
+                  className={`boxContainer ${
+                    data?.length >= 3 ? "grid" : "flexbox"
                   } ${inputType.credential && "blur"}`}
                 >
                   <div
-                    className="add-box"
+                    className="addBox"
                     onClick={() =>
                       setInputType({ type: "ADD", credential: true })
                     }
                   >
                     <div className="plus">+</div>
                   </div>
-                  {array
+                  {data
                     ?.filter((item) =>
                       item?.projectName
                         ?.toUpperCase()
@@ -110,7 +127,7 @@ const Projects = () => {
                       />
                     ))}
                 </div>
-              )}
+              }
             </div>
           </div>
           {inputType.credential && (

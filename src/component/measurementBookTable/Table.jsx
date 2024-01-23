@@ -8,8 +8,6 @@ import {
   INITIAL_STATE,
 } from "../../reducers/measurementbookReducer.js";
 import { useAlert } from "react-alert";
-import ContractItemFilter from "../filter/ContractItemFilter.jsx";
-import TagFilter from "../filter/TagFilter.jsx";
 
 const Table = ({
   projectId,
@@ -19,29 +17,27 @@ const Table = ({
   setContractItemValues,
   initialState,
   allTag,
+  tagFilter,
+  contractItemFilter
 }) => {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [head, setHead] = useState("00000000-0000-0000-0000-000000000000");
   const [change, setChange] = useState(0);
   const [scrollValue, setScrollValue] = useState(0);
   const [state, dispatch] = useReducer(inputReducer, INITIAL_STATE);
   const makeRequest = makeRequesInstance(localStorage.getItem("token"));
   const [input, setInput] = useState({ type: "", credential: false });
+  const [page, setPage] = useState(1);
   const [divideBy, setDivideBy] = useState(0);
-  const [contractItemFilter, setContractItemFilter] = useState([]);
-  const [tagFilter, setTagFilter] = useState([]);
   const alert = useAlert();
   const ref = useRef();
 
   useEffect(() => {
     const makeRequest = makeRequesInstance(localStorage.getItem("token"));
     const getData = async () => {
-      setLoading(true);
       const res = await makeRequest.post("MeasurementBook/GetByBillId", {
         billId,
         page: 1,
-        pageSize: 50000,
+        pageSize: page*10,
         filter: [
           ...(contractItemFilter.length !== 0
             ? [
@@ -67,27 +63,21 @@ const Table = ({
           setInput({ type: "ADD", credential: true });
           setDivideBy(0);
         }
+        else{
+          setInput({ type: "", credential:false });
+          setDivideBy(0);
+        }
       }
-      setLoading(false);
     };
     getData();
-  }, [billId, change, contractItemFilter,tagFilter]);
+  }, [billId, change, contractItemFilter,tagFilter,page]);
 
   useEffect(() => {
     if (ref.current) {
       ref.current.scrollTop = scrollValue;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
-
-  const handleClose = (e) => {
-    e.preventDefault();
-    setInput({ type: "", credential: false });
-    setHead("00000000-0000-0000-0000-000000000000");
-    setDivideBy(0);
-    dispatch({ type: "INITIAL_STATE" });
-    setContractItemValues(initialState);
-  };
+  }, [data,scrollValue]);
 
   const arrangeValues = () => {
     return {
@@ -105,9 +95,18 @@ const Table = ({
     };
   };
 
+  //set scrollvalue for when data ADD || UPDATED we can scroll Table
   const handleScrollValue = () => {
     if (ref.current) {
       setScrollValue(ref.current.scrollTop);
+    }
+  };
+
+  const handleInfinityScroll = (e) => {
+    const { scrollTop, clientHeight, scrollHeight } = e.target;
+    if (scrollHeight <= clientHeight + scrollTop + 1) {
+      setPage((prev) => prev + 1);
+      setScrollValue(scrollTop);
     }
   };
 
@@ -118,7 +117,7 @@ const Table = ({
         measurementBookDto: {
           ...values,
         },
-        head,
+        index:divideBy,
       });
       if (res.status === 204) {
         setChange(!change);
@@ -157,27 +156,18 @@ const Table = ({
     }
   };
 
-  const handleClear = () => {
-    if (tagFilter.length !== 0 || contractItemFilter.length !== 0) {
-      setTagFilter([]);
-      setContractItemFilter([]);
-    }
+  const handleClose = (e) => {
+    e.preventDefault();
+    handleScrollValue();
+    setInput({ type: "", credential: false });
+    setDivideBy(0);
+    dispatch({ type: "INITIAL_STATE" });
+    setContractItemValues(initialState);
   };
 
   return (
     <>
-      <div className="measurementFilter">
-        <ContractItemFilter
-          item={contractItems}
-          filter={contractItemFilter}
-          setFilter={setContractItemFilter}
-        />
-        <TagFilter item={allTag} filter={tagFilter} setFilter={setTagFilter} />
-        <span className="clear" onClick={handleClear}>
-          Clear All
-        </span>
-      </div>
-      <div className="measurementContainer" ref={ref}>
+      <div className="measurementContainer" ref={ref} onScroll={handleInfinityScroll}>
         <form onSubmit={handleSubmit}>
           <table>
             <tr className="measurementTableRow">
@@ -209,7 +199,7 @@ const Table = ({
                 Actions
               </th>
             </tr>
-            {!loading && (
+            {
               <TableRow
                 contractItems={contractItems}
                 data={data?.slice(0, divideBy)}
@@ -217,13 +207,12 @@ const Table = ({
                 setInput={setInput}
                 input={input}
                 dispatch={dispatch}
-                setHead={setHead}
                 handleScrollValue={handleScrollValue}
                 setChange={setChange}
                 change={change}
                 setContractItemValues={setContractItemValues}
               />
-            )}
+            }
 
             {/* input row */}
             {input?.credential && (
@@ -240,7 +229,7 @@ const Table = ({
               />
             )}
 
-            {!loading && (
+            {
               <TableRow
                 contractItems={contractItems}
                 data={
@@ -252,13 +241,12 @@ const Table = ({
                 setInput={setInput}
                 input={input}
                 dispatch={dispatch}
-                setHead={setHead}
                 handleScrollValue={handleScrollValue}
                 setChange={setChange}
                 change={change}
                 setContractItemValues={setContractItemValues}
               />
-            )}
+            }
           </table>
         </form>
       </div>

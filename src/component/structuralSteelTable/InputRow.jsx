@@ -15,9 +15,9 @@ const InputRow = ({
   load,
   input,
   contractItemValues,
-  setContractItemValues
+  setContractItemValues,
 }) => {
-  const ref=useRef();
+  const ref = useRef();
   const options = contractItems?.map((i) => ({
     value: i?.id,
     label: i?.item,
@@ -25,23 +25,23 @@ const InputRow = ({
     stdUnit: i?.stdUnitId,
   }));
 
-  useEffect(()=>{
-    if(ref.current){
-      ref.current.scrollIntoView({ block: 'nearest', inline: 'start', behavior:'smooth'});
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollIntoView({
+        block: "nearest",
+        inline: "start",
+        behavior: "smooth",
+      });
     }
-  },[input?.credential])
+  }, [input?.credential]);
 
   return (
     <>
-      <tr
-        className="ssTableTr"
-        style={{ height: "90px"}}
-        ref={ref}
-      >
+      <tr className="ssTableTr" style={{ height: "90px" }} ref={ref}>
         <td className="ssTableTd select-Wrapper">
           <Select
             onChange={(e) => {
-              setContractItemValues({...e,exist:true});
+              setContractItemValues({ ...e, exist: true });
             }}
             options={options}
             value={contractItemValues}
@@ -198,7 +198,13 @@ const InputRow = ({
           )}
         </td>
         <td className="ssTableTd" align="center">
-          <button className="actions" type='submit'>
+          <button
+            className="actions"
+            type="submit"
+            onKeyPress={(e) => {
+              e.key === "Enter" && e.preventDefault();
+            }}
+          >
             <FontAwesomeIcon icon={faCheck} />
           </button>
           <button className="actions" onClick={handleClose}>

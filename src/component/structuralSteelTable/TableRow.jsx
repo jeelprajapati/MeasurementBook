@@ -19,7 +19,6 @@ const TableRow = ({
   setDivideBy,
   setInput,
   dispatch,
-  setHead,
   setChange,
   change,
   setContractItemValues
@@ -41,7 +40,6 @@ const TableRow = ({
   const handleAdd = (e, index, id) => {
     e.preventDefault();
     setDivideBy(index + 1);
-    setHead(id);
     setInput({ type: "ADD", credential: true });
   };
 
@@ -71,7 +69,6 @@ const TableRow = ({
     });
     setDivideBy(index + 1);
     setInput({ type: "ADD", credential: true });
-    setHead(item?.id);
   };
 
   const handleDelete = async (e) => {

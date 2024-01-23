@@ -51,31 +51,31 @@ const Forgetpassword = () => {
   return (
     <>
       {!success ? (
-        <div className="forget-container">
-          <h3 className="forget-title">Forgot Your Password ?</h3>
-          <div className="forget-input">
+        <div className="forgetContainer">
+          <h3 className="forgetTitle">Forgot Your Password ?</h3>
+          <div className="forgetInput">
             <input
               type="email"
               name="email"
               placeholder="Enter Your Email*"
-              className="forget-email"
+              className="forgetEmail"
               value={values.email}
               onBlur={handleBlur}
               onChange={handleChange}
             />
             {<Error touch={touched.email} error={errors.email} />}
           </div>
-          <div className="forget-buttons">
+          <div className="forgetButtons">
             <input
               type="button"
               value="Submit"
               onClick={handleSubmit}
-              className="forget-btn"
+              className="forgetBtn"
             />
             <Link to="/login" className="link" style={{ width: "100%" }}>
               <input
                 type="button"
-                className="forget-btn"
+                className="forgetBtn"
                 value="Cancel"
                 style={{ backgroundColor: "white", color: "#2e4a93" }}
               />
@@ -83,7 +83,7 @@ const Forgetpassword = () => {
           </div>
         </div>
       ) : (
-        <div className="text-container">
+        <div className="textContainer">
           <h3>Reset Password</h3>
           <span>
             An email has been sent to{" "}

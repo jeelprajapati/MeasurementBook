@@ -7,6 +7,8 @@ import { Link, useLocation } from "react-router-dom";
 import makeRequesInstance from "../../utils/makeRequest.js";
 import { Context } from "../../context/Context.js";
 import useFetch from "../../hooks/useFetch.js";
+import ContractItemFilter from "../../component/filter/ContractItemFilter.jsx";
+import TagFilter from "../../component/filter/TagFilter.jsx";
 const Measurement = () => {
   const search = new URLSearchParams(useLocation().search);
   const [contractItems, setContractItems] = useState([]);
@@ -14,6 +16,8 @@ const Measurement = () => {
   const projectId = search.get("projectId");
   const billname = search.get("billName");
   const billId = search.get("billId");
+  const [contractItemFilter, setContractItemFilter] = useState([]);
+  const [tagFilter, setTagFilter] = useState([]);
   const initialState = {
     value: "",
     unit: "",
@@ -21,7 +25,10 @@ const Measurement = () => {
     stdUnit: 0,
     exist: false,
   };
-  const { loding, data } = useFetch({url:`MeasurementBook/GetTagsByProjectId?projectId=${projectId}`,change:0})
+  const { loding, data } = useFetch({
+    url: `Project/GetTagsByProjectId?projectId=${projectId}`,
+    change: 0,
+  });
   const { type, setType, contractItemValues, setContractItemValues } =
     useContext(Context);
 
@@ -39,13 +46,13 @@ const Measurement = () => {
   }, [projectId]);
 
   useEffect(() => {
-    const initialState={
+    const initialState = {
       value: "",
       unit: "",
       label: "",
       stdUnit: 0,
-      exist: false
-    }
+      exist: false,
+    };
     if (contractItemValues?.stdUnit === 7 && type !== 3) {
       setType(3);
       setContractItemValues(initialState);
@@ -59,35 +66,42 @@ const Measurement = () => {
       setType(1);
       setContractItemValues(initialState);
     }
-  }, [contractItemValues?.stdUnit, type, setType,setContractItemValues]);
+  }, [contractItemValues?.stdUnit, type, setType, setContractItemValues]);
+
+  const handleClear = () => {
+    if (tagFilter.length !== 0 || contractItemFilter.length !== 0) {
+      setTagFilter([]);
+      setContractItemFilter([]);
+    }
+  };
 
   return (
     <div>
-      <div className="measurement-main-container">
-        <div className="measurement-left">
+      <div className="measurementMainContainer">
+        <div className="measurementLeft">
           <Sidebar id={2} />
         </div>
-        <div className="measurement-right">
-          <div className="measurement-top">
-            <div className="measurement-path">
-              <Link to={`/project`} className="bill-link">
+        <div className="measurementRight">
+          <div className="measurementTop">
+            <div className="measurementPath">
+              <Link to={`/project`} className="billLink">
                 Projects/
               </Link>
-              <Link to={`/project/${projectId}`} className="bill-link">
+              <Link to={`/project/${projectId}`} className="billLink">
                 {projectName[0].toUpperCase() + projectName.slice(1)}{" "}
               </Link>
               /
               <Link
                 to={`/bills?projectid=${projectId}&projectname=${projectName}`}
-                className="bill-link"
+                className="billLink"
               >
                 Bills/
               </Link>
               <span>{billname[0].toUpperCase() + billname.slice(1)}</span>
             </div>
           </div>
-          <div className="measurement-middle">
-            <div className="types-con">
+          <div className="measurementMiddle">
+            <div className="typesCon">
               <div
                 className={`type ${type === 1 && "selected"}`}
                 onClick={() => {
@@ -111,7 +125,22 @@ const Measurement = () => {
               </div>
             </div>
           </div>
-          <div className="measurement-footer">
+          <div className="measurementFooter">
+            <div className="measurementFilter">
+              <ContractItemFilter
+                item={contractItems}
+                filter={contractItemFilter}
+                setFilter={setContractItemFilter}
+              />
+              <TagFilter
+                item={data}
+                filter={tagFilter}
+                setFilter={setTagFilter}
+              />
+              <span className="clear" onClick={handleClear}>
+                Clear All
+              </span>
+            </div>
             {type === 1 && (
               <MeasurementBook
                 billId={billId}
@@ -122,6 +151,8 @@ const Measurement = () => {
                 initialState={initialState}
                 allTag={data}
                 loding={loding}
+                tagFilter={tagFilter}
+                contractItemFilter={contractItemFilter}
               />
             )}
             {/* {type === 2 && (
@@ -137,6 +168,8 @@ const Measurement = () => {
                 initialState={initialState}
                 allTag={data}
                 loding={loding}
+                tagFilter={tagFilter}
+                contractItemFilter={contractItemFilter}
               />
             )}
           </div>

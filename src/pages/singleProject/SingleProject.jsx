@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./singleProject.css";
 import Sidebar from "../../component/sidebar/Sidebar.jsx";
-import Table from "../../component/contractItem/ContractItem.jsx";
+import Table from "../../component/contractItemTable/Table.jsx";
 import useFetch from "../../hooks/useFetch";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Excel from "../../component/excel/Excel";
@@ -47,28 +47,28 @@ const SingleProject = () => {
 
   return (
     <div>
-      <div className="single-container">
-        <div className="single-left">
+      <div className="singleProjectContainer">
+        <div className="singleProjectLeft">
           <Sidebar id={2} />
         </div>
-        <div className="single-right">
-          <div className="contract-top">
+        <div className="singleProjectRight">
+          <div className="contractItemTop">
             <div className="path">
-              <Link to={`/project`} className="bill-link">
+              <Link to={`/project`} style={{textDecoration:'none',color:'gray'}}>
                 Projects/
               </Link>
               {data?.projectName[0]?.toUpperCase() +
                 data?.projectName?.slice(1)}
             </div>
           </div>
-          <div className="contract-middle">
-            <div className="title-icon-wrapper">
-              <h3 className={`contract-title ${open && "blur"}`}>
+          <div className="contractItemMiddle">
+            <div className="titleIconWrapper">
+              <h3 className={`contractItemTitle ${open && "blur"}`}>
                 Project Detail
               </h3>
             </div>
             {!loding && (
-              <div className={`detail-box ${open && "blur"}`}>
+              <div className={`detailBox ${open && "blur"}`}>
                 <div className="entity">
                   <span style={{flex:'0.8'}}>Project</span>
                   <span style={{flex:'0.1'}}>:</span>
@@ -104,12 +104,12 @@ const SingleProject = () => {
               </Link> 
             </div>
           </div>
-          <div className="contract-footer">
-            <div className="table-container">
-              <div className="single-page-container">
-                <h3 className="table-title">Contract Item</h3>
+          <div className="contractItemFooter">
+            <div className="contractItemTableContainer">
+              <div className="singleProjectWrapper">
+                <h3>Contract Item</h3>
                 <button
-                  className="excel-btn"
+                  className="addExcelButton"
                   onClick={() => {
                     setOpen(true);
                   }}
@@ -117,7 +117,7 @@ const SingleProject = () => {
                   Add Excel
                 </button>
               </div>
-                <Table Id={id} change={change} setChange={setChange} unit={unit} />
+                <Table projectId={id} change={change} setChange={setChange} unit={unit} />
             </div>
           </div>
           {open && (

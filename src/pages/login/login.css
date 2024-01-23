@@ -1,4 +1,4 @@
-.login-container{
+.loginContainer{
     width: 24%;
     display: flex;
     flex-direction: column;
@@ -12,28 +12,28 @@
     padding: 40px;
     gap: 25px;
 }
-.login-title{
+.loginTitle{
     font-size: 18px;
     color:  #2e4a93; 
     font-weight: 600;
     text-align: center;
 }
-.login-wrapper{
+.loginWrapper{
     width: 100%;
     display: grid;
 }
-.login-input{
+.loginInput{
     height: 30px;
     padding: 10px;
     border: 1px solid #2e4a93;
     border-radius: 5px;
 }
-.button-container{
+.buttonContainer{
     width: 100%;
     display: flex;
     gap: 8px;
 }
-.login-button{
+.loginButton{
     background-color:  #2e4a93;
     flex: 1;
     color: #fdfdfd;
@@ -43,7 +43,7 @@
     font-size: 15px;
     font-weight: 400;
 }
-.forget-button{
+.forgetButton{
     border-radius: 5px;
     flex: 1;
     background-color: #fdfdfd;
@@ -54,12 +54,12 @@
     font-weight: 400;
     width: 100%;
 }
-.forget-button:hover{
+.forgetButton:hover{
     color: #fdfdfd;
     background-color: #2e4a93;
 }
 
-.link-register{
+.linkRegister{
     font-size: 15px;
     font-weight: 400;
     text-align: center;

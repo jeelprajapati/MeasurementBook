@@ -19,7 +19,6 @@ const TableRow = ({
   contractItems,
   input,
   dispatch,
-  setHead,
   handleScrollValue,
   setChange,
   change,
@@ -30,7 +29,6 @@ const TableRow = ({
   const makeRequest = makeRequesInstance(localStorage.getItem("token"));
   const handleAdd = (e, index, id) => {
     e.preventDefault();
-    setHead(id);
     setDivideBy(index + 1);
     setInput({ type: "ADD", credential: true });
   };
@@ -57,7 +55,6 @@ const TableRow = ({
 
   const handleCopy = (e, index, item) => {
     e.preventDefault();
-    setHead(item?.id);
     setDivideBy(index + 1);
     setInput({ type: "ADD", credential: true });
     const { contractItemId, ...other } = item;
