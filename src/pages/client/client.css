@@ -19,13 +19,6 @@
     align-items: center;
     background-color: white;
 }
-.clientPath{
-    color:#2e4a93;
-    margin: 0 10px; 
-    font-size: 15px;
-    font-weight: 400;
-    padding: 7px;
-}
 .clientMain{
     background-color: white;
     padding: 15px;

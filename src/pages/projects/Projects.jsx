@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import makeRequesInstance from "../../utils/makeRequest.js";
 import { useAlert } from "react-alert";
+import BreadCrumbs from "../../component/breadCrumbs/BreadCrumbs.jsx";
 
 const initialState = {
   id: "00000000-0000-0000-0000-000000000000",
@@ -26,12 +27,13 @@ const Projects = () => {
   const [inputType, setInputType] = useState({ type: "", credential: false });
   const [initialValues, setInitialValues] = useState(initialState);
   const [change, setChange] = useState(0);
-  const [data,setData]=useState([]);
-  const [page,setPage]=useState(1);
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
-  const alert=useAlert();
+  const alert = useAlert();
+  const pathData = [{ name: "Projects", to: null }];
 
   const Id = localStorage.getItem("organizationId");
   useEffect(() => {
@@ -45,7 +47,7 @@ const Projects = () => {
       const makeRequest = makeRequesInstance(localStorage.getItem("token"));
       try {
         const res = await makeRequest.get(
-          `/Project?page=1&pageSize=${page*7}&organizationId=${Id}`
+          `/Project?page=1&pageSize=${page * 7}&organizationId=${Id}`
         );
         if (res.status === 200) {
           setData(res.data.items);
@@ -55,7 +57,7 @@ const Projects = () => {
       }
     };
     getData();
-  }, [alert, page, Id,change]);
+  }, [alert, page, Id, change]);
 
   const handleInfinityScroll = (e) => {
     const { scrollTop, clientHeight, scrollHeight } = e.target;
@@ -63,7 +65,6 @@ const Projects = () => {
       setPage((prev) => prev + 1);
     }
   };
-
 
   // const handleDelete=async(id)=>{
   //   try {
@@ -85,9 +86,10 @@ const Projects = () => {
         <div className="projectRight" onScroll={handleInfinityScroll}>
           <div className="projectContentWrapper">
             <div className="projectTop">
-              <div className={`${inputType.credential ? "path blur" : "path"}`}>
+              {/* <div className={`${inputType.credential ? "path blur" : "path"}`}>
                 Projects/
-              </div>
+              </div> */}
+              <BreadCrumbs pathData={pathData} />
               <div className="search">
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
                 <input

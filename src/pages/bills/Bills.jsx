@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./bills.css";
 import Sidebar from "../../component/sidebar/Sidebar.jsx";
 import Billpopup from "../../component/billPopup/BillPopup.jsx";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Billcard from "../../component/billCard/BillCard.jsx";
 import makeRequesInstance from "../../utils/makeRequest.js";
 import { useAlert } from "react-alert";
+import BreadCrumbs from "../../component/breadCrumbs/BreadCrumbs.jsx";
 const initialState = {
   id: "00000000-0000-0000-0000-000000000000",
   invoiceNo: "INV-2023080428",
@@ -26,6 +27,11 @@ const Bills = () => {
   const [page, setPage] = useState(1);
   const [change, setChange] = useState(0);
   const alert = useAlert();
+  const pathData = [
+    { name: "Projects", to: "/project" },
+    { name: projectName, to: `/project/${projectId}` },
+    { name: "Bills", to: null },
+  ];
 
   useEffect(() => {
     const getData = async () => {
@@ -44,7 +50,7 @@ const Bills = () => {
       }
     };
     getData();
-  }, [alert, page, projectId,change]);
+  }, [alert, page, projectId, change]);
 
   const handleInfinityScroll = (e) => {
     const { scrollTop, clientHeight, scrollHeight } = e.target;
@@ -62,16 +68,7 @@ const Bills = () => {
         <div className="billRight" onScroll={handleInfinityScroll}>
           <div className="rightContentWrapper">
             <div className={`billTop ${inputType?.credential && "blur"}`}>
-              <div className="billPath">
-                <Link to={`/project`} className="billLink">
-                  Projects
-                </Link>
-                /
-                <Link to={`/project/${projectId}`} className="billLink">
-                  {projectName[0]?.toUpperCase() + projectName?.slice(1)} /{" "}
-                </Link>{" "}
-                <span>Bills</span>
-              </div>
+              <BreadCrumbs pathData={pathData}/>
             </div>
 
             {

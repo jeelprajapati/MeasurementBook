@@ -5,8 +5,9 @@ import ClientTable from "../../component/clientTable/ClientTable.jsx";
 import ClientPopUp from "../../component/clientPopup/ClientPopup.jsx";
 import { useNavigate } from "react-router-dom";
 import makeRequesInstance from "../../utils/makeRequest.js";
+import BreadCrumbs from "../../component/breadCrumbs/BreadCrumbs.jsx";
 const initialState = {
-  id:"00000000-0000-0000-0000-000000000000",
+  id: "00000000-0000-0000-0000-000000000000",
   name: "",
   email: "",
   phoneNumber: "",
@@ -14,12 +15,12 @@ const initialState = {
   pan: "",
   address: "",
   city: "",
-  countryId:"",
-  stateId:"",
+  countryId: "",
+  stateId: "",
   postalCode: "",
 };
 const Client = () => {
-  const [input, setInput] = useState({type:"",credential:false});
+  const [input, setInput] = useState({ type: "", credential: false });
   const [item, setItem] = useState(initialState);
   const [country, setCountry] = useState(null);
   const [state, setState] = useState(null);
@@ -27,6 +28,7 @@ const Client = () => {
   const navigate = useNavigate();
   const Id = localStorage.getItem("organizationId");
   const token = localStorage.getItem("token");
+  const pathData = [{ name: "Clients", to: null }];
   useEffect(() => {
     if (!(token && Id)) {
       navigate("/login");
@@ -35,18 +37,18 @@ const Client = () => {
 
   useEffect(() => {
     const getCountry = async () => {
-        const makeRequest = makeRequesInstance(localStorage.getItem("token"));
-        const res = await makeRequest.get("/Standard/GetCountries");
-        if(res.status===200){
-          setCountry(res.data);
-        }
+      const makeRequest = makeRequesInstance(localStorage.getItem("token"));
+      const res = await makeRequest.get("/Standard/GetCountries");
+      if (res.status === 200) {
+        setCountry(res.data);
+      }
     };
     const getStates = async () => {
-        const makeRequest = makeRequesInstance(localStorage.getItem("token"));
-        const res = await makeRequest.get("/Standard/GetStates");
-        if(res.status===200){
-          setState(res.data);
-        }
+      const makeRequest = makeRequesInstance(localStorage.getItem("token"));
+      const res = await makeRequest.get("/Standard/GetStates");
+      if (res.status === 200) {
+        setState(res.data);
+      }
     };
     getCountry();
     getStates();
@@ -60,12 +62,18 @@ const Client = () => {
         </div>
         <div className="clientRight">
           <div className="clientTop">
-            <div className={`${input?.credential ? "clientPath blur" : "clientPath"}`}>
-              Clients/
-            </div>
+            <BreadCrumbs pathData={pathData}/>
           </div>
-          <div className={`${input?.credential ? "clientMain blur" : "clientMain"}`}>
-            <h2 className={`${input?.credential ? "clientTitle blur" : "clientTitle"}`}>
+          <div
+            className={`${
+              input?.credential ? "clientMain blur" : "clientMain"
+            }`}
+          >
+            <h2
+              className={`${
+                input?.credential ? "clientTitle blur" : "clientTitle"
+              }`}
+            >
               Clients
             </h2>
             <ClientTable

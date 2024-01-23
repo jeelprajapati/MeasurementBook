@@ -14,17 +14,9 @@
 }
 .measurementTop{
     background-color: #fdfdfd;
-    padding: 7px;
     height: 52px;
     display: flex;
     align-items: center;
-}
-.measurementPath{
-    font-size: 15px;
-    margin: 0 8px;
-}
-.measurementPath span{
-    color: #2e4a93;
 }
 .measurementTitle{
     margin:0;

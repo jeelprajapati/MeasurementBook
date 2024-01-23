@@ -25,14 +25,6 @@
     align-items: center;
     background-color: white;
 }
-.billPath{
-    font-size: 15px;
-    font-weight: 400;
-    margin: 10px;
-}
-.billPath span{
-    color: #2e4a93;
-}
 .billLink{
     text-decoration: none;
     color: gray;

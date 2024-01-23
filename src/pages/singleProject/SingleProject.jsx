@@ -8,12 +8,13 @@ import Excel from "../../component/excel/Excel";
 import makeRequesInstance from "../../utils/makeRequest.js";
 import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import BreadCrumbs from "../../component/breadCrumbs/BreadCrumbs.jsx";
 const SingleProject = () => {
   const [open, setOpen] = useState(false);
   // const [Update, setUpdate] = useState(false);
   const [change, setChange] = useState(0);
   const [client, setClient] = useState(null);
-  const [unit,setUnit]=useState([]);
+  const [unit, setUnit] = useState([]);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const Id = localStorage.getItem("organizationId");
@@ -24,6 +25,10 @@ const SingleProject = () => {
   }, [navigate, token, Id]);
   const id = useLocation().pathname.split("/")[2];
   const { loding, data } = useFetch({ url: `/Project/${id}`, change });
+  const pathData = [
+    { name: "Projects", to: "/project" },
+    { name: data?.projectName, to: null },
+  ];
   useEffect(() => {
     const getClient = async () => {
       const orgId = localStorage.getItem("organizationId");
@@ -53,13 +58,7 @@ const SingleProject = () => {
         </div>
         <div className="singleProjectRight">
           <div className="contractItemTop">
-            <div className="path">
-              <Link to={`/project`} style={{textDecoration:'none',color:'gray'}}>
-                Projects/
-              </Link>
-              {data?.projectName[0]?.toUpperCase() +
-                data?.projectName?.slice(1)}
-            </div>
+            <BreadCrumbs pathData={pathData}/>
           </div>
           <div className="contractItemMiddle">
             <div className="titleIconWrapper">
@@ -70,14 +69,14 @@ const SingleProject = () => {
             {!loding && (
               <div className={`detailBox ${open && "blur"}`}>
                 <div className="entity">
-                  <span style={{flex:'0.8'}}>Project</span>
-                  <span style={{flex:'0.1'}}>:</span>
-                  <span style={{flex:'8'}}>{data?.projectName}</span>
+                  <span style={{ flex: "0.8" }}>Project</span>
+                  <span style={{ flex: "0.1" }}>:</span>
+                  <span style={{ flex: "8" }}>{data?.projectName}</span>
                 </div>
                 <div className="entity">
-                  <span style={{flex:'0.8'}}>Client</span>
-                  <span style={{flex:'0.1'}}>:</span>
-                  <span style={{flex:'9'}}>
+                  <span style={{ flex: "0.8" }}>Client</span>
+                  <span style={{ flex: "0.1" }}>:</span>
+                  <span style={{ flex: "9" }}>
                     {
                       client?.filter((item) => item?.id === data?.clientId)[0]
                         ?.name
@@ -101,7 +100,7 @@ const SingleProject = () => {
                   <span>Goto Bills</span>
                   <FontAwesomeIcon icon={faArrowRightLong} className="arrow" />
                 </button>
-              </Link> 
+              </Link>
             </div>
           </div>
           <div className="contractItemFooter">
@@ -117,17 +116,22 @@ const SingleProject = () => {
                   Add Excel
                 </button>
               </div>
-                <Table projectId={id} change={change} setChange={setChange} unit={unit} />
+              <Table
+                projectId={id}
+                change={change}
+                setChange={setChange}
+                unit={unit}
+              />
             </div>
           </div>
           {open && (
-              <Excel
-                setOpen={setOpen}
-                projectId={id}
-                setChange={setChange}
-                change={change}
-                unit={unit}
-              />
+            <Excel
+              setOpen={setOpen}
+              projectId={id}
+              setChange={setChange}
+              change={change}
+              unit={unit}
+            />
           )}
         </div>
       </div>

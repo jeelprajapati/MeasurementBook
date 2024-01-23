@@ -3,12 +3,21 @@ import "./measurement.css";
 import Sidebar from "../../component/sidebar/Sidebar";
 import MeasurementBook from "../../component/measurementBookTable/Table.jsx";
 import StructuralSteelTable from "../../component/structuralSteelTable/Table.jsx";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import makeRequesInstance from "../../utils/makeRequest.js";
 import { Context } from "../../context/Context.js";
 import useFetch from "../../hooks/useFetch.js";
 import ContractItemFilter from "../../component/filter/ContractItemFilter.jsx";
 import TagFilter from "../../component/filter/TagFilter.jsx";
+import BreadCrumbs from "../../component/breadCrumbs/BreadCrumbs.jsx";
+const initialState = {
+  value: "",
+  unit: "",
+  label: "",
+  stdUnit: 0,
+  exist: false,
+};
+
 const Measurement = () => {
   const search = new URLSearchParams(useLocation().search);
   const [contractItems, setContractItems] = useState([]);
@@ -18,13 +27,17 @@ const Measurement = () => {
   const billId = search.get("billId");
   const [contractItemFilter, setContractItemFilter] = useState([]);
   const [tagFilter, setTagFilter] = useState([]);
-  const initialState = {
-    value: "",
-    unit: "",
-    label: "",
-    stdUnit: 0,
-    exist: false,
-  };
+  
+  const pathData = [
+    { name: "Projects", to: "/project" },
+    { name: projectName, to: `/project/${projectId}` },
+    {
+      name: "Bills",
+      to: `/bills?projectid=${projectId}&projectname=${projectName}`,
+    },
+    { name: billname, to: null },
+  ];
+
   const { loding, data } = useFetch({
     url: `Project/GetTagsByProjectId?projectId=${projectId}`,
     change: 0,
@@ -46,13 +59,6 @@ const Measurement = () => {
   }, [projectId]);
 
   useEffect(() => {
-    const initialState = {
-      value: "",
-      unit: "",
-      label: "",
-      stdUnit: 0,
-      exist: false,
-    };
     if (contractItemValues?.stdUnit === 7 && type !== 3) {
       setType(3);
       setContractItemValues(initialState);
@@ -83,22 +89,7 @@ const Measurement = () => {
         </div>
         <div className="measurementRight">
           <div className="measurementTop">
-            <div className="measurementPath">
-              <Link to={`/project`} className="billLink">
-                Projects/
-              </Link>
-              <Link to={`/project/${projectId}`} className="billLink">
-                {projectName[0].toUpperCase() + projectName.slice(1)}{" "}
-              </Link>
-              /
-              <Link
-                to={`/bills?projectid=${projectId}&projectname=${projectName}`}
-                className="billLink"
-              >
-                Bills/
-              </Link>
-              <span>{billname[0].toUpperCase() + billname.slice(1)}</span>
-            </div>
+            <BreadCrumbs pathData={pathData}/>
           </div>
           <div className="measurementMiddle">
             <div className="typesCon">
