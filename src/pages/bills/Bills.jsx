@@ -1,52 +1,122 @@
-import React, { useState } from 'react'
-import './Bills.css'
-import Sidebar from '../../component/sidebar/Sidebar'
-import Billtable from '../../component/billTable/Billtable'
-import Billpopup from '../../component/billPopup/Billpopup'
-import { Link, useLocation } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import "./bills.css";
+import Sidebar from "../../component/sidebar/Sidebar.jsx";
+import Billpopup from "../../component/billPopup/BillPopup.jsx";
+import { useLocation } from "react-router-dom";
+import Billcard from "../../component/billCard/BillCard.jsx";
+import makeRequesInstance from "../../utils/makeRequest.js";
+import { useAlert } from "react-alert";
+import BreadCrumbs from "../../component/breadCrumbs/BreadCrumbs.jsx";
+const initialState = {
+  id: "00000000-0000-0000-0000-000000000000",
+  invoiceNo: "INV-2023080428",
+  name: "",
+  invoiceDate: "",
+  typeBill: "",
+  status: "",
+  invoiceValue: 0,
+};
 
 const Bills = () => {
-  const loaction=useLocation().search.split('?');
-  const projectId=loaction[1].split('=')[1];
-  const projectname=loaction[2].split('=')[1];
-  const [open,setOpen]=useState(false)
-  const[change,setChange]=useState(0)
-  const [item,setItem]=useState({name:'',invoiceDate:'',typeBill:'',status:''})
-  const [input,setInput]=useState(false)
+  const search = new URLSearchParams(useLocation()?.search);
+  const projectId = search?.get("projectid");
+  const [data, setData] = useState([]);
+  const projectName = search?.get("projectname");
+  const [inputType, setInputType] = useState({ type: "", credential: false });
+  const [initialValues, setInitialValues] = useState(initialState);
+  const [page, setPage] = useState(1);
+  const [change, setChange] = useState(0);
+  const alert = useAlert();
+  const pathData = [
+    { name: "Projects", to: "/project" },
+    { name: projectName, to: `/project/${projectId}` },
+    { name: "Bills", to: null },
+  ];
+
+  useEffect(() => {
+    const getData = async () => {
+      const makeRequest = makeRequesInstance(localStorage.getItem("token"));
+      try {
+        const res = await makeRequest.get(
+          `/Bill/GetByProjectId?page=${1}&pageSize=${
+            page * 7
+          }&projectId=${projectId}`
+        );
+        if (res.status === 200) {
+          setData(res.data.items);
+        }
+      } catch (error) {
+        alert.show("something went wrong!", { type: "info" });
+      }
+    };
+    getData();
+  }, [alert, page, projectId, change]);
+
+  const handleInfinityScroll = (e) => {
+    const { scrollTop, clientHeight, scrollHeight } = e.target;
+    if (scrollHeight <= clientHeight + scrollTop + 1) {
+      setPage((prev) => prev + 1);
+    }
+  };
+
   return (
     <div>
-      <div className="bill-main-container">
-        <div className="bill-left"><Sidebar id={2}/>
+      <div className="billMainContainer">
+        <div className="billLeft">
+          <Sidebar id={2} />
         </div>
-        <div className="bill-right">
-            <div className={`${open?'bills blur':'bills'}`}>
-                <div className="bill-path">
-                <Link to={`/project`} className='bill-link'>PROJECT</Link>/<Link to={`/project/${projectId}`} className='bill-link'>{projectname.toUpperCase()} / </Link> <span>BILLS</span>
-                </div>
-                <div className="bill-summary">
-                    <h3 className="summary-title">
-                      Summary
-                    </h3>
-                    <div className="summary-container">
-                      <div className="summary-box"></div>
-                      <div className="summary-box"></div>
-                      <div className="summary-box"></div>
-                      <div className="summary-box"></div>
-                    </div>
-                </div>
-                <div className="bill-table">
-                  <div className="bill-con">
-                   <h3 className="bill-table-title">Bills</h3>
-                   <button className="add-bill" onClick={()=>setOpen(true)}>+ Add Bill</button>
-                  </div>
-                  <Billtable setOpen={setOpen} change={change} setItem={setItem} setInput={setInput} setChange={setChange} open={open}/>
-                </div>
+        <div className="billRight" onScroll={handleInfinityScroll}>
+          <div className="rightContentWrapper">
+            <div className={`billTop ${inputType?.credential && "blur"}`}>
+              <BreadCrumbs pathData={pathData}/>
             </div>
-          {open && <Billpopup setOpen={setOpen} input={input} item={item} setItem={setItem} setInput={setInput} setChange={setChange} change={change}/>}
+
+            {
+              <div className={`billMiddle ${inputType?.credential && "blur"}`}>
+                <div
+                  className={`billWrapper  ${
+                    data?.length >= 3 ? "grid" : "flexbox"
+                  }`}
+                >
+                  <div
+                    className="addCard"
+                    onClick={() =>
+                      setInputType({ type: "ADD", credential: true })
+                    }
+                  >
+                    +
+                  </div>
+                  {data?.map((item) => (
+                    <Billcard
+                      key={item?.id}
+                      setInputType={setInputType}
+                      setInitialValues={setInitialValues}
+                      item={item}
+                      projectName={projectName}
+                      projectId={projectId}
+                    />
+                  ))}
+                </div>
+              </div>
+            }
+          </div>
+
+          {inputType?.credential && (
+            <Billpopup
+              setInputType={setInputType}
+              setInitialValues={setInitialValues}
+              initialValues={initialValues}
+              initialState={initialState}
+              setChange={setChange}
+              change={change}
+              inputType={inputType}
+              projectId={projectId}
+            />
+          )}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Bills
+export default Bills;

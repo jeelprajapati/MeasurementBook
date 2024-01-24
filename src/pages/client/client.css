@@ -1,0 +1,45 @@
+.clientMainContainer{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+.clientRight{
+    position: relative;
+    background-color: rgb(238, 237, 237);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    gap:10px;
+    flex-direction: column;
+}
+.clientTop{
+    width: 100%;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+}
+.clientMain{
+    background-color: white;
+    padding: 15px;
+    margin: 0 10px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.clientTitle{
+    margin: 0;
+    font-weight: 600;
+    font-size: 15px;
+}
+.clientpopup{
+    width: 40%;
+    position:fixed;
+    left: 50%;
+    top: 50%;
+    -ms-transform: translate(-50%,-50%);
+    -moz-transform:translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+     transform: translate(-50%,-50%);
+}

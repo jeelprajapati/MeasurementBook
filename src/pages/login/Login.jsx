@@ -1,17 +1,19 @@
-import React, { useState } from "react";
-import "./Login.css";
-import makeRequesInstance from "../../makeRequest";
+import React, { useEffect, useState } from "react";
+import "./login.css";
+import makeRequesInstance from "../../utils/makeRequest.js";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAlert } from "react-alert";
-import Sidebar from '../../component/sidebar/Sidebar.jsx'
+import { useFormik } from "formik";
+import { loginScema } from "../../scemas/index.js";
+import Error from "../../component/error/Error.jsx";
 const Login = () => {
-  const [data, setData] = useState(null);
-  const [loading,setLoading]=useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const alert = useAlert();
-  const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+  const initialValues = {
+    email: "",
+    password: "",
   };
   const handleLoginAndSetId = async (token) => {
     const makeRequest = makeRequesInstance(token);
@@ -21,103 +23,135 @@ const Login = () => {
         "organizationId",
         res.data.organizations[0].organizationID
       );
-      if(res.status===200){
+      if (res.status === 200) {
         try {
-          const clients= await makeRequest.get(`Client?page=${1}&pageSize=${100}&organizationId=${res.data.organizations[0].organizationID}`) 
-          if(clients.data.items.length===0){
-            navigate('/client');
-          }
-          else{
-            navigate('/');
+          const clients = await makeRequest.get(
+            `Client?page=${1}&pageSize=${100}&organizationId=${
+              res.data.organizations[0].organizationID
+            }`
+          );
+          if (clients.data.items.length === 0) {
+            navigate("/client");
+          } else {
+            navigate("/");
           }
         } catch (error) {
-          if(error.response){
-            alert.show(error.response.data.title,{type:'info'})
-          }
-          else if(error.code==='ERR_NETWORK'){
-            alert.show(error.message,{type:'error'})
-          }
-          else{
-            alert.show('Iternal server error',{type:'error'})
+          if (error.response) {
+            alert.show(error.response.data.title, { type: "error" });
+          } else {
+            alert.show("something went wrong", { type: "info" });
           }
         }
       }
     } catch (error) {
-      if(error.response){
-        alert.show(error.response.data.title,{type:'info'})
-      }
-      else if(error.code==='ERR_NETWORK'){
-        alert.show(error.message,{type:'error'})
-      }
-      else{
-        alert.show('Iternal server error',{type:'error'})
-      }
-    }
-    setLoading(false);
-  };
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const res = await axios.post(
-        "https://dev-api.measurekaro.com/api/Authentication/login",
-        data
-      );
-      if (res.status === 200) {
-        localStorage.setItem("token", res.data.token);
-        handleLoginAndSetId(res.data.token);
-      }
-    } catch (error) {
-      if(error?.response.status===401){
-        alert.show('Invalid Username Or Password',{type:'error'})
-      }
-      else if(error.response){
-        alert.show(error.response.data.title,{type:'info'})
-      }
-      else if(error.code==='ERR_NETWORK'){
-        alert.show(error.message,{type:'error'})
-      }
-      else{
-        alert.show('Iternal server error',{type:'error'})
+      if (error.response) {
+        alert.show(error.response.data.title, { type: "error" });
+      } else {
+        alert.show("something went wrong", { type: "info" });
       }
     }
     setLoading(false);
   };
 
+  const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
+    useFormik({
+      initialValues,
+      validationSchema: loginScema,
+      onSubmit: (values, action) => {
+        const handleLogin = async () => {
+          setLoading(true);
+          try {
+            const res = await axios.post(
+              `${process.env.REACT_APP_BASE_URL}/Authentication/login`,
+              values
+            );
+            if (res.status === 200) {
+          
+              localStorage.setItem("token", res.data.token);
+              handleLoginAndSetId(res.data.token);
+              action.resetForm();
+            }
+          } catch (error) {
+            if (error.response) {
+              if (error.response.status === 401) {
+                alert.show("Invalid Email Or Password", { type: "error" });
+              } else {
+                alert.show(error.response.data.title, { type: "error" });
+              }
+            } else if (error.request) {
+              alert.show("something went wrong", { type: "info" });
+            } else {
+              alert.show(error.message, { type: "error" });
+            }
+          }
+          setLoading(false);
+        };
+        handleLogin();
+      },
+    });
+
+    useEffect(() => {
+      const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+          handleSubmit();
+        }
+      };
+      document.addEventListener('keydown', handleKeyPress);
+      return () => {
+        document.removeEventListener('keydown', handleKeyPress);
+      };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
   return (
-    <div className="main-login-container">
-       <div className="client-left"><Sidebar id={0}/></div>
-        <div className="login-right">
-      <div className="login-container">
-        <div className="login-title">Login</div>
-        <input
-          type="text"
-          placeholder="Username"
-          name="username"
-          className="login-input"
-          onChange={handleChange}
-        />
-        <br />
-        <input
-          type="password"
-          placeholder="Password"
-          name="password"
-          className="login-input"
-          onChange={handleChange}
-        />
-        <br />
-        <div className="button-container">
-          <button className={`${loading?'login-button reload':'login-button pointer'}`} onClick={handleLogin}>
+      <div className="loginContainer">
+        <div className="loginTitle">Login</div>
+        <div className="loginWrapper">
+          <input
+            type="email"
+            placeholder="Email"
+            name="email"
+            className="loginInput"
+            value={values.email}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          {<Error touch={touched.email} error={errors.email} />}
+        </div>
+        <div className="loginWrapper">
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            value={values.password}
+            className="loginInput"
+            onChange={handleChange}
+          />
+          {<Error touch={touched.password} error={errors.password} />}
+        </div>
+        <div className="buttonContainer">
+          <button
+            className={`${
+              loading ? "loginButton reload" : "loginButton pointer"
+            }`}
+            onClick={handleSubmit}
+          >
             Login
           </button>
-          <button className={`${loading?'forget-button reload':'forget-button pointer'}`}>Forget Password</button>
+          <Link className="link" to='/forget-password' style={{flex:'1'}}>
+            <button
+              className={`${
+                loading ? "forgetButton reload" : "forgetButton pointer"
+              }`}
+            >
+              Forget Password
+            </button>
+          </Link>
         </div>
-        <div className="link-register">
-          Go to register <Link to='/register'>Register</Link>
+        <div className="linkRegister">
+          Don't have an account ? <Link to="/register">sign up</Link>
         </div>
       </div>
-      </div>
-    </div>
   );
 };
 

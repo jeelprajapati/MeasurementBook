@@ -1,0 +1,51 @@
+.excel-container{
+    width: 35%;
+    position:fixed;
+    left: 50%;
+    top: 50%;
+    -ms-transform: translate(-50%,-50%);
+    -moz-transform:translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    background-color: #fdfdfd;
+    box-shadow: 0px 4px 10px #00000040;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 15px;
+    z-index: 10;
+}
+.excel-label{
+    font-size: 18px;
+    font-weight: 600;
+}
+.excel-input{
+    font-size: 15px;
+    font-weight: 400;
+}
+.excel-red{
+    font-size: 15px;
+    font-weight: 400;
+}
+.excel-button{
+    width: 20%;
+    padding: 7px 0;
+    font-weight: 400;
+    font-size: 15px;
+    background-color: #2e4a93;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+.excel-img{
+    position: absolute;
+    font-size: 18px;
+    top: 7px;
+    right: 7px;
+    color: gray;
+}
+.excel-img:hover{
+    cursor: pointer;
+}

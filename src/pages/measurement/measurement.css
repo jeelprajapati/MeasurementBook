@@ -1,0 +1,75 @@
+.measurementMainContainer{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    border-radius: 5px;
+}
+.measurementRight{
+    position: relative;
+    background-color: rgb(238, 237, 237);
+    width: 100%;
+    display: flex;
+    gap:7px;
+    flex-direction: column;
+}
+.measurementTop{
+    background-color: #fdfdfd;
+    height: 52px;
+    display: flex;
+    align-items: center;
+}
+.measurementTitle{
+    margin:0;
+    font-size: 15px;
+    margin: 5px 8px;
+}
+.measurementMiddle{
+    background-color: #fdfdfd;
+    padding: 7px;
+    margin:0 7px;
+}
+.typesCon{
+    display: flex;
+    align-items: center;
+    width: 99%;
+    margin: 7px;
+    border-radius: 4px;
+    background-color: #fdfdfd;
+}
+.type{
+    text-align: center;
+    flex:1;
+    border: 1px solid #2e4a93;
+    font-size: 15px;
+    font-weight: 400;
+    padding: 7px;
+    color: #2e4a93;
+    cursor: pointer;
+}
+.type:nth-child(1){
+    border-radius: 4px 0 0 4px;
+}
+.type:nth-child(3){
+    border-radius: 0 4px 4px 0;
+}
+.selected{
+    background-color: #2e4a93;
+    color: #fdfdfd;
+}
+.measurementFooter{
+    background-color: #fdfdfd;
+    padding: 7px;
+    margin: 0 7px;
+    display:flex;
+    flex-direction:column;
+    height:100%
+}
+.measurementFilter{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 5px;
+  }
+  .clear{
+    cursor: pointer;
+  }

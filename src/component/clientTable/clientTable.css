@@ -1,75 +1,79 @@
-.client-table-con{
+.clientTableContainer{
     width: 100%;
-    border-radius: 10px;
-    height: 595px;
-    background-color: rgb(224, 224, 224);
-    overflow-y: scroll;
+    overflow-y: auto;
+    height: 560px;
 }
-.client-table-con::-webkit-scrollbar{
-    display: none;
-}
-.client-table{
-    background-color: rgb(224, 224, 224);
-    border-radius: 10px;
+
+.clientTable{
     table-layout: fixed;
     width: 100%;
+    border-collapse: collapse;
 }
-.client-tr:nth-child(1){
+.clientTr:nth-child(1){
     position: sticky;
     top:0;
-    background-color: #333333;
     color: white;
+    background-color: #fdfdfd;
 }
-.client-th{
+.tr{
+    border-bottom:1px solid #2e4a93;
+}
+.clientTh{
     padding: 10px 0px;
-    font-size: 14px;   
-    font-family: 'Roboto';
+    font-size: 15px;   
+    font-weight: 400;
+    color: #2e4a93;
+    box-shadow: inset 0 -1px 0 #2e4a93;
+    text-align: start;
 }
-.client-th:nth-child(1){
-    border-radius: 10px 0 0 0px;
+.clientTh:nth-child(1){
+    border-radius: 5px 0 0 0px;
 }
-.client-th:nth-child(12){
-    border-radius: 0 10px 0 0;
+.clientTh:nth-child(12){
+    border-radius: 0 5px 0 0;
 }
-.client-svg{
-    width: 20px;
-    height: 20px;
-    margin: 0 4px;
-}
-.client-td{
-    color: black;
-    padding: 10px 2px;
-    overflow-wrap: break-word;
-    text-align: center;
-    font-size: 13px;
-    font-family: 'Roboto';
-}
-.client-svg:hover{
+.clientButton{
+    width: 35px;
+    height: 35px;
+    background-color: #2e4a93;
+    border: none;
+    margin: 0 2px;
     cursor: pointer;
 }
-.client-add-button{
-    background-color: rgb(5, 187, 5);
+.clientButton svg{
+    color: #fdfdfd;
+    font-size: 18px;
+}
+.clientTd{
+    color: black;
+    overflow-wrap: break-word;
+    text-align: start;
+    height: 50px;
+    font-size: 13px;
+    font-weight: 400;
+}
+.clientAddButton{
+    background-color: #2e4a93;
     border: none;
-    padding: 10px 15px;
+    height: 40px;
+    width: 130px;
+    padding: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 10px 10px;
-    border-radius: 7px;
+    margin: 10px 0px;
+    border-radius: 5px;
     color: white;
-    font-family: 'Roboto';
-}
-.client-add-button:hover{
+    font-size: 15px;
+    font-weight: 400;
     cursor: pointer;
 }
-.client-td span{
+.clientTd span{
     background-color: white;
-    display: block;
-    padding: 5px 10px;
-    border-radius: 7px;
+    border-radius: 3px;
     height: 30px;
     overflow-y: scroll;
 }
-.client-td span::-webkit-scrollbar{
+.clientTd span::-webkit-scrollbar{
     display: none;
 }

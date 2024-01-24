@@ -1,0 +1,117 @@
+.projectCardContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fdfdfd;
+  box-shadow: 0px 4px 10px 0px #00000040;
+  border-radius: 15px;
+  height: 305px;
+  min-width: 310px;
+}
+.projectCardSetting {
+  display: flex;
+  justify-content: flex-end;
+  width: 86%;
+  position: relative;
+}
+.settingIcon {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5px;
+  cursor: pointer;
+}
+.settingIcon div {
+  width: 4px;
+  height: 4px;
+  background-color: #333333;
+}
+.listItems {
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background-color: #fdfdfd;
+  box-shadow: 0px 4px 10px 0px #00000040;
+  position: absolute;
+  top: 25px;
+  right: -70px;
+}
+.itemName {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 7px;
+  padding: 3px 7px;
+}
+.itemName:hover{
+  cursor:pointer;
+  background-color: rgb(217, 217, 217);
+}
+.itemName span {
+  font-weight: 400;
+  font-size: 12px;
+}
+.itemName img {
+  width: 15px;
+}
+.projectCardBody {
+  width: 76%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.projectCardTop {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.projectCardTop h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+.projectCardDesc {
+  font-size: 15px;
+  font-weight: 400;
+}
+.projectCardWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.projectCardLabel {
+  font-size: 12px;
+
+  font-weight: 400;
+}
+.projectCardValue {
+  font-size: 15px;
+  font-weight: 600;
+}
+.projectCardButton {
+  display: flex;
+  gap: 5px;
+  width: 100%;
+}
+.projectCardButton button {
+  display: flex;
+  width: 100%;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: #2e4a93;
+  color: white;
+  font-weight: 400;
+  font-size: 15px;
+  padding: 8px;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+}
+.projectCardButton svg {
+  font-size: 15px;
+  font-weight: 400;
+}

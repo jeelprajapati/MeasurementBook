@@ -1,78 +1,82 @@
-import React, { useEffect, useState } from 'react'
-import './Sidebar.css'
-import dashboard from '../../image/dashboard.svg'
-import layer from '../../image/layer.svg'
-import clientsvg from '../../image/clients.svg'
-import tutorial from '../../image/tutorial.svg'
-import logout from '../../image/logout.svg'
-import rightarrow from '../../image/right-arrow.svg'
-import leftarrow from '../../image/left-arrow.svg'
-import { Link, useNavigate } from 'react-router-dom';
-const Sidebar = ({id}) => {
-  const [clickId,setClickId]=useState(id);
-  const [sidebar,setSidebar]=useState(false);
-  const [token,setToken]=useState(null)
+import React, { useContext, useState } from "react";
+import "./sidebar.css";
+import { Link, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHome,
+  faLayerGroup,
+  faUsers,
+  faBook,
+  faSignOutAlt,
+  faBars,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
+import { Context } from "../../context/Context";
 
-  const handleClick=(e)=>{
-    e.preventDefault();
-    if(sidebar){
-      setSidebar(false)
-    }
-    else{
-      setSidebar(true)
-    }
-  }
+const Sidebar = ({ id }) => {
+  const { state, toggle } = useContext(Context);
+  const [token] = useState(localStorage.getItem("token"));
+  const navigate = useNavigate();
 
-  const Id=localStorage.getItem('organizationId');
-  useEffect(()=>{
-    setToken(localStorage.getItem('token'))
-  },[Id,localStorage.getItem('token')])
-  const navigate=useNavigate()
-  const handleLogout=(e)=>{
+  const handleLogout = (e) => {
     e.preventDefault();
-    localStorage.removeItem('token');
-    localStorage.removeItem('organizationId');
-    setToken(localStorage.getItem('token'))
-    navigate('/login')
-  }
- 
+    localStorage.removeItem("token");
+    localStorage.removeItem("organizationId");
+    navigate("/login");
+  };
+
+  const menuItems = [
+    { id: 1, icon: faHome, text: "Dashboard", path: "/" },
+    { id: 2, icon: faLayerGroup, text: "Projects", path: "/project" },
+    { id: 3, icon: faUsers, text: "Clients", path: "/client" },
+    { id: 4, icon: faBook, text: "Tutorials", path: "/" },
+  ];
+
   return (
-    <div className='sidebar-main-container'>
-      <div className={`${sidebar?'side-container':'side-less-container'}`}>
-          <ul className='sidebar-ul'>
-            <li style={{position:'relative'}}>
-              <div className="nav-logo">
-                <span>MB</span>
-                </div>
-                {sidebar&&<div className="nav-title" style={{margin:'0 10px'}}>
-                  measurement book
-                </div>}
-                {sidebar?<span onClick={handleClick} style={{position:'absolute',top:'21px',width:'18px',height:'18px',right:'-12px',borderRadius:'50%',backgroundColor:'purple'}}><img src={leftarrow} alt="" /></span>:<span onClick={handleClick} style={{position:'absolute',top:'21px',width:'18px',height:'18px',right:'-10px',borderRadius:'50%',backgroundColor:'purple'}}><img src={rightarrow} alt="" /></span>}
-            </li>
-            <Link className='link' to='/'><li className={`${clickId===1&&'lightGray'}`}>
-              <span className='sidebar-svg' ><img src={dashboard} alt="" /></span>
-              <span style={{padding:'12px 4px'}} className={`${sidebar?'sidebar-name':'d-none'}`}>Dashboard</span>
-            </li></Link>
-            <Link className='link' to='/project'><li className={`${clickId===2&&'lightGray'}`}>
-              <span className='sidebar-svg'><img src={layer} alt="" /></span>
-              <span className={`${sidebar?'sidebar-name':'d-none'}`}>Projects</span>
-            </li></Link>
-            <Link className='link' to='/client'><li className={`${clickId===3&&'lightGray'}`}>
-              <span className='sidebar-svg'><img src={clientsvg} alt="" /></span>
-              <span  className={`${sidebar?'sidebar-name':'d-none'}`}>Clients</span>
-            </li></Link>
-            <Link className='link' to='/'><li className={`${clickId===4&&'lightGray'}`}>
-              <span className='sidebar-svg'><img src={tutorial} alt="" /></span>
-              <span className={`${sidebar?'sidebar-name':'d-none'}`}>Tutorials</span>
-            </li></Link>
-          </ul>
+    <div
+      className={`sidebar-main-container ${
+        state ? "side-container" : "side-less-container"
+      }`}
+    >
+      <div className="sidebar-toggle" onClick={toggle}>
+        <span className="sidebar-toggle-icon">
+          <FontAwesomeIcon icon={state ? faTimes : faBars} />
+        </span>
       </div>
-      {(token)&&<div style={{cursor:'pointer'}} className={!sidebar?'logout':'logout-high'} onClick={handleLogout}>
-        <span style={{display:'flex',justifyContent:'center'}} className='sidebar-svg'><img src={logout} alt="" /></span>
-        <span style={{color:'white',fontFamily:"'Roboto'",fontSize:'14px',fontWeight:'bold'}} className={`${sidebar?'sidebar-name':'d-none'}`}>Logout</span>
-      </div>}
+      <ul className={`sidebar-ul ${state ? "centered" : ""}`}>
+        {menuItems.map((item) => (
+          <Link key={item.id} to={item.path} className="link">
+            <li className={`${id === item.id ? "lightGray" : "hover-li"}`}>
+              <span className={`sidebar-svg ${id === item.id && "selected"}`}>
+                <FontAwesomeIcon icon={item.icon} />
+              </span>
+              <span
+                className={`${state ? "sidebar-name" : "d-none"} ${
+                  id === item.id && "selected"
+                }`}
+              >
+                {state && item.text}
+              </span>
+              {!state && <span className="hover-show-name ">{item.text}</span>}
+            </li>
+          </Link>
+        ))}
+      </ul>
+      {token && (
+        <div className="logout-container">
+          <div className="logout" onClick={handleLogout}>
+            <span className="sidebar-svg">
+              <FontAwesomeIcon icon={faSignOutAlt} />
+            </span>
+            <span className={`${state ? "sidebar-name" : "d-none"}`}>
+              {state && "LogOut"}
+            </span>
+            {!state && <span className="hover-show-name ">LogOut</span>}
+          </div>
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

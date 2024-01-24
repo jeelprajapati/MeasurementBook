@@ -1,0 +1,62 @@
+.searchableDropdown {
+  height: fit-content;
+  background-color: white;
+  padding: 7px;
+  -webkit-box-shadow: 0px 1px 3px 0px rgba(51, 51, 51, 1);
+  -moz-box-shadow: 0px 1px 3px 0px rgba(51, 51, 51, 1);
+  box-shadow: 0px 1px 3px 0px rgba(51, 51, 51, 1);
+  border-radius: 4px;
+  cursor: pointer;
+  position: absolute;
+  top: 20%;
+  z-index: 3;
+}
+.maxwidth {
+  width: 500px;
+}
+.minwidth {
+  width: 90%;
+}
+.textInput {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 40px;
+  width: 100%;
+}
+
+.textInput input {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  width: 100%;
+}
+.textInput input::placeholder {
+  font-size: 14px;
+  font-weight: 600;
+}
+.searchItem {
+  font-size: 15px;
+  color: gray;
+}
+.searchableDropdown ul {
+  margin: 0;
+  padding: 0;
+  max-height: 300px;
+  overflow-y: scroll;
+}
+.searchableDropdown ul li:nth-child(1) {
+  border-top: 2px solid gray;
+}
+.searchableDropdown ul li {
+  list-style: none;
+  padding: 10px 7px;
+  font-size: 13px;
+  font-weight: 600;
+  border-top: 1px solid rgb(162, 162, 162);
+  text-align: start;
+  cursor: pointer;
+}
+.searchableDropdown ul li:hover {
+  background-color: rgb(206, 204, 204);
+}

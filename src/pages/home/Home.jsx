@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import Sidebar from "../../component/sidebar/Sidebar.jsx";
-import "./Home.css";
+import "./home.css";
 import { useNavigate } from "react-router-dom";
 const Home = () => {
   const navigate = useNavigate();
-  const Id = localStorage.getItem("organizationId");
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -18,7 +17,7 @@ const Home = () => {
           <Sidebar id={1} />
         </div>
         <div className="home-right">
-          home</div>
+        </div>
       </div>
     </div>
   );

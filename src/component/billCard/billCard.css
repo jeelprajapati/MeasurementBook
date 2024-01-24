@@ -1,0 +1,135 @@
+.billCardContainer{
+    display: flex;
+    flex-direction: column;
+    background-color: #fdfdfd;
+    box-shadow: 0px 4px 10px 0px #00000040;
+    border-radius: 15px;
+    height: 350px;
+    align-items: center;
+    justify-content: center;
+    min-width: 310px;
+}
+.billCardWrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.billCardTop{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.billCardBatch{
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.billCardBatch h3{
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+.batch{
+    background-color: #ffe0df;
+    color: #9f5f60;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 7px;
+    border-radius: 5px;
+}
+.billCardDesc{
+    font-size: 15px;
+    font-weight: 400;
+}
+.billCardDate{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+}
+.billCardLabel{
+    font-size: 12px;
+    font-weight: 400;
+}
+.billCardValue{
+    font-size: 15px;
+    font-weight: 600;
+}
+.reports{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+}
+.reportType{
+    display: flex;
+    gap: 7px;
+}
+.reportType img{
+    width: 30px;
+    cursor: pointer;
+}
+.billCardButton{
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.billCardButton button{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    background-color: #2e4a93;
+    color: white;
+    font-weight: 400;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+}
+.billCardButton button:disabled{
+    cursor: not-allowed;
+    background-color: #758cc7;
+}
+.billCardButton img{
+    width: 13px;
+}
+.editWrapper{
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.editButton{
+    top: 3%;
+    right: 3%;
+    background-color: #e1e1e1;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.editButton:hover{
+   background-color: #cfcdcd;
+}
+.submit{
+    background-color: #d1f0d7;
+    color: #6b9976;
+}
+.accept{
+    background-color: #fefbe2;
+    color: #b5b180;
+}

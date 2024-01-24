@@ -1,33 +1,69 @@
 import React, { useEffect, useState } from "react";
-import "./Projects.css";
+import "./projects.css";
 import Sidebar from "../../component/sidebar/Sidebar.jsx";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Popup from "../../component/popup/Popup";
-import useFetch from "../../hooks/useFetch";
-// import makeRequesInstance from "../../makeRequest";
-// import { useAlert } from "react-alert";
+import Projectcard from "../../component/projectCard/ProjectCard.jsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import makeRequesInstance from "../../utils/makeRequest.js";
+import { useAlert } from "react-alert";
+import BreadCrumbs from "../../component/breadCrumbs/BreadCrumbs.jsx";
+
+const initialState = {
+  id: "00000000-0000-0000-0000-000000000000",
+  contractNo: "",
+  contractDate: "",
+  loiNo: "",
+  loiDate: "",
+  projectName: "",
+  contractValidity: "",
+  clientId: "",
+  projectValue: 0,
+  executedValue: 0,
+};
 
 const Projects = () => {
-  const [popUp, setPopUp] = useState(false);
+  const [inputType, setInputType] = useState({ type: "", credential: false });
+  const [initialValues, setInitialValues] = useState(initialState);
   const [change, setChange] = useState(0);
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
-  const [update,setUpdate]=useState(false);
-  // const makeRequest=makeRequesInstance(localStorage.getItem('token'));
-  // const alert=useAlert();
+  const alert = useAlert();
+  const pathData = [{ name: "Projects", to: null }];
+
   const Id = localStorage.getItem("organizationId");
   useEffect(() => {
     if (!(token && Id)) {
       navigate("/login");
     }
   });
-  const { loding, data } = useFetch({
-    url: `/Project?page=1&pageSize=100&organizationId=${Id}`,
-    change,
-  });
-  const handlePopUp = (e) => {
-    e.preventDefault();
-    setPopUp(true);
+
+  useEffect(() => {
+    const getData = async () => {
+      const makeRequest = makeRequesInstance(localStorage.getItem("token"));
+      try {
+        const res = await makeRequest.get(
+          `/Project?page=1&pageSize=${page * 7}&organizationId=${Id}`
+        );
+        if (res.status === 200) {
+          setData(res.data.items);
+        }
+      } catch (error) {
+        alert.show("something went wrong!", { type: "info" });
+      }
+    };
+    getData();
+  }, [alert, page, Id, change]);
+
+  const handleInfinityScroll = (e) => {
+    const { scrollTop, clientHeight, scrollHeight } = e.target;
+    if (scrollHeight <= clientHeight + scrollTop + 1) {
+      setPage((prev) => prev + 1);
+    }
   };
 
   // const handleDelete=async(id)=>{
@@ -40,42 +76,72 @@ const Projects = () => {
   //      alert('First Delete This project related data',{type:'info'})
   //   }
   // }
+
   return (
     <div>
-      <div className="pro-container">
-        <div className="pro-left">
+      <div className="projectContainer">
+        <div className="projectLeft">
           <Sidebar id={2} />
         </div>
-        <div className="pro-right">
-          <div className={`${popUp ? "path blur" : "path"}`}>PROJECT/</div>
-          <h3 className={`${popUp ? "pro-title blur" : "pro-title"}`}>
-            Projects
-          </h3>
-          <div className={`${popUp ? "box-container blur" : "box-container"}`}>
-            <div className="add-box" onClick={handlePopUp}>
-              <div className="plus">+</div>
+        <div className="projectRight" onScroll={handleInfinityScroll}>
+          <div className="projectContentWrapper">
+            <div className="projectTop">
+              {/* <div className={`${inputType.credential ? "path blur" : "path"}`}>
+                Projects/
+              </div> */}
+              <BreadCrumbs pathData={pathData} />
+              <div className="search">
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+                <input
+                  type="text"
+                  placeholder="Search By Project Name .."
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </div>
             </div>
-            {!loding &&
-              data?.items?.slice(0)?.reverse()?.map((item, index) => (
-                <Link to={`/project/${item.id}`} className="link">
-                  <div className={`${index === 0 ? "box green" : "box"}`}>
-                    <div className="c-name">{item.projectName}</div>
+            <div className="projectMain">
+              {
+                <div
+                  className={`boxContainer ${
+                    data?.length >= 3 ? "grid" : "flexbox"
+                  } ${inputType.credential && "blur"}`}
+                >
+                  <div
+                    className="addBox"
+                    onClick={() =>
+                      setInputType({ type: "ADD", credential: true })
+                    }
+                  >
+                    <div className="plus">+</div>
                   </div>
-                </Link>
-              ))}
-          </div>
-
-          {popUp && (
-            <div className="popup">
-              <Popup
-                setPopUp={setPopUp}
-                input={{contractNo:'',contractDate:'',loiNo:'',loiDate:'',projectName:'',contractValidity:'',clientId:''}}
-                setChange={setChange}
-                change={change}
-                update={update}
-                setUpdate={setUpdate}
-              />
+                  {data
+                    ?.filter((item) =>
+                      item?.projectName
+                        ?.toUpperCase()
+                        .includes(search?.toUpperCase())
+                    )
+                    ?.map((item) => (
+                      <Projectcard
+                        item={item}
+                        key={item?.id}
+                        setInitialValues={setInitialValues}
+                        setInputType={setInputType}
+                      />
+                    ))}
+                </div>
+              }
             </div>
+          </div>
+          {inputType.credential && (
+            <Popup
+              setInputType={setInputType}
+              initialState={initialState}
+              setChange={setChange}
+              change={change}
+              initialValues={initialValues}
+              setInitialValues={setInitialValues}
+              inputType={inputType}
+            />
           )}
         </div>
       </div>

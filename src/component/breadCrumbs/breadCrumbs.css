@@ -1,0 +1,25 @@
+.breadCrumbContainer{
+    margin: 0px 10px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+}
+.breadCrumbLink{
+    font-size: 15px;
+    font-weight: 400;
+    text-decoration: none;
+    color: gray;
+    padding: 0 2px;
+}
+.breadCrumbLink:hover{
+    color:#2e4a93;
+}
+.breadCrumbLink::after{
+    content:"/"
+}
+.breadCrumbSpan{
+    font-size: 15px;
+    font-weight: 400;
+    color:#2e4a93;
+    padding: 0 2px;
+}

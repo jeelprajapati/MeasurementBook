@@ -3,6 +3,7 @@ import {
   RouterProvider,
   Outlet
 } from "react-router-dom";
+import './App.css'
 import Home from "./pages/home/Home";
 import Projects from "./pages/projects/Projects";
 import SingleProject from "./pages/singleProject/SingleProject";
@@ -11,6 +12,8 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Bills from "./pages/bills/Bills.jsx"
 import Measurement from "./pages/measurement/Measurement";
+import Forgetpassword from "./pages/forgetPassword/ForgetPassword.jsx";
+import Reset from "./pages/resetPassword/ResetPassword.jsx";
 
 const Layout=()=>{
   
@@ -56,6 +59,14 @@ const router = createBrowserRouter([
       {
         path:"/register",
         element:<Register/>
+      },
+      {
+        path:"/forget-password",
+        element:<Forgetpassword/>
+      },
+      {
+        path:"/reset-password",
+        element:<Reset/>
       }
     ]
   }

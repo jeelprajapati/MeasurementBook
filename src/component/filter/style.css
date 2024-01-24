@@ -1,0 +1,127 @@
+.filterContainer{
+    position: relative;
+    display: inline;
+    z-index: 1000;
+}
+.triangleDown {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #2e4a93;
+    font-size: 0;
+    line-height: 0;
+    float: left;
+    margin-top:2px;
+}
+.filterType{   
+    font-weight: 400;
+    font-size: 15px;
+    color: #2e4a93;
+}
+.filterBox{
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    gap:10px;
+    border: 0.1px solid #2e4a93;
+    padding: 7px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.filterBox:hover{
+   background-color: #ebe9e9;
+}
+.filterTable{
+    background-color: white;
+    box-shadow: 0px 4px 10px 0px #00000040;
+    position: absolute;
+    top: 120%;
+    border-radius: 5px;
+    z-index: 3;
+    overflow-y: auto;
+    }
+.filterSearch{
+    display: flex;
+    align-items: center;
+    padding: 10px 7px;
+    display: flex;
+    gap: 7px;
+    border-bottom:1px solid #333333;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    }
+.filterSearch input{
+    width: 98%;
+    border: none;
+    height: 25px;
+    outline: none;
+}
+.filterSearch input::placeholder{
+    color: gray;
+    font-size: 15px;
+    font-weight: 400;
+}
+.Fi{
+    padding: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    border-bottom:1px solid rgb(214 213 213);
+}
+.Fi:hover{
+   background-color: rgb(226, 225, 225);
+}
+.filterBox1{
+    display: flex;
+    width: fit-content;
+    gap:15px;
+    padding: 7px 10px;
+    border-radius: 4px;
+    align-items: center;
+    justify-content: center;
+    background-color: #c2e7ff;
+    border: none;
+}
+.x{
+    font-size: 15px;
+    font-weight: 400;
+}
+.w{
+    font-size: 15px;
+    font-weight: 600;
+}
+.filterName{
+    font-size: 15px;
+    font-weight: 400;
+}
+.Wrapper{
+    min-width: 80px;
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+}
+.Wrapper span{
+    padding: 3px;
+    flex: 4;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    height: fit-content;
+}
+.Wrapper input{
+    cursor: pointer;
+}
+.Wrapper:nth-child(3n+1) span{
+    background-color: #d5d2f6;
+    color: #78759e;
+}
+.Wrapper:nth-child(3n+2) span{
+    background-color: #ffd2d1;
+    color: #9c7076;
+}
+.Wrapper:nth-child(3n+3) span{
+    background-color:#dcfaeb;
+    color: #769b8d;
+}

@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from "react";
-import "./SingleProject.css";
+import "./singleProject.css";
 import Sidebar from "../../component/sidebar/Sidebar.jsx";
-import pencil from "../../image/edit.svg";
-import arrow from "../../image/arrow.svg";
-import Table from "../../component/table/Table";
+import Table from "../../component/contractItemTable/Table.jsx";
 import useFetch from "../../hooks/useFetch";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Excel from "../../component/excel/Excel";
-import Popup from "../../component/popup/Popup";
-import makeRequesInstance from "../../makeRequest";
+import makeRequesInstance from "../../utils/makeRequest.js";
+import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import BreadCrumbs from "../../component/breadCrumbs/BreadCrumbs.jsx";
 const SingleProject = () => {
   const [open, setOpen] = useState(false);
-  const [Update,setUpdate]=useState(false)
+  // const [Update, setUpdate] = useState(false);
   const [change, setChange] = useState(0);
-  const [popUp, setPopUp] = useState(false);
-  const [input, setInput] = useState(null);
-  const [client,setClient]=useState(null);
+  const [client, setClient] = useState(null);
+  const [unit, setUnit] = useState([]);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const Id = localStorage.getItem("organizationId");
-  const makeRequest=makeRequesInstance(token);
   useEffect(() => {
     if (!(token && Id)) {
       navigate("/login");
@@ -27,121 +25,113 @@ const SingleProject = () => {
   }, [navigate, token, Id]);
   const id = useLocation().pathname.split("/")[2];
   const { loding, data } = useFetch({ url: `/Project/${id}`, change });
-  useEffect(()=>{
-    // const {loding,data}=useFetch({url:`Client?page=${1}&pageSize=${100}&organizationId=${Id}`,})
-    const getClient=async()=>{
-       const res=await makeRequest.get(`Client?page=${1}&pageSize=${100}&organizationId=${Id}`)
-       setClient(res.data.items);
-    }
+  const pathData = [
+    { name: "Projects", to: "/project" },
+    { name: data?.projectName, to: null },
+  ];
+  useEffect(() => {
+    const getClient = async () => {
+      const orgId = localStorage.getItem("organizationId");
+      const makeRequest = makeRequesInstance(localStorage.getItem("token"));
+      const res = await makeRequest.get(
+        `Client?page=${1}&pageSize=${100}&organizationId=${orgId}`
+      );
+      setClient(res.data.items);
+    };
     getClient();
-  },[])
-  const handlePopUP = (e) => {
-    setInput(e);
-    setUpdate(true)
-    setPopUp(true);
-  };
+  }, []);
+
+  useEffect(() => {
+    const getUnit = async () => {
+      const makeRequest = makeRequesInstance(localStorage.getItem("token"));
+      const res = await makeRequest.get("/Standard/GetStandardUnit");
+      setUnit(res.data);
+    };
+    getUnit();
+  }, []);
+
   return (
     <div>
-      <div className="single-container">
-        <div className="single-left">
+      <div className="singleProjectContainer">
+        <div className="singleProjectLeft">
           <Sidebar id={2} />
         </div>
-        <div className="single-right">
-          <div className={`${open ? "path blur" : "path"}`}>
-            <Link to={`/project`} className="bill-link">
-              PROJECT/
-            </Link>
-            {data?.projectName?.toUpperCase()}
+        <div className="singleProjectRight">
+          <div className="contractItemTop">
+            <BreadCrumbs pathData={pathData}/>
           </div>
-          <h3 className={`${open ? "pro-title blur" : "pro-title"}`}>
-            Project Detail
-          </h3>
-          {!loding && (
-            <div className={`${open ? "detail-box blur" : "detail-box"}`}>
-              {/* <div className="entity">
-                <span>Contract No</span>
-                <span>:</span>
-                <span>{data?.contractNo}</span>
-              </div> */}
-              <div className="entity">
-                <span>Project</span>
-                <span>:</span>
-                <span>{data?.projectName}</span>
-              </div>
-              <div className="entity">
-                <span>Client</span>
-                <span>:</span>
-                <span>{client?.filter((item)=>(item?.id===data?.clientId))[0]?.name}</span>
-              </div>
-              {/* <div className="entity">
-                <span>Contract Date</span>
-                <span>:</span>
-                <span>{data?.contractDate}</span>
-              </div> */}
-              {/* <div className="entity">
-                <span>Contract Validity</span>
-                <span>:</span>
-                <span>{data?.contractValidity} Days</span>
-              </div> */}
-              <div className="edit-btn">
-                <img
-                  className="edit-img"
-                  onClick={() => handlePopUP(data)}
-                  src={pencil}
-                  alt=""
-                />
-              </div>
+          <div className="contractItemMiddle">
+            <div className="titleIconWrapper">
+              <h3 className={`contractItemTitle ${open && "blur"}`}>
+                Project Detail
+              </h3>
             </div>
-          )}
-          <div className={`${open ? "goto blur" : "goto"}`}>
-            <Link
-              to={`/bills?projectid=${data?.id}?projectname=${data?.projectName}`}
-              className="link">
-              <button>
-                Goto bills
-                <img src={arrow} className="arrow" alt="" />
-              </button>
-            </Link>
-          </div>
-          <div
-            className={`${open ? "table-container blur" : "table-container"}`}
-          >
-            <div className="single-page-container">
-              <h3 className="table-title">Contract Item</h3>
-              <button
-                className="excel-btn"
-                onClick={() => {
-                  setOpen(true);
-                }}
+            {!loding && (
+              <div className={`detailBox ${open && "blur"}`}>
+                <div className="entity">
+                  <span style={{ flex: "0.8" }}>Project</span>
+                  <span style={{ flex: "0.1" }}>:</span>
+                  <span style={{ flex: "8" }}>{data?.projectName}</span>
+                </div>
+                <div className="entity">
+                  <span style={{ flex: "0.8" }}>Client</span>
+                  <span style={{ flex: "0.1" }}>:</span>
+                  <span style={{ flex: "9" }}>
+                    {
+                      client?.filter((item) => item?.id === data?.clientId)[0]
+                        ?.name
+                    }
+                  </span>
+                </div>
+              </div>
+            )}
+            <div className="goto">
+              <Link
+                to={`/bills?projectid=${data?.id}&projectname=${data?.projectName}`}
+                className="link"
               >
-                Add Excel
-              </button>
+                <button
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "3px",
+                  }}
+                >
+                  <span>Goto Bills</span>
+                  <FontAwesomeIcon icon={faArrowRightLong} className="arrow" />
+                </button>
+              </Link>
             </div>
-            <div className="table">
-              <Table Id={id} change={change} setChange={setChange}/>
+          </div>
+          <div className="contractItemFooter">
+            <div className="contractItemTableContainer">
+              <div className="singleProjectWrapper">
+                <h3>Contract Item</h3>
+                <button
+                  className="addExcelButton"
+                  onClick={() => {
+                    setOpen(true);
+                  }}
+                >
+                  Add Excel
+                </button>
+              </div>
+              <Table
+                projectId={id}
+                change={change}
+                setChange={setChange}
+                unit={unit}
+              />
             </div>
           </div>
           {open && (
-            <div className="excel-popup">
-              <Excel
-                setOpen={setOpen}
-                projectId={id}
-                setChange={setChange}
-                change={change}
-              />
-            </div>
-          )}
-          {popUp && (
-            <div className="popup">
-              <Popup
-                setPopUp={setPopUp}
-                setChange={setChange}
-                change={change}
-                input={input}
-                update={Update}
-                setUpdate={setUpdate}
-              />
-            </div>
+            <Excel
+              setOpen={setOpen}
+              projectId={id}
+              setChange={setChange}
+              change={change}
+              unit={unit}
+            />
           )}
         </div>
       </div>

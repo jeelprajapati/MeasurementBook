@@ -1,0 +1,117 @@
+.singleProjectContainer{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+.singleProjectRight{
+    position: relative;
+    background-color: rgb(238, 237, 237);
+    width: 100%;
+    display: flex;
+    gap:7px;
+    flex-direction: column;
+}
+.contractItemTop{
+    width: 100%;
+    height: 52px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+}
+.contractItemMiddle{
+    background-color: #fdfdfd;
+    width:40%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 17px;
+    border-radius: 15px;
+    margin: 0 10px;
+    position: relative;
+}
+.detailBox{
+   padding: 0 10px;
+   display: flex;
+   gap: 5px;
+   flex-direction: column;
+}
+.contractItemTitle{
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+}
+.titleIconWrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+}
+.entity{
+    display: flex;
+    gap: 2px;
+}
+.entity span:nth-child(1){
+    font-size: 15px;
+    color: gray;
+    font-weight: 600;
+}
+.entity span:nth-child(3){
+    font-size: 15px;
+    font-weight: 400;
+    color: gray;
+}
+.goto button{
+    background-color: #2e4a93;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 140px;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.contractItemFooter{
+    background-color: white;
+    height:65.5%;
+    margin: 0 10px;
+    border-radius: 15px;
+}
+.contractItemTableContainer{
+    display: flex;
+    align-items: space-between;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin-top: 10px;
+}
+.contractItemTableContainer h3{
+    font-size: 15px;
+    font-weight: 600;
+}
+.singleProjectWrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px 20px;
+}
+.addExcelButton{
+   width: 100px;
+   height: 40px;
+   font-size: 15px;
+   border: none;
+   background-color: #2e4a93;
+   color: white;
+   border-radius: 5px;
+   font-weight: 400;
+   cursor: pointer;
+}
+.project-title{
+    color: black;
+    margin: 17px 10px;
+}
+.arrow{
+    font-weight: 600;
+    font-size: 17px;
+}

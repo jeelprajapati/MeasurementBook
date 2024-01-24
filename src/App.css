@@ -1,0 +1,16 @@
+*{
+    font-family: 'Inter';
+}
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #F5F5F5;
+    box-sizing: border-box;
+}
+.flexbox{
+    display: flex;
+}
+.grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(310px,1fr));
+}

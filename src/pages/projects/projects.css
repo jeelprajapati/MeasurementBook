@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
+.projectContainer{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    position: relative;
+}
+.projectLeft{
+    position: sticky;
+    top: 0px;
+    z-index: 2;
+}
+.projectRight{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    position: relative;
+    overflow-y:auto;
+}
+.projectTop{
+    width: 100%;
+    background-color: #FEFEFF;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+}
+.search{
+    margin-right: 30px;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    background-color: #F5F5F5;
+}
+.search input{
+    width: 230px;
+    height: 35px;
+    font-size: 15px;
+    padding: 0 5px;
+    border: none;
+    outline: none;
+    background-color: #F5F5F5;
+}
+.search input::placeholder{
+    font-size: 15px;
+    font-weight: 400;
+    color: rgb(171, 170, 170);
+}
+.search svg{
+    padding: 10px;
+}
+.path{
+    color:#2e4a93;
+    margin: 0px 10px;
+    font-size: 15px;
+    font-weight: 400;
+    padding: 7px;
+    border-radius: 5px;
+}
+.projectMain{
+    width: 100%;
+}
+.projectTitle{
+    margin: 5px 8px;
+    font-size: 15px;
+    width: fit-content;
+    padding: 7px;
+    border-radius: 5px;
+}
+.boxContainer{
+    width: 90%;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 20px auto;
+}
+.addBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    height: 305px;
+    box-shadow: 0px 4px 10px 0px #00000040;
+    background-color: #fdfdfd;
+    min-width: 310px;
+}
+.addBox:hover{
+    cursor: pointer;
+}
+.plus{
+    padding: 5px;
+    font-size: 75px;
+}
+.blur{
+    filter: blur(1.5px);
+}
+
