@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
 import "./excel.css";
-import makeRequesInstance from "../../utils/makeRequest.js";
-import { useAlert } from "react-alert";
 import { Link } from "react-router-dom";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { addContractItemRange } from "../../actions/contractItem.js";
+import toast from "react-hot-toast";
 const Excel = ({ setOpen, projectId, setChange, change, unit }) => {
   const [data, setData] = useState(null);
-  const alert = useAlert();
-  const makeRequest = makeRequesInstance(localStorage.getItem("token"));
   const handleFile = (e) => {
     const file = e.target.files[0];
     const fileType = [
@@ -51,30 +49,12 @@ const Excel = ({ setOpen, projectId, setChange, change, unit }) => {
           projectId: `${projectId}`,
         };
       });
-      try {
-        const response = await makeRequest.post(
-          "/ContractItem/AddContractItemRange",
-          {
-            contractItems: [...newarray],
-            projectID: `${projectId}`,
-          }
-        );
-        if (response.status === 204) {
-          alert.show("Data Added sucessfully", { type: "success" });
-          setOpen(false);
-          if (change === 0) {
-            setChange(1);
-          } else {
-            setChange(0);
-          }
-        }
-      } catch (error) {
-        if (error.response) {
-          alert.show(error.response.data.title, { type: "error" });
-        } else {
-          alert.show("something went wrong", { type: "info" });
-        }
-      }
+      
+      addContractItemRange(newarray,projectId,()=>{
+        toast.success("Data Added Successfully");
+        setOpen(false);
+        setChange(!change);
+      })
     }
   };
   return (

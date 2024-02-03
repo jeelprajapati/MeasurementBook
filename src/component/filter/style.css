@@ -83,6 +83,7 @@
     justify-content: center;
     background-color: #c2e7ff;
     border: none;
+    cursor: pointer;
 }
 .x{
     font-size: 15px;

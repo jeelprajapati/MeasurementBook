@@ -1,12 +1,12 @@
 import React from "react";
 import "./billPopup.css";
-import makeRequesInstance from "../../utils/makeRequest.js";
-import { useAlert } from "react-alert";
 import { useFormik } from "formik";
-import { billScema } from "../../scemas/index.js";
+import { billScema } from "../../utils/scemas/index.js";
 import Error from "../error/Error.jsx";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { addBill, updateBill } from "../../actions/bill.js";
+import toast from "react-hot-toast";
 const Billpopup = ({
   initialState,
   setInitialValues,
@@ -17,9 +17,6 @@ const Billpopup = ({
   change,
   projectId
 }) => {
-  const makeRequest = makeRequesInstance(localStorage.getItem("token"));
-  const alert = useAlert();
-
   const handleClose = () => {
     setInitialValues(initialState);
     setInputType({type:"",credential:false});
@@ -40,30 +37,22 @@ const Billpopup = ({
       validationSchema: billScema,
       onSubmit: (value, action) => {
         const values=arrangeValues(value);
-        const getResponse=async()=>{
           if(inputType?.type==="ADD"){
-            return makeRequest.post('Bill',values);
+            addBill(values,()=>{
+              toast.success("Data Added Successfully");
+              setChange(!change);
+              handleClose();
+              action.resetForm();
+            })
           }
           else if(inputType?.type==="UPDATE"){
-            return makeRequest.put('Bill',values);
+            updateBill(values,()=>{
+              toast.success("Data Added Successfully");
+              setChange(!change);
+              handleClose();
+              action.resetForm();
+            })
           }
-        }
-        getResponse().then((res)=>{
-          if(res.status===204){
-            alert.show(
-              `Data ${
-                inputType?.type === "UPDATE" ? "updated" : "added"
-              } sucessfully`,
-              { type: "success" }
-            );
-            setChange(!change);
-            setInitialValues(initialState);
-            setInputType({ type: "", credential: false });
-            action.resetForm();
-          }
-        }).catch(()=>{
-          alert.show("Something Went Wrong!", { type: "info" });
-        })
       },
     });
 

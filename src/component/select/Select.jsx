@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./select.css";
 import {
   faAngleDown,
@@ -9,10 +9,14 @@ import useClickOutside from "../../hooks/useclickOutside";
 
 const Select = ({ onChange, options, value, error }) => {
   const [searchTerm, setSearchTerm] = useState(value?.label);
-  const [filteredOptions, setFilteredOptions] = useState(options);
+  const [filteredOptions, setFilteredOptions] = useState([]);
   const [open, setOpen] = useState(false);
   const ref = useRef();
   const inputRef = useRef();
+
+  useEffect(()=>{
+    setFilteredOptions(()=>options);
+  },[options])
 
   const focusInput = () => {
     if (inputRef.current) {

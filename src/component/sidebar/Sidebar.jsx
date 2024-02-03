@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import "./sidebar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,10 +11,13 @@ import {
   faBars,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-import { Context } from "../../context/Context";
+import { useDispatch, useSelector } from "react-redux";
+import { toggle } from "../../redux/slice/sidebarSlice";
+
 
 const Sidebar = ({ id }) => {
-  const { state, toggle } = useContext(Context);
+  const dispatch=useDispatch();
+  const state=useSelector((state)=>state.sidebarToggle.credential)
   const [token] = useState(localStorage.getItem("token"));
   const navigate = useNavigate();
 
@@ -38,7 +41,7 @@ const Sidebar = ({ id }) => {
         state ? "side-container" : "side-less-container"
       }`}
     >
-      <div className="sidebar-toggle" onClick={toggle}>
+      <div className="sidebar-toggle" onClick={()=>dispatch(toggle())}>
         <span className="sidebar-toggle-icon">
           <FontAwesomeIcon icon={state ? faTimes : faBars} />
         </span>

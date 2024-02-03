@@ -3,55 +3,27 @@ import "./client.css";
 import Sidebar from "../../component/sidebar/Sidebar.jsx";
 import ClientTable from "../../component/clientTable/ClientTable.jsx";
 import ClientPopUp from "../../component/clientPopup/ClientPopup.jsx";
-import { useNavigate } from "react-router-dom";
-import makeRequesInstance from "../../utils/makeRequest.js";
 import BreadCrumbs from "../../component/breadCrumbs/BreadCrumbs.jsx";
-const initialState = {
-  id: "00000000-0000-0000-0000-000000000000",
-  name: "",
-  email: "",
-  phoneNumber: "",
-  gstin: "",
-  pan: "",
-  address: "",
-  city: "",
-  countryId: "",
-  stateId: "",
-  postalCode: "",
-};
+import { clientInitialState } from "../../constants/initialState.js";
+import { getCountry, getState } from "../../actions/standard.js";
+import useRedirect from "../../hooks/useRedirect.js";
+
 const Client = () => {
   const [input, setInput] = useState({ type: "", credential: false });
-  const [item, setItem] = useState(initialState);
+  const [item, setItem] = useState(clientInitialState);
   const [country, setCountry] = useState(null);
   const [state, setState] = useState(null);
   const [change, setChange] = useState(0);
-  const navigate = useNavigate();
-  const Id = localStorage.getItem("organizationId");
-  const token = localStorage.getItem("token");
-  const pathData = [{ name: "Clients", to: null }];
-  useEffect(() => {
-    if (!(token && Id)) {
-      navigate("/login");
-    }
-  }, [navigate, token, Id]);
+  //redirect to login when token and organizationId is Not exist
+  useRedirect();
 
   useEffect(() => {
-    const getCountry = async () => {
-      const makeRequest = makeRequesInstance(localStorage.getItem("token"));
-      const res = await makeRequest.get("/Standard/GetCountries");
-      if (res.status === 200) {
-        setCountry(res.data);
-      }
-    };
-    const getStates = async () => {
-      const makeRequest = makeRequesInstance(localStorage.getItem("token"));
-      const res = await makeRequest.get("/Standard/GetStates");
-      if (res.status === 200) {
-        setState(res.data);
-      }
-    };
-    getCountry();
-    getStates();
+    getCountry((data)=>{
+      setCountry(data);
+    })
+    getState((data)=>{
+      setState(data);
+    })
   }, []);
 
   return (
@@ -62,7 +34,7 @@ const Client = () => {
         </div>
         <div className="clientRight">
           <div className="clientTop">
-            <BreadCrumbs pathData={pathData}/>
+            <BreadCrumbs type={"client"} />
           </div>
           <div
             className={`${
@@ -88,7 +60,7 @@ const Client = () => {
           {input?.credential && (
             <div className="clientpopup">
               <ClientPopUp
-                initialState={initialState}
+                initialState={clientInitialState}
                 setInput={setInput}
                 change={change}
                 setChange={setChange}

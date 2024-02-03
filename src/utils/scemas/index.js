@@ -73,7 +73,7 @@ export const measureTable = Yup.object({
   contractItemId: Yup.string().required("Contract Item is Required!"),
 });
 
-export const forgetPassword = Yup.object({
+export const forgetPasswordSchema = Yup.object({
   email: Yup.string()
     .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, "Enter A valid Email")
     .required("Email is Required!"),

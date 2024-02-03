@@ -1,13 +1,13 @@
 import React from "react";
 import "./popup.css";
-import makeRequesInstance from "../../utils/makeRequest.js";
-import useFetch from "../../hooks/useFetch";
-import { useAlert } from "react-alert";
+import useFetch from "../../hooks/useFetch.js";
 import { useFormik } from "formik";
-import { projectScema } from "../../scemas";
+import { projectScema } from "../../utils/scemas/index.js";
 import Error from "../error/Error.jsx";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { addProject, updateProject } from "../../actions/project.js";
+import toast from "react-hot-toast";
 
 const Popup = ({
   initialValues,
@@ -18,9 +18,8 @@ const Popup = ({
   inputType,
   setInputType,
 }) => {
-  const makeRequest = makeRequesInstance(localStorage.getItem("token"));
   const organizationId = localStorage.getItem("organizationId");
-  const alert = useAlert();
+  //todo: add infinity scroll
   const { loding, data } = useFetch({
     url: `Client?organizationId=${organizationId}&page=${1}&pageSize=${50000}`,
     change,
@@ -47,52 +46,38 @@ const Popup = ({
     };
   };
 
-  const {
-    values,
-    handleBlur,
-    handleChange,
-    handleSubmit,
-    errors,
-    touched
-  } = useFormik({
-    initialValues,
-    validationSchema: projectScema,
-    onSubmit: (value, action) => {
-      const cDate = calculateDate({
-        date: value?.loiDate,
-        days: value?.contractValidity,
-      });
-      const values = arrangeValues({
-        ...value,
-        workCompletion: cDate?.toISOString().split("T")[0],
-      });
-      const getResponse = async () => {
-        if (inputType?.type === "ADD") {
-          return await makeRequest.post("Project", values);
-        } else if (inputType?.type === "UPDATE") {
-          return await makeRequest.put("Project", values);
-        }
-      };
-      getResponse()
-        .then((res) => {
-          if (res.status === 204) {
-            alert.show(
-              `Data ${
-                inputType?.type === "UPDATE" ? "updated" : "added"
-              } sucessfully`,
-              { type: "success" }
-            );
-            setChange(!change);
-            setInitialValues(initialState);
-            setInputType({ type: "", credential: false });
-            action.resetForm();
-          }
-        })
-        .catch(() => {
-          alert.show("Something Went Wrong!", { type: "info" });
+  const handleSuccess = ({ type, action }) => {
+    toast.success(`Data ${type}ed Successfully`);
+    setChange(!change);
+    setInitialValues(initialState);
+    setInputType({ type: "", credential: false });
+    action.resetForm();
+  };
+  
+  const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
+    useFormik({
+      initialValues,
+      validationSchema: projectScema,
+      onSubmit: (value, action) => {
+        const cDate = calculateDate({
+          date: value?.loiDate,
+          days: value?.contractValidity,
         });
-    },
-  });
+        const values = arrangeValues({
+          ...value,
+          workCompletion: cDate?.toISOString().split("T")[0],
+        });
+        if (inputType?.type === "ADD") {
+          addProject(values, () => {
+            handleSuccess({ type: "Add", action });
+          });
+        } else if (inputType?.type === "UPDATE") {
+          updateProject(values,()=>{
+            handleSuccess({ type: "Updat", action });
+          })
+        }
+      },
+    });
 
   return (
     <div className="popupContainer">

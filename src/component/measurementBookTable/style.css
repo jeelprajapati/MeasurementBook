@@ -1,7 +1,8 @@
 .measurementContainer{
   width: 100%;
-  height: 540px;
+  height: calc(100% - 40px);
   overflow-y:scroll;
+  position: relative;
 }
 .measurementContainer table{
   width: 100%;
@@ -114,7 +115,7 @@
   padding: 5px;
   height: 40px;
   gap: 5px;
-  background-color: #f9f9f9;
+  background-color: #fdfdfd;
 }
 .unitName{
   background-color: rgb(208, 208, 208);

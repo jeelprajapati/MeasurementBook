@@ -8,9 +8,9 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import makeRequesInstance from "../../utils/makeRequest";
-import { useAlert } from "react-alert";
 import Content from "../content/Content";
+import { deleteContractItem } from "../../actions/contractItem";
+import toast from "react-hot-toast";
 
 const TableRow = ({
   items,
@@ -18,13 +18,11 @@ const TableRow = ({
   setInputType,
   setDivideBy,
   inputType,
-  dispatch,
   setChange,
-  change,
-  handleScrollValue
+  setFormData
 }) => {
-  const [isDelete, setIsDelete] = useState({id:"",credential:false});
-  const alert=useAlert();
+  const [isDelete, setIsDelete] = useState({ id: "", credential: false });
+  
   const handleAdd = (e, index) => {
     e.preventDefault();
     setDivideBy(index + 1);
@@ -35,35 +33,26 @@ const TableRow = ({
     e.preventDefault();
     setDivideBy(index);
     const { projectId, ...other } = item;
-    dispatch({ type: "HANDLE_STATE", payload: other });
+    setFormData(other);
     setInputType({ type: "UPDATE", credential: true });
   };
 
-  const handleCopy=(e, index, item)=>{
+  const handleCopy = (e, index, item) => {
     e.preventDefault();
-    setDivideBy(index+1);
+    setDivideBy(index + 1);
     const { projectId, ...other } = item;
-    dispatch({ type: "HANDLE_STATE", payload: other });
+    setFormData(other);
     setInputType({ type: "ADD", credential: true });
-  }
+  };
 
-  const handleDelete=async(e)=>{
+  const handleDelete = async (e) => {
     e.preventDefault();
-    handleScrollValue();
-    try {
-      const makeRequest = makeRequesInstance(localStorage.getItem("token"));
-      const res = await makeRequest.delete(
-        `/ContractItem?contractItemId=${isDelete?.id}`
-      );
-      if (res.status === 204) {
-        alert.show("Data Deleted Sucessfully", { type: "success" });
-        setChange(!change);
-        setIsDelete({id:"",credential:false});
-      }
-    } catch (error) {
-      alert.show("something went wrong", { type: "info" });
-    }
-  }
+    deleteContractItem(isDelete.id, () => {
+      toast.success("Data Deleted Sucessfully");
+      setChange((prev)=>!prev);
+      setIsDelete({ id: "", credential: false });
+    });
+  };
 
   return (
     <>
@@ -73,7 +62,7 @@ const TableRow = ({
             {item?.sorNo}
           </td>
           <td className="td" style={{ textAlign: "start" }}>
-          <Content text={item?.item} index={index} min={60}/>
+            <Content text={item?.item} index={index} min={60} />
           </td>
           <td className="td" style={{ textAlign: "start" }}>
             {item?.poQty?.toFixed(2)}
@@ -88,14 +77,19 @@ const TableRow = ({
             {item?.rate?.toFixed(2)}
           </td>
           <td className="td" style={{ textAlign: "end" }}>
-            {item?.hsn?.toFixed(2)}
+            {item?.hsn}
           </td>
           {isDelete?.id === item?.id && isDelete?.credential ? (
             <td className="td" style={{ textAlign: "center" }}>
               <button className="contractButton" onClick={handleDelete}>
                 <FontAwesomeIcon icon={faCheck} />
               </button>
-              <button className="contractButton">
+              <button
+                className="contractButton"
+                onClick={() => {
+                  setIsDelete({ id: "", credential: false });
+                }}
+              >
                 <FontAwesomeIcon icon={faXmark} />
               </button>
             </td>
@@ -125,7 +119,9 @@ const TableRow = ({
               <button
                 className="contractButton"
                 disabled={inputType.credential}
-                onClick={()=>{setIsDelete({id:item?.id,credential:true})}}
+                onClick={() => {
+                  setIsDelete({ id: item?.id, credential: true });
+                }}
               >
                 <FontAwesomeIcon icon={faTrash} />
               </button>

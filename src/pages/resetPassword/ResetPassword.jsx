@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import "./resetPassword.css";
 import { useFormik } from "formik";
-import { resetSchema } from "../../scemas/index.js";
+import { resetSchema } from "../../utils/scemas/index.js";
 import Error from "../../component/error/Error.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useAlert } from "react-alert";
+import toast from "react-hot-toast";
+import { resetPassword } from "../../actions/authentication.js";
 const Reset = () => {
   const navigate = useNavigate();
-  const alert = useAlert();
   const [loading, setLoading] = useState(false);
-  const query=new URLSearchParams(useLocation()?.search);
-  const token=query?.get('token');
-  const email = query?.get('email');
-  
+  const query = new URLSearchParams(useLocation()?.search);
+  const token = query?.get("token");
+  const email = query?.get("email");
+
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
     useFormik({
       initialValues: {
@@ -22,32 +21,18 @@ const Reset = () => {
       },
       validationSchema: resetSchema,
       onSubmit: (values, action) => {
-        const makeRequest = async () => {
-          setLoading(true);
-          try {
-            const res = await axios.post(
-              `${process.env.REACT_APP_BASE_URL}/Authentication/reset-password`,
-              {},
-              {
-                params: {
-                  Email:email,
-                  Token:encodeURIComponent(token),
-                  Password:values.confirmPassword
-                },
-              }
-            );
-            if (res.status === 200) {
-              action.resetForm();
-              alert.show("password reset sucessfully", { type: "success" });
-              navigate("/login");
-            }
-          } catch (error) {
-            console.log(error);
-            alert.show("something went wrong", { type: "info" });
+        setLoading(true);
+        resetPassword(
+          email,
+          encodeURIComponent(token),
+          values.confirmPassword,
+          () => {
+            action.resetForm();
+            toast.success("Password Reset Successfully");
+            navigate("/login");
           }
-          setLoading(false);
-        };
-        makeRequest();
+        );
+        setLoading(false);
       },
     });
   return (

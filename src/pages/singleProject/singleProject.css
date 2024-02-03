@@ -21,6 +21,7 @@
 .contractItemMiddle{
     background-color: #fdfdfd;
     width:40%;
+    height: 150px;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -75,7 +76,7 @@
 }
 .contractItemFooter{
     background-color: white;
-    height:65.5%;
+    height: calc(100vh - 265px);
     margin: 0 10px;
     border-radius: 15px;
 }

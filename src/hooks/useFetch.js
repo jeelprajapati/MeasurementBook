@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import makeRequesInstance from "../utils/makeRequest";
-import { useAlert } from "react-alert";
+import toast from "react-hot-toast";
 
 const useFetch = ({ url, change }) => {
   const [data, setdata] = useState(null);
   const [loding, setLoding] = useState(false);
-  const alert=useAlert();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -14,15 +13,15 @@ const useFetch = ({ url, change }) => {
         setdata(res.data);
       } catch (error) {
         if (error.response) {
-            alert.show(error.response.data.title, { type: "error" });
+            toast.error(error.response.data.title);
         } else {
-          alert.show("something went wrong", { type: "info" });
+          toast.error("something went wrong");
         }
       }
       setLoding(false);
     };
       fetchData();
-  }, [url, change,alert]);
+  }, [url, change]);
   return { loding, data };
 };
 

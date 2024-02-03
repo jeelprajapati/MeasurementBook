@@ -9,8 +9,11 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import Content from "../content/Content";
-import makeRequesInstance from "../../utils/makeRequest";
-import { useAlert } from "react-alert";
+import { deleteStructMeasurementBook } from "../../actions/structMeasurementBook";
+import { addcontractItem } from "../../redux/slice/contractItemSlice";
+import { useDispatch } from "react-redux";
+import { CHANGE_ALLSTATE } from "../../constants/actionTypes";
+import toast from "react-hot-toast";
 
 const TableRow = ({
   data,
@@ -20,21 +23,31 @@ const TableRow = ({
   setInput,
   dispatch,
   setChange,
-  change,
-  setContractItemValues
+  input
 }) => {
   const [isDeleted, setIsDeleted] = useState({ id: "", credential: false });
-  const makeRequest = makeRequesInstance(localStorage.getItem("token"));
-  const alert = useAlert();
+  const dispatchAction=useDispatch();
 
-  const handleContrcctItemValues=(contractItem)=>{
-    setContractItemValues({
-      value:contractItem?.id,
-      unit: contractItem?.unit,
-      label: contractItem?.item,
-      stdUnit: contractItem?.stdUnitId,
-      exist: true
-    })
+  const handleContractItem = (contractItem) => {
+    dispatchAction(
+      addcontractItem({
+        item: {
+          value: contractItem?.id,
+          unit: contractItem?.unit,
+          label: contractItem?.item,
+          stdUnit: contractItem?.stdUnitId,
+          exist:true
+        },
+      })
+    );
+  };
+
+  const handleState=(item)=>{
+    const { contractItemId, structShapeId, billId, ...other } = item;
+    const shape = allShape.find((i) => i?.id === structShapeId)?.subSection;
+    const contractItem = contractItems?.find((i) => i?.id === contractItemId);
+    handleContractItem(contractItem);
+    dispatch({ type: CHANGE_ALLSTATE, payload: {...other,shape,structShapeId} });
   }
 
   const handleAdd = (e, index, id) => {
@@ -43,48 +56,28 @@ const TableRow = ({
     setInput({ type: "ADD", credential: true });
   };
 
+
   const handleUpdate = (e, index, item) => {
     e.preventDefault();
-    const { contractItemId, structShapeId, billId, ...other } = item;
-    const contractItem = contractItems?.find((i) => i?.id === contractItemId);
-    const shape = allShape.find((i) => i?.id === structShapeId);
-    handleContrcctItemValues(contractItem);
-    dispatch({
-      type: "HANDLE_STATE",
-      payload: { ...other, shape, structShapeId },
-    });
     setDivideBy(index);
     setInput({ type: "UPDATE", credential: true });
+    handleState(item);
   };
 
   const handleCopy = (e, index, item) => {
     e.preventDefault();
-    const { contractItemId, structShapeId, billId, ...other } = item;
-    const contractItem = contractItems?.find((i) => i?.id === contractItemId);
-    const shape = allShape.find((i) => i?.id === structShapeId);
-    handleContrcctItemValues(contractItem);
-    dispatch({
-      type: "HANDLE_STATE",
-      payload: { ...other, shape, structShapeId },
-    });
     setDivideBy(index + 1);
     setInput({ type: "ADD", credential: true });
+    handleState(item);
   };
 
   const handleDelete = async (e) => {
     e.preventDefault();
-    try {
-      const res = await makeRequest.delete(
-        `StructMeasurementBook/${isDeleted?.id}`
-      );
-      if (res.status === 200) {
-        alert.show("Data Deleted Sucessfully", { type: "success" });
-        setIsDeleted({ id: "", credential: false });
-        setChange(!change);
-      }
-    } catch (error) {
-      alert.show("something went wrong!", { type: "info" });
-    }
+    deleteStructMeasurementBook(isDeleted.id,()=>{
+      toast.success("Data Deleted Successfully");
+      setIsDeleted({ id: "", credential: false });
+      setChange((prev)=>!prev);
+    })
   };
 
   return (
@@ -163,22 +156,25 @@ const TableRow = ({
               </button>
             </td>
           ) : (
-            <td className="ssTableTd" align="start">
+            <td className="ssTableTd" align="center">
               <button
                 className="addAction actions"
                 onClick={(e) => handleAdd(e, index, item?.id)}
+                disabled={input.credential}
               >
                 <FontAwesomeIcon icon={faPlus} />
               </button>
               <button
                 className="updateAction actions"
                 onClick={(e) => handleUpdate(e, index, item)}
+                disabled={input.credential}
               >
                 <FontAwesomeIcon icon={faPencil} />
               </button>
               <button
                 className="copyAction actions"
                 onClick={(e) => handleCopy(e, index, item)}
+                disabled={input.credential}
               >
                 <FontAwesomeIcon icon={faCopy} />
               </button>
@@ -188,6 +184,7 @@ const TableRow = ({
                   e.preventDefault();
                   setIsDeleted({ id: item?.id, credential: true });
                 }}
+                disabled={input.credential}
               >
                 <FontAwesomeIcon icon={faTrash} />
               </button>
