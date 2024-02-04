@@ -1,8 +1,9 @@
 import toast from "react-hot-toast";
-import { makeRequest } from "../constants/makeRequest";
+import makeRequesInstance from "../utils/makeRequest";
 
 export const addStructMeasurementBook = async (values, index, callback) => {
     try {
+      const makeRequest=makeRequesInstance(localStorage.getItem('token'));
       const res = await makeRequest.post("StructMeasurementBook", {
         structMeasurementBookDto: {
           ...values,
@@ -28,6 +29,7 @@ export const addStructMeasurementBook = async (values, index, callback) => {
 
   export const updateStructMeasurementBook = async (values, billId, callback) => {
     try {
+      const makeRequest=makeRequesInstance(localStorage.getItem('token'));
       const res = await makeRequest.put("StructMeasurementBook", {
         ...values,
         billId
@@ -51,6 +53,7 @@ export const addStructMeasurementBook = async (values, index, callback) => {
 
   export const deleteStructMeasurementBook = async (id,callback) => {
     try {
+      const makeRequest=makeRequesInstance(localStorage.getItem('token'));
       const res = await makeRequest.delete(`StructMeasurementBook/${id}`);
       if (res.status === 200) {
         callback();

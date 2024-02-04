@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
-import { makeRequest } from "../constants/makeRequest";
 import makeRequesInstance from "../utils/makeRequest";
+const makeRequest=makeRequesInstance(localStorage.getItem('token'));
 
 export const register = async (values, callback) => {
   try {

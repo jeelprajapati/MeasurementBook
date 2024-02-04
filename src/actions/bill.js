@@ -1,8 +1,9 @@
 import toast from "react-hot-toast";
-import { makeRequest } from "../constants/makeRequest";
+import makeRequesInstance from "../utils/makeRequest";
 
 export const getBills = async (page, projectId,callback) => {
   try {
+    const makeRequest=makeRequesInstance(localStorage.getItem('token'));
     const res = await makeRequest.get(
       `/Bill/GetByProjectId?page=${1}&pageSize=${
         page * 7
@@ -27,6 +28,7 @@ export const getBills = async (page, projectId,callback) => {
 
 export const addBill = async (values,callback) => {
   try {
+    const makeRequest=makeRequesInstance(localStorage.getItem('token'));
     const res = await makeRequest.post('Bill',values);
     if(res.status===204){
      callback() 
@@ -47,6 +49,7 @@ export const addBill = async (values,callback) => {
 
 export const updateBill = async (values,callback) => {
   try {
+    const makeRequest=makeRequesInstance(localStorage.getItem('token'));
     const res = await makeRequest.put('Bill',values);
     if(res.status===204){
      callback() 

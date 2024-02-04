@@ -1,8 +1,9 @@
 import toast from "react-hot-toast";
-import { makeRequest } from "../constants/makeRequest";
+import makeRequesInstance from "../utils/makeRequest";
 
 export const getClient = async (Id, page, callback) => {
   try {
+    const makeRequest=makeRequesInstance(localStorage.getItem('token'));
     const res = await makeRequest.get(
       `Client?page=${1}&pageSize=${11 * page}&organizationId=${Id}`
     );
@@ -25,6 +26,7 @@ export const getClient = async (Id, page, callback) => {
 
 export const addClient = async (values, callback) => {
   try {
+    const makeRequest=makeRequesInstance(localStorage.getItem('token'));
     const res = await makeRequest.post("Client", values);
     if (res.status === 204) {
       callback();
@@ -45,6 +47,7 @@ export const addClient = async (values, callback) => {
 
 export const updateClient = async (values, callback) => {
   try {
+    const makeRequest=makeRequesInstance(localStorage.getItem('token'));
     const res = await makeRequest.put("Client", values);
     if (res.status === 204) {
       callback();
@@ -65,6 +68,7 @@ export const updateClient = async (values, callback) => {
 
 export const deleteClient = async (id, organizationId, callback) => {
   try {
+    const makeRequest=makeRequesInstance(localStorage.getItem('token'));
     const res = await makeRequest.delete(
       `/Client/${id}?organizationId=${organizationId}`
     );

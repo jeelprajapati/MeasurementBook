@@ -1,8 +1,9 @@
 import toast from "react-hot-toast";
-import { makeRequest } from "../constants/makeRequest";
+import makeRequesInstance from "../utils/makeRequest";
 
 export const getProjects = async (Id, page, callback) => {
   try {
+    const makeRequest=makeRequesInstance(localStorage.getItem('token'));
     const res = await makeRequest.get(
       `/Project?page=1&pageSize=${page * 7}&organizationId=${Id}`
     );
@@ -25,6 +26,7 @@ export const getProjects = async (Id, page, callback) => {
 
 export const getProject = async (id, callback) => {
   try {
+    const makeRequest=makeRequesInstance(localStorage.getItem('token'));
     const res = await makeRequest.get(`/Project/${id}`);
     if (res.status === 200) {
       callback(res.data);
@@ -45,6 +47,7 @@ export const getProject = async (id, callback) => {
 
 export const addProject = async (values, callback) => {
   try {
+    const makeRequest=makeRequesInstance(localStorage.getItem('token'));
     const res = await makeRequest.post("Project", values);
     if (res.status === 204) {
       callback();
@@ -65,6 +68,7 @@ export const addProject = async (values, callback) => {
 
 export const updateProject = async (values, callback) => {
   try {
+    const makeRequest=makeRequesInstance(localStorage.getItem('token'));
     const res = await makeRequest.put("Project", values);
     if (res.status === 204) {
       callback();
@@ -85,6 +89,7 @@ export const updateProject = async (values, callback) => {
 
 export const getTagsByProject = async (projectId, callback) => {
   try {
+    const makeRequest=makeRequesInstance(localStorage.getItem('token'));
     const res = await makeRequest.get(
       `Project/GetTagsByProjectId?projectId=${projectId}`
     );
@@ -107,6 +112,7 @@ export const getTagsByProject = async (projectId, callback) => {
 
 export const getExcelReport = async (billId, callback) => {
   try {
+    const makeRequest=makeRequesInstance(localStorage.getItem('token'));
     const res = await makeRequest.get(
       `Project/GenerateStandardExcelReport?billId=${billId}`,
       { responseType: "blob" }
