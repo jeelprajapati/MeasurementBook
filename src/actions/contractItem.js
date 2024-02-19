@@ -13,7 +13,7 @@ export const getContractItem = async (projectId, page, callback) => {
       callback(res.data);
     }
   } catch (error) {
-    if (error.status === 401) {
+    if (error?.response?.status === 401) {
       toast(
         "Your session has expired. Please log in again to continue accessing the application.",
         {
@@ -39,7 +39,7 @@ export const addContractItem = async (values, index, callback) => {
       callback();
     }
   } catch (error) {
-    if (error.status === 401) {
+    if (error?.response?.status === 401) {
       toast(
         "Your session has expired. Please log in again to continue accessing the application.",
         {
@@ -63,7 +63,7 @@ export const updateContractItem = async (values, projectId, callback) => {
       callback();
     }
   } catch (error) {
-    if (error.status === 401) {
+    if (error?.response?.status === 401) {
       toast(
         "Your session has expired. Please log in again to continue accessing the application.",
         {
@@ -84,7 +84,7 @@ export const deleteContractItem = async (id, callback) => {
       callback();
     }
   } catch (error) {
-    if (error.status === 401) {
+    if (error?.response?.status === 401) {
       toast(
         "Your session has expired. Please log in again to continue accessing the application.",
         {
@@ -108,7 +108,7 @@ export const addContractItemRange = async (newarray, projectId, callback) => {
       callback();
     }
   } catch (error) {
-    if (error.status === 401) {
+    if (error?.response?.status === 401) {
       toast(
         "Your session has expired. Please log in again to continue accessing the application.",
         {

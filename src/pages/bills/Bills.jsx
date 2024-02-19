@@ -8,6 +8,7 @@ import BreadCrumbs from "../../component/breadCrumbs/BreadCrumbs.jsx";
 import { billInitialState } from "../../constants/initialState.js";
 import { getBills } from "../../actions/bill.js";
 import useRedirect from "../../hooks/useRedirect.js";
+import useInfinityScroll from "../../hooks/useInfinityScroll.js";
 
 const Bills = () => {
   const search = new URLSearchParams(useLocation()?.search);
@@ -16,23 +17,22 @@ const Bills = () => {
   const projectName = search?.get("projectName");
   const [inputType, setInputType] = useState({ type: "", credential: false });
   const [initialValues, setInitialValues] = useState(billInitialState);
-  const [page, setPage] = useState(1);
   const [change, setChange] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const { handleInfinityScroll, page } = useInfinityScroll();
   //redirect to login when token and organizationId is Not exist
   useRedirect();
-  
+
   useEffect(() => {
     getBills(page, projectId, (data) => {
       setData(data.items);
+      if (data.items?.length < data?.totalCount) {
+        setHasMore(true);
+      } else {
+        setHasMore(false);
+      }
     });
   }, [page, projectId, change]);
-
-  const handleInfinityScroll = (e) => {
-    const { scrollTop, clientHeight, scrollHeight } = e.target;
-    if (scrollHeight <= clientHeight + scrollTop + 1) {
-      setPage((prev) => prev + 1);
-    }
-  };
 
   return (
     <div>
@@ -40,7 +40,10 @@ const Bills = () => {
         <div className="billLeft">
           <Sidebar id={2} />
         </div>
-        <div className="billRight" onScroll={handleInfinityScroll}>
+        <div
+          className="billRight"
+          onScroll={(e) => hasMore && handleInfinityScroll(e)}
+        >
           <div className="rightContentWrapper">
             <div className={`billTop ${inputType?.credential && "blur"}`}>
               <BreadCrumbs type={"bill"} />

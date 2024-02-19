@@ -29,7 +29,7 @@ const Table = ({ billId, contractItems, tagFilter, contractItemFilter }) => {
   const ref = useRef();
   const contractItem = useSelector((state) => state.contractItem.contractItem);
   const dispatchAction = useDispatch();
-  const { handleInfinityScroll, page } = useInfinityScroll({credential:input?.credential});
+  const { handleInfinityScroll, page } = useInfinityScroll();
 
   const headerObject = [
     { label: "ContractItem", align: "start" },
@@ -45,24 +45,24 @@ const Table = ({ billId, contractItems, tagFilter, contractItemFilter }) => {
     { label: "Actions", align: "center" },
   ];
 
-  const { data,loading } = useFetchByPost({
+  const { data, loading,hasMore } = useFetchByPost({
     url: "StructMeasurementBook/getByBillId",
     billId,
     change,
     contractItemFilter,
     tagFilter,
-    page
+    page,
   });
 
   useEffect(() => {
     if (data?.length === 0 && !loading) {
       setInput({ type: "ADD", credential: true });
       setDivideBy(0);
-    }else{
+    } else {
       setInput({ type: "", credential: false });
       setDivideBy(0);
     }
-  }, [data,loading]);
+  }, [data, loading]);
 
   useEffect(() => {
     getShape((data) => {
@@ -83,7 +83,7 @@ const Table = ({ billId, contractItems, tagFilter, contractItemFilter }) => {
   }, [data]);
 
   const handleSuccess = (type) => {
-    toast.success(`Data ${type}ed Successfully`)
+    toast.success(`Data ${type}ed Successfully`);
     setChange(!change);
     dispatchAction(setInitialState());
     dispatch({ type: SETINITIAL_STATE });
@@ -135,7 +135,11 @@ const Table = ({ billId, contractItems, tagFilter, contractItemFilter }) => {
   };
 
   return (
-    <div className="ssTableContainer" ref={ref} onScroll={handleInfinityScroll}>
+    <div
+      className="ssTableContainer"
+      ref={ref}
+      onScroll={(e) => hasMore && !input.credential && handleInfinityScroll(e)}
+    >
       <form onSubmit={handleSubmit}>
         <table>
           <tr className="ssTableTr">
@@ -182,9 +186,11 @@ const Table = ({ billId, contractItems, tagFilter, contractItemFilter }) => {
           />
         </table>
       </form>
-      {loading && <div className="loader">
+      {loading && (
+        <div className="loader">
           <FontAwesomeIcon icon={faSpinner} />
-        </div>}
+        </div>
+      )}
     </div>
   );
 };

@@ -14,7 +14,7 @@ export const addStructMeasurementBook = async (values, index, callback) => {
         callback();
       }
     } catch (error) {
-      if (error.status === 401) {
+      if (error?.response?.status === 401) {
         toast(
           "Your session has expired. Please log in again to continue accessing the application.",
           {
@@ -38,7 +38,7 @@ export const addStructMeasurementBook = async (values, index, callback) => {
         callback();
       }
     } catch (error) {
-      if (error.status === 401) {
+      if (error?.response?.status === 401) {
         toast(
           "Your session has expired. Please log in again to continue accessing the application.",
           {
@@ -59,7 +59,7 @@ export const addStructMeasurementBook = async (values, index, callback) => {
         callback();
       }
     } catch (error) {
-      if (error.status === 401) {
+      if (error?.response?.status === 401) {
         toast(
           "Your session has expired. Please log in again to continue accessing the application.",
           {

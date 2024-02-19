@@ -21,7 +21,8 @@ const ClientTable = ({
   const Id = localStorage.getItem("organizationId");
   const [isDelete, setIsDelete] = useState({ id: "", credential: false });
   const [data, setData] = useState([]);
-  const {handleInfinityScroll,page}=useInfinityScroll({credential:false});
+  const [hasMore,setHasMore]=useState(true);
+  const {handleInfinityScroll,page}=useInfinityScroll();
 
   const headerobject = [
     { label: "Name*", colSpan: 2 },
@@ -40,6 +41,11 @@ const ClientTable = ({
   useEffect(() => {
     getClient(Id, page, (data) => {
       setData(data.items);
+      if(data.items?.length < data.totalCount){
+        setHasMore(true);
+      }else{
+        setHasMore(false);
+      }
     });
   }, [page, Id, change]);
 
@@ -62,7 +68,7 @@ const ClientTable = ({
       <button className="clientAddButton" onClick={handleAdd}>
         + Add Client
       </button>
-      <div className="clientTableContainer" onScroll={handleInfinityScroll}>
+      <div className="clientTableContainer" onScroll={(e)=>hasMore && handleInfinityScroll(e)}>
         <table className="clientTable">
           <tr className="clientTr">
             {headerobject.map((item, index) => (

@@ -10,6 +10,7 @@ import {
   faSignOutAlt,
   faBars,
   faTimes,
+  faGear,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { toggle } from "../../redux/slice/sidebarSlice";
@@ -33,6 +34,7 @@ const Sidebar = ({ id }) => {
     { id: 2, icon: faLayerGroup, text: "Projects", path: "/project" },
     { id: 3, icon: faUsers, text: "Clients", path: "/client" },
     { id: 4, icon: faBook, text: "Tutorials", path: "/" },
+    { id: 5, icon: faGear, text: "Settings", path: "/profile" },
   ];
 
   return (

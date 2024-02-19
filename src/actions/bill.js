@@ -13,7 +13,7 @@ export const getBills = async (page, projectId,callback) => {
         callback(res.data);
     }
   } catch (error) {
-    if (error.status === 401) {
+    if (error?.response?.status === 401) {
       toast(
         "Your session has expired. Please log in again to continue accessing the application.",
         {
@@ -34,7 +34,7 @@ export const addBill = async (values,callback) => {
      callback() 
     }
   } catch (error) {
-    if (error.status === 401) {
+    if (error?.response?.status === 401) {
       toast(
         "Your session has expired. Please log in again to continue accessing the application.",
         {
@@ -55,7 +55,7 @@ export const updateBill = async (values,callback) => {
      callback() 
     }
   } catch (error) {
-    if (error.status === 401) {
+    if (error?.response?.status === 401) {
       toast(
         "Your session has expired. Please log in again to continue accessing the application.",
         {

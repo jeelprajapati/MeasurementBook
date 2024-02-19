@@ -25,9 +25,7 @@ const Table = ({ billId, contractItems, tagFilter, contractItemFilter }) => {
   const [state, dispatch] = useReducer(formData, intialState);
   const dispatchAction = useDispatch();
   const contractItem = useSelector((state) => state.contractItem.contractItem);
-  const { handleInfinityScroll, page } = useInfinityScroll({
-    credential: input?.credential,
-  });
+  const { handleInfinityScroll, page } = useInfinityScroll();
 
   const headerObject = [
     { label: "ContractItem*", align: "start" },
@@ -41,7 +39,7 @@ const Table = ({ billId, contractItems, tagFilter, contractItemFilter }) => {
     { label: "Actions", align: "center" },
   ];
 
-  const { data, loading } = useFetchByPost({
+  const { data, loading,hasMore } = useFetchByPost({
     url: "MeasurementBook/getByBillId",
     billId,
     change,
@@ -122,7 +120,7 @@ const Table = ({ billId, contractItems, tagFilter, contractItemFilter }) => {
       <div
         className="measurementContainer"
         ref={ref}
-        onScroll={handleInfinityScroll}
+        onScroll={(e)=> hasMore && !input.credential && handleInfinityScroll(e)}
       >
 
         <form onSubmit={handleSubmit}>

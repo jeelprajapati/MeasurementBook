@@ -1,0 +1,75 @@
+.accountContainer{
+    height: 100%;
+}
+.detailMainContainer{
+    display: flex;
+    padding: 10px 0;
+    flex-direction: column;
+    gap: 32px;
+    width: 100%;
+}
+.detailTitle span{
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+.detailContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+}
+.detailFlex{
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+}
+.detailLabel span{
+    font-size: 15px;
+    font-weight: 400;
+}
+.detailWrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 35px;
+}
+.detailValue{
+    font-size: 15px;
+    font-weight: 400;
+    color: gray;
+}
+.detailButton button{
+    font-size: 15px;
+    background-color: rgb(234, 234, 234);
+    color: black;
+    border: none;
+    padding: 7px 15px;
+    cursor: pointer;
+}
+.line{
+    border: 1px solid rgb(189, 189, 189);
+}
+.detailInput{
+    width: 80%;
+    height: 100%;
+    border: 1px solid #2e4a93;
+    border-radius: 3px;
+}
+.detailButtons{
+    display: flex;
+    gap: 5px;
+}
+.detailButtons button{
+    padding: 7px 15px;
+    cursor: pointer;
+}
+.save{
+    background-color: #2e4a93;
+    color: #fdfdfd;
+    border: none;
+}
+.detailCancel{
+    color: #2e4a93;
+    background-color: #fdfdfd;
+    border: 1px solid #2e4a93;
+}

@@ -12,7 +12,7 @@ export const register = async (values, callback) => {
       callback();
     }
   } catch (error) {
-    if (error.status === 401) {
+    if (error?.response?.status === 401) {
       toast(
         "Your session has expired. Please log in again to continue accessing the application.",
         {
@@ -48,7 +48,7 @@ export const getOrganizationId = async (token, callback) => {
       callback(res.data.organizations[0].organizationID);
     }
   } catch (error) {
-    if (error.status === 401) {
+    if (error?.response?.status === 401) {
       toast(
         "Your session has expired. Please log in again to continue accessing the application.",
         {

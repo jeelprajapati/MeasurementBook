@@ -12,6 +12,7 @@ const useFetchByPost = ({
 }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [hasMore,setHasMore]=useState(true);
   useEffect(() => {
     const makeRequest = makeRequesInstance(localStorage.getItem("token"));
     const getData = async () => {
@@ -42,9 +43,16 @@ const useFetchByPost = ({
         });
         if (res.status === 200) {
           setData(res.data?.items);
+
+          console.log(res.data?.items?.length , res.data?.totalCount)
+          if(res.data?.items?.length < res.data?.totalCount){
+            setHasMore(true);
+          }else{
+            setHasMore(false);
+          }
         }
       } catch (error) {
-        if (error.status === 401) {
+        if (error?.response?.status === 401) {
           toast(
             "Your session has expired. Please log in again to continue accessing the application.",
             {
@@ -60,7 +68,7 @@ const useFetchByPost = ({
 
     getData();
   }, [billId, change, contractItemFilter, tagFilter, page, url]);
-  return { data, loading };
+  return { data, loading, hasMore };
 };
 
 export default useFetchByPost;

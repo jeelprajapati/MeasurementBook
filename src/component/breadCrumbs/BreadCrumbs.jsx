@@ -31,6 +31,7 @@ const BreadCrumbs = ({ type }) => {
       { name: search?.get("billName"), to: null },
     ],
     client: [{ name: "Clients", to: null }],
+    profile: [{ name: "Settings", to: null }]
   };
   return (
     <div className="breadCrumbContainer">

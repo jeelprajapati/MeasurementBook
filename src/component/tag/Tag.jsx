@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./tag.css";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,6 +18,16 @@ const Tag = ({ tags, dispatch}) => {
       setOpen(false);
     }
   });
+
+  useEffect(() => {
+    if (tagRef.current) {
+      tagRef.current.scrollIntoView({
+        block: "nearest",
+        inline: "start",
+        behavior: "smooth",
+      });
+    }
+  }, [open]);
 
   // focus on input when user click in writeTag class container
   const focusInput = () => {

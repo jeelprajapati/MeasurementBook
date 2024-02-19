@@ -2,7 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import "./style.css";
 import TableRow from "./TableRow.jsx";
 import InputRow from "./InputRow.jsx";
-import { addContractItem, getContractItem, updateContractItem } from "../../actions/contractItem.js";
+import {
+  addContractItem,
+  getContractItem,
+  updateContractItem,
+} from "../../actions/contractItem.js";
 import useInfinityScroll from "../../hooks/useInfinityScroll.js";
 import { contractItemInitialState } from "../../constants/initialState.js";
 import toast from "react-hot-toast";
@@ -12,18 +16,24 @@ const Table = ({ change, setChange, unit, projectId }) => {
   const [divideBy, setDivideBy] = useState(0);
   const [inputType, setInputType] = useState({ type: "", credential: false });
   const [scrollValue, setScrollValue] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
   const ref = useRef();
-  const [formData,setFormData]=useState(contractItemInitialState);
-  const {handleInfinityScroll,page}=useInfinityScroll({credential:inputType?.credential});
+  const [formData, setFormData] = useState(contractItemInitialState);
+  const { handleInfinityScroll, page } = useInfinityScroll();
 
   useEffect(() => {
-      getContractItem(projectId, page, (data) => {
-        setArray(data.items);
-        if (data.items?.length === 0) {
-          setInputType({ type: "ADD", credential: true });
-          setDivideBy(0);
-        }
-      });
+    getContractItem(projectId, page, (data) => {
+      setArray(data.items);
+      if (data.items?.length < data?.totalCount) {
+        setHasMore(true);
+      } else {
+        setHasMore(false);
+      }
+      if (data.items?.length === 0) {
+        setInputType({ type: "ADD", credential: true });
+        setDivideBy(0);
+      }
+    });
   }, [projectId, page, change]);
 
   useEffect(() => {
@@ -33,43 +43,43 @@ const Table = ({ change, setChange, unit, projectId }) => {
     //eslint-disable-next-line
   }, [array]);
 
-  const handleSuccess=(type)=>{
+  const handleSuccess = (type) => {
     toast.success(`Data ${type}ed Successfully`);
     setChange(!change);
     setFormData(contractItemInitialState);
-    setInputType({type:"",credential:false});
+    setInputType({ type: "", credential: false });
     setDivideBy(0);
-  }
+  };
 
-  const handleAdd=()=>{
-    addContractItem({...formData,projectId},divideBy,()=>{
+  const handleAdd = () => {
+    addContractItem({ ...formData, projectId }, divideBy, () => {
       handleSuccess("Add");
-    })
-  }
+    });
+  };
 
-  const handleUpdate=()=>{
-    updateContractItem(formData,projectId,()=>{
+  const handleUpdate = () => {
+    updateContractItem(formData, projectId, () => {
       handleSuccess("Updat");
-    })
-  }
+    });
+  };
 
-  const handleSubmit=(e)=>{
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if(ref.current){
+    if (ref.current) {
       setScrollValue(ref.current.scrollTop);
     }
-    if(inputType.type==="ADD"){
-      handleAdd()
-    }else if(inputType.type==="UPDATE"){
+    if (inputType.type === "ADD") {
+      handleAdd();
+    } else if (inputType.type === "UPDATE") {
       handleUpdate();
     }
-  }
+  };
 
   return (
     <div
       className="contractTableContainer"
       ref={ref}
-      onScroll={handleInfinityScroll}
+      onScroll={(e)=>hasMore && !inputType?.credential && handleInfinityScroll(e)}
     >
       <form onSubmit={handleSubmit}>
         <table className="table">

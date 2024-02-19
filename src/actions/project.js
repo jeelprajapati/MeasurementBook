@@ -11,7 +11,7 @@ export const getProjects = async (Id, page, callback) => {
       callback(res.data);
     }
   } catch (error) {
-    if (error.status === 401) {
+    if (error?.response?.status === 401) {
       toast(
         "Your session has expired. Please log in again to continue accessing the application.",
         {
@@ -32,7 +32,7 @@ export const getProject = async (id, callback) => {
       callback(res.data);
     }
   } catch (error) {
-    if (error.status === 401) {
+    if (error?.response?.status === 401) {
       toast(
         "Your session has expired. Please log in again to continue accessing the application.",
         {
@@ -53,7 +53,7 @@ export const addProject = async (values, callback) => {
       callback();
     }
   } catch (error) {
-    if (error.status === 401) {
+    if (error?.response?.status === 401) {
       toast(
         "Your session has expired. Please log in again to continue accessing the application.",
         {
@@ -74,7 +74,7 @@ export const updateProject = async (values, callback) => {
       callback();
     }
   } catch (error) {
-    if (error.status === 401) {
+    if (error?.response?.status === 401) {
       toast(
         "Your session has expired. Please log in again to continue accessing the application.",
         {
@@ -97,7 +97,7 @@ export const getTagsByProject = async (projectId, callback) => {
       callback(res.data);
     }
   } catch (error) {
-    if (error.status === 401) {
+    if (error?.response?.status === 401) {
       toast(
         "Your session has expired. Please log in again to continue accessing the application.",
         {
@@ -121,7 +121,7 @@ export const getExcelReport = async (billId, callback) => {
       callback(res.data);
     }
   } catch (error) {
-    if (error.status === 401) {
+    if (error?.response?.status === 401) {
       toast(
         "Your session has expired. Please log in again to continue accessing the application.",
         {
