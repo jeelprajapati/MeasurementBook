@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import makeRequesInstance from "../utils/makeRequest";
-const makeRequest=makeRequesInstance(localStorage.getItem('token'));
+const makeRequest = makeRequesInstance(localStorage.getItem("token"));
 
 export const register = async (values, callback) => {
   try {
@@ -40,27 +40,6 @@ export const login = async (values, callback) => {
   }
 };
 
-export const getOrganizationId = async (token, callback) => {
-  const newRequest = makeRequesInstance(token);
-  try {
-    const res = await newRequest.get("Account/GetUserInfo");
-    if (res.status === 200) {
-      callback(res.data.organizations[0].organizationID);
-    }
-  } catch (error) {
-    if (error?.response?.status === 401) {
-      toast(
-        "Your session has expired. Please log in again to continue accessing the application.",
-        {
-          duration: 6000,
-        }
-      );
-    } else {
-      toast.error("Something Went Wrong!");
-    }
-  }
-};
-
 export const forgetPassword = async (values, callback) => {
   try {
     const res = await makeRequest.post(
@@ -93,9 +72,46 @@ export const resetPassword = async (Email, Token, Password, callback) => {
       }
     );
     if (res.status === 200) {
-        callback();
+      callback();
     }
   } catch (error) {
     toast.error("Something Went Wrong!");
   }
 };
+
+export const changePassword = async (
+  email,
+  currentPassword,
+  newPassword,
+  callback
+) => {
+  try {
+    const makeRequest = makeRequesInstance(localStorage.getItem("token"));
+    const res = await makeRequest.post("Authentication/change-password", {
+      email,
+      currentPassword,
+      newPassword,
+    });
+    if (res.status === 200) {
+      callback();
+    }
+  } catch (error) {
+    if (error?.response) {
+      if (error?.response?.status === 401) {
+        toast(
+          "Your session has expired. Please log in again to continue accessing the application.",
+          {
+            duration: 6000,
+          }
+        );
+      } else if (error?.response?.status === 404) {
+        toast.error("Invalid email address!");
+      } else if (error?.response?.status === 400) {
+        toast.error("Current password is invalid!");
+      }
+    } else {
+      toast.error("Something Went Wrong!");
+    }
+  }
+};
+

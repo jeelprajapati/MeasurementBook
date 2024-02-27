@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { loginScema } from "../../utils/scemas/index.js";
 import Error from "../../component/error/Error.jsx";
-import { getOrganizationId, login } from "../../actions/authentication.js";
+import { getOrganization } from "../../actions/account.js";
+import { login } from "../../actions/authentication.js";
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate=useNavigate();
@@ -14,8 +15,8 @@ const Login = () => {
   };
   const handleLoginAndSetId = async (token) => {
     setLoading(true)
-    getOrganizationId(token, (organizationId) => {
-      localStorage.setItem("organizationId", organizationId);
+    getOrganization(token, (data) => {
+      localStorage.setItem("organizationId", data.organizations[0].organizationID);
       navigate('/')
     });
     setLoading(false);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./profile.css";
 import Sidebar from "../../component/sidebar/Sidebar.jsx";
 import useRedirect from "../../hooks/useRedirect.js";
@@ -11,29 +11,39 @@ import {
   faLock,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import { getOrganization } from "../../actions/account.js";
+
+const listItems = [
+  {
+    id: 1,
+    label: "Your Account",
+    icon: faUser,
+  },
+  {
+    id: 2,
+    label: "Change Password",
+    icon: faLock,
+  },
+  {
+    id: 3,
+    label: "Your Organization",
+    icon: faBuildingNgo,
+  },
+];
 
 const Profile = () => {
+  const [data, setData] = useState({});
+  const [reload,setReload]=useState(0);
   useRedirect();
 
   const [type, setType] = useState(1);
 
-  const listItems = [
-    {
-      id: 1,
-      label: "Your Account",
-      icon: faUser,
-    },
-    {
-      id: 2,
-      label: "Change Password",
-      icon: faLock,
-    },
-    {
-      id: 3,
-      label: "Your Organization",
-      icon: faBuildingNgo,
-    },
-  ];
+  useEffect(() => {
+    getOrganization(localStorage.getItem("token"), (data) => {
+      setData(data);
+    });
+  }, [reload]);
+
   return (
     <div className="profileContainer">
       <div className="profileLeft">
@@ -67,7 +77,7 @@ const Profile = () => {
               ))}
             </div>
             <div className="profileComponent">
-              {type === 1 && <Account />}
+              {type === 1 && <Account data={data} setReload={setReload} />}
               {type === 2 && <ChangePassword />}
             </div>
           </div>

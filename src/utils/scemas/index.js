@@ -93,3 +93,27 @@ export const resetSchema = Yup.object({
     )
     .required("Confirm Password is Requird!"),
 });
+
+export const changePasswordSchema = Yup.object({
+  email: Yup.string()
+    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, "Enter A valid Email")
+    .required("Email is Required!"),
+  currentPassword: Yup.string()
+    .matches(
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{6,}$/,
+      "Password must contain at least 8 characters, one uppercase, one number and one special case character"
+    )
+    .required("Password is Required!"),
+  newPassword: Yup.string()
+    .matches(
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{6,}$/,
+      "Password must contain at least 8 characters, one uppercase, one number and one special case character"
+    )
+    .required("Password is Required!"),
+  cNewPassword: Yup.string()
+    .oneOf(
+      [Yup.ref("newPassword"), null],
+      "New Password and Confirm New Password must be same"
+    )
+    .required("Confirm Password is Requird!"),
+});
