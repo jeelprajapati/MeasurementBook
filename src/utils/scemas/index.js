@@ -109,7 +109,7 @@ export const changePasswordSchema = Yup.object({
       /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{6,}$/,
       "Password must contain at least 8 characters, one uppercase, one number and one special case character"
     )
-    .required("Password is Required!"),
+    .required("Password is required!"),
   cNewPassword: Yup.string()
     .oneOf(
       [Yup.ref("newPassword"), null],
@@ -117,3 +117,11 @@ export const changePasswordSchema = Yup.object({
     )
     .required("Confirm Password is Requird!"),
 });
+
+export const addressShcema=Yup.object({
+  countryId:Yup.string().required("Country is required!"),
+  stateId:Yup.string().required("State is required!"),
+  city:Yup.string().required("City is required!"),
+  postalCode:Yup.string().required("Postal Code is required!"),
+  address:Yup.string().required("Street address is required!")
+})

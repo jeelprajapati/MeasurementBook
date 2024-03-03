@@ -12,6 +12,7 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { getOrganization } from "../../actions/account.js";
+import { getCountry, getState } from "../../actions/standard.js";
 
 const listItems = [
   {
@@ -33,7 +34,10 @@ const listItems = [
 
 const Profile = () => {
   const [data, setData] = useState({});
-  const [reload,setReload]=useState(0);
+  const [reload, setReload] = useState(0);
+  const [blur, setBlur] = useState(false);
+  const [country, setCountry] = useState([]);
+  const [state, setState] = useState([]);
   useRedirect();
 
   const [type, setType] = useState(1);
@@ -43,6 +47,20 @@ const Profile = () => {
       setData(data);
     });
   }, [reload]);
+
+  useEffect(() => {
+    getCountry((data) => {
+      setCountry(data);
+    });
+    getState((data) => {
+      setState(data);
+    });
+  }, []);
+
+  const handleType=(id)=>{
+    setType(id);
+    setBlur(false);
+  }
 
   return (
     <div className="profileContainer">
@@ -54,20 +72,20 @@ const Profile = () => {
           <BreadCrumbs type={"profile"} />
         </div>
         <div className="profileFooter">
-          <div className="profileTitle">
+          <div className={`profileTitle ${blur && "profileBlur"}`}>
             <span>Settings</span>
           </div>
           <div className="profileWrapper">
-            <div className="profileList">
+            <div className={`profileList ${blur && "profileBlur"}`}>
               {listItems.map((item) => (
                 <div
+                  key={item.id}
                   className={`profileItem ${
                     type === item.id
                       ? "profileListSelected"
                       : "profileItemHover"
                   }`}
-                  onClick={() => setType(item.id)}
-                  key={item.id}
+                  onClick={() => handleType(item.id)}
                 >
                   <span className="profileLabelIcon">
                     <FontAwesomeIcon icon={item.icon} />
@@ -77,7 +95,16 @@ const Profile = () => {
               ))}
             </div>
             <div className="profileComponent">
-              {type === 1 && <Account data={data} setReload={setReload} />}
+              {type === 1 && (
+                <Account
+                  data={data}
+                  setReload={setReload}
+                  setBlur={setBlur}
+                  country={country}
+                  state={state}
+                  blur={blur}
+                />
+              )}
               {type === 2 && <ChangePassword />}
             </div>
           </div>

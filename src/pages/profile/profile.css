@@ -25,6 +25,7 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
+  position: relative;
 }
 .profileTitle span{
   font-size: 18px;
@@ -75,4 +76,7 @@
   background-color: #ececec;
   cursor: pointer;
   border-radius: 5px;
+}
+.profileBlur{
+  filter: blur(1.5px);
 }

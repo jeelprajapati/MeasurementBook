@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import "./account.css";
 import { updateUserInfo } from "../../actions/account.js";
 import toast from "react-hot-toast";
+import AddressPopup from "./AddressPopup.jsx";
 
-const Detail = ({ detail, data, setReload }) => {
+const Detail = ({ detail, data, setReload, setBlur, country, state,blur }) => {
   const [detailId, setDetailId] = useState(0);
   const [values, setValues] = useState({});
   const [change, setChange] = useState(0);
@@ -28,9 +29,12 @@ const Detail = ({ detail, data, setReload }) => {
 
   const handleEdit = (id) => {
     setDetailId(id);
+    if (id === 4) {
+      setBlur(true);
+    }else{
+      setBlur(false);
+    }
   };
-
-  console.log(values);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -41,7 +45,6 @@ const Detail = ({ detail, data, setReload }) => {
     //check number only for phone Number
     if (e.target.name === "phoneNumber") {
       const regex = /^\d+$/;
-      console.log(value.substring(value.length - 1));
       if (!regex.test(value.substring(value.length - 1)) && value !== "") {
         return;
       }
@@ -54,6 +57,7 @@ const Detail = ({ detail, data, setReload }) => {
     setDetailId(0);
     setChange((prev) => !prev);
     setError(false);
+    setBlur(false);
   };
 
   const handleSave = (type) => {
@@ -71,28 +75,38 @@ const Detail = ({ detail, data, setReload }) => {
   return (
     <>
       <div className="detailMainContainer">
-        <div className="detailTitle">
+        <div className={`detailTitle ${blur && "profileBlur"}`}>
           <span>Your Account</span>
         </div>
         {detail.map((item) => (
           <div className="detailContainer" key={item.id}>
             <div className="detailFlex">
-              <div className="detailLabel">
+              <div className={`detailLabel ${blur && "profileBlur"}`}>
                 <span>{item.label}</span>
               </div>
               <div className="detailWrapper">
                 {detailId !== item.id ? (
                   <>
-                    <div className="detailValue">
+                    <div className={`detailValue ${blur && "profileBlur"}`}>
                       <span>{item.value ? item.value : "No Item Yet"}</span>
                     </div>
                     {item.edit && (
-                      <div className="detailButton">
+                      <div className={`detailButton ${blur && "profileBlur"}`}>
                         <button onClick={() => handleEdit(item.id)}>
                           Edit
                         </button>
                       </div>
                     )}
+                  </>
+                ) : item.popup ? (
+                  <>
+                    <AddressPopup
+                      handleClose={handleClose}
+                      data={values}
+                      setReload={setReload}
+                      country={country}
+                      state={state}
+                    />
                   </>
                 ) : (
                   <>
