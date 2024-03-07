@@ -33,51 +33,17 @@ const AddressPopup = ({ handleClose, data, setReload, country, state }) => {
     <div className="addressContainer">
       <h4 className="addressTitle">Edit address</h4>
       <div className="addressWrapper">
-        <label htmlFor="countryId">
-          Country <span style={{ color: "red" }}>*</span>
+        <label htmlFor="address">
+          Street Address <span style={{ color: "red" }}>*</span>
         </label>
-        <select
-          name="countryId"
-          value={values.countryId ? values.countryId : ""}
+        <input
+          type="text"
+          name="address"
+          value={values.address ? values.address : ""}
           onBlur={handleBlur}
           onChange={handleChange}
-        >
-          <option value="" disabled>
-            Setect Country
-          </option>
-          {country.map((item) => (
-            <option key={item.id} value={item.id}>
-              {item.countryName}
-            </option>
-          ))}
-        </select>
-        <Error error={errors.countryId} touch={touched.countryId} />
-      </div>
-      <div className="addressWrapper">
-        <label htmlFor="stateId">
-          State <span style={{ color: "red" }}>*</span>
-        </label>
-        <select
-          name="stateId"
-          value={values.stateId ? values.stateId : ""}
-          onBlur={handleBlur}
-          onChange={handleChange}
-        >
-          <option value="" disabled>
-            Setect State
-          </option>
-          {state
-            .filter(
-              (item) =>
-                toString(item.countryCode) === toString(values?.countryId)
-            )
-            .map((item) => (
-              <option key={item.id} value={item.id}>
-                {item.stateName}
-              </option>
-            ))}
-        </select>
-        <Error error={errors.state} touch={touched.state} />
+        />
+        <Error error={errors.address} touch={touched.address} />
       </div>
       <div className="twoAddressWrapper">
         <div className="addressWrapper" style={{ flex: "1" }}>
@@ -93,6 +59,55 @@ const AddressPopup = ({ handleClose, data, setReload, country, state }) => {
           />
           <Error error={errors.city} touch={touched.city} />
         </div>
+        <div className="addressWrapper">
+          <label htmlFor="countryId">
+            Country <span style={{ color: "red" }}>*</span>
+          </label>
+          <select
+            name="countryId"
+            value={values.countryId ? values.countryId : ""}
+            onBlur={handleBlur}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              Setect Country
+            </option>
+            {country.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.countryName}
+              </option>
+            ))}
+          </select>
+          <Error error={errors.countryId} touch={touched.countryId} />
+        </div>
+      </div>
+      <div className="twoAddressWrapper">
+        <div className="addressWrapper">
+          <label htmlFor="stateId">
+            State <span style={{ color: "red" }}>*</span>
+          </label>
+          <select
+            name="stateId"
+            value={values.stateId ? values.stateId : ""}
+            onBlur={handleBlur}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              Setect State
+            </option>
+            {state
+              .filter(
+                (item) =>
+                  toString(item.countryCode) === toString(values?.countryId)
+              )
+              .map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.stateName}
+                </option>
+              ))}
+          </select>
+          <Error error={errors.state} touch={touched.state} />
+        </div>
         <div className="addressWrapper" style={{ flex: "1" }}>
           <label htmlFor="postalCode">
             Postal Code <span style={{ color: "red" }}>*</span>
@@ -106,19 +121,6 @@ const AddressPopup = ({ handleClose, data, setReload, country, state }) => {
           />
           <Error error={errors.postalCode} touch={touched.postalCode} />
         </div>
-      </div>
-      <div className="addressWrapper">
-        <label htmlFor="address">
-          Street Address <span style={{ color: "red" }}>*</span>
-        </label>
-        <input
-          type="text"
-          name="address"
-          value={values.address ? values.address : ""}
-          onBlur={handleBlur}
-          onChange={handleChange}
-        />
-        <Error error={errors.address} touch={touched.address} />
       </div>
       <div className="addressButton">
         <button className="addressSave" onClick={handleSubmit}>
