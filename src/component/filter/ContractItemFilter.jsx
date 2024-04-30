@@ -64,13 +64,16 @@ const ContractItemFilter = ({ item, filter, setFilter }) => {
               : filterItem}
           </span>
           <span className="x" onClick={handleClose}>
-            <FontAwesomeIcon icon={faXmark} style={{fontSize:'18px',fontWeight:'400',color:'gray'}}/>
+            <FontAwesomeIcon
+              icon={faXmark}
+              style={{ fontSize: "18px", fontWeight: "400", color: "gray" }}
+            />
           </span>
         </div>
       ) : (
         <div className="filterBox" onClick={handleClick}>
           <span className="filterType">ContractItem</span>
-          <span class="triangleDown"></span>
+          <span className="triangleDown"></span>
         </div>
       )}
       {allFilters && (

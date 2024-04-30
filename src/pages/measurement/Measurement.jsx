@@ -3,6 +3,7 @@ import "./measurement.css";
 import Sidebar from "../../component/sidebar/Sidebar";
 import MeasurementBook from "../../component/measurementBookTable/Table.jsx";
 import StructuralSteelTable from "../../component/structuralSteelTable/Table.jsx";
+import ReinforcementSteelTable from "../../component/reinforcementSteelTable/Table.jsx";
 import { useLocation } from "react-router-dom";
 import ContractItemFilter from "../../component/filter/ContractItemFilter.jsx";
 import TagFilter from "../../component/filter/TagFilter.jsx";
@@ -23,22 +24,22 @@ const Measurement = () => {
   const [tagFilter, setTagFilter] = useState([]);
   const [type, setType] = useState(1);
   const dispatch = useDispatch();
-  const contractItem=useSelector((state)=>state.contractItem.contractItem);
+  const contractItem = useSelector((state) => state.contractItem.contractItem);
 
   //redirect to login when token and organizationId is Not exist
   useRedirect();
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(setInitialState());
-  },[dispatch])
-  
-  useEffect(()=>{
-    if([1,2,3,4].includes(contractItem?.stdUnit) && type!==1){
+  }, [dispatch]);
+
+  useEffect(() => {
+    if ([1, 2, 3, 4].includes(contractItem?.stdUnit) && type !== 1) {
       setType(1);
-    }else if(contractItem?.stdUnit===7 && type!==2){
-      setType(3)
+    } else if (contractItem?.stdUnit === 7 && type !== 2) {
+      setType(3);
     }
-  },[contractItem?.stdUnit,type])
+  }, [contractItem?.stdUnit, type]);
 
   useEffect(() => {
     getContractItem(projectId, 100, (data) => {
@@ -64,7 +65,7 @@ const Measurement = () => {
     dispatch(setInitialState());
     handleClear();
   };
-  
+
   return (
     <div>
       <div className="measurementMainContainer">
@@ -83,7 +84,10 @@ const Measurement = () => {
               >
                 MeasurementBook
               </div>
-              <div className={`type ${type === 2 && "selected"}`}>
+              <div
+                className={`type ${type === 2 && "selected"}`}
+                onClick={() => handleType(2)}
+              >
                 R/F Steel MeasurementBook
               </div>
               <div
@@ -101,10 +105,7 @@ const Measurement = () => {
                 filter={contractItemFilter}
                 setFilter={setContractItemFilter}
               />
-              <TagFilter
-                filter={tagFilter}
-                setFilter={setTagFilter}
-              />
+              <TagFilter filter={tagFilter} setFilter={setTagFilter} />
               <span className="clear" onClick={handleClear}>
                 Clear All
               </span>
@@ -118,9 +119,14 @@ const Measurement = () => {
               />
             )}
 
-            {/* {type === 2 && (
-              <MeasurementBook billId={billId} projectId={projectId} />
-            )} */}
+            {type === 2 && (
+              <ReinforcementSteelTable
+                billId={billId}
+                tagFilter={tagFilter}
+                contractItems={contractItems}
+                contractItemFilter={contractItemFilter}
+              />
+            )}
 
             {type === 3 && (
               <StructuralSteelTable

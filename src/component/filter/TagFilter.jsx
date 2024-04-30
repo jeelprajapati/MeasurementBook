@@ -7,10 +7,10 @@ import useClickOutside from "../../hooks/useclickOutside";
 import { useSelector } from "react-redux";
 const TagFilter = ({ filter, setFilter }) => {
   const [searchVal, setSearchVal] = useState("");
-  const [loading,setLoading]=useState(false);
+  const [loading, setLoading] = useState(false);
   const [allFilters, setAllFilters] = useState(false);
   const ref = useRef();
-  const tags=useSelector((state)=>state.tags.tags);
+  const tags = useSelector((state) => state.tags.tags);
   const handleArray = (e) => {
     setLoading(true);
     if (filter?.find((i) => e === i)) {
@@ -45,14 +45,14 @@ const TagFilter = ({ filter, setFilter }) => {
       ) : (
         <div className="filterBox" onClick={handleClose}>
           <span className="filterType">Tags</span>
-          <span class="triangleDown"></span>
+          <span className="triangleDown"></span>
         </div>
       )}
       {allFilters && (
         <div
           className="filterTable"
           style={{
-            width:"200px",
+            width: "200px",
             height: "fitContent",
             maxHeight: "250px",
           }}
@@ -82,13 +82,22 @@ const TagFilter = ({ filter, setFilter }) => {
               ?.filter((i) => i.toUpperCase().includes(searchVal.toUpperCase()))
               ?.map((i, index) => (
                 <div className="Wrapper" key={index}>
-                  {!loading && <><input
-                    type="checkbox"
-                    value={i}
-                    onClick={() => handleArray(i)}
-                    checked={filter.find((e) => e === i) ? true : false}
-                  />
-                  <span style={{cursor:'pointer'}} onClick={() => handleArray(i)}>{i}</span></>}
+                  {!loading && (
+                    <>
+                      <input
+                        type="checkbox"
+                        value={i}
+                        onClick={() => handleArray(i)}
+                        checked={filter.find((e) => e === i) ? true : false}
+                      />
+                      <span
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleArray(i)}
+                      >
+                        {i}
+                      </span>
+                    </>
+                  )}
                 </div>
               ))}
           </div>

@@ -1,4 +1,12 @@
-import { ADD_TAG, CHANGE_ALLSTATE, CHANGE_NUMBER, CHANGE_SHAPE, CHANGE_TEXT, REMOVE_TAG, SETINITIAL_STATE } from "../constants/actionTypes";
+import {
+  ADD_TAG,
+  CHANGE_ALLSTATE,
+  CHANGE_NUMBER,
+  CHANGE_SHAPE,
+  CHANGE_TEXT,
+  REMOVE_TAG,
+  SETINITIAL_STATE,
+} from "../constants/actionTypes";
 
 export const intialState = {
   id: "00000000-0000-0000-0000-000000000000",
@@ -12,7 +20,7 @@ export const intialState = {
   tags: [],
 };
 
-export const formData = (state=intialState, action) => {
+export const formData = (state = intialState, action) => {
   switch (action.type) {
     case CHANGE_TEXT:
       return {
@@ -27,10 +35,10 @@ export const formData = (state=intialState, action) => {
     case CHANGE_SHAPE:
       return {
         ...intialState,
-        id:state.id,
-        description:state.description,
-        [action.payload.name]:action.payload.value
-      }
+        id: state.id,
+        description: state.description,
+        [action.payload.name]: action.payload.value,
+      };
     case ADD_TAG:
       return {
         ...state,
@@ -41,17 +49,18 @@ export const formData = (state=intialState, action) => {
         ...state,
         tags: state.tags.filter((tag) => tag !== action.payload.tag),
       };
-      case CHANGE_ALLSTATE:
-        const { tags,...other } = action.payload;
-        return {
-          ...other,
-          tags:tags.split(',')
-        };
-      case SETINITIAL_STATE:
-          return {
-              ...intialState
-          }
+    case CHANGE_ALLSTATE:
+      const { tags, ...other } = action.payload;
+      return {
+        ...other,
+        tags: tags.split(","),
+      };
+    case SETINITIAL_STATE:
+      return {
+        ...intialState,
+      };
 
-      default: return state
+    default:
+      return state;
   }
-}
+};

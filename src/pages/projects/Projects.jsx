@@ -22,9 +22,9 @@ const Projects = () => {
   useRedirect();
 
   useEffect(() => {
-   getProjects(Id,page,(data)=>{
-    setData(data.items);
-   })
+    getProjects(Id, page, (data) => {
+      setData(data.items);
+    })
   }, [page, Id, change]);
 
   const handleInfinityScroll = (e) => {
@@ -43,7 +43,7 @@ const Projects = () => {
         <div className="projectRight" onScroll={handleInfinityScroll}>
           <div className="projectContentWrapper">
             <div className="projectTop">
-              <BreadCrumbs type={"project"}/>
+              <BreadCrumbs type={"project"} />
               <div className="search">
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
                 <input
@@ -56,9 +56,8 @@ const Projects = () => {
             <div className="projectMain">
               {
                 <div
-                  className={`boxContainer ${
-                    data?.length >= 3 ? "grid" : "flexbox"
-                  } ${inputType.credential && "blur"}`}
+                  className={`boxContainer ${data?.length >= 3 ? "grid" : "flexbox"
+                    } ${inputType.credential && "blur"}`}
                 >
                   <div
                     className="addBox"

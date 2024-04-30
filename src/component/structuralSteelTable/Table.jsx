@@ -29,7 +29,7 @@ const Table = ({ billId, contractItems, tagFilter, contractItemFilter }) => {
   const ref = useRef();
   const contractItem = useSelector((state) => state.contractItem.contractItem);
   const dispatchAction = useDispatch();
-  const { handleInfinityScroll, page } = useInfinityScroll({credential:input?.credential});
+  const { handleInfinityScroll, page } = useInfinityScroll({ credential: input?.credential });
 
   const headerObject = [
     { label: "ContractItem", align: "start" },
@@ -45,7 +45,7 @@ const Table = ({ billId, contractItems, tagFilter, contractItemFilter }) => {
     { label: "Actions", align: "center" },
   ];
 
-  const { data,loading } = useFetchByPost({
+  const { data, loading } = useFetchByPost({
     url: "StructMeasurementBook/getByBillId",
     billId,
     change,
@@ -58,11 +58,11 @@ const Table = ({ billId, contractItems, tagFilter, contractItemFilter }) => {
     if (data?.length === 0 && !loading) {
       setInput({ type: "ADD", credential: true });
       setDivideBy(0);
-    }else{
+    } else {
       setInput({ type: "", credential: false });
       setDivideBy(0);
     }
-  }, [data,loading]);
+  }, [data, loading]);
 
   useEffect(() => {
     getShape((data) => {
@@ -183,8 +183,8 @@ const Table = ({ billId, contractItems, tagFilter, contractItemFilter }) => {
         </table>
       </form>
       {loading && <div className="loader">
-          <FontAwesomeIcon icon={faSpinner} />
-        </div>}
+        <FontAwesomeIcon icon={faSpinner} />
+      </div>}
     </div>
   );
 };

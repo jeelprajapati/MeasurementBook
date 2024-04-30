@@ -124,7 +124,6 @@ const Table = ({ billId, contractItems, tagFilter, contractItemFilter }) => {
         ref={ref}
         onScroll={handleInfinityScroll}
       >
-
         <form onSubmit={handleSubmit}>
           <table>
             <tr className="measurementTableRow">
@@ -176,9 +175,11 @@ const Table = ({ billId, contractItems, tagFilter, contractItemFilter }) => {
             }
           </table>
         </form>
-        {loading && <div className="loader">
-          <FontAwesomeIcon icon={faSpinner} />
-        </div>}
+        {loading && (
+          <div className="loader">
+            <FontAwesomeIcon icon={faSpinner} />
+          </div>
+        )}
       </div>
     </>
   );
