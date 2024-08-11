@@ -1,17 +1,15 @@
 import { useState } from "react";
 import "./forgetPassword.css";
 import { useFormik } from "formik";
-import { forgetPassword } from "../../scemas/index.js";
+import { forgetPasswordSchema } from "../../utils/scemas/index.js";
 import { Link } from "react-router-dom";
 import Error from "../../component/error/Error.jsx";
-import axios from "axios";
-import { useAlert } from "react-alert";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { forgetPassword } from "../../actions/authentication.js";
 const Forgetpassword = () => {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
-  const alert = useAlert();
   const initialValues = {
     email: "",
   };
@@ -19,32 +17,13 @@ const Forgetpassword = () => {
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
     useFormik({
       initialValues,
-      validationSchema: forgetPassword,
+      validationSchema: forgetPasswordSchema,
       onSubmit: (values) => {
-        const makeRequest = async () => {
-          setLoading(true);
-          try {
-            const res = await axios.post(
-              `${process.env.REACT_APP_BASE_URL}/Authentication/forgot-password`,
-              values
-            );
-            if (res.status === 200) {
-              setSuccess(true);
-            }
-          } catch (error) {
-            if (error.response) {
-              if (error.response.data.status === 404) {
-                alert.show("invalid email address", { type: "error" });
-              } else {
-                alert.show(error.response.data.title, { type: "error" });
-              }
-            } else {
-              alert.show("something went wrong", { type: "info" });
-            }
-          }
-          setLoading(false);
-        };
-        makeRequest();
+        setLoading(true);
+        forgetPassword(values,()=>{
+          setSuccess(true);
+        })
+        setLoading(false);
       },
     });
   

@@ -2,21 +2,16 @@ import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef } from "react";
 
-const InputRow = ({ unit,inputType, setDivideBy, setInputType, state, dispatch }) => {
-  const ref=useRef();
-  const handleClose = (e) => {
-    e.preventDefault();
-    setInputType({ type: "", credential: false });
-    dispatch({ type: "INITIAL_STATE" });
-    setDivideBy(0);
-  };
-
-  const handleDispatch = (e) => {
-    dispatch({
-      type: "CHANGE_INPUT",
-      payload: { name: e.target.name, value: e.target.value },
-    });
-  };
+const InputRow = ({
+  unit,
+  inputType,
+  setDivideBy,
+  setInputType,
+  formData,
+  setFormData,
+  contractItemInitialState
+}) => {
+  const ref = useRef();
 
   useEffect(() => {
     if (ref.current) {
@@ -26,7 +21,18 @@ const InputRow = ({ unit,inputType, setDivideBy, setInputType, state, dispatch }
         behavior: "smooth",
       });
     }
-  }, [inputType?.credential]);
+  }, [inputType.credential]);
+
+  const handleChange = (name, value) => {
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleClose = (e) => {
+    e.preventDefault();
+    setInputType({ type: "", credential: false });
+    setFormData(contractItemInitialState);
+    setDivideBy(0);
+  };
 
   return (
     <tr className="tr" ref={ref}>
@@ -34,15 +40,17 @@ const InputRow = ({ unit,inputType, setDivideBy, setInputType, state, dispatch }
         <input
           type="number"
           name="sorNo"
-          value={state.sorNo}
-          onChange={(e) => handleDispatch(e)}
+          value={formData.sorNo === 0 ? "" : formData.sorNo}
+          onChange={(e) =>
+            handleChange(e.target.name, parseInt(e.target.value || 0))
+          }
         />
       </td>
       <td className="td">
         <textarea
           name="item"
-          value={state.item}
-          onChange={(e) => handleDispatch(e)}
+          value={formData.item}
+          onChange={(e) => handleChange(e.target.name, e.target.value)}
           required
         ></textarea>
       </td>
@@ -52,19 +60,21 @@ const InputRow = ({ unit,inputType, setDivideBy, setInputType, state, dispatch }
           step="any"
           min={0}
           name="poQty"
-          value={state.poQty}
+          value={formData.poQty === 0 ? "" : formData.poQty}
+          onChange={(e) =>
+            handleChange(e.target.name, parseFloat(e.target.value || 0))
+          }
           required
-          onChange={(e) => handleDispatch(e)}
         />
       </td>
       <td className="td">
         <select
           name="stdUnitId"
-          value={state.stdUnitId}
+          value={formData.stdUnitId}
+          onChange={(e) => handleChange(e.target.name, parseInt(e.target.value))}
           required
-          onChange={(e) => handleDispatch(e)}
         >
-          <option value="" disabled>
+          <option value={0} disabled>
             select
           </option>
           {unit?.map((item) => (
@@ -78,31 +88,35 @@ const InputRow = ({ unit,inputType, setDivideBy, setInputType, state, dispatch }
         <input
           type="text"
           name="unit"
-          value={state.unit}
+          value={formData.unit}
+          onChange={(e) => handleChange(e.target.name, e.target.value)}
           required
-          onChange={(e) => handleDispatch(e)}
         />
       </td>
       <td className="td">
         <input
           type="number"
+          style={{ textAlign: "end" }}
           step="any"
           min={0}
           name="rate"
-          style={{ textAlign: "end" }}
-          value={state.rate}
-          onChange={(e) => handleDispatch(e)}
+          value={formData.rate === 0 ? "" : formData.rate}
+          onChange={(e) =>
+            handleChange(e.target.name, parseFloat(e.target.value || 0))
+          }
         />
       </td>
       <td className="td">
         <input
           type="number"
+          style={{ textAlign: "end" }}
           name="hsn"
           step="any"
           min={0}
-          style={{ textAlign: "end" }}
-          value={state.hsn}
-          onChange={(e) => handleDispatch(e)}
+          value={formData.hsn === 0 ? "" : formData.hsn}
+          onChange={(e) =>
+            handleChange(e.target.name, parseInt(e.target.value || 0))
+          }
         />
       </td>
       <td className="td" style={{ textAlign: "center" }}>

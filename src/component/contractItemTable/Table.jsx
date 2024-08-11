@@ -1,120 +1,73 @@
-import React, { useEffect, useReducer, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./style.css";
-import makeRequesInstance from "../../utils/makeRequest.js";
-import { useAlert } from "react-alert";
 import TableRow from "./TableRow.jsx";
 import InputRow from "./InputRow.jsx";
 import {
-  INITIAL_STATE,
-  inputReducer,
-} from "../../reducers/contractItemReducer.js";
+  addContractItem,
+  getContractItem,
+  updateContractItem,
+} from "../../actions/contractItem.js";
+import useInfinityScroll from "../../hooks/useInfinityScroll.js";
+import { contractItemInitialState } from "../../constants/initialState.js";
+import toast from "react-hot-toast";
+
 const Table = ({ change, setChange, unit, projectId }) => {
   const [array, setArray] = useState([]);
   const [divideBy, setDivideBy] = useState(0);
   const [inputType, setInputType] = useState({ type: "", credential: false });
   const [scrollValue, setScrollValue] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
   const ref = useRef();
-  const alert = useAlert();
-  const [page, setPage] = useState(1);
-  const makeRequest = makeRequesInstance(localStorage.getItem("token"));
-  const [state, dispatch] = useReducer(inputReducer, INITIAL_STATE);
+  const [formData, setFormData] = useState(contractItemInitialState);
+  const { handleInfinityScroll, page } = useInfinityScroll();
 
   useEffect(() => {
-    const getData = async () => {
-      const makeRequest = makeRequesInstance(localStorage.getItem("token"));
-      const res = await makeRequest.get(
-        `/ContractItem/GetByProjectId?projectId=${projectId}&page=1&pageSize=${
-          page * 9
-        }`
-      );
-      if (res.status === 200) {
-        setArray(res.data.items);
-        if (res.data.items?.length === 0) {
-          setInputType({ type: "ADD", credential: true });
-          setDivideBy(0);
-        }
+    getContractItem(projectId, page, (data) => {
+      setArray(data.items);
+      if (data.items?.length < data?.totalCount) {
+        setHasMore(true);
+      } else {
+        setHasMore(false);
       }
-    };
-    getData();
-  }, [projectId, page,change]);
+      if (data.items?.length === 0) {
+        setInputType({ type: "ADD", credential: true });
+        setDivideBy(0);
+      }
+    });
+  }, [projectId, page, change]);
 
   useEffect(() => {
-    if (ref.current) {
+    if (ref.current && scrollValue !== 0) {
       ref.current.scrollTop = scrollValue;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    //eslint-disable-next-line
   }, [array]);
 
-  const handleInfinityScroll = (e) => {
-    const { scrollTop, clientHeight, scrollHeight } = e.target;
-    if (scrollHeight <= clientHeight + scrollTop + 1) {
-      setPage((prev) => prev + 1);
-      setScrollValue(scrollTop);
-    }
+  const handleSuccess = (type) => {
+    toast.success(`Data ${type}ed Successfully`);
+    setChange(!change);
+    setFormData(contractItemInitialState);
+    setInputType({ type: "", credential: false });
+    setDivideBy(0);
   };
 
-  //set scrollvalue for when data ADD || UPDATED we can scroll Table
-  const handleScrollValue = () => {
-    if (ref.current) {
-      setScrollValue(ref.current.scrollTop);
-    }
+  const handleAdd = () => {
+    addContractItem({ ...formData, projectId }, divideBy, () => {
+      handleSuccess("Add");
+    });
   };
 
-  const arrangeValues = () => {
-    return {
-      ...state,
-      sorNo: parseFloat(state.sorNo) || 0,
-      hsn: parseFloat(state.hsn) || 0,
-      poQty: parseFloat(state.poQty) || 0,
-      stdUnitId: parseInt(state.stdUnitId) || 0,
-      rate: parseFloat(state.rate) || 0,
-      projectId,
-    };
-  };
-
-  const handleAdd = async () => {
-    try {
-      const values = arrangeValues();
-      const res = await makeRequest.post("ContractItem", {
-        contractItemDto: {
-          ...values,
-        },
-        index: divideBy,
-      });
-      if (res.status === 204) {
-        alert.show("data added successfully", { type: "success" });
-        setDivideBy(0);
-        setChange(!change);
-        dispatch({ type: "INITIAL_STATE" });
-        setInputType({ type: "", credential: false });
-      }
-    } catch (error) {
-      alert.show("somthing went Wrong!", { type: "info" });
-    }
-  };
-
-  const handleUpdate = async () => {
-    try {
-      const values = arrangeValues();
-      const res = await makeRequest.put("ContractItem", {
-        ...values,
-        projectId,
-      });
-      if (res.status === 204) {
-        alert.show("data updated successfully", { type: "success" });
-        setChange(!change);
-        setDivideBy(0);
-        dispatch({ type: "INITIAL_STATE" });
-        setInputType({ type: "", credential: false });
-      }
-    } catch (error) {
-      alert.show("somthing went Wrong!", { type: "info" });
-    }
+  const handleUpdate = () => {
+    updateContractItem(formData, projectId, () => {
+      handleSuccess("Updat");
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleScrollValue();
+    if (ref.current) {
+      setScrollValue(ref.current.scrollTop);
+    }
     if (inputType.type === "ADD") {
       handleAdd();
     } else if (inputType.type === "UPDATE") {
@@ -126,7 +79,7 @@ const Table = ({ change, setChange, unit, projectId }) => {
     <div
       className="contractTableContainer"
       ref={ref}
-      onScroll={handleInfinityScroll}
+      onScroll={(e)=>hasMore && !inputType?.credential && handleInfinityScroll(e)}
     >
       <form onSubmit={handleSubmit}>
         <table className="table">
@@ -163,9 +116,8 @@ const Table = ({ change, setChange, unit, projectId }) => {
               setInputType={setInputType}
               setDivideBy={setDivideBy}
               inputType={inputType}
-              dispatch={dispatch}
-              change={change}
               setChange={setChange}
+              setFormData={setFormData}
             />
           }
           {inputType?.credential && (
@@ -173,25 +125,23 @@ const Table = ({ change, setChange, unit, projectId }) => {
               unit={unit}
               setInputType={setInputType}
               setDivideBy={setDivideBy}
-              state={state}
-              dispatch={dispatch}
               inputType={inputType}
-              handleScrollValue={handleScrollValue}
+              formData={formData}
+              setFormData={setFormData}
+              contractItemInitialState={contractItemInitialState}
             />
           )}
           {
             <TableRow
               items={array?.slice(
-                inputType?.type === "UPDATE" ? divideBy + 1 : divideBy
+                inputType.type === "UPDATE" ? divideBy + 1 : divideBy
               )}
               unit={unit}
               setInputType={setInputType}
               setDivideBy={setDivideBy}
               inputType={inputType}
-              dispatch={dispatch}
-              change={change}
               setChange={setChange}
-              handleScrollValue={handleScrollValue}
+              setFormData={setFormData}
             />
           }
         </table>

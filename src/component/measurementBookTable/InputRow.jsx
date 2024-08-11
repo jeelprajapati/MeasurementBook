@@ -4,19 +4,13 @@ import Tag from "../tag/Tag";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Select from "../select/Select.jsx";
+import { useDispatch } from "react-redux";
+import { addcontractItem, setInitialState } from "../../redux/slice/contractItemSlice.js";
+import { CHANGE_NUMBER, CHANGE_TEXT, SETINITIAL_STATE } from "../../constants/actionTypes.js";
 
-const InputRow = ({
-  contractItems,
-  projectId,
-  dispatch,
-  state,
-  handleClose,
-  input,
-  contractItemValues,
-  setContractItemValues,
-  allTag,
-}) => {
+const InputRow = ({ contractItems,dispatch,state,input,setDivideBy,setInput,contractItem}) => {
   const ref = useRef();
+  const dispatchAction = useDispatch();
   const options = contractItems?.map((i) => ({
     value: i.id,
     label: i.item,
@@ -33,11 +27,25 @@ const InputRow = ({
       });
     }
   }, [input?.credential]);
-
+ 
   const handleSelect = (e) => {
-    setContractItemValues({ ...e, exist: true });
-    dispatch({ type: "CHANGE_CONTRCTITEM", payload: { stdUnitId: e.stdUnit } });
+    dispatchAction(addcontractItem({ item:{...e ,exist:true} }));
   };
+
+  const handleChange = (e, type) => {
+    dispatch({
+      type,
+      payload: { name: e.target.name, value: e.target.value },
+    });
+  };
+
+  const handleClose=(e)=>{
+    e.preventDefault();
+    dispatchAction(setInitialState());
+    dispatch({type:SETINITIAL_STATE});
+    setInput({type:"",credential:false});
+    setDivideBy(0);
+  }
 
   return (
     <>
@@ -46,145 +54,90 @@ const InputRow = ({
           <Select
             onChange={(e) => handleSelect(e)}
             options={options}
-            value={contractItemValues}
+            value={contractItem}
           />
         </td>
         <td className="measurementTableTd">
-          {contractItemValues?.exist && (
+          {contractItem.exist && (
             <textarea
               name="description"
               className="measurementTableInput"
-              value={state?.description}
               required
-              onChange={(e) => {
-                dispatch({
-                  type: "CHANGE_INPUT",
-                  payload: {
-                    name: "description",
-                    value: e.target.value,
-                  },
-                });
-              }}
+              value={state.description}
+              onChange={(e) =>handleChange(e,CHANGE_TEXT)}
             ></textarea>
           )}
         </td>
         <td className="measurementTableTd">
-          {contractItemValues?.exist && (
+          {contractItem.exist && (
             <input
               type="number"
+              className="measurementTableInput alignItemEnd"
               step="any"
               min={0}
               name="no"
               required
-              value={state?.no}
-              className="measurementTableInput alignItemEnd"
-              onChange={(e) => {
-                dispatch({
-                  type: "CHANGE_NUMBER",
-                  payload: {
-                    name: "no",
-                    value: e.target.value,
-                  },
-                });
-              }}
+              value={state.no === 0 ? "" : state.no}
+              onChange={(e) =>handleChange(e,CHANGE_NUMBER)}
             />
           )}
         </td>
         <td className="measurementTableTd">
-          {contractItemValues?.exist && (
+          {contractItem.exist && (
             <input
               type="number"
+              name="l"
+              className="measurementTableInput alignItemEnd"
               step="any"
               min={0}
-              name="l"
-              value={state?.l?.value}
-              disabled={!state?.l?.required}
-              className="measurementTableInput alignItemEnd"
-              required={state?.l?.required}
-              onChange={(e) => {
-                dispatch({
-                  type: "CHANGE_L_B_H",
-                  payload: {
-                    name: "l",
-                    value: e.target.value,
-                  },
-                });
-              }}
+              required={[1,2,3].includes(contractItem.stdUnit)}
+              disabled={![1,2,3].includes(contractItem.stdUnit)}
+              value={state.l === 0 ? "" : state.l}
+              onChange={(e) =>handleChange(e,CHANGE_NUMBER)}
             />
           )}
         </td>
         <td className="measurementTableTd">
-          {contractItemValues?.exist && (
+          {contractItem.exist && (
             <input
               type="number"
               step="any"
               min={0}
               name="b"
-              value={state?.b?.value}
-              disabled={!state?.b?.required}
+              required={[2,3].includes(contractItem.stdUnit)}
+              disabled={![2,3].includes(contractItem.stdUnit)}
               className="measurementTableInput alignItemEnd"
-              required={state?.b?.required}
-              onChange={(e) => {
-                dispatch({
-                  type: "CHANGE_L_B_H",
-                  payload: {
-                    name: "b",
-                    value: e.target.value,
-                  },
-                });
-              }}
+              value={state.b === 0 ? "" : state.b}
+              onChange={(e) =>handleChange(e,CHANGE_NUMBER)}
             />
           )}
         </td>
         <td className="measurementTableTd">
-          {contractItemValues?.exist && (
+          {contractItem?.exist && (
             <input
               type="number"
               step="any"
               min={0}
               name="d_H"
-              value={state?.h?.value}
-              disabled={!state?.h?.required}
+              required={[3].includes(contractItem.stdUnit)}
+              disabled={![3].includes(contractItem.stdUnit)}
               className="measurementTableInput alignItemEnd"
-              required={state?.h?.required}
-              onChange={(e) => {
-                dispatch({
-                  type: "CHANGE_L_B_H",
-                  payload: {
-                    name: "h",
-                    value: e.target.value,
-                  },
-                });
-              }}
+              value={state.d_H === 0 ? "" : state.d_H}
+              onChange={(e) =>handleChange(e,CHANGE_NUMBER)}
             />
           )}
         </td>
         <td className="measurementTableTd">
-          {contractItemValues?.exist && (
+          {contractItem?.exist && (
             <div className="totalContainer" disabled>
-              <span>{state?.subtotal?.toFixed(3)}</span>
-              <span className="unitName">{contractItemValues?.unit}</span>
+              <span>{state.subtotal === 0 ? "" : state.subtotal}</span>
+              <span className="unitName">{contractItem?.unit}</span>
             </div>
           )}
         </td>
-        <td className="measurementTableTd">
-          {contractItemValues?.exist && (
-            <Tag
-              projectId={projectId}
-              dispatch={dispatch}
-              tags={state?.tags}
-              allTag={allTag}
-            />
-          )}
-        </td>
+        <td className="measurementTableTd">{contractItem?.exist && <Tag tags={state.tags} dispatch={dispatch}/>}</td>
         <td className="measurementTableTd" align="center">
-          <button
-            className="actionType"
-            type="submit"
-            onKeyPress={(e) => {
-              e.key === "Enter" && e.preventDefault();
-            }}
-          >
+          <button className="actionType" type="submit">
             <FontAwesomeIcon icon={faCheck} />
           </button>
           <button className="actionType" onClick={handleClose}>

@@ -4,60 +4,35 @@ import Sidebar from "../../component/sidebar/Sidebar.jsx";
 import Billpopup from "../../component/billPopup/BillPopup.jsx";
 import { useLocation } from "react-router-dom";
 import Billcard from "../../component/billCard/BillCard.jsx";
-import makeRequesInstance from "../../utils/makeRequest.js";
-import { useAlert } from "react-alert";
 import BreadCrumbs from "../../component/breadCrumbs/BreadCrumbs.jsx";
-const initialState = {
-  id: "00000000-0000-0000-0000-000000000000",
-  invoiceNo: "INV-2023080428",
-  name: "",
-  invoiceDate: "",
-  typeBill: "",
-  status: "",
-  invoiceValue: 0,
-};
+import { billInitialState } from "../../constants/initialState.js";
+import { getBills } from "../../actions/bill.js";
+import useRedirect from "../../hooks/useRedirect.js";
+import useInfinityScroll from "../../hooks/useInfinityScroll.js";
 
 const Bills = () => {
   const search = new URLSearchParams(useLocation()?.search);
-  const projectId = search?.get("projectid");
+  const projectId = search?.get("projectId");
   const [data, setData] = useState([]);
-  const projectName = search?.get("projectname");
+  const projectName = search?.get("projectName");
   const [inputType, setInputType] = useState({ type: "", credential: false });
-  const [initialValues, setInitialValues] = useState(initialState);
-  const [page, setPage] = useState(1);
+  const [initialValues, setInitialValues] = useState(billInitialState);
   const [change, setChange] = useState(0);
-  const alert = useAlert();
-  const pathData = [
-    { name: "Projects", to: "/project" },
-    { name: projectName, to: `/project/${projectId}` },
-    { name: "Bills", to: null },
-  ];
+  const [hasMore, setHasMore] = useState(true);
+  const { handleInfinityScroll, page } = useInfinityScroll();
+  //redirect to login when token and organizationId is Not exist
+  useRedirect();
 
   useEffect(() => {
-    const getData = async () => {
-      const makeRequest = makeRequesInstance(localStorage.getItem("token"));
-      try {
-        const res = await makeRequest.get(
-          `/Bill/GetByProjectId?page=${1}&pageSize=${
-            page * 7
-          }&projectId=${projectId}`
-        );
-        if (res.status === 200) {
-          setData(res.data.items);
-        }
-      } catch (error) {
-        alert.show("something went wrong!", { type: "info" });
+    getBills(page, projectId, (data) => {
+      setData(data.items);
+      if (data.items?.length < data?.totalCount) {
+        setHasMore(true);
+      } else {
+        setHasMore(false);
       }
-    };
-    getData();
-  }, [alert, page, projectId, change]);
-
-  const handleInfinityScroll = (e) => {
-    const { scrollTop, clientHeight, scrollHeight } = e.target;
-    if (scrollHeight <= clientHeight + scrollTop + 1) {
-      setPage((prev) => prev + 1);
-    }
-  };
+    });
+  }, [page, projectId, change]);
 
   return (
     <div>
@@ -65,10 +40,13 @@ const Bills = () => {
         <div className="billLeft">
           <Sidebar id={2} />
         </div>
-        <div className="billRight" onScroll={handleInfinityScroll}>
+        <div
+          className="billRight"
+          onScroll={(e) => hasMore && handleInfinityScroll(e)}
+        >
           <div className="rightContentWrapper">
             <div className={`billTop ${inputType?.credential && "blur"}`}>
-              <BreadCrumbs pathData={pathData}/>
+              <BreadCrumbs type={"bill"} />
             </div>
 
             {
@@ -106,7 +84,7 @@ const Bills = () => {
               setInputType={setInputType}
               setInitialValues={setInitialValues}
               initialValues={initialValues}
-              initialState={initialState}
+              initialState={billInitialState}
               setChange={setChange}
               change={change}
               inputType={inputType}

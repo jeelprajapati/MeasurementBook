@@ -1,6 +1,5 @@
 import React from "react";
 import "./billCard.css";
-import makeRequesInstance from "../../utils/makeRequest";
 import xls from "../../assets/image/xls.svg";
 import { Link } from "react-router-dom";
 import { saveAs } from "file-saver";
@@ -9,30 +8,18 @@ import {
   faPencil,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useAlert } from "react-alert";
+import { getExcelReport } from "../../actions/project";
 
 const Billcard = ({ item, projectName, projectId, setInputType,setInitialValues }) => {
-  const alert = useAlert();
   const handleClick = () => {
     setInitialValues(item);
     setInputType({type:"UPDATE",credential:true});
   };
 
   const downloadExcelFile = async (billId, billName) => {
-    const makeRequest = makeRequesInstance(localStorage.getItem("token"));
-    try {
-      const res = await makeRequest.get(
-        `Project/GenerateStandardExcelReport?billId=${billId}`,
-        { responseType: "blob" }
-      );
-      saveAs(res.data, billName);
-    } catch (error) {
-      if (error.response) {
-        alert.show(error.response.data.title, { type: "error" });
-      } else {
-        alert.show("something went wrong", { type: "info" });
-      }
-    }
+    getExcelReport(billId,(data)=>{
+      saveAs(data,billName);
+    })
   };
 
   return (
@@ -104,7 +91,7 @@ const Billcard = ({ item, projectName, projectId, setInputType,setInitialValues 
               <Link
                 className="link"
                 style={{ width: "100%" }}
-                to={`/measurementbook?billId=${item?.id}&projectId=${projectId}&projectname=${projectName}&billName=${item?.name}`}
+                to={`/measurementbook?billId=${item?.id}&projectId=${projectId}&projectName=${projectName}&billName=${item?.name}`}
               >
                 <button>
                   Measurement <FontAwesomeIcon icon={faArrowRightToBracket} />

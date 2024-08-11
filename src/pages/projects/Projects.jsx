@@ -1,81 +1,38 @@
 import React, { useEffect, useState } from "react";
 import "./projects.css";
 import Sidebar from "../../component/sidebar/Sidebar.jsx";
-import { useNavigate } from "react-router-dom";
 import Popup from "../../component/popup/Popup";
 import Projectcard from "../../component/projectCard/ProjectCard.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import makeRequesInstance from "../../utils/makeRequest.js";
-import { useAlert } from "react-alert";
 import BreadCrumbs from "../../component/breadCrumbs/BreadCrumbs.jsx";
-
-const initialState = {
-  id: "00000000-0000-0000-0000-000000000000",
-  contractNo: "",
-  contractDate: "",
-  loiNo: "",
-  loiDate: "",
-  projectName: "",
-  contractValidity: "",
-  clientId: "",
-  projectValue: 0,
-  executedValue: 0,
-};
+import { projectInitialState } from "../../constants/initialState.js";
+import { getProjects } from "../../actions/project.js";
+import useRedirect from "../../hooks/useRedirect.js";
+import useInfinityScroll from "../../hooks/useInfinityScroll.js";
 
 const Projects = () => {
   const [inputType, setInputType] = useState({ type: "", credential: false });
-  const [initialValues, setInitialValues] = useState(initialState);
+  const [initialValues, setInitialValues] = useState(projectInitialState);
   const [change, setChange] = useState(0);
   const [data, setData] = useState([]);
-  const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const token = localStorage.getItem("token");
-  const navigate = useNavigate();
-  const alert = useAlert();
-  const pathData = [{ name: "Projects", to: null }];
-
+  const [hasMore, setHasMore] = useState(true);
   const Id = localStorage.getItem("organizationId");
-  useEffect(() => {
-    if (!(token && Id)) {
-      navigate("/login");
-    }
-  });
+  const { handleInfinityScroll, page } = useInfinityScroll();
+  //redirect to login when token and organizationId is Not exist
+  useRedirect();
 
   useEffect(() => {
-    const getData = async () => {
-      const makeRequest = makeRequesInstance(localStorage.getItem("token"));
-      try {
-        const res = await makeRequest.get(
-          `/Project?page=1&pageSize=${page * 7}&organizationId=${Id}`
-        );
-        if (res.status === 200) {
-          setData(res.data.items);
-        }
-      } catch (error) {
-        alert.show("something went wrong!", { type: "info" });
+    getProjects(Id, page, (data) => {
+      setData(data.items);
+      if (data.items?.length < data?.totalCount) {
+        setHasMore(true);
+      } else {
+        setHasMore(false);
       }
-    };
-    getData();
-  }, [alert, page, Id, change]);
-
-  const handleInfinityScroll = (e) => {
-    const { scrollTop, clientHeight, scrollHeight } = e.target;
-    if (scrollHeight <= clientHeight + scrollTop + 1) {
-      setPage((prev) => prev + 1);
-    }
-  };
-
-  // const handleDelete=async(id)=>{
-  //   try {
-  //     const res=await makeRequest.delete(`/Project/${id}?organizationId=${Id}`);
-  //     if(res.status===200){
-  //       alert('Project Deleted Sucessfully',{type:'sucess'})
-  //     }
-  //   } catch (error) {
-  //      alert('First Delete This project related data',{type:'info'})
-  //   }
-  // }
+    });
+  }, [page, Id, change]);
 
   return (
     <div>
@@ -83,13 +40,13 @@ const Projects = () => {
         <div className="projectLeft">
           <Sidebar id={2} />
         </div>
-        <div className="projectRight" onScroll={handleInfinityScroll}>
+        <div
+          className="projectRight"
+          onScroll={(e) => hasMore && handleInfinityScroll(e)}
+        >
           <div className="projectContentWrapper">
             <div className="projectTop">
-              {/* <div className={`${inputType.credential ? "path blur" : "path"}`}>
-                Projects/
-              </div> */}
-              <BreadCrumbs pathData={pathData} />
+              <BreadCrumbs type={"project"} />
               <div className="search">
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
                 <input
@@ -135,7 +92,7 @@ const Projects = () => {
           {inputType.credential && (
             <Popup
               setInputType={setInputType}
-              initialState={initialState}
+              initialState={projectInitialState}
               setChange={setChange}
               change={change}
               initialValues={initialValues}

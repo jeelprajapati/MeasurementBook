@@ -79,7 +79,7 @@ const Projectcard = ({ item,setInitialValues,setInputType }) => {
         </div>
         <div className="projectCardButton">
           <Link
-            to={`/project/${item?.id}`}
+            to={`/project/${item?.id}?projectName=${item?.projectName}`}
             className="link"
             style={{ width: "100%" }}
           >

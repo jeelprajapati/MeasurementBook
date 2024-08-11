@@ -1,12 +1,12 @@
 import React from "react";
 import "./clientPopup.css";
 import { useFormik } from "formik";
-import { clientScema } from "../../scemas";
+import { clientScema } from "../../utils/scemas/index.js";
 import Error from "../error/Error";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import makeRequesInstance from "../../utils/makeRequest";
-import { useAlert } from "react-alert";
+import { addClient, updateClient } from "../../actions/client";
+import toast from "react-hot-toast";
 
 const ClientPopup = ({
   item,
@@ -20,8 +20,6 @@ const ClientPopup = ({
   change,
 }) => {
   const organizationID = localStorage.getItem("organizationId");
-  const makeRequest = makeRequesInstance(localStorage.getItem("token"));
-  const alert = useAlert();
   const arrangeValues = (values) => {
     return {
       ...values,
@@ -30,47 +28,38 @@ const ClientPopup = ({
       organizationID,
     };
   };
-  const {
-    values,
-    handleBlur,
-    handleChange,
-    handleSubmit,
-    errors,
-    touched
-  } = useFormik({
-    initialValues: item,
-    validationSchema: clientScema,
-    onSubmit: (value, action) => {
-      const values = arrangeValues(value);
-      const getResponse = async () => {
-        if (input?.type === "ADD") {
-          return await makeRequest.post("Client", values);
-        } else if (input?.type === "UPDATE") {
-          return await makeRequest.put("Client", values);
-        }
-      };
-      getResponse()
-        .then((res) => {
-          if (res.status === 204) {
-            alert.show(
-              `Data ${input === "ADD" ? "Added" : "Updated"} Sucessfully`,
-              { type: "success" }
-            );
-            setChange(!change);
-            setItem(initialState);
-            setInput({ type: "", credential: false });
-            action.resetForm();
-          }
-        })
-        .catch(() => {
-          alert.show("Something Went Wrong!", { type: "info" });
-        });
-    },
-  });
+
   const handleClose = () => {
     setItem(initialState);
     setInput({ type: "", credential: false });
   };
+
+  const handleSucess = ({type,action}) => {
+    toast.success(`Data ${type}ed Successfully`);
+    setChange(!change);
+    setItem(initialState);
+    setInput({ type: "", credential: false });
+    action.resetForm();
+  };
+
+  const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
+    useFormik({
+      initialValues: item,
+      validationSchema: clientScema,
+      onSubmit: (value, action) => {
+        const values = arrangeValues(value);
+        if (input?.type === "ADD") {
+          addClient(values, () => {
+            handleSucess({type:"Add",action});
+          });
+        } else if (input?.type === "UPDATE") {
+          updateClient(values, () => {
+            handleSucess({type:"Updat",action});
+          });
+        }
+      },
+    });
+
   return (
     <div className="clientPopupContainer">
       <h3>

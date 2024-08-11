@@ -1,21 +1,33 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./tag.css";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useClickOutside from "../../hooks/useclickOutside.js";
-import useFetch from "../../hooks/useFetch.js";
-const Tag = ({ tags, dispatch, projectId,allTag }) => {
+import { useSelector } from "react-redux";
+import { ADD_TAG, REMOVE_TAG } from "../../constants/actionTypes.js";
+const Tag = ({ tags, dispatch}) => {
   const ref = useRef();
   const tagRef = useRef();
   const [chip, setChip] = useState("");
   const [open, setOpen] = useState(false);
   const colors = ["blue", "pink", "green", "orange"];
+  const allTag=useSelector((state)=>state.tags.tags);
   // close used tag box when outside click of box
   useClickOutside(tagRef, () => {
     if (open) {
       setOpen(false);
     }
   });
+
+  useEffect(() => {
+    if (tagRef.current) {
+      tagRef.current.scrollIntoView({
+        block: "nearest",
+        inline: "start",
+        behavior: "smooth",
+      });
+    }
+  }, [open]);
 
   // focus on input when user click in writeTag class container
   const focusInput = () => {
@@ -34,7 +46,7 @@ const Tag = ({ tags, dispatch, projectId,allTag }) => {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       dispatch({
-        type: "ADD_TAG",
+        type: ADD_TAG,
         payload: { tag: chip },
       });
       setChip("");
@@ -43,14 +55,13 @@ const Tag = ({ tags, dispatch, projectId,allTag }) => {
 
   const removeTag = (tag) => {
     dispatch({
-      type: "REMOVE_TAG",
+      type: REMOVE_TAG,
       payload: { tag },
     });
   };
-
   const addTag= (tag) =>{
     dispatch({
-      type: "ADD_TAG",
+      type: ADD_TAG,
       payload: { tag },
     });
   }
@@ -59,7 +70,7 @@ const Tag = ({ tags, dispatch, projectId,allTag }) => {
       <div className="tagContainer" ref={tagRef}>
         <div className="writeTag" onClick={focusInput}>
           <ul>
-            {tags?.map((tag, index) => (
+            {tags?.filter((i)=>(i!==""))?.map((tag, index) => (
               <li key={index} className={`${colors[index % 4]}`}>
                 <span className="chipName">{tag}</span>
                 <span className="tagIcon" onClick={() => removeTag(tag)}>

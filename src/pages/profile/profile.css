@@ -1,0 +1,82 @@
+.profileContainer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+.profileRight {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.profileTop {
+  width: 100%;
+  background-color: #fefeff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+}
+.profileFooter {
+  margin: 10px;
+  padding: 30px;
+  height: calc(100% - 34px);
+  background-color: #fdfdfd;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: relative;
+}
+.profileTitle span{
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.profileWrapper {
+  display: flex;
+}
+.profileList {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+.profileComponent {
+  flex: 3;
+}
+.profileItem {
+  height: 45px;
+  width: 75%;
+  display: flex;
+  align-items: center;
+}
+.profileLabelIcon {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 400;
+}
+.profileLabel {
+  flex: 3;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.profileListSelected {
+  background-color: #2e4a93;
+  color: #fdfdfd;
+  border-radius: 5px;
+}
+.profileItemHover {
+  color: #2e4a93;
+}
+.profileItemHover:hover {
+  background-color: #ececec;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.profileBlur{
+  filter: blur(1.5px);
+}

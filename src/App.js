@@ -14,6 +14,7 @@ import Bills from "./pages/bills/Bills.jsx"
 import Measurement from "./pages/measurement/Measurement";
 import Forgetpassword from "./pages/forgetPassword/ForgetPassword.jsx";
 import Reset from "./pages/resetPassword/ResetPassword.jsx";
+import Profile from "./pages/profile/Profile.jsx";
 
 const Layout=()=>{
   
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
       {
         path:"/reset-password",
         element:<Reset/>
+      },
+      {
+        path:"/profile",
+        element:<Profile/>
       }
     ]
   }

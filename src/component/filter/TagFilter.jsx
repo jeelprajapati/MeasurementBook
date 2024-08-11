@@ -4,16 +4,21 @@ import { useState } from "react";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useClickOutside from "../../hooks/useclickOutside";
-const TagFilter = ({ item, filter, setFilter }) => {
+import { useSelector } from "react-redux";
+const TagFilter = ({ filter, setFilter }) => {
   const [searchVal, setSearchVal] = useState("");
+  const [loading,setLoading]=useState(false);
   const [allFilters, setAllFilters] = useState(false);
   const ref = useRef();
+  const tags=useSelector((state)=>state.tags.tags);
   const handleArray = (e) => {
-    if (filter?.find((i) => e.target.value === i)) {
-      setFilter(filter.filter((i) => i !== e.target.value));
+    setLoading(true);
+    if (filter?.find((i) => e === i)) {
+      setFilter(filter.filter((i) => i !== e));
     } else {
-      setFilter([...filter, e.target.value]);
+      setFilter([...filter, e]);
     }
+    setLoading(false);
   };
   const handleClose = () => {
     if (allFilters) {
@@ -73,17 +78,17 @@ const TagFilter = ({ item, filter, setFilter }) => {
               margin: "5px",
             }}
           >
-            {item
+            {tags
               ?.filter((i) => i.toUpperCase().includes(searchVal.toUpperCase()))
               ?.map((i, index) => (
                 <div className="Wrapper" key={index}>
-                  <input
+                  {!loading && <><input
                     type="checkbox"
                     value={i}
-                    onClick={(e) => handleArray(e)}
-                    checked={filter.find((e) => e === i)}
+                    onClick={() => handleArray(i)}
+                    checked={filter.find((e) => e === i) ? true : false}
                   />
-                  <span>{i}</span>
+                  <span style={{cursor:'pointer'}} onClick={() => handleArray(i)}>{i}</span></>}
                 </div>
               ))}
           </div>

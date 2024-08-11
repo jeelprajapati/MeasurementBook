@@ -73,7 +73,7 @@ export const measureTable = Yup.object({
   contractItemId: Yup.string().required("Contract Item is Required!"),
 });
 
-export const forgetPassword = Yup.object({
+export const forgetPasswordSchema = Yup.object({
   email: Yup.string()
     .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, "Enter A valid Email")
     .required("Email is Required!"),
@@ -93,3 +93,35 @@ export const resetSchema = Yup.object({
     )
     .required("Confirm Password is Requird!"),
 });
+
+export const changePasswordSchema = Yup.object({
+  email: Yup.string()
+    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, "Enter A valid Email")
+    .required("Email is Required!"),
+  currentPassword: Yup.string()
+    .matches(
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{6,}$/,
+      "Password must contain at least 8 characters, one uppercase, one number and one special case character"
+    )
+    .required("Password is Required!"),
+  newPassword: Yup.string()
+    .matches(
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{6,}$/,
+      "Password must contain at least 8 characters, one uppercase, one number and one special case character"
+    )
+    .required("Password is required!"),
+  cNewPassword: Yup.string()
+    .oneOf(
+      [Yup.ref("newPassword"), null],
+      "New Password and Confirm New Password must be same"
+    )
+    .required("Confirm Password is Requird!"),
+});
+
+export const addressShcema=Yup.object({
+  countryId:Yup.string().required("Country is required!"),
+  stateId:Yup.string().required("State is required!"),
+  city:Yup.string().required("City is required!"),
+  postalCode:Yup.string().required("Postal Code is required!"),
+  address:Yup.string().required("Street address is required!")
+})

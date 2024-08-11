@@ -27,6 +27,7 @@
     background-color: #fdfdfd;
     padding: 7px;
     margin:0 7px;
+    height: 48px;
 }
 .typesCon{
     display: flex;
@@ -57,12 +58,12 @@
     color: #fdfdfd;
 }
 .measurementFooter{
+    height: calc(100vh - 150px);
     background-color: #fdfdfd;
     padding: 7px;
     margin: 0 7px;
     display:flex;
     flex-direction:column;
-    height:100%
 }
 .measurementFilter{
     display: flex;

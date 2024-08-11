@@ -1,0 +1,7 @@
+export const CHANGE_TEXT="CHANGE_TEXT";
+export const CHANGE_NUMBER="CHANGE_NUMBER";
+export const ADD_TAG="ADD_TAG";
+export const REMOVE_TAG="REMOVE_TAG";
+export const SETINITIAL_STATE="SETINITIAL_STATE";
+export const CHANGE_ALLSTATE="CHANGE_ALLSTATE";
+export const CHANGE_SHAPE="CHANGE_SHAPE";
